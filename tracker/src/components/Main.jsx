@@ -1,21 +1,32 @@
 import React, { useState, useEffect } from "react"
 
+//add rendering logic to only show the right amount of time. ex: if there are 0hours, dont display
+
 function Main () {
-    const [totalSeconds, setTotalSeconds] = useState('')
+    const [totalSeconds, setTotalSeconds] = useState()
     const [initialTime, setInitialTime] = useState(500)
     const [formattedTime, setFormattedTime] = useState()
-    const [timing, setTiming] = useState(false)
+    const [isTiming, setIsTiming] = useState(false)
 
     // useEffect(() => {
         
     // });
+
     function startTimer () {
-        setTiming(true)
-        setInterval(function(){decrementTotalSeconds()}, 1000)
+        setIsTiming(true)
+        setInterval(decrementTotalSeconds(), 1000)
         displayTime()
     }
 
+    function decrementTotalSeconds () {
+        setTotalSeconds(totalSeconds - 1)
+    }
+    
     function stopTimer () {
+        setIsTiming(false)
+    }
+
+    function resetTimer () {
 
     }
 
@@ -50,10 +61,6 @@ function Main () {
         return totalSeconds
     }
 
-    function decrementTotalSeconds () {
-        setTotalSeconds(totalSeconds - 1)
-    }
-
     function displayTime () {
         let formatTime = calculateSeconds()
         let showHours = 0;
@@ -82,12 +89,12 @@ function Main () {
 
     return (
         <div>
-            <input type="text" id="timer" name="timer" maxLength="6" onChange={handleChange}>
+            <input type="text" id="timer" name="timer" maxLength="6" onChange={handleChange} >
             </input>
-            {formattedTime && <p>{formattedTime[0]}h {formattedTime[1]}m {formattedTime[2]}s</p>}  
-            {timing === false && <button onClick={startTimer}>Start</button>}        
-            {timing && <button onClick={stopTimer}>Stop</button>}  
-            <button>Reset</button>
+            {formattedTime && <div>{formattedTime[0]}h {formattedTime[1]}m {formattedTime[2]}s</div>}             
+            {!isTiming && <button onClick={startTimer}>Start</button>}        
+            {isTiming && <button onClick={stopTimer}>Stop</button>}  
+            <button onClick={resetTimer}>Reset</button>
         </div>
     )
 }
