@@ -117,8 +117,10 @@ function Main() {
     return formatted
   }
   const formattedTime = displayTime()
+
   return (
     <div>
+
       <input
         type="text"
         id="timer"
