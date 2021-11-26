@@ -29,28 +29,43 @@ function splitInput(initialTime) {
   }
 
 function Main() {
+  const TIMER_STATES = {
+    INITIAL : 0,
+    STARTED : 1,
+    STOPPED : 2,
+    FINISHED : 3
+  }
+
   const [totalSeconds, setTotalSeconds] = useState();
-  // console.log("[main] total seconds", totalSeconds)
   const [initialTime, setInitialTime] = useState(500);
-  const [isTiming, setIsTiming] = useState(false);
   const [intervalID, setIntervalID] = useState()
+  const [timerState, setTimerState] = useState(TIMER_STATES["INITIAL"])
 
   useEffect(() => {
-    if (isTiming && !intervalID) {
+    if (timerState === TIMER_STATES["STARTED"] && !intervalID) {
       console.log("Internal started.");
-     const intervalID =  setInterval(decrementTotalSeconds, 1000);
-     setIntervalID(intervalID)
+      const intervalID =  setInterval(decrementTotalSeconds, 1000);
+      setIntervalID(intervalID)
     }
-  }, [isTiming, intervalID]);
+  }, [timerState, intervalID]);
 
   function startTimer() {
-    setIsTiming(true);
+    console.log('[startTimer] timer started')
     const calculated = calculateSeconds(initialTime);
+    //if tot seconds != init time in seconds > timer has been already run
+    if (timerState === TIMER_STATES["STOPPED"]) {
+      // setIsTiming(true);
+      setTimerState(TIMER_STATES["STARTED"])
+      return
+    }
+    // setIsTiming(true);    
+    setTimerState(TIMER_STATES["STARTED"])
     setTotalSeconds(calculated);
   }
 
   function stopTimer() {
-    setIsTiming(false);
+    // setIsTiming(false);
+    setTimerState(TIMER_STATES["STOPPED"])
     clearInterval(intervalID)
     setIntervalID(undefined)
   }
@@ -63,17 +78,18 @@ function Main() {
   }
 
   function resetTimer() {
-      console.log("initial time", initialTime)
+    console.log("[resetTimer] initial time", initialTime)
+    // setIsTiming(false);
+    setTimerState(TIMER_STATES["STOPPED"])
+    clearInterval(intervalID)
+    setIntervalID(undefined)
     const initialTimeInSeconds = calculateSeconds(initialTime)
     setTotalSeconds(initialTimeInSeconds)
-    resetTimer();
   }
 
   function handleChange(event) {
     setInitialTime(event.target.value);
   }
-
-
 
   function displayTime() {
     let formatTime = totalSeconds;
@@ -86,7 +102,7 @@ function Main() {
       formatTime -= 3600;
     }
 
-    while (formatTime > 60) {
+    while (formatTime >= 60) {
       showMin += 1;
       formatTime -= 60;
     }
@@ -115,8 +131,8 @@ function Main() {
           {formattedTime}
         </div>
       )}
-      {!isTiming && <button onClick={startTimer}>Start</button>}
-      {isTiming && <button onClick={stopTimer}>Stop</button>}
+      {(timerState === TIMER_STATES["INITIAL"] || timerState === TIMER_STATES["STOPPED"]) && <button onClick={startTimer}>Start</button>}
+      {timerState === TIMER_STATES["STARTED"] && <button onClick={stopTimer}>Stop</button>}
       <button onClick={resetTimer}>Reset</button>
     </div>
   );
