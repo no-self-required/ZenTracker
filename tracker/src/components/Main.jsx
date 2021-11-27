@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 //add rendering logic to only show the right amount of time. ex: if there are 0hours, dont display
-
+// add logic for finished timer (0seconds)
 function splitInput(initialTime) {
     const parsedTimer = parseInt(initialTime);
     const arr = Array.from(parsedTimer.toString()).map(Number);
