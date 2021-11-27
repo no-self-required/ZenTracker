@@ -117,6 +117,7 @@ function Main() {
   //disable reset button if timer is not running
   //if timer is running, clicking timer will enter edit timer state
   
+  //fix css
   const formattedTime = displayTime();
   return (
     <div>
