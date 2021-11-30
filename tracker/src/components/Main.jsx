@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import "../styling/main.scss";
 //add rendering logic to only show the right amount of time. ex: if there are 0hours, dont display
 //add logic for finished timer (0seconds)
 
@@ -30,12 +30,14 @@ function calculateSeconds(initialTime) {
 }
 
 //when timer hits 0, sound alarm, and switch button to "OK" that stops alarm.
+
 function Main() {
   const TIMER_STATES = {
     INITIAL: 0,
     STARTED: 1,
     STOPPED: 2,
-    FINISHED: 3,
+    EDIT: 3,
+    FINISHED: 4
   };
 
   const [totalSeconds, setTotalSeconds] = useState();
@@ -69,14 +71,17 @@ function Main() {
     setIntervalID(undefined);
   }
 
-  function stopAlarm() {
+  function stopAlarm() {}
 
-  }
+  //click on timer> enter edit state> pause timer
 
-  function editTimerState() {
+  const editTimerState = function getFocus() {
+    if(timerState === TIMER_STATES["STARTED"]) {
+      document.getElementById("timer").focus();
+    }
     
   }
-
+  
   function decrementTotalSeconds() {
     setTotalSeconds((prevSeconds) => {
       if (prevSeconds === 0) {
@@ -89,7 +94,7 @@ function Main() {
 
   function resetTimer() {
     console.log("[resetTimer] initial time", initialTime);
-    setTimerState(TIMER_STATES["STOPPED"]);
+    setTimerState(TIMER_STATES["INITIAL"]);
     clearInterval(intervalID);
     setIntervalID(undefined);
     const initialTimeInSeconds = calculateSeconds(initialTime);
@@ -130,18 +135,21 @@ function Main() {
   //disable reset button if timer is not running
   //if timer is running, clicking timer will enter edit timer state
 
+  //show formatted time on launch
   const formattedTime = displayTime();
   return (
-    <div>
-      <input
-        type="text"
-        id="timer"
-        name="timer"
-        maxLength="6"
-        onClick={editTimerState}
-        onChange={handleChange}
-      ></input>
-      {totalSeconds && <div>{formattedTime}</div>}
+    <div className="timer-container">
+      {(timerState === TIMER_STATES["INITIAL"] ||
+        timerState === TIMER_STATES["STOPPED"]) && (
+        <input
+          type="text"
+          id="timer"
+          name="timer"
+          maxLength="6"
+          onChange={handleChange}
+        ></input>
+      )}
+      {totalSeconds && <div onClick={editTimerState()}>{formattedTime}</div>}
       {(timerState === TIMER_STATES["INITIAL"] ||
         timerState === TIMER_STATES["STOPPED"]) && (
         <button onClick={startTimer}>Start</button>
@@ -150,7 +158,7 @@ function Main() {
         <button onClick={stopTimer}>Stop</button>
       )}
       {timerState === TIMER_STATES["FINISHED"] && (
-        <button onClick={stopAlarm}>Finished</button>
+        <button onClick={stopAlarm}>Ok</button>
       )}
       <button onClick={resetTimer}>Reset</button>
     </div>
