@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 
 //add rendering logic to only show the right amount of time. ex: if there are 0hours, dont display
-// add logic for finished timer (0seconds)
+//add logic for finished timer (0seconds)
+
 function splitInput(initialTime) {
   const parsedTimer = parseInt(initialTime);
   const arr = Array.from(parsedTimer.toString()).map(Number);
@@ -28,6 +29,7 @@ function calculateSeconds(initialTime) {
   return calculatedTotalSeconds;
 }
 
+//when timer hits 0, sound alarm, and switch button to "OK" that stops alarm.
 function Main() {
   const TIMER_STATES = {
     INITIAL: 0,
@@ -67,9 +69,20 @@ function Main() {
     setIntervalID(undefined);
   }
 
+  function stopAlarm() {
+
+  }
+
+  function editTimerState() {
+    
+  }
+
   function decrementTotalSeconds() {
     setTotalSeconds((prevSeconds) => {
-      console.log({ prevSeconds });
+      if (prevSeconds === 0) {
+        setTimerState(TIMER_STATES["FINISHED"]);
+        return prevSeconds;
+      }
       return prevSeconds - 1;
     });
   }
@@ -112,12 +125,11 @@ function Main() {
     console.log("formatted time", formatted);
     return formatted;
   }
-  
+
   //add rendering logic: show initial timer, on click: edit timer
   //disable reset button if timer is not running
   //if timer is running, clicking timer will enter edit timer state
-  
-  //fix css
+
   const formattedTime = displayTime();
   return (
     <div>
@@ -126,6 +138,7 @@ function Main() {
         id="timer"
         name="timer"
         maxLength="6"
+        onClick={editTimerState}
         onChange={handleChange}
       ></input>
       {totalSeconds && <div>{formattedTime}</div>}
@@ -135,6 +148,9 @@ function Main() {
       )}
       {timerState === TIMER_STATES["STARTED"] && (
         <button onClick={stopTimer}>Stop</button>
+      )}
+      {timerState === TIMER_STATES["FINISHED"] && (
+        <button onClick={stopAlarm}>Finished</button>
       )}
       <button onClick={resetTimer}>Reset</button>
     </div>
