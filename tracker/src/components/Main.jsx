@@ -40,7 +40,7 @@ function Main() {
     FINISHED: 4
   };
 
-  const [totalSeconds, setTotalSeconds] = useState();
+  const [totalSeconds, setTotalSeconds] = useState(300);
   const [initialTime, setInitialTime] = useState(500);
   const [intervalID, setIntervalID] = useState();
   const [timerState, setTimerState] = useState(TIMER_STATES["INITIAL"]);
@@ -54,6 +54,9 @@ function Main() {
   }, [timerState, intervalID]);
 
   function startTimer() {
+
+    //if initial time has already started
+
     console.log("[startTimer] timer started");
     const calculated = calculateSeconds(initialTime);
     //if tot seconds != init time in seconds > timer has been already run
@@ -75,11 +78,10 @@ function Main() {
 
   //click on timer> enter edit state> pause timer
 
-  const editTimerState = function getFocus() {
-    if(timerState === TIMER_STATES["STARTED"]) {
-      document.getElementById("timer").focus();
-    }
-    
+  function editTimerState() {
+    setTimerState(TIMER_STATES["EDIT"]);
+    document.getElementById("timer").focus();  
+    stopTimer();
   }
   
   function decrementTotalSeconds() {
@@ -133,14 +135,15 @@ function Main() {
 
   //add rendering logic: show initial timer, on click: edit timer
   //disable reset button if timer is not running
+
   //if timer is running, clicking timer will enter edit timer state
 
-  //show formatted time on launch
+  //if timer is clicked, pause and hide timer and show timer input. AS OPPOSED to hiding input / changing focus to input
+
   const formattedTime = displayTime();
   return (
     <div className="timer-container">
-      {(timerState === TIMER_STATES["INITIAL"] ||
-        timerState === TIMER_STATES["STOPPED"]) && (
+      {
         <input
           type="text"
           id="timer"
@@ -148,8 +151,8 @@ function Main() {
           maxLength="6"
           onChange={handleChange}
         ></input>
-      )}
-      {totalSeconds && <div onClick={editTimerState()}>{formattedTime}</div>}
+      }
+      {totalSeconds && <div onClick={editTimerState}>{formattedTime}</div>}
       {(timerState === TIMER_STATES["INITIAL"] ||
         timerState === TIMER_STATES["STOPPED"]) && (
         <button onClick={startTimer}>Start</button>
