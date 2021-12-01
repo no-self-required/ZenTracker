@@ -79,9 +79,9 @@ function Main() {
   //click on timer> enter edit state> pause timer
 
   function editTimerState() {
-    setTimerState(TIMER_STATES["EDIT"]);
-    document.getElementById("timer").focus();  
     stopTimer();
+    document.getElementById("timer").focus();  
+
   }
   
   function decrementTotalSeconds() {
