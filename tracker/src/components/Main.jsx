@@ -64,10 +64,17 @@ function Main() {
     // const postCalculated = totalSeconds
     //if initial time has already started
     if (timerState === TIMER_STATES["EDIT"]) {
+      if (totalSeconds < calculated) {
+        setTimerState(TIMER_STATES["STARTED"]);
+        setTotalSeconds(totalSeconds); //start from current timer
+        return
+      } else {
+        setTimerState(TIMER_STATES["STARTED"]);
+        setTotalSeconds(calculated); //start from initial timer / new input
+        return;
+      }
+     
 
-      setTimerState(TIMER_STATES["STARTED"]);
-      setTotalSeconds(calculated);
-      return;
     } else if (timerState === TIMER_STATES["STOPPED"]) {
       setTimerState(TIMER_STATES["STARTED"]);
       return;
