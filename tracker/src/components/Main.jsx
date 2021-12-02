@@ -54,7 +54,8 @@ function Main() {
 
   //start from default || start from stop || start from edit 
 
-  //RESET> EDIT> start with new intial time> works
+  //RESET> EDIT> start with new intial time> works ******
+  //Need to figure out logic to start timer from new initial state
 
   function startTimer() {
     const calculated = calculateSeconds(initialTime);
