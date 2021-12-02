@@ -31,8 +31,6 @@ function calculateSeconds(initialTime) {
 
 //when timer hits 0, sound alarm, and switch button to "OK" that stops alarm.
 
-
-
 function Main() {
   const TIMER_STATES = {
     INITIAL: 0,
@@ -49,7 +47,6 @@ function Main() {
 
   useEffect(() => {
     if (timerState === TIMER_STATES["STARTED"] && !intervalID) {
-      console.log("Internal started.");
       const intervalID = setInterval(decrementTotalSeconds, 1000);
       setIntervalID(intervalID);
     }
@@ -57,34 +54,39 @@ function Main() {
 
   //start from default || start from stop || start from edit 
 
-  //current bug: entering edit state without entering timer input will start from initial time
+  //RESET> EDIT> start with new intial time> works
 
   function startTimer() {
     const calculated = calculateSeconds(initialTime);
-    // const postCalculated = totalSeconds
     //if initial time has already started
     if (timerState === TIMER_STATES["EDIT"]) {
+      console.log("START FROM EDIT STATE");
+      //if totalSeconds < calculated (initial time in seconds) : then start from current timer 
       if (totalSeconds < calculated) {
+        setTotalSeconds(totalSeconds);
         setTimerState(TIMER_STATES["STARTED"]);
-        setTotalSeconds(totalSeconds); //start from current timer
+         //start from current timer
         return
       } else {
+        setTotalSeconds(calculated);
+        // setTimerState(TIMER_STATES["INITIAL"]);
         setTimerState(TIMER_STATES["STARTED"]);
-        setTotalSeconds(calculated); //start from initial timer / new input
+         //start from initial timer / new input
         return;
       }
-     
-
     } else if (timerState === TIMER_STATES["STOPPED"]) {
+      console.log("START FROM STOPPED STATE")
       setTimerState(TIMER_STATES["STARTED"]);
       return;
     } else if (timerState === TIMER_STATES["INITIAL"]) {
+      console.log("START FROM INITIAL STATE")
       setTimerState(TIMER_STATES["STARTED"]);
       setTotalSeconds(calculated);
     }
   }
 
   function stopTimer() {
+    console.log("ENTER STOP STATE")
     setTimerState(TIMER_STATES["STOPPED"]);
     clearInterval(intervalID);
     setIntervalID(undefined);
@@ -95,6 +97,7 @@ function Main() {
   //click on timer> enter edit state> pause timer
 
   function editTimerState() {
+    console.log("ENTER EDIT STATE")
     setTimerState(TIMER_STATES["EDIT"]);
     clearInterval(intervalID);
     setIntervalID(undefined);
@@ -112,6 +115,7 @@ function Main() {
 
   function resetTimer() {
     console.log("[resetTimer] initial time", initialTime);
+    console.log("ENTER INITIAL STATE");
     setTimerState(TIMER_STATES["INITIAL"]);
     clearInterval(intervalID);
     setIntervalID(undefined);
@@ -145,7 +149,6 @@ function Main() {
     formatted.push(showHours);
     formatted.push(showMin);
     formatted.push(showSec);
-    console.log("formatted time", formatted);
     return formatted;
   }
 
