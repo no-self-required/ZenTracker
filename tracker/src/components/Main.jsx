@@ -54,8 +54,8 @@ function Main() {
 
   //start from default || start from stop || start from edit 
 
-  //RESET> EDIT> start with new intial time> works ******
-  //Need to figure out logic to start timer from new initial state
+  //RESET> EDIT> start with new intial time IF NEW INPUT IS LESS THAN CURRENT TIMER > works ******
+  //Need to figure out logic to start timer from new initial state > AFTER timer has been started
 
   function startTimer() {
     const calculated = calculateSeconds(initialTime);
@@ -63,12 +63,13 @@ function Main() {
     if (timerState === TIMER_STATES["EDIT"]) {
       console.log("START FROM EDIT STATE");
       //if totalSeconds < calculated (initial time in seconds) : then start from current timer 
-      if (totalSeconds < calculated) {
-        setTotalSeconds(totalSeconds);
-        setTimerState(TIMER_STATES["STARTED"]);
-         //start from current timer
+      if (totalSeconds <= calculated) {
+        setTotalSeconds(totalSeconds); //start from current timer
+        setTimerState(TIMER_STATES["STARTED"]);         
         return
       } else {
+        //logic to start from new initial input
+        console.log("START FROM EDIT WITH NEW INITIAL INPUT")
         setTotalSeconds(calculated);
         // setTimerState(TIMER_STATES["INITIAL"]);
         setTimerState(TIMER_STATES["STARTED"]);
