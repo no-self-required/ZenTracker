@@ -63,11 +63,11 @@ function Main() {
     if (timerState === TIMER_STATES["EDIT"]) {
       console.log("START FROM EDIT STATE");
       //if totalSeconds < calculated (initial time in seconds) : then start from current timer 
-      if (totalSeconds <= calculated) {
-        setTotalSeconds(totalSeconds); //start from current timer
-        setTimerState(TIMER_STATES["STARTED"]);         
-        return
-      } else {
+      // if (totalSeconds <= calculated) {
+      //   setTotalSeconds(totalSeconds); //start from current timer
+      //   setTimerState(TIMER_STATES["STARTED"]);         
+      //   return
+      // } else {
         //logic to start from new initial input
         console.log("START FROM EDIT WITH NEW INITIAL INPUT")
         setTotalSeconds(calculated);
@@ -75,7 +75,7 @@ function Main() {
         setTimerState(TIMER_STATES["STARTED"]);
          //start from initial timer / new input
         return;
-      }
+      // }
     } else if (timerState === TIMER_STATES["STOPPED"]) {
       console.log("START FROM STOPPED STATE")
       setTimerState(TIMER_STATES["STARTED"]);
