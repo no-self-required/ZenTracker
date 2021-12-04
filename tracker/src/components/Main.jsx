@@ -64,13 +64,13 @@ function Main() {
       console.log("START FROM EDIT STATE");
       // if totalSeconds less than calculated (initial time in seconds) : then start from current timer 
       // this logic doesnt make sense because it doesnt account for new initial timer > current timer
-      // need this logic to run if no new initial input
-      if (totalSeconds < calculated) { //check this logic out
+      // need this logic to run if NO NEW initial input
+      // if (totalSeconds < calculated) 
+      if (initialTime === initialTime.prevState) { //check this logic out
         setTotalSeconds(totalSeconds); //start from current timer
         setTimerState(TIMER_STATES["STARTED"]);         
         return
       } else { //need logic to account for: ANY new initial input > start from that input
-
         //logic to start from new initial input
         console.log("START FROM EDIT WITH NEW INITIAL INPUT")
         setTotalSeconds(calculated);
@@ -104,6 +104,7 @@ function Main() {
   function editTimerState() {
     console.log("ENTER EDIT STATE")
     setTimerState(TIMER_STATES["EDIT"]);
+    console.log("initial time from EDIT STATE", initialTime)
     clearInterval(intervalID);
     setIntervalID(undefined);
   }
@@ -127,9 +128,15 @@ function Main() {
     const initialTimeInSeconds = calculateSeconds(initialTime);
     setTotalSeconds(initialTimeInSeconds);
   }
-
+  
+  //if input is an empty string, continue from current initial time
+  //input value should reflect current timer when clicked
   function handleChange(event) {
+    // if (event.target.value === "") {
+    //   setInitialTime(initialTime)
+    // }
     setInitialTime(event.target.value);
+    console.log("handlechange check", initialTime)
   }
 
   function displayTime() {
