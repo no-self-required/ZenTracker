@@ -29,7 +29,7 @@ function calculateSeconds(initialTime) {
   return calculatedTotalSeconds;
 }
 
-//when timer hits 0, sound alarm, and switch button to "OK" that stops alarm.
+//todo: when timer hits 0, sound alarm, and switch button to "OK" that stops alarm.
 
 function Main() {
   const TIMER_STATES = {
@@ -41,10 +41,7 @@ function Main() {
   };
 
   const [totalSeconds, setTotalSeconds] = useState(300);
-  const [initialTime, setInitialTime] = useState({
-    current: 500,
-    prevTime: 500
-  });
+  const [initialTime, setInitialTime] = useState(500);
   const [intervalID, setIntervalID] = useState();
   const [timerState, setTimerState] = useState(TIMER_STATES["INITIAL"]);
 
@@ -55,34 +52,21 @@ function Main() {
     }
   }, [timerState, intervalID]);
 
-  //start from default || start from stop || start from edit 
-
-  //RESET> EDIT> start with new intial time IF NEW INPUT IS LESS THAN CURRENT TIMER > works ******
-  //Need to figure out logic to start timer from new initial state > AFTER timer has been started
-
   function startTimer() {
-    const calculated = calculateSeconds(initialTime.current);
+    const calculated = calculateSeconds(initialTime);
     //if initial time has already started
     if (timerState === TIMER_STATES["EDIT"]) {
       console.log("START FROM EDIT STATE");
-      // if totalSeconds less than calculated (initial time in seconds) : then start from current timer 
-      // this logic doesnt make sense because it doesnt account for new initial timer > current timer
       // need this logic to run if NO NEW initial input
-      // if (totalSeconds < calculated) 
-
-
-      if (initialTime.current === initialTime.prevTime) { //check this logic out
-        console.log("Start from current initial time")
+      if (initialTime === initialTime.prevState) { //check this logic out
         setTotalSeconds(totalSeconds); //start from current timer
         setTimerState(TIMER_STATES["STARTED"]);         
         return
-      } else { //need logic to account for: ANY new initial input > start from that input
+      } else { 
         //logic to start from new initial input
         console.log("START FROM EDIT WITH NEW INITIAL INPUT")
         setTotalSeconds(calculated);
-        // setTimerState(TIMER_STATES["INITIAL"]);
         setTimerState(TIMER_STATES["STARTED"]);
-         //start from initial timer / new input
         return;
       }
     } else if (timerState === TIMER_STATES["STOPPED"]) {
@@ -107,11 +91,8 @@ function Main() {
 
   function editTimerState() {
     console.log("ENTER EDIT STATE")
-    console.log("INIT CURRENT", initialTime.current)
-    console.log("INIT PREV", initialTime.prevTime)
     setTimerState(TIMER_STATES["EDIT"]);
-    console.log("initial time from EDIT STATE", initialTime.current)
-
+    console.log("initial time from EDIT STATE", initialTime)
     clearInterval(intervalID);
     setIntervalID(undefined);
   }
@@ -127,32 +108,30 @@ function Main() {
   }
 
   function resetTimer() {
-    console.log("[resetTimer] initial time", initialTime.current);
+    console.log("[resetTimer] initial time", initialTime);
     console.log("ENTER INITIAL STATE");
     setTimerState(TIMER_STATES["INITIAL"]);
     clearInterval(intervalID);
     setIntervalID(undefined);
-    const initialTimeInSeconds = calculateSeconds(initialTime.current);
+    const initialTimeInSeconds = calculateSeconds(initialTime);
     setTotalSeconds(initialTimeInSeconds);
   }
   
   
-  //if input is an empty string, continue from current initial time *Dec 4*
-  //input value should reflect current timer when clicked
-  //need to manipulate input value to show current time 
-  //Need to only accept numbers for input
+  
+   
+  // to do: input value should reflect current timer when clicked
+  // if input is an empty string, continue from current initial time
+  // need to manipulate input value to show current time 
+  // Need to only accept numbers for input
 
   function handleChange(event) {
-    // console.log("evt target value from handleChange", event.target.value)
     // if (event.target.value === "") {
     //   setInitialTime(initialTime)
-    // } else {
-    setInitialTime((prevInitialTime) => {
-      return {
-        current: event.target.value,
-        prevTime: prevInitialTime.current
-      }
-    })
+    // }
+    
+    setInitialTime(event.target.value);
+    
     console.log("handlechange check", initialTime)
   }
 
@@ -183,8 +162,6 @@ function Main() {
 
   //add rendering logic: show initial timer, on click: edit timer
   //disable reset button if timer is not running
-
-  //if timer is running, clicking timer will enter edit timer state
 
   //if timer is clicked, pause and hide timer and show timer input. AS OPPOSED to hiding input / changing focus to input
 
