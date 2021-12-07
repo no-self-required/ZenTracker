@@ -42,6 +42,7 @@ function Main() {
 
   const [totalSeconds, setTotalSeconds] = useState(300);
   const [initialTime, setInitialTime] = useState(500);
+  const [prevTime, setPrevTime] = useState();
   const [intervalID, setIntervalID] = useState();
   const [timerState, setTimerState] = useState(TIMER_STATES["INITIAL"]);
 
@@ -54,11 +55,12 @@ function Main() {
 
   function startTimer() {
     const calculated = calculateSeconds(initialTime);
+    setPrevTime(initialTime)
     //if initial time has already started
     if (timerState === TIMER_STATES["EDIT"]) {
       console.log("START FROM EDIT STATE");
       // need this logic to run if NO NEW initial input
-      if (initialTime === initialTime.prevState) {
+      if (prevTime === initialTime) {
         //check this logic out
         setTotalSeconds(totalSeconds); //start from current timer
         setTimerState(TIMER_STATES["STARTED"]);
