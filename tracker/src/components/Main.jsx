@@ -165,6 +165,7 @@ function Main() {
 
   //if timer is clicked, pause and hide timer and show timer input. AS OPPOSED to hiding input / changing focus to input
 
+  //change input to onSubmit to enable enter to start
   const formattedTime = displayTime();
   return (
     <div className="container">
