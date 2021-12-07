@@ -1,8 +1,12 @@
-.timer-container{
+.container {
   display: flex;
   justify-content: center;
-  flex-direction: column;
-  width: 15em;
-  height: 10em;
-  margin-left: 50em;
+  .timer-container{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 15em;
+    height: 10em;
+  }
 }
+
