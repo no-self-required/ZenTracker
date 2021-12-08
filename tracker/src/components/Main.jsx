@@ -55,7 +55,7 @@ function Main() {
 
   function startTimer() {
     const calculated = calculateSeconds(initialTime);
-    setPrevTime(initialTime)
+    setPrevTime(initialTime);
     //if initial time has already started
     if (timerState === TIMER_STATES["EDIT"]) {
       console.log("START FROM EDIT STATE");
@@ -179,19 +179,29 @@ function Main() {
             onChange={handleChange}
           ></input>
         )}
-        {totalSeconds && <div onClick={editTimerState}>{formattedTime}</div>}
-        {(timerState === TIMER_STATES["INITIAL"] ||
-          timerState === TIMER_STATES["STOPPED"] ||
-          timerState === TIMER_STATES["EDIT"]) && (
-          <button onClick={startTimer}>Start</button>
-        )}
-        {timerState === TIMER_STATES["STARTED"] && (
-          <button onClick={stopTimer}>Stop</button>
-        )}
-        {timerState === TIMER_STATES["FINISHED"] && (
-          <button onClick={stopAlarm}>Ok</button>
-        )}
-        <button onClick={resetTimer}>Reset</button>
+        <div>
+          {totalSeconds && <div onClick={editTimerState}>{formattedTime}</div>}
+          {(timerState === TIMER_STATES["INITIAL"] ||
+            timerState === TIMER_STATES["STOPPED"] ||
+            timerState === TIMER_STATES["EDIT"]) && (
+            <button id="start-button" onClick={startTimer}>
+              Start
+            </button>
+          )}
+          {timerState === TIMER_STATES["STARTED"] && (
+            <button id="stop-button" onClick={stopTimer}>
+              Stop
+            </button>
+          )}
+          {timerState === TIMER_STATES["FINISHED"] && (
+            <button id="ok-button" onClick={stopAlarm}>
+              Ok
+            </button>
+          )}
+          <button id="reset-button" onClick={resetTimer}>
+            Reset
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -199,7 +209,8 @@ function Main() {
 
 export default Main;
 
-{/* <form onSubmit={handleChange}>
+{
+  /* <form onSubmit={handleChange}>
 <input
   type="text"
   id="timer"
@@ -207,4 +218,5 @@ export default Main;
   maxLength="6"
 ></input>
 <input type="submit" value="Start" />
-</form> */}
+</form> */
+}

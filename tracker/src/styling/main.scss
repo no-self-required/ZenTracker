@@ -1,12 +1,19 @@
 .container {
   display: flex;
   justify-content: center;
-  .timer-container{
+
+  .timer-container {
     display: flex;
     justify-content: center;
     flex-direction: column;
     width: 15em;
     height: 10em;
+
+    #start-button,
+    #stop-button,
+    #ok-button,
+    #reset-button {
+      width: 5em;
+    }
   }
 }
-
