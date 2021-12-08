@@ -128,8 +128,9 @@ function Main() {
   // Need to only accept numbers for input
 
   const inputId = document.getElementById("timer");
+
   if (document.getElementById("timer")) {
-    inputId.addEventListener("keydown", function onEvent(e) {
+    inputId.addEventListener("keyup", function onEvent(e) {
       if (e.key === "Enter") {
         startTimer();
       }
@@ -138,6 +139,9 @@ function Main() {
   
 
   function handleChange(event) {
+    // if (event.target.value === "") {
+    //   setInitialTime()
+    // }
     setInitialTime(event.target.value);
     console.log("handlechange check", initialTime);
   }
@@ -172,7 +176,7 @@ function Main() {
 
   //if timer is clicked, pause and hide timer and show timer input. AS OPPOSED to hiding input / changing focus to input
 
-  //change input to onSubmit to enable enter to start
+  //change timer input to proper display and to show current time by default
   
   return (
     <div className="container">
@@ -216,14 +220,3 @@ function Main() {
 
 export default Main;
 
-{
-  /* <form onSubmit={handleChange}>
-<input
-  type="text"
-  id="timer"
-  name="timer"
-  maxLength="6"
-></input>
-<input type="submit" value="Start" />
-</form> */
-}
