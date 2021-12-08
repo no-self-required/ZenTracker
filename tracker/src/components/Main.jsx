@@ -46,6 +46,8 @@ function Main() {
   const [intervalID, setIntervalID] = useState();
   const [timerState, setTimerState] = useState(TIMER_STATES["INITIAL"]);
 
+  const formattedTime = displayTime();
+
   useEffect(() => {
     if (timerState === TIMER_STATES["STARTED"] && !intervalID) {
       const intervalID = setInterval(decrementTotalSeconds, 1000);
@@ -125,13 +127,18 @@ function Main() {
   // need to manipulate input value to show current time
   // Need to only accept numbers for input
 
+  const inputId = document.getElementById("timer");
+  if (document.getElementById("timer")) {
+    inputId.addEventListener("keydown", function onEvent(e) {
+      if (e.key === "Enter") {
+        startTimer();
+      }
+    });
+  }
+  
+
   function handleChange(event) {
-    // if (event.target.value === "") {
-    //   setInitialTime(initialTime)
-    // }
-
     setInitialTime(event.target.value);
-
     console.log("handlechange check", initialTime);
   }
 
@@ -166,7 +173,7 @@ function Main() {
   //if timer is clicked, pause and hide timer and show timer input. AS OPPOSED to hiding input / changing focus to input
 
   //change input to onSubmit to enable enter to start
-  const formattedTime = displayTime();
+  
   return (
     <div className="container">
       <div className="timer-container">
