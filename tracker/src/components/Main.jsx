@@ -122,7 +122,6 @@ function Main() {
     setTotalSeconds(initialTimeInSeconds);
   }
 
-  // to do: input value should reflect current timer when clicked
   // if input is an empty string, continue from current initial time
   // need to manipulate input value to show current time
   // Need to only accept numbers for input
@@ -139,9 +138,6 @@ function Main() {
   
 
   function handleChange(event) {
-    // if (event.target.value === "") {
-    //   setInitialTime()
-    // }
     setInitialTime(event.target.value);
     console.log("handlechange check", initialTime);
   }
