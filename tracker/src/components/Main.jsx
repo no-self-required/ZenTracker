@@ -135,7 +135,7 @@ function Main() {
       }
     });
   }
-  
+
   function handleChange(event) {
     setInitialTime(event.target.value);
     console.log("handlechange check", initialTime);
@@ -161,19 +161,20 @@ function Main() {
     if (formatTime < 60) {
       showSec = formatTime;
     }
-    
+
     if (showHours !== 0) {
-      formatted.push(showHours + "h");
+      formatted.push(showHours + "h ");
     }
     if (showMin !== 0) {
-      formatted.push(showMin + "m" );
+      formatted.push(showMin + "m ");
     }
     if (showSec !== 0) {
-      formatted.push(showSec + "s" );
+      formatted.push(showSec + "s");
     }
+
     // formatted.push(showMin);
     // formatted.push(showSec);
-    
+
     // for (const ele of formatted) {
     //   if (ele === 0) {
     //     ele === undefined
@@ -183,13 +184,27 @@ function Main() {
     return formatted;
   }
 
+  //work on removing letters from formattedTime...?
+  //or only iterate over intergers/numbers
+  function formattedToInput() {
+    // let converted = [] 
+    // for (const ele of formattedTime) {
+    //   if (Number.isInteger(ele)) {
+    //     converted.push(ele)
+    //   }
+    // }
+    let newInput = formattedTime.join('')
+    return newInput
+  }
+
   //add rendering logic: show initial timer, on click: edit timer
   //disable reset button if timer is not running
 
   //if timer is clicked, pause and hide timer and show timer input. AS OPPOSED to hiding input / changing focus to input
 
   //change timer input to proper display and to show current time by default
-  
+
+  const newInput = formattedToInput();
   return (
     <div className="container">
       <div className="timer-container">
@@ -199,11 +214,16 @@ function Main() {
             id="timer"
             name="timer"
             maxLength="6"
+            value={newInput}
             onChange={handleChange}
           ></input>
         )}
         <div>
-          {totalSeconds && <div id="absolute-timer" onClick={editTimerState}>{formattedTime}</div>}
+          {totalSeconds && (
+            <div id="absolute-timer" onClick={editTimerState}>
+              {formattedTime}
+            </div>
+          )}
           {(timerState === TIMER_STATES["INITIAL"] ||
             timerState === TIMER_STATES["STOPPED"] ||
             timerState === TIMER_STATES["EDIT"]) && (
@@ -231,4 +251,3 @@ function Main() {
 }
 
 export default Main;
-
