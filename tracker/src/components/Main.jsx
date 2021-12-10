@@ -136,7 +136,6 @@ function Main() {
     });
   }
   
-
   function handleChange(event) {
     setInitialTime(event.target.value);
     console.log("handlechange check", initialTime);
@@ -148,6 +147,7 @@ function Main() {
     let showMin = 0;
     let showSec = 0;
     let formatted = [];
+
     while (formatTime >= 3600) {
       showHours += 1;
       formatTime -= 3600;
@@ -161,9 +161,25 @@ function Main() {
     if (formatTime < 60) {
       showSec = formatTime;
     }
-    formatted.push(showHours);
-    formatted.push(showMin);
-    formatted.push(showSec);
+    
+    if (showHours !== 0) {
+      formatted.push(showHours + "h");
+    }
+    if (showMin !== 0) {
+      formatted.push(showMin + "m" );
+    }
+    if (showSec !== 0) {
+      formatted.push(showSec + "s" );
+    }
+    // formatted.push(showMin);
+    // formatted.push(showSec);
+    
+    // for (const ele of formatted) {
+    //   if (ele === 0) {
+    //     ele === undefined
+    //   }
+    // }
+
     return formatted;
   }
 
@@ -187,7 +203,7 @@ function Main() {
           ></input>
         )}
         <div>
-          {totalSeconds && <div onClick={editTimerState}>{formattedTime}</div>}
+          {totalSeconds && <div id="absolute-timer" onClick={editTimerState}>{formattedTime}</div>}
           {(timerState === TIMER_STATES["INITIAL"] ||
             timerState === TIMER_STATES["STOPPED"] ||
             timerState === TIMER_STATES["EDIT"]) && (
