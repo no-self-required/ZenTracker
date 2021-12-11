@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "../styling/main.scss";
+
+//import Hind Madurai font
+
 //add rendering logic to only show the right amount of time. ex: if there are 0hours, dont display
 //add logic for finished timer (0seconds)
 
