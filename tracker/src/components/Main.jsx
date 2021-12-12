@@ -49,8 +49,6 @@ function Main() {
   const [intervalID, setIntervalID] = useState();
   const [timerState, setTimerState] = useState(TIMER_STATES["INITIAL"]);
 
-  const formattedTime = displayTime();
-
   useEffect(() => {
     if (timerState === TIMER_STATES["STARTED"] && !intervalID) {
       const intervalID = setInterval(decrementTotalSeconds, 1000);
@@ -166,14 +164,24 @@ function Main() {
     }
 
     if (showHours !== 0) {
-      formatted.push(showHours + "h ");
+      formatted.push(showHours);
     }
     if (showMin !== 0) {
-      formatted.push(showMin + "m ");
+      formatted.push(showMin);
     }
     if (showSec !== 0) {
-      formatted.push(showSec + "s");
+      formatted.push(showSec);
     }
+
+    // if (showHours !== 0) {
+    //   formatted.push(showHours + "h ");
+    // }
+    // if (showMin !== 0) {
+    //   formatted.push(showMin + "m ");
+    // }
+    // if (showSec !== 0) {
+    //   formatted.push(showSec + "s");
+    // }
 
     // formatted.push(showMin);
     // formatted.push(showSec);
@@ -183,22 +191,21 @@ function Main() {
     //     ele === undefined
     //   }
     // }
-
+    console.log("formatted", formatted)
     return formatted;
   }
 
   //work on removing letters from formattedTime...?
   //or only iterate over intergers/numbers
-  function formattedToInput() {
-    // let converted = [] 
-    // for (const ele of formattedTime) {
-    //   if (Number.isInteger(ele)) {
-    //     converted.push(ele)
-    //   }
-    // }
-    let newInput = formattedTime.join('')
-    return newInput
-  }
+
+  // function formattedToInput() {
+  //   console.log("formattedTime", formattedTime)
+  //   let converted = [] 
+  //   const num1 = formattedTime[0]
+  //   converted.push(num1)
+  //   let newInput = converted.join('')
+  //   return newInput
+  // }
 
   //add rendering logic: show initial timer, on click: edit timer
   //disable reset button if timer is not running
@@ -207,7 +214,11 @@ function Main() {
 
   //change timer input to proper display and to show current time by default
 
-  const newInput = formattedToInput();
+  // let newInput = formattedToInput();
+
+  const formattedTime = displayTime();
+  const newInput = formattedTime.join('')
+
   return (
     <div className="container">
       <div className="timer-container">
@@ -217,7 +228,7 @@ function Main() {
             id="timer"
             name="timer"
             maxLength="6"
-            value={newInput}
+            defaultValue={newInput}
             onChange={handleChange}
           ></input>
         )}
