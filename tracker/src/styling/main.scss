@@ -15,5 +15,13 @@
     #reset-button {
       width: 5em;
     }
+
+    #timer {
+      border: none;
+    }
+
+    #timer:focus {
+      outline: none;
+    }
   }
 }
