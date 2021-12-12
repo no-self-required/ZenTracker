@@ -123,8 +123,6 @@ function Main() {
     setTotalSeconds(initialTimeInSeconds);
   }
 
-  // if input is an empty string, continue from current initial time
-  // need to manipulate input value to show current time
   // Need to only accept numbers for input
 
   const inputId = document.getElementById("timer");
@@ -142,6 +140,7 @@ function Main() {
     console.log("handlechange check", initialTime);
   }
 
+  //display 00's. ex: 2m 00s
   function displayTime() {
     let formatTime = totalSeconds;
     let showHours = 0;
@@ -195,17 +194,6 @@ function Main() {
     return formatted;
   }
 
-  //work on removing letters from formattedTime...?
-  //or only iterate over intergers/numbers
-
-  // function formattedToInput() {
-  //   console.log("formattedTime", formattedTime)
-  //   let converted = [] 
-  //   const num1 = formattedTime[0]
-  //   converted.push(num1)
-  //   let newInput = converted.join('')
-  //   return newInput
-  // }
 
   //add rendering logic: show initial timer, on click: edit timer
   //disable reset button if timer is not running
@@ -213,8 +201,6 @@ function Main() {
   //if timer is clicked, pause and hide timer and show timer input. AS OPPOSED to hiding input / changing focus to input
 
   //change timer input to proper display and to show current time by default
-
-  // let newInput = formattedToInput();
 
   const formattedTime = displayTime();
   const newInput = formattedTime.join('')
