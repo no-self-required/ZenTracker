@@ -20,6 +20,18 @@
       border: none;
     }
 
+    /* Chrome, Safari, Edge, Opera */
+    #timer::-webkit-outer-spin-button,
+    #timer::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    /* Firefox */
+    #timer[type="number"] {
+      -moz-appearance: textfield;
+    }
+    
     #timer:focus {
       outline: none;
     }

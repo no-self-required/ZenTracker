@@ -127,6 +127,9 @@ function Main() {
 
   const inputId = document.getElementById("timer");
 
+  //possibly: if max length, and user inputs additonal number, shift numbers to left. replace first digit with the second.
+  //ex: 12, 42, 53 > 24, 25, 3(6 = new number)
+  
   if (document.getElementById("timer")) {
     inputId.addEventListener("keyup", function onEvent(e) {
       if (e.key === "Enter") {
@@ -205,15 +208,16 @@ function Main() {
   const formattedTime = displayTime();
   const newInput = formattedTime.join('')
 
+  
   return (
     <div className="container">
       <div className="timer-container">
         {timerState === TIMER_STATES["EDIT"] && (
           <input
-            type="text"
+            type="number"
             id="timer"
             name="timer"
-            maxLength="6"
+            onInput={(e) => e.target.value = e.target.value.slice(0, 6)}
             defaultValue={newInput}
             onChange={handleChange}
           ></input>
