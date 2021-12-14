@@ -165,14 +165,36 @@ function Main() {
       showSec = formatTime;
     }
 
+    // (showHours.toString().length === 1)
     if (showHours !== 0) {
-      formatted.push(showHours);
+      if (showHours.toString().length === 1) {
+        formatted.push("0" + showHours)
+        console.log("length === 1 trigger check")
+      } else {
+        formatted.push(showHours);
+      }
+    } else if (showHours === 0) {
+      formatted.push("00")
     }
+
     if (showMin !== 0) {
-      formatted.push(showMin);
+      if (showMin.toString().length === 1) {
+        formatted.push("0" + showMin)
+      } else {
+        formatted.push(showHours);
+      }  
+    } else if (showMin === 0) {
+      formatted.push("00")
     }
+    
     if (showSec !== 0) {
-      formatted.push(showSec);
+      if (showSec.toString().length === 1) {
+        formatted.push("0" + showSec)
+      } else {
+        formatted.push(showSec);
+      }  
+    } else if (showSec === 0) {
+      formatted.push("00")
     }
 
     // if (showHours !== 0) {

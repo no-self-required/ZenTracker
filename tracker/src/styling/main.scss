@@ -20,7 +20,7 @@
       border: none;
     }
 
-    /* Chrome, Safari, Edge, Opera */
+    /* remove number input arrows Chrome, Safari, Edge, Opera */
     #timer::-webkit-outer-spin-button,
     #timer::-webkit-inner-spin-button {
       -webkit-appearance: none;
@@ -31,7 +31,7 @@
     #timer[type="number"] {
       -moz-appearance: textfield;
     }
-    
+
     #timer:focus {
       outline: none;
     }
