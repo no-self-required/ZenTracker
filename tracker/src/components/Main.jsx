@@ -201,8 +201,6 @@ function Main() {
     return formatted;
   }
 
-
-
   //disable reset button if timer is not running
 
   //add rendering logic: show initial timer, on click: edit timer
