@@ -64,7 +64,6 @@ function Main() {
       console.log("START FROM EDIT STATE");
       // need this logic to run if NO NEW initial input
       if (prevTime === initialTime) {
-        //check this logic out
         setTotalSeconds(totalSeconds); //start from current timer
         setTimerState(TIMER_STATES["STARTED"]);
         return;
@@ -123,12 +122,12 @@ function Main() {
     setTotalSeconds(initialTimeInSeconds);
   }
 
-  // Need to only accept numbers for input
-
-  const inputId = document.getElementById("timer");
-
+  
+  //very important for UX. ensures there is never an empty input
   //possibly: if max length, and user inputs additonal number, shift numbers to left. replace first digit with the second.
   //ex: 12, 42, 53 > 24, 25, 3(6 = new number)
+  
+  const inputId = document.getElementById("timer");
   
   if (document.getElementById("timer")) {
     inputId.addEventListener("keyup", function onEvent(e) {
@@ -198,35 +197,16 @@ function Main() {
       formatted.push("00")
     }
 
-    // if (showHours !== 0) {
-    //   formatted.push(showHours + "h ");
-    // }
-    // if (showMin !== 0) {
-    //   formatted.push(showMin + "m ");
-    // }
-    // if (showSec !== 0) {
-    //   formatted.push(showSec + "s");
-    // }
-
-    // formatted.push(showMin);
-    // formatted.push(showSec);
-
-    // for (const ele of formatted) {
-    //   if (ele === 0) {
-    //     ele === undefined
-    //   }
-    // }
     console.log("formatted", formatted)
     return formatted;
   }
 
 
-  //add rendering logic: show initial timer, on click: edit timer
+
   //disable reset button if timer is not running
 
+  //add rendering logic: show initial timer, on click: edit timer
   //if timer is clicked, pause and hide timer and show timer input. AS OPPOSED to hiding input / changing focus to input
-
-  //change timer input to proper display and to show current time by default
 
   const formattedTime = displayTime();
   const newInput = formattedTime.join('')
