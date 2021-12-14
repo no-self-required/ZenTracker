@@ -165,7 +165,8 @@ function Main() {
       showSec = formatTime;
     }
 
-    // (showHours.toString().length === 1)
+    // correct logic for timer input
+    // need to remove unncessary 0's for timer display
     if (showHours !== 0) {
       if (showHours.toString().length === 1) {
         formatted.push("0" + showHours)
