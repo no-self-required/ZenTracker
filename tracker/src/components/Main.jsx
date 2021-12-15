@@ -143,6 +143,14 @@ function Main() {
     console.log("handlechange check", initialTime);
   }
 
+  function handleInput(e) {
+    e.target.value = e.target.value.slice(0, 6)
+    // let inputValue = e.target.value
+    // if (inputValue.length > 6) {
+    //   constinputValue.shift()
+    //   inputValue.push(e.target.value)
+    // }
+  }
   //display 00's. ex: 2m 00s
   function displayTime() {
     let formatTime = totalSeconds;
@@ -219,7 +227,7 @@ function Main() {
             type="number"
             id="timer"
             name="timer"
-            onInput={(e) => e.target.value = e.target.value.slice(0, 6)}
+            onInput={handleInput}
             defaultValue={newInput}
             onChange={handleChange}
           ></input>
