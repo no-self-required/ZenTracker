@@ -127,6 +127,7 @@ function Main() {
   //possibly: if max length, and user inputs additonal number, shift numbers to left. replace first digit with the second.
   //ex: 12, 42, 53 > 24, 25, 3(6 = new number)
   
+  //ex: use shift to remove first element, then push the new latest digit. 
   const inputId = document.getElementById("timer");
   
   if (document.getElementById("timer")) {
