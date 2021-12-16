@@ -126,7 +126,7 @@ function Main() {
   //very important for UX. ensures there is never an empty input
   //possibly: if max length, and user inputs additonal number, shift numbers to left. replace first digit with the second.
   //ex: 12, 42, 53 > 24, 25, 3(6 = new number)
-  
+  // 00's must always show for empty inputs. ex: 00h 05m 21s
   //ex: use shift to remove first element, then push the new latest digit. 
   const inputId = document.getElementById("timer");
   
@@ -139,7 +139,11 @@ function Main() {
   }
 
   function handleChange(event) {
-    setInitialTime(event.target.value);
+    let timerInput = event.target.value
+    // if (timerInput.length > 6) {
+    //   timerInput.substring(1)
+    // }
+    setInitialTime(timerInput);
     console.log("handlechange check", initialTime);
   }
 
@@ -147,11 +151,10 @@ function Main() {
     e.target.value = e.target.value.slice(0, 6)
     // let inputValue = e.target.value
     // if (inputValue.length > 6) {
-    //   constinputValue.shift()
-    //   inputValue.push(e.target.value)
+    //   inputValue.substring(1)
     // }
   }
-  //display 00's. ex: 2m 00s
+  //display necessary 00's. ex: 2m 00s
   function displayTime() {
     let formatTime = totalSeconds;
     let showHours = 0;
