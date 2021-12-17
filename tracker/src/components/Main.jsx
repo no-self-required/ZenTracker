@@ -149,7 +149,7 @@ function Main() {
   }
 
   function handleInput(e) {
-    // e.target.value = e.target.value.slice(0, 6)
+    e.target.value = e.target.value.slice(0, 6)
     // let inputValue = e.target.value
     // if (inputValue.length > 6) {
     //   inputValue.substring(1)
