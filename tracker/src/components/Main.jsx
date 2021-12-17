@@ -138,17 +138,18 @@ function Main() {
     });
   }
 
+  //convert to array > shift and push
   function handleChange(event) {
     let timerInput = event.target.value
-    // if (timerInput.length > 6) {
-    //   timerInput.substring(1)
-    // }
+    if (timerInput.length > 6) {
+      let x = timerInput.substring(1)
+    }
+    console.log("timerInput length", timerInput)
     setInitialTime(timerInput);
-    console.log("handlechange check", initialTime);
   }
 
   function handleInput(e) {
-    e.target.value = e.target.value.slice(0, 6)
+    // e.target.value = e.target.value.slice(0, 6)
     // let inputValue = e.target.value
     // if (inputValue.length > 6) {
     //   inputValue.substring(1)
