@@ -137,19 +137,22 @@ function Main() {
       }
     });
   }
-  //test
+
   //convert to array > shift and push
+  //CHANGE VALUE
+  //timerInput overflows correctly. just need to display and change actual value
   function handleChange(event) {
     let timerInput = event.target.value
-    if (timerInput.length > 6) {
-      let x = timerInput.substring(1)
+    while (timerInput.length > 6) {
+      timerInput = timerInput.substring(1)
+      console.log("test", timerInput)
     }
-    console.log("timerInput length", timerInput)
     setInitialTime(timerInput);
+    return timerInput
   }
 
   function handleInput(e) {
-    e.target.value = e.target.value.slice(0, 6)
+    // e.target.value = e.target.value.slice(0, 6)
     // let inputValue = e.target.value
     // if (inputValue.length > 6) {
     //   inputValue.substring(1)
