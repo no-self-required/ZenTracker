@@ -141,18 +141,18 @@ function Main() {
   //convert to array > shift and push
   //CHANGE VALUE
   //timerInput overflows correctly. just need to display and change actual value
+  //use setState to change value
   function handleChange(event) {
     let timerInput = event.target.value
     while (timerInput.length > 6) {
       timerInput = timerInput.substring(1)
-      console.log("test", timerInput)
+      console.log("check timerInput", timerInput)
     }
     setInitialTime(timerInput);
-    return timerInput
   }
 
   function handleInput(e) {
-    // e.target.value = e.target.value.slice(0, 6)
+    // e.target.value = e.target.value.slice(0
     // let inputValue = e.target.value
     // if (inputValue.length > 6) {
     //   inputValue.substring(1)
