@@ -139,9 +139,9 @@ function Main() {
     });
   }
 
-  //convert to array > shift and push
-  //CHANGE VALUE
-  //timerInput overflows correctly. just need to display and change actual value
+  //input overflow working correctly
+  //default value not wokring correctly
+  //when timer is started, then enter edit state, default value goes to initial timer rather than current timer.
   //use setState to change value
   function handleChange(event) {
     let timerInput = event.target.value
