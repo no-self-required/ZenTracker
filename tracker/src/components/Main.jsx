@@ -48,6 +48,7 @@ function Main() {
   const [prevTime, setPrevTime] = useState();
   const [intervalID, setIntervalID] = useState();
   const [timerState, setTimerState] = useState(TIMER_STATES["INITIAL"]);
+  const [inputTimer, setInputTimer] = useState();
 
   useEffect(() => {
     if (timerState === TIMER_STATES["STARTED"] && !intervalID) {
@@ -148,6 +149,7 @@ function Main() {
       timerInput = timerInput.substring(1)
       console.log("check timerInput", timerInput)
     }
+    setInputTimer(timerInput);
     setInitialTime(timerInput);
   }
 
@@ -236,6 +238,7 @@ function Main() {
             name="timer"
             onInput={handleInput}
             defaultValue={newInput}
+            value={inputTimer}
             onChange={handleChange}
           ></input>
         )}
