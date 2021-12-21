@@ -43,10 +43,10 @@ function Main() {
 
   const [totalSeconds, setTotalSeconds] = useState(300);
   const [initialTime, setInitialTime] = useState(500);
-  const [prevTime, setPrevTime] = useState();
+  // const [prevTime, setPrevTime] = useState();
   const [intervalID, setIntervalID] = useState();
   const [timerState, setTimerState] = useState(TIMER_STATES["INITIAL"]);
-  const [inputTimer, setInputTimer] = useState();
+  const [inputTimer, setInputTimer] = useState(initialTime);
 
   useEffect(() => {
     if (timerState === TIMER_STATES["STARTED"] && !intervalID) {
@@ -57,22 +57,22 @@ function Main() {
 
   function startTimer() {
     const calculated = calculateSeconds(initialTime);
-    setPrevTime(initialTime);
+    // setPrevTime(initialTime);
     //if initial time has already started
     if (timerState === TIMER_STATES["EDIT"]) {
       console.log("START FROM EDIT STATE");
       // need this logic to run if NO NEW initial input
-      if (prevTime === initialTime) {
-        setTotalSeconds(totalSeconds); //start from current timer
-        setTimerState(TIMER_STATES["STARTED"]);
-        return;
-      } else {
+      // if (prevTime === initialTime) {
+      //   setTotalSeconds(totalSeconds); //start from current timer
+      //   setTimerState(TIMER_STATES["STARTED"]);
+      //   return;
+      // } else {
         //logic to start from new initial input
         console.log("START FROM EDIT WITH NEW INITIAL INPUT");
         setTotalSeconds(calculated);
         setTimerState(TIMER_STATES["STARTED"]);
         return;
-      }
+      // }
     } else if (timerState === TIMER_STATES["STOPPED"]) {
       console.log("START FROM STOPPED STATE");
       setTimerState(TIMER_STATES["STARTED"]);
@@ -96,6 +96,7 @@ function Main() {
   function editTimerState() {
     console.log("ENTER EDIT STATE");
     setTimerState(TIMER_STATES["EDIT"]);
+    displayInputValue();
     console.log("initial time from EDIT STATE", initialTime);
     clearInterval(intervalID);
     setIntervalID(undefined);
@@ -136,6 +137,7 @@ function Main() {
   //when timer is started, then enter edit state, default value goes to initial timer rather than current timer.
   //issues with string vs integer input
   //use setState to change value
+
   function handleChange(event) {
     let timerInput = event.target.value
     console.log("TYPE", typeof timerInput)
@@ -147,6 +149,63 @@ function Main() {
     setInitialTime(timerInput);
   }
 
+  //use timerInput to set and display new input value
+
+  //take totalseconds and set new input
+  function displayInputValue() {
+    let formatTime = totalSeconds;
+    let showHours = 0;
+    let showMin = 0;
+    let showSec = 0;
+    let formatted = [];
+
+    while (formatTime >= 3600) {
+      showHours += 1;
+      formatTime -= 3600;
+    }
+
+    while (formatTime >= 60) {
+      showMin += 1;
+      formatTime -= 60;
+    }
+
+    if (formatTime < 60) {
+      showSec = formatTime;
+    }
+
+    if (showHours !== 0) {
+      if (showHours.toString().length === 1) {
+        formatted.push("0" + showHours)
+        console.log("length === 1 trigger check")
+      } else {
+        formatted.push(showHours);
+      }
+    } else if (showHours === 0) {
+      formatted.push("00")
+    }
+    if (showMin !== 0) {
+      if (showMin.toString().length === 1) {
+        formatted.push("0" + showMin)
+      } else {
+        formatted.push(showHours);
+      }  
+    } else if (showMin === 0) {
+      formatted.push("00")
+    }
+    
+    if (showSec !== 0) {
+      if (showSec.toString().length === 1) {
+        formatted.push("0" + showSec)
+      } else {
+        formatted.push(showSec);
+      }  
+    } else if (showSec === 0) {
+      formatted.push("00")
+    }
+
+    setInputTimer(formatted.join(''))
+  }
+
   // function handleInput(e) {
   //   // e.target.value = e.target.value.slice(0)
   //   // let inputValue = e.target.value
@@ -154,7 +213,7 @@ function Main() {
   //   //   inputValue.substring(1)
   //   // }
   // }
-  
+
   //display necessary 00's. ex: 2m 00s
   function displayTime() {
     let formatTime = totalSeconds;
