@@ -43,7 +43,6 @@ function Main() {
 
   const [totalSeconds, setTotalSeconds] = useState(300);
   const [initialTime, setInitialTime] = useState(500);
-  // const [prevTime, setPrevTime] = useState();
   const [intervalID, setIntervalID] = useState();
   const [timerState, setTimerState] = useState(TIMER_STATES["INITIAL"]);
   const [inputTimer, setInputTimer] = useState(initialTime);
@@ -57,22 +56,15 @@ function Main() {
 
   function startTimer() {
     const calculated = calculateSeconds(initialTime);
-    // setPrevTime(initialTime);
+    const newInputTimer = calculateSeconds(inputTimer)
     //if initial time has already started
     if (timerState === TIMER_STATES["EDIT"]) {
       console.log("START FROM EDIT STATE");
-      // need this logic to run if NO NEW initial input
-      // if (prevTime === initialTime) {
-      //   setTotalSeconds(totalSeconds); //start from current timer
-      //   setTimerState(TIMER_STATES["STARTED"]);
-      //   return;
-      // } else {
         //logic to start from new initial input
         console.log("START FROM EDIT WITH NEW INITIAL INPUT");
-        setTotalSeconds(calculated);
+        setTotalSeconds(newInputTimer);
         setTimerState(TIMER_STATES["STARTED"]);
         return;
-      // }
     } else if (timerState === TIMER_STATES["STOPPED"]) {
       console.log("START FROM STOPPED STATE");
       setTimerState(TIMER_STATES["STARTED"]);
