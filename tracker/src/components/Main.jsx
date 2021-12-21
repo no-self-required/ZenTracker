@@ -138,6 +138,7 @@ function Main() {
   //use setState to change value
   function handleChange(event) {
     let timerInput = event.target.value
+    console.log("TYPE", typeof timerInput)
     while (timerInput.length > 6) {
       timerInput = timerInput.substring(1)
       console.log("check timerInput", timerInput)
@@ -146,13 +147,14 @@ function Main() {
     setInitialTime(timerInput);
   }
 
-  function handleInput(e) {
-    // e.target.value = e.target.value.slice(0
-    // let inputValue = e.target.value
-    // if (inputValue.length > 6) {
-    //   inputValue.substring(1)
-    // }
-  }
+  // function handleInput(e) {
+  //   // e.target.value = e.target.value.slice(0)
+  //   // let inputValue = e.target.value
+  //   // if (inputValue.length > 6) {
+  //   //   inputValue.substring(1)
+  //   // }
+  // }
+  
   //display necessary 00's. ex: 2m 00s
   function displayTime() {
     let formatTime = totalSeconds;
@@ -175,38 +177,9 @@ function Main() {
       showSec = formatTime;
     }
 
-    // correct logic for timer input
-    // need to remove unncessary 0's for timer display
-    if (showHours !== 0) {
-      if (showHours.toString().length === 1) {
-        formatted.push("0" + showHours)
-        console.log("length === 1 trigger check")
-      } else {
-        formatted.push(showHours);
-      }
-    } else if (showHours === 0) {
-      formatted.push("00")
-    }
-
-    if (showMin !== 0) {
-      if (showMin.toString().length === 1) {
-        formatted.push("0" + showMin)
-      } else {
-        formatted.push(showHours);
-      }  
-    } else if (showMin === 0) {
-      formatted.push("00")
-    }
-    
-    if (showSec !== 0) {
-      if (showSec.toString().length === 1) {
-        formatted.push("0" + showSec)
-      } else {
-        formatted.push(showSec);
-      }  
-    } else if (showSec === 0) {
-      formatted.push("00")
-    }
+    formatted.push(showHours);
+    formatted.push(showMin);
+    formatted.push(showSec);
 
     console.log("formatted", formatted)
     return formatted;
@@ -229,8 +202,8 @@ function Main() {
             type="number"
             id="timer"
             name="timer"
-            onInput={handleInput}
-            defaultValue={newInput}
+            // onInput={handleInput}
+            // defaultValue={newInput}
             value={inputTimer}
             onChange={handleChange}
           ></input>
