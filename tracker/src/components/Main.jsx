@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../styling/main.scss";
 
-//import Hind Madurai font
-
 //add rendering logic to only show the right amount of time. ex: if there are 0hours, dont display
 //add logic for finished timer (0seconds)
 
@@ -122,13 +120,7 @@ function Main() {
     const initialTimeInSeconds = calculateSeconds(initialTime);
     setTotalSeconds(initialTimeInSeconds);
   }
-
-  
-  //very important for UX. ensures there is never an empty input
-  //possibly: if max length, and user inputs additonal number, shift numbers to left. replace first digit with the second.
-  //ex: 12, 42, 53 > 24, 25, 3(6 = new number)
-  // 00's must always show for empty inputs. ex: 00h 05m 21s
-  //ex: use shift to remove first element, then push the new latest digit. 
+ 
   const inputId = document.getElementById("timer");
   
   if (document.getElementById("timer")) {
@@ -142,6 +134,7 @@ function Main() {
   //input overflow working correctly
   //default value not wokring correctly
   //when timer is started, then enter edit state, default value goes to initial timer rather than current timer.
+  //issues with string vs integer input
   //use setState to change value
   function handleChange(event) {
     let timerInput = event.target.value
