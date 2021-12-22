@@ -88,7 +88,7 @@ function Main() {
   function editTimerState() {
     console.log("ENTER EDIT STATE");
     setTimerState(TIMER_STATES["EDIT"]);
-    displayInputValue();
+    fillZeros();
     console.log("initial time from EDIT STATE", initialTime);
     clearInterval(intervalID);
     setIntervalID(undefined);
@@ -166,43 +166,44 @@ function Main() {
       showSec = formatTime;
     }
 
-    // if (showHours !== 0) {
-    //   if (showHours.toString().length === 1) {
-    //     formatted.push("0" + showHours)
-    //     console.log("length === 1 trigger check")
-    //   } else {
-    //     formatted.push(showHours);
-    //   }
-    // } else if (showHours === 0) {
-    //   formatted.push("00")
-    // }
-    // if (showMin !== 0) {
-    //   if (showMin.toString().length === 1) {
-    //     formatted.push("0" + showMin)
-    //   } else {
-    //     formatted.push(showHours);
-    //   }  
-    // } else if (showMin === 0) {
-    //   formatted.push("00")
-    // }
-    
-    // if (showSec !== 0) {
-    //   if (showSec.toString().length === 1) {
-    //     formatted.push("0" + showSec)
-    //   } else {
-    //     formatted.push(showSec);
-    //   }  
-    // } else if (showSec === 0) {
-    //   formatted.push("00")
-    // }
+
 
     formatted.push(showHours);
     formatted.push(showMin);
     formatted.push(showSec);
 
-    setInputTimer(formatted.join(''))
+    return formatted
   }
 
+  function fillZeros() {
+    let input = displayInputValue();
+    console.log("INPUT", input)
+
+    for (let i = 0; i < input.length; i++) {
+      if (input[0] === 0) {
+        input[0] = "00"
+      } else if (input[0] !== 0 && input[0].toString().length === 1) {
+        input[0] = "0" + input[0]
+      } 
+  
+      if (input[1] === 0) {
+        input[1] = "00"
+      } else if (input[1] !== 0 && input[1].toString().length === 1) {
+        input[1] = "0" + input[1]
+      } 
+  
+      if (input[2] === 0) {
+        input[2] = "00"
+      } else if (input[2] !== 0 && input[2].toString().length === 1) {
+        input[2] = "0" + input[2]
+      } 
+    }
+
+
+    console.log("INPUT FILL ZEROS", input)
+    console.log("LENGTH OF [1]", input[1].length)
+    setInputTimer(input.join(''))
+  }
   // function handleInput(e) {
   //   // e.target.value = e.target.value.slice(0)
   //   // let inputValue = e.target.value
