@@ -237,8 +237,8 @@ function Main() {
     // formatted.push(showMin + "m ");
     // formatted.push(showSec + "s ");
 
-    formatted.push(showHours);
-    formatted.push(showMin);
+    formatted.push(showHours + ' : ');
+    formatted.push(showMin + ' : ');
     formatted.push(showSec);
 
     console.log("formatted", formatted)
@@ -252,6 +252,9 @@ function Main() {
       }
     }
 
+    // if (omitZero[omitZero.length -1] === 0) {
+    //   omitZero.pop()
+    // }
     return omitZero;
   }
 
