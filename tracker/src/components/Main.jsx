@@ -282,6 +282,11 @@ function Main() {
             // defaultValue={newInput}
             value={inputTimer}
             onChange={handleChange}
+            onKeyPress={(event) => {
+              if (!/[0-9]/.test(event.key)) {
+                event.preventDefault();
+              }
+            }}
           ></input>
         )}
         <div>
