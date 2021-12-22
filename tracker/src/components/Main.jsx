@@ -233,12 +233,26 @@ function Main() {
       showSec = formatTime;
     }
 
-    formatted.push(showHours + "h ");
-    formatted.push(showMin + "m ");
-    formatted.push(showSec + "s ");
+    // formatted.push(showHours + "h ");
+    // formatted.push(showMin + "m ");
+    // formatted.push(showSec + "s ");
+
+    formatted.push(showHours);
+    formatted.push(showMin);
+    formatted.push(showSec);
 
     console.log("formatted", formatted)
-    return formatted;
+
+    let omitZero = []
+    //remove zeros before actual timer
+    for (let i = 0; i < formatted.length; i++) {
+      if (formatted[i] !== 0) {
+        omitZero = formatted.slice(i)
+        break;
+      }
+    }
+
+    return omitZero;
   }
 
   //disable reset button if timer is not running
