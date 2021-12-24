@@ -124,12 +124,6 @@ function Main() {
     });
   }
 
-  //input overflow working correctly
-  //default value not wokring correctly
-  //when timer is started, then enter edit state, default value goes to initial timer rather than current timer.
-  //issues with string vs integer input
-  //use setState to change value
-
   //stretch: on fresh edit state: any new input will delete previous timer
   function handleChange(event) {
     let timerInput = event.target.value
@@ -142,6 +136,11 @@ function Main() {
     setInitialTime(timerInput);
   }
 
+  function acceptNum(event) {
+      if (!/[0-9]/.test(event.key)) {
+        event.preventDefault();
+      }
+  }
   //use timerInput to set and display new input value
 
   //take totalseconds and set new input
@@ -165,8 +164,6 @@ function Main() {
     if (formatTime < 60) {
       showSec = formatTime;
     }
-
-
 
     formatted.push(showHours);
     formatted.push(showMin);
@@ -199,20 +196,9 @@ function Main() {
       } 
     }
 
-
-    console.log("INPUT FILL ZEROS", input)
-    console.log("LENGTH OF [1]", input[1].length)
     setInputTimer(input.join(''))
   }
-  // function handleInput(e) {
-  //   // e.target.value = e.target.value.slice(0)
-  //   // let inputValue = e.target.value
-  //   // if (inputValue.length > 6) {
-  //   //   inputValue.substring(1)
-  //   // }
-  // }
 
-  //display necessary 00's. ex: 2m 00s
   function displayTime() {
     let formatTime = totalSeconds;
     let showHours = 0;
@@ -234,32 +220,36 @@ function Main() {
       showSec = formatTime;
     }
 
-    // formatted.push(showHours + "h ");
-    // formatted.push(showMin + "m ");
-    // formatted.push(showSec + "s ");
-
     formatted.push(showHours);
     formatted.push(showMin);
     formatted.push(showSec);
 
-    console.log("formatted", formatted)
-
-    let omitZero = []
-    //remove zeros before actual timer
     for (let i = 0; i < formatted.length; i++) {
-      if (formatted[i] !== 0) {
-        omitZero = formatted.slice(i)
+      if (formatted[i].toString().length === 1) {
+        formatted[i] = "0" + formatted[i] 
+      }
+    }
+
+    return formatted;
+  }
+
+  function omitZero() {
+    const timer = displayTime();
+
+    const joinTimer = timer.join('');
+
+    const splitTimer = joinTimer.split('')
+
+    let omitZero = [];
+    //remove zeros before actual timer
+    for (let i = 0; i < splitTimer.length; i++) {
+      if (splitTimer[i] !== "0") {
+        omitZero = splitTimer.slice(i)
         break;
       }
     }
 
-    // if (omitZero[omitZero.length -1] === 0) {
-    //   omitZero.pop()
-    // }
-
-    //problem with single digit minutes
-    //need to add double zeros!!!
-    return omitZero;
+    return omitZero
   }
 
   //disable reset button if timer is not running
@@ -267,10 +257,9 @@ function Main() {
   //add rendering logic: show initial timer, on click: edit timer
   //if timer is clicked, pause and hide timer and show timer input. AS OPPOSED to hiding input / changing focus to input
 
-  const formattedTime = displayTime();
-  const newInput = formattedTime.join('')
-
+  const formattedTime = omitZero();
   
+  //Need to display shadow 00's for input
   return (
     <div className="container">
       <div className="timer-container">
@@ -279,15 +268,9 @@ function Main() {
             type="number"
             id="timer"
             name="timer"
-            // onInput={handleInput}
-            // defaultValue={newInput}
             value={inputTimer}
             onChange={handleChange}
-            onKeyPress={(event) => {
-              if (!/[0-9]/.test(event.key)) {
-                event.preventDefault();
-              }
-            }}
+            onKeyPress={acceptNum}
           ></input>
         )}
         <div>
