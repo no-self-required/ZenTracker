@@ -136,7 +136,7 @@ function Main() {
     setInitialTime(timerInput);
   }
 
-  function acceptNum(event) {
+  function numOnly(event) {
       if (!/[0-9]/.test(event.key)) {
         event.preventDefault();
       }
@@ -270,7 +270,7 @@ function Main() {
             name="timer"
             value={inputTimer}
             onChange={handleChange}
-            onKeyPress={acceptNum}
+            onKeyPress={numOnly}
           ></input>
         )}
         <div>
