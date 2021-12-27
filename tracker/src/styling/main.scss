@@ -18,11 +18,33 @@
     #stop-button,
     #ok-button,
     #reset-button {
+      font-family: 'Hind Madurai', sans-serif;
+      font-size: 24px;
       width: 6em;
       height: 2.3em;
       margin: 1em;
     }
 
+    #start-button {
+      background-color: #ABC4FF;
+      border: none;
+    }
+
+    #reset-button {
+      background-color: white;
+      border-style: solid;
+      border-color: #ABC4FF;
+      border-width: 3px;
+    }
+
+    #stop-button {
+      background-color: #C1D3FE;
+      border: none;
+    }
+
+    #stop-button:hover {
+      background-color: #ABC4FF;
+    }
     #timer {
       border: none;
       font-size: 144px;
