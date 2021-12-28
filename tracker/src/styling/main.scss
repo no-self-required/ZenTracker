@@ -6,11 +6,17 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
-    width: 35em;
-    height: 10em;
-    margin: 10em;
+    width: 60em;
+    height: 25em;
+    margin: 5em;
 
     #absolute-timer {
+      font-size: 144px;
+    }
+
+    #timer {
+      border: none;
+      text-align: center;
       font-size: 144px;
     }
 
@@ -45,10 +51,7 @@
     #stop-button:hover {
       background-color: #ABC4FF;
     }
-    #timer {
-      border: none;
-      font-size: 144px;
-    }
+
 
     /* remove number input arrows Chrome, Safari, Edge, Opera */
     #timer::-webkit-outer-spin-button,

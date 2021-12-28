@@ -174,25 +174,24 @@ function Main() {
 
   function fillZeros() {
     let input = displayInputValue();
-    console.log("INPUT", input)
 
     for (let i = 0; i < input.length; i++) {
       if (input[0] === 0) {
         input[0] = "00"
       } else if (input[0] !== 0 && input[0].toString().length === 1) {
-        input[0] = "0" + input[0]
+        input[0] = "0" + input[0] 
       } 
   
       if (input[1] === 0) {
         input[1] = "00"
       } else if (input[1] !== 0 && input[1].toString().length === 1) {
-        input[1] = "0" + input[1]
+        input[1] = "0" + input[1] 
       } 
   
       if (input[2] === 0) {
-        input[2] = "00"
+        input[2] = "00" 
       } else if (input[2] !== 0 && input[2].toString().length === 1) {
-        input[2] = "0" + input[2]
+        input[2] = "0" + input[2] 
       } 
     }
 
@@ -235,9 +234,7 @@ function Main() {
 
   function omitZero() {
     const timer = displayTime();
-
     const joinTimer = timer.join('');
-
     const splitTimer = joinTimer.split('')
 
     let omitZero = [];
@@ -252,13 +249,47 @@ function Main() {
     return omitZero
   }
 
+  //logic of 0X h 00 m 00 s breaks timer
+  
+  //use switch case here for every possible length of output to display time notation
+  function addTimeNotation() {
+    const formatted = omitZero()
+
+    switch (formatted.length) {
+      case 1:
+        formatted[0] = formatted[0] + "s "
+        break;
+      case 2:
+        formatted[1] = formatted[1] + "s "
+        break;
+      case 3:
+        formatted[0] = formatted[0] + "m "
+        formatted[2] = formatted[2] + "s "
+        break;
+      case 4:
+        formatted[1] = formatted[1] + "m "
+        formatted[3] = formatted[3] + "s "
+        break;
+      case 5:
+        formatted[0] = formatted[5] + "h "
+        formatted[2] = formatted[2] + "m "
+        formatted[4] = formatted[4] + "s "
+        break;
+      case 6:
+        formatted[1] = formatted[1] + "h "
+        formatted[3] = formatted[3] + "m "
+        formatted[5] = formatted[5] + "s "
+        break;
+    }
+    return formatted
+  }
   //disable reset button if timer is not running
 
   //add rendering logic: show initial timer, on click: edit timer
   //if timer is clicked, pause and hide timer and show timer input. AS OPPOSED to hiding input / changing focus to input
 
-  const formattedTime = omitZero();
-  
+  const formattedTime = addTimeNotation();
+  console.log("FORMATTED TIME", formattedTime)
   //Need to display shadow 00's for input
   return (
     <div className="container">
