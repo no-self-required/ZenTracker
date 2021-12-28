@@ -248,8 +248,6 @@ function Main() {
 
     return omitZero
   }
-
-  //logic of 0X h 00 m 00 s breaks timer
   
   //use switch case here for every possible length of output to display time notation
   function addTimeNotation() {
@@ -271,7 +269,7 @@ function Main() {
         formatted[3] = formatted[3] + "s "
         break;
       case 5:
-        formatted[0] = formatted[5] + "h "
+        formatted[0] = formatted[0] + "h "
         formatted[2] = formatted[2] + "m "
         formatted[4] = formatted[4] + "s "
         break;
