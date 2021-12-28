@@ -56,15 +56,15 @@ function Main() {
 
   function startTimer() {
     const calculated = calculateSeconds(initialTime);
-    const newInputTimer = calculateSeconds(inputTimer)
+    const newInputTimer = calculateSeconds(inputTimer);
     //if initial time has already started
     if (timerState === TIMER_STATES["EDIT"]) {
       console.log("START FROM EDIT STATE");
-        //logic to start from new initial input
-        console.log("START FROM EDIT WITH NEW INITIAL INPUT");
-        setTotalSeconds(newInputTimer);
-        setTimerState(TIMER_STATES["STARTED"]);
-        return;
+      //logic to start from new initial input
+      console.log("START FROM EDIT WITH NEW INITIAL INPUT");
+      setTotalSeconds(newInputTimer);
+      setTimerState(TIMER_STATES["STARTED"]);
+      return;
     } else if (timerState === TIMER_STATES["STOPPED"]) {
       console.log("START FROM STOPPED STATE");
       setTimerState(TIMER_STATES["STARTED"]);
@@ -113,9 +113,9 @@ function Main() {
     const initialTimeInSeconds = calculateSeconds(initialTime);
     setTotalSeconds(initialTimeInSeconds);
   }
- 
+
   const inputId = document.getElementById("timer");
-  
+
   if (document.getElementById("timer")) {
     inputId.addEventListener("keyup", function onEvent(e) {
       if (e.key === "Enter") {
@@ -126,20 +126,21 @@ function Main() {
 
   //stretch: on fresh edit state: any new input will delete previous timer
   function handleChange(event) {
-    let timerInput = event.target.value
-    console.log("TYPE", typeof timerInput)
+    let timerInput = event.target.value;
+    console.log("TYPE", typeof timerInput);
     while (timerInput.length > 6) {
-      timerInput = timerInput.substring(1)
-      console.log("check timerInput", timerInput)
+      timerInput = timerInput.substring(1);
+      console.log("check timerInput", timerInput);
     }
+    // let spaced = timerInput.match(/.{1,2}/g);
     setInputTimer(timerInput);
     setInitialTime(timerInput);
   }
 
   function numOnly(event) {
-      if (!/[0-9]/.test(event.key)) {
-        event.preventDefault();
-      }
+    if (!/[0-9]/.test(event.key)) {
+      event.preventDefault();
+    }
   }
   //use timerInput to set and display new input value
 
@@ -169,7 +170,7 @@ function Main() {
     formatted.push(showMin);
     formatted.push(showSec);
 
-    return formatted
+    return formatted;
   }
 
   function fillZeros() {
@@ -177,25 +178,25 @@ function Main() {
 
     for (let i = 0; i < input.length; i++) {
       if (input[0] === 0) {
-        input[0] = "00"
+        input[0] = "00";
       } else if (input[0] !== 0 && input[0].toString().length === 1) {
-        input[0] = "0" + input[0] 
-      } 
-  
+        input[0] = "0" + input[0];
+      }
+
       if (input[1] === 0) {
-        input[1] = "00"
+        input[1] = "00";
       } else if (input[1] !== 0 && input[1].toString().length === 1) {
-        input[1] = "0" + input[1] 
-      } 
-  
+        input[1] = "0" + input[1];
+      }
+
       if (input[2] === 0) {
-        input[2] = "00" 
+        input[2] = "00";
       } else if (input[2] !== 0 && input[2].toString().length === 1) {
-        input[2] = "0" + input[2] 
-      } 
+        input[2] = "0" + input[2];
+      }
     }
 
-    setInputTimer(input.join(''))
+    setInputTimer(input.join(""));
   }
 
   function displayTime() {
@@ -225,7 +226,7 @@ function Main() {
 
     for (let i = 0; i < formatted.length; i++) {
       if (formatted[i].toString().length === 1) {
-        formatted[i] = "0" + formatted[i] 
+        formatted[i] = "0" + formatted[i];
       }
     }
 
@@ -234,61 +235,65 @@ function Main() {
 
   function omitZero() {
     const timer = displayTime();
-    const joinTimer = timer.join('');
-    const splitTimer = joinTimer.split('')
+    const joinTimer = timer.join("");
+    const splitTimer = joinTimer.split("");
 
     let omitZero = [];
     //remove zeros before actual timer
     for (let i = 0; i < splitTimer.length; i++) {
       if (splitTimer[i] !== "0") {
-        omitZero = splitTimer.slice(i)
+        omitZero = splitTimer.slice(i);
         break;
       }
     }
 
-    return omitZero
+    return omitZero;
   }
-  
+
   //use switch case here for every possible length of output to display time notation
   function addTimeNotation() {
-    const formatted = omitZero()
-
+    const formatted = omitZero();
     switch (formatted.length) {
       case 1:
-        formatted[0] = formatted[0] + "s "
+        formatted[0] = formatted[0] + "s ";
         break;
       case 2:
-        formatted[1] = formatted[1] + "s "
+        formatted[1] = formatted[1] + "s ";
         break;
       case 3:
-        formatted[0] = formatted[0] + "m "
-        formatted[2] = formatted[2] + "s "
+        formatted[0] = formatted[0] + "m ";
+        formatted[2] = formatted[2] + "s ";
         break;
       case 4:
-        formatted[1] = formatted[1] + "m "
-        formatted[3] = formatted[3] + "s "
+        formatted[1] = formatted[1] + "m ";
+        formatted[3] = formatted[3] + "s ";
         break;
       case 5:
-        formatted[0] = formatted[0] + "h "
-        formatted[2] = formatted[2] + "m "
-        formatted[4] = formatted[4] + "s "
+        formatted[0] = formatted[0] + "h ";
+        formatted[2] = formatted[2] + "m ";
+        formatted[4] = formatted[4] + "s ";
         break;
       case 6:
-        formatted[1] = formatted[1] + "h "
-        formatted[3] = formatted[3] + "m "
-        formatted[5] = formatted[5] + "s "
+        formatted[1] = formatted[1] + "h ";
+        formatted[3] = formatted[3] + "m ";
+        formatted[5] = formatted[5] + "s ";
+        break;
+      default:
         break;
     }
-    return formatted
+    return formatted;
   }
   //disable reset button if timer is not running
 
   //add rendering logic: show initial timer, on click: edit timer
   //if timer is clicked, pause and hide timer and show timer input. AS OPPOSED to hiding input / changing focus to input
 
+  // document.getElementById('timer').addEventListener('input', function (e) {
+  //   e.target.value = e.target.value.replace(/[^\dA-Z]/g, '').replace(/(.{2})/g, '$1 ').trim();
+  // });
+
   const formattedTime = addTimeNotation();
-  console.log("FORMATTED TIME", formattedTime)
-  //Need to display shadow 00's for input
+  console.log("FORMATTED TIME", formattedTime);
   return (
     <div className="container">
       <div className="timer-container">
