@@ -36,6 +36,10 @@
       border: none;
     }
 
+    #ok-button {
+
+    }
+
     #reset-button {
       background-color: white;
       border-style: solid;
@@ -43,12 +47,12 @@
       border-width: 3px;
     }
 
-    #stop-button {
+    #stop-button, #ok-button {
       background-color: #C1D3FE;
       border: none;
     }
 
-    #stop-button:hover {
+    #stop-button:hover, #ok-button:hover {
       background-color: #ABC4FF;
     }
 
