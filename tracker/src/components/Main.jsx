@@ -132,19 +132,19 @@ function Main() {
       timerInput = timerInput.substring(1);
       console.log("check timerInput", timerInput);
     }
-    // let spaced = timerInput.match(/.{1,2}/g);
+
     setInputTimer(timerInput);
     setInitialTime(timerInput);
   }
 
+  //only accept numbers for timer input
   function numOnly(event) {
     if (!/[0-9]/.test(event.key)) {
       event.preventDefault();
     }
   }
-  //use timerInput to set and display new input value
 
-  //take totalseconds and set new input
+  //take totalseconds and calculate display input
   function displayInputValue() {
     let formatTime = totalSeconds;
     let showHours = 0;
@@ -224,11 +224,14 @@ function Main() {
     formatted.push(showMin);
     formatted.push(showSec);
 
+    //add a zero before single digits
     for (let i = 0; i < formatted.length; i++) {
       if (formatted[i].toString().length === 1) {
         formatted[i] = "0" + formatted[i];
-      }
+      } 
     }
+
+    console.log("formatted check", formatted)
 
     return formatted;
   }
@@ -238,22 +241,32 @@ function Main() {
     const joinTimer = timer.join("");
     const splitTimer = joinTimer.split("");
 
+    console.log("timer inside omitZero after join, split", timer)
     let omitZero = [];
-    //remove zeros before actual timer
-    for (let i = 0; i < splitTimer.length; i++) {
-      if (splitTimer[i] !== "0") {
-        omitZero = splitTimer.slice(i);
-        break;
+    //remove zeros before start of timer
+
+    if (splitTimer === ["00", "00", "00"]) {
+      omitZero = 2
+    } else {
+      for (let i = 0; i < splitTimer.length; i++) {
+        if (splitTimer[i] !== "0") {
+          omitZero = splitTimer.slice(i);
+          break;
+        }
       }
     }
-
+    console.log("omitZero", omitZero)
     return omitZero;
   }
+
+  // displayTime > omitZero > addTimeNotation
 
   //use switch case here for every possible length of output to display time notation
   function addTimeNotation() {
     const formatted = omitZero();
     switch (formatted.length) {
+      case 0:
+        formatted[0] = formatted[0] + "s ";
       case 1:
         formatted[0] = formatted[0] + "s ";
         break;
@@ -281,6 +294,7 @@ function Main() {
       default:
         break;
     }
+    console.log("formatted inside addTimeNotation", formatted);
     return formatted;
   }
   //disable reset button if timer is not running
@@ -293,7 +307,7 @@ function Main() {
   // });
 
   const formattedTime = addTimeNotation();
-  console.log("FORMATTED TIME", formattedTime);
+  // console.log("FORMATTED TIME", formattedTime);
   return (
     <div className="container">
       <div className="timer-container">
@@ -308,7 +322,7 @@ function Main() {
           ></input>
         )}
         <div>
-          {totalSeconds && (
+          {timerState !== TIMER_STATES["EDIT"] && (
             <div id="absolute-timer" onClick={editTimerState}>
               {formattedTime}
             </div>
