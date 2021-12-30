@@ -6,17 +6,23 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
-    width: 60em;
-    height: 25em;
+    height: 20em;
     margin: 5em;
 
-    #absolute-timer {
-      font-size: 144px;
+    #timer-button-container {
+      display: flex;
+      flex-direction: column;
+
+      #absolute-timer {
+        width: fit-content;
+        font-size: 144px;
+        border-bottom: solid rgba(128, 128, 128, 0.596) 2px;
+      }
     }
 
     #timer {
-      border: none;
       text-align: center;
+      border: none;
       font-size: 144px;
     }
 
@@ -24,7 +30,7 @@
     #stop-button,
     #ok-button,
     #reset-button {
-      font-family: 'Hind Madurai', sans-serif;
+      font-family: "Hind Madurai", sans-serif;
       font-size: 24px;
       width: 6em;
       height: 2.3em;
@@ -32,31 +38,32 @@
     }
 
     #start-button {
-      background-color: #ABC4FF;
+      background-color: #c1d3fe;
       border: none;
-    }
-
-    #ok-button {
-
     }
 
     #reset-button {
       background-color: white;
       border-style: solid;
-      border-color: #ABC4FF;
+      border-color: #abc4ff;
       border-width: 3px;
     }
 
-    #stop-button, #ok-button {
-      background-color: #C1D3FE;
+    #stop-button,
+    #ok-button {
+      background-color: #abc4ff;
       border: none;
     }
 
-    #stop-button:hover, #ok-button:hover {
-      background-color: #ABC4FF;
+    #stop-button:hover,
+    #ok-button:hover,
+    #start-button:hover {
+      background-color: #84a8ff;
     }
 
-
+    #reset-button:hover {
+      border-color: #84a8ff;
+    }
     /* remove number input arrows Chrome, Safari, Edge, Opera */
     #timer::-webkit-outer-spin-button,
     #timer::-webkit-inner-spin-button {

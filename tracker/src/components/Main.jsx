@@ -228,42 +228,63 @@ function Main() {
     for (let i = 0; i < formatted.length; i++) {
       if (formatted[i].toString().length === 1) {
         formatted[i] = "0" + formatted[i];
-      } 
+      }
     }
 
-    console.log("formatted check", formatted)
+    console.log("formatted check", formatted);
 
     return formatted;
   }
 
-  function omitZero() {
+  function splitTimer() {
     const timer = displayTime();
     const joinTimer = timer.join("");
     const splitTimer = joinTimer.split("");
 
-    console.log("timer inside omitZero after join, split", timer)
+    return splitTimer;
+  }
+
+  function omitZero() {
+    const splitTime = splitTimer();
+    console.log("splitTime inside omitZero", splitTime);
     let omitZero = [];
     //remove zeros before start of timer
 
-    if (splitTimer === ["00", "00", "00"]) {
-      omitZero = 2
+    // SOLVE HERE: omitZero === [], when timer = 0s. Need: omitZero === ["0"]
+    if (totalSeconds === 0) {
+      omitZero = ["0"];
     } else {
-      for (let i = 0; i < splitTimer.length; i++) {
-        if (splitTimer[i] !== "0") {
-          omitZero = splitTimer.slice(i);
+      for (let i = 0; i < splitTime.length; i++) {
+        if (splitTime[i] !== "0") {
+          omitZero = splitTime.slice(i);
           break;
         }
       }
     }
-    console.log("omitZero", omitZero)
+
+    if (splitTime !== ["0", "0", "0", "0", "0", "0"]) {
+      for (let i = 0; i < splitTime.length; i++) {
+        if (splitTime[i] !== "0") {
+          omitZero = splitTime.slice(i);
+          break;
+        }
+      }
+    } else {
+      omitZero = ["0"];
+    }
+    console.log("omitZero inside omitZero", omitZero);
     return omitZero;
   }
-
   // displayTime > omitZero > addTimeNotation
 
   //use switch case here for every possible length of output to display time notation
   function addTimeNotation() {
     const formatted = omitZero();
+    console.log(
+      "formatted inside addTimeNotation before switch case",
+      formatted
+    );
+
     switch (formatted.length) {
       case 0:
         formatted[0] = formatted[0] + "s ";
@@ -299,13 +320,6 @@ function Main() {
   }
   //disable reset button if timer is not running
 
-  //add rendering logic: show initial timer, on click: edit timer
-  //if timer is clicked, pause and hide timer and show timer input. AS OPPOSED to hiding input / changing focus to input
-
-  // document.getElementById('timer').addEventListener('input', function (e) {
-  //   e.target.value = e.target.value.replace(/[^\dA-Z]/g, '').replace(/(.{2})/g, '$1 ').trim();
-  // });
-
   const formattedTime = addTimeNotation();
   // console.log("FORMATTED TIME", formattedTime);
   return (
@@ -319,34 +333,37 @@ function Main() {
             value={inputTimer}
             onChange={handleChange}
             onKeyPress={numOnly}
+            autoFocus
           ></input>
         )}
-        <div>
+        <div id="timer-button-container">
           {timerState !== TIMER_STATES["EDIT"] && (
             <div id="absolute-timer" onClick={editTimerState}>
               {formattedTime}
             </div>
           )}
-          {(timerState === TIMER_STATES["INITIAL"] ||
-            timerState === TIMER_STATES["STOPPED"] ||
-            timerState === TIMER_STATES["EDIT"]) && (
-            <button id="start-button" onClick={startTimer}>
-              Start
+          <div id="button-container">
+            {(timerState === TIMER_STATES["INITIAL"] ||
+              timerState === TIMER_STATES["STOPPED"] ||
+              timerState === TIMER_STATES["EDIT"]) && (
+              <button id="start-button" onClick={startTimer}>
+                Start
+              </button>
+            )}
+            {timerState === TIMER_STATES["STARTED"] && (
+              <button id="stop-button" onClick={stopTimer}>
+                Stop
+              </button>
+            )}
+            {timerState === TIMER_STATES["FINISHED"] && (
+              <button id="ok-button" onClick={stopAlarm}>
+                Ok
+              </button>
+            )}
+            <button id="reset-button" onClick={resetTimer}>
+              Reset
             </button>
-          )}
-          {timerState === TIMER_STATES["STARTED"] && (
-            <button id="stop-button" onClick={stopTimer}>
-              Stop
-            </button>
-          )}
-          {timerState === TIMER_STATES["FINISHED"] && (
-            <button id="ok-button" onClick={stopAlarm}>
-              Ok
-            </button>
-          )}
-          <button id="reset-button" onClick={resetTimer}>
-            Reset
-          </button>
+          </div>
         </div>
       </div>
     </div>
