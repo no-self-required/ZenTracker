@@ -236,10 +236,20 @@ function Main() {
     return formatted;
   }
 
+  /**
+   * Split timer takes the display time which consists of an array of elements where each element is two digits representing either hours, minutes or seconds, and reformats it so that every digit is its own element in an array.
+   * 
+   * For example, if the display time input would have the value of: ["00", "05", "02"], then,
+   * the splitTimer() function would return: ["0", "0", "0", "5", "0", "2"]
+   * 
+   * @returns An array where each element is a digit of the current displayed time
+   */
   function splitTimer() {
     const timer = displayTime();
+    console.log("timer inside splitTimer", timer)
     const joinTimer = timer.join("");
     const splitTimer = joinTimer.split("");
+    console.log("splitTimer inside splitTimer", splitTimer)
 
     return splitTimer;
   }
@@ -250,7 +260,6 @@ function Main() {
     let omitZero = [];
     //remove zeros before start of timer
 
-    // SOLVE HERE: omitZero === [], when timer = 0s. Need: omitZero === ["0"]
     if (totalSeconds === 0) {
       omitZero = ["0"];
     } else {
@@ -275,9 +284,10 @@ function Main() {
     console.log("omitZero inside omitZero", omitZero);
     return omitZero;
   }
+
   // displayTime > omitZero > addTimeNotation
 
-  //use switch case here for every possible length of output to display time notation
+  //time notation for every length case 
   function addTimeNotation() {
     const formatted = omitZero();
     console.log(
@@ -287,7 +297,6 @@ function Main() {
 
     switch (formatted.length) {
       case 0:
-        formatted[0] = formatted[0] + "s ";
       case 1:
         formatted[0] = formatted[0] + "s ";
         break;
@@ -338,8 +347,10 @@ function Main() {
         )}
         <div id="timer-button-container">
           {timerState !== TIMER_STATES["EDIT"] && (
-            <div id="absolute-timer" onClick={editTimerState}>
-              {formattedTime}
+            <div id="timer-button-absolute-container">
+              <div id="absolute-timer" onClick={editTimerState}>
+                {formattedTime}
+              </div>
             </div>
           )}
           <div id="button-container">

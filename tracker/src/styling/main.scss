@@ -13,6 +13,12 @@
       display: flex;
       flex-direction: column;
 
+      #timer-button-absolute-container {
+        display: flex; 
+        width: 100%; 
+        justify-content: center;
+      }
+
       #absolute-timer {
         width: fit-content;
         font-size: 144px;
