@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../styling/main.scss";
 
-//add rendering logic to only show the right amount of time. ex: if there are 0hours, dont display
-//add logic for finished timer (0seconds)
-
 function splitInput(initialTime) {
   const parsedTimer = parseInt(initialTime);
   const arr = Array.from(parsedTimer.toString()).map(Number);
@@ -330,7 +327,7 @@ function Main() {
   //disable reset button if timer is not running
 
   const formattedTime = addTimeNotation();
-  // console.log("FORMATTED TIME", formattedTime);
+
   return (
     <div className="container">
       <div className="timer-container">
