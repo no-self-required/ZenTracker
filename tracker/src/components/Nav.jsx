@@ -9,8 +9,6 @@ function Nav() {
         <div id="navbar-logo">ZenTracker</div>
       </div>
       <nav id="navbar-links">
-        <div>Timer</div>
-        <div>Login</div>
       </nav>
     </div>
   );
