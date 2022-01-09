@@ -188,9 +188,13 @@ function Main() {
         input[2] = "0" + input[2];
       }
     }
-    console.log("input inside fillZeros()", input.join(""))
+    // let x = input.join("")
+    // let spaced = x.substring(0, 2) + " " + x.substring(2, 4) + " " + x.substring(4, 6);
+    // console.log("SPACED", spaced)
+    //when space is added, input disappears
     setInputTimer(input.join(""));
   }
+  
 
   function displayTime() {
     let formatTime = totalSeconds;
@@ -222,10 +226,7 @@ function Main() {
       if (formatted[i].toString().length === 1) {
         formatted[i] = "0" + formatted[i];
       }
-    }
-
-    console.log("formatted check", formatted);
-
+    }    
     return formatted;
   }
 
@@ -316,6 +317,7 @@ function Main() {
 
   const formattedTime = addTimeNotation();
 
+  console.log("timer check", inputTimer)
   return (
     <div className="container">
       <div className="timer-container">
@@ -326,7 +328,7 @@ function Main() {
             name="timer"
             value={inputTimer}
             onChange={handleChange}
-            onKeyPress={numOnly}
+            // onKeyPress={numOnly}
             autoFocus
           ></input>
         )}
