@@ -318,6 +318,8 @@ function Main() {
   const formattedTime = addTimeNotation();
 
   console.log("timer check", inputTimer)
+
+  //for input: numOnly check and substring 6 disabled
   return (
     <div className="container">
       <div className="timer-container">
