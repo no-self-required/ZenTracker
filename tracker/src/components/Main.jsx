@@ -86,7 +86,6 @@ function Main() {
     console.log("ENTER EDIT STATE");
     setTimerState(TIMER_STATES["EDIT"]);
     fillZeros();
-    console.log("initial time from EDIT STATE", initialTime);
     clearInterval(intervalID);
     setIntervalID(undefined);
   }
@@ -102,7 +101,6 @@ function Main() {
   }
 
   function resetTimer() {
-    console.log("[resetTimer] initial time", initialTime);
     console.log("ENTER INITIAL STATE");
     setTimerState(TIMER_STATES["INITIAL"]);
     clearInterval(intervalID);
@@ -124,11 +122,9 @@ function Main() {
   //stretch: on fresh edit state: any new input will delete previous timer
   function handleChange(event) {
     let timerInput = event.target.value;
-    console.log("TYPE", typeof timerInput);
-    while (timerInput.length > 6) {
-      timerInput = timerInput.substring(1);
-      console.log("check timerInput", timerInput);
-    }
+    // while (timerInput.length > 6) {
+    //   timerInput = timerInput.substring(1);
+    // }
 
     setInputTimer(timerInput);
     setInitialTime(timerInput);
@@ -192,7 +188,7 @@ function Main() {
         input[2] = "0" + input[2];
       }
     }
-
+    console.log("input inside fillZeros()", input.join(""))
     setInputTimer(input.join(""));
   }
 
@@ -243,17 +239,14 @@ function Main() {
    */
   function splitTimer() {
     const timer = displayTime();
-    console.log("timer inside splitTimer", timer)
     const joinTimer = timer.join("");
     const splitTimer = joinTimer.split("");
-    console.log("splitTimer inside splitTimer", splitTimer)
-
     return splitTimer;
   }
 
   function omitZero() {
     const splitTime = splitTimer();
-    console.log("splitTime inside omitZero", splitTime);
+
     let omitZero = [];
     //remove zeros before start of timer
 
@@ -287,11 +280,6 @@ function Main() {
   //time notation for every length case 
   function addTimeNotation() {
     const formatted = omitZero();
-    console.log(
-      "formatted inside addTimeNotation before switch case",
-      formatted
-    );
-
     switch (formatted.length) {
       case 0:
       case 1:
@@ -321,9 +309,9 @@ function Main() {
       default:
         break;
     }
-    console.log("formatted inside addTimeNotation", formatted);
     return formatted;
   }
+
   //disable reset button if timer is not running
 
   const formattedTime = addTimeNotation();
