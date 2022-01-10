@@ -188,9 +188,7 @@ function Main() {
         input[2] = "0" + input[2];
       }
     }
-    // let x = input.join("")
-    // let spaced = x.substring(0, 2) + " " + x.substring(2, 4) + " " + x.substring(4, 6);
-    // console.log("SPACED", spaced)
+
     //when space is added, input disappears
     setInputTimer(input.join(""));
   }
@@ -279,6 +277,10 @@ function Main() {
   // displayTime > omitZero > addTimeNotation
 
   //time notation for every length case 
+  //if input goes above 99:59:59 > default timer to 99:59:59
+  //ex: 99:99:99 > 99:59:59
+
+  //if input is empty: timer is = 0
   function addTimeNotation() {
     const formatted = omitZero();
     switch (formatted.length) {
@@ -324,15 +326,24 @@ function Main() {
     <div className="container">
       <div className="timer-container">
         {timerState === TIMER_STATES["EDIT"] && (
-          <input
-            type="number"
-            id="timer"
-            name="timer"
-            value={inputTimer}
-            onChange={handleChange}
-            onKeyPress={numOnly}
-            autoFocus
-          ></input>
+          <div>
+            <div className="input-time-notation">
+              <span id="hour">h</span>
+              <span id="colon1">:</span>
+              <span id="minute">m</span>
+              <span id="colon2">:</span>
+              <span id="second">s</span>
+            </div>
+            <input
+              type="number"
+              id="timer"
+              name="timer"
+              value={inputTimer}
+              onChange={handleChange}
+              onKeyPress={numOnly}
+              autoFocus
+            ></input>
+          </div>
         )}
         <div id="timer-button-container">
           {timerState !== TIMER_STATES["EDIT"] && (

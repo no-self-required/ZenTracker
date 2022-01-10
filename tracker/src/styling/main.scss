@@ -9,6 +9,14 @@
     height: 20em;
     margin: 5em;
 
+    .input-time-notation {
+      width: 7em;
+      margin-left: 16.8em;
+      font-size: 50px;
+      display: flex;
+      justify-content: space-between;
+
+    }
     #timer-button-container {
       display: flex;
       flex-direction: column;
