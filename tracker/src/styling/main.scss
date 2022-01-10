@@ -11,12 +11,12 @@
 
     .input-time-notation {
       width: 7em;
-      margin-left: 16.8em;
+      margin-left: 2.8em;
       font-size: 50px;
       display: flex;
       justify-content: space-between;
-
     }
+    
     #timer-button-container {
       display: flex;
       flex-direction: column;
@@ -35,7 +35,8 @@
     }
 
     #timer {
-      text-align: center;
+      text-align: right;
+      width: 4em;
       border: none;
       font-size: 144px;
     }
