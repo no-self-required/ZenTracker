@@ -122,9 +122,9 @@ function Main() {
   //stretch: on fresh edit state: any new input will delete previous timer
   function handleChange(event) {
     let timerInput = event.target.value;
-    // while (timerInput.length > 6) {
-    //   timerInput = timerInput.substring(1);
-    // }
+    while (timerInput.length > 6) {
+      timerInput = timerInput.substring(1);
+    }
 
     setInputTimer(timerInput);
     setInitialTime(timerInput);
@@ -330,7 +330,7 @@ function Main() {
             name="timer"
             value={inputTimer}
             onChange={handleChange}
-            // onKeyPress={numOnly}
+            onKeyPress={numOnly}
             autoFocus
           ></input>
         )}
