@@ -326,7 +326,7 @@ function Main() {
     <div className="container">
       <div className="timer-container">
         {timerState === TIMER_STATES["EDIT"] && (
-          <div>
+          <div id="notation-timer">
             <div className="input-time-notation">
               <span id="hour">h</span>
               <span id="colon1">:</span>

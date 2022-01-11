@@ -9,9 +9,25 @@
     height: 20em;
     margin: 5em;
 
+    #notation-timer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      width: 100%;
+    }
+
+    #timer {
+      text-align: right;
+      height: 55%;
+      width: 30%;
+      border: none;
+      font-size: 144px;
+    }
+
     .input-time-notation {
-      width: 7em;
-      margin-left: 2.8em;
+      width: 20%;
+      height: 25%;
       font-size: 50px;
       display: flex;
       justify-content: space-between;
@@ -34,12 +50,7 @@
       }
     }
 
-    #timer {
-      text-align: right;
-      width: 4em;
-      border: none;
-      font-size: 144px;
-    }
+
 
     #start-button,
     #stop-button,
