@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "../styling/main.scss";
 
+//store input length and value as state > input is invisible
+//pass state into master component of input
+//if length = 1, value = 1. > update single digit of seconds component to show. 
+//
 function splitInput(initialTime) {
   const parsedTimer = parseInt(initialTime);
   const arr = Array.from(parsedTimer.toString()).map(Number);
@@ -188,8 +192,6 @@ function Main() {
         input[2] = "0" + input[2];
       }
     }
-
-    //when space is added, input disappears
     setInputTimer(input.join(""));
   }
   
@@ -260,7 +262,7 @@ function Main() {
       }
     }
 
-    if (splitTime !== ["0", "0", "0", "0", "0", "0"]) {
+    if (totalSeconds !== 0) {
       for (let i = 0; i < splitTime.length; i++) {
         if (splitTime[i] !== "0") {
           omitZero = splitTime.slice(i);
@@ -327,13 +329,6 @@ function Main() {
       <div className="timer-container">
         {timerState === TIMER_STATES["EDIT"] && (
           <div id="notation-timer">
-            <div className="input-time-notation">
-              <span id="hour">h</span>
-              <span id="colon1">:</span>
-              <span id="minute">m</span>
-              <span id="colon2">:</span>
-              <span id="second">s</span>
-            </div>
             <input
               type="number"
               id="timer"

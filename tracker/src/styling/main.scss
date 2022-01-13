@@ -15,24 +15,17 @@
       align-items: center;
       flex-direction: column;
       width: 100%;
+      
+      //not responsive
+      #timer {
+        text-align: right;
+        height: 65%;
+        width: 40%;
+        border: none;
+        font-size: 144px;
+      }
     }
 
-    #timer {
-      text-align: right;
-      height: 55%;
-      width: 30%;
-      border: none;
-      font-size: 144px;
-    }
-
-    .input-time-notation {
-      width: 20%;
-      height: 25%;
-      font-size: 50px;
-      display: flex;
-      justify-content: space-between;
-    }
-    
     #timer-button-container {
       display: flex;
       flex-direction: column;
