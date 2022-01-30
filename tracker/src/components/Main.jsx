@@ -60,10 +60,7 @@ function Main() {
   //step 2: set timer values based off display timer -- incomplete
 
   function startTimer() {
-
-    let tripleInputArray = [inputTimerHour, inputTimerMinute, inputTimerSecond]
-    let tripleCombined = tripleInputArray.join('');
-
+    let tripleCombined = inputTimerHour + inputTimerMinute + inputTimerSecond
 
     const calculated = calculateSeconds(initialTime);
     const newInputTimer = calculateSeconds(tripleCombined);
@@ -180,9 +177,9 @@ function Main() {
   }
 
   //set input timer based on displayed timer //**** important: display timer > input timer */
+
   function fillZeros() {
     let input = displayInputValue();
-
     for (let i = 0; i < input.length; i++) {
       if (input[0] === 0) {
         input[0] = "00";
@@ -202,7 +199,11 @@ function Main() {
         input[2] = "0" + input[2];
       }
     }
-    setInputTimer(input.join(""));
+    let x = input.join("")
+    setInputTimerHour(input[0])
+    setInputTimerMinute(input[1])
+    setInputTimerSecond(input[2])
+
   }
 
   function displayTime() {
@@ -581,15 +582,6 @@ function Main() {
       <div className="timer-container">
         {timerState === TIMER_STATES["EDIT"] && (
           <div id="notation-timer">
-            <input
-              type="number"
-              id="timer"
-              name="timer"
-              value={inputTimer}
-              onChange={handleChange}
-              onKeyPress={numOnly}
-              autoFocus
-            ></input>
             <div className="box" onClick={handleClick}></div>
             <div className="all-inputs">
               <input
