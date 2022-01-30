@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "../styling/main.scss";
 
 //store input length and value as state > input is invisible
 //pass state into master component of input
-//if length = 1, value = 1. > update single digit of seconds component to show. 
+//if length = 1, value = 1. > update single digit of seconds component to show.
 //
 function splitInput(initialTime) {
   const parsedTimer = parseInt(initialTime);
@@ -170,6 +170,7 @@ function Main() {
     return formatted;
   }
 
+  //set input timer based on displayed timer
   function fillZeros() {
     let input = displayInputValue();
 
@@ -194,7 +195,6 @@ function Main() {
     }
     setInputTimer(input.join(""));
   }
-  
 
   function displayTime() {
     let formatTime = totalSeconds;
@@ -226,16 +226,16 @@ function Main() {
       if (formatted[i].toString().length === 1) {
         formatted[i] = "0" + formatted[i];
       }
-    }    
+    }
     return formatted;
   }
 
   /**
    * Split timer takes the display time which consists of an array of elements where each element is two digits representing either hours, minutes or seconds, and reformats it so that every digit is its own element in an array.
-   * 
+   *
    * For example, if the display time input would have the value of: ["00", "05", "02"], then,
    * the splitTimer() function would return: ["0", "0", "0", "5", "0", "2"]
-   * 
+   *
    * @returns An array where each element is a digit of the current displayed time
    */
   function splitTimer() {
@@ -278,7 +278,7 @@ function Main() {
 
   // displayTime > omitZero > addTimeNotation
 
-  //time notation for every length case 
+  //time notation for every length case
   //if input goes above 99:59:59 > default timer to 99:59:59
   //ex: 99:99:99 > 99:59:59
 
@@ -321,9 +321,251 @@ function Main() {
 
   const formattedTime = addTimeNotation();
 
-  console.log("timer check", inputTimer)
+  console.log("timer check", inputTimer);
 
-  //for input: numOnly check and substring 6 disabled
+  /**
+   * IMPORTED FROM TEST
+   */
+
+  const [inputTimerSecond, setInputTimerSecond] = useState("00");
+  const [inputTimerMinute, setInputTimerMinute] = useState("00");
+  const [inputTimerHour, setInputTimerHour] = useState("00");
+
+  // const [firstS, setFirstS] = useState(0);
+  // const [secondS, setSecondS] = useState(0);
+  // const [firstM, setFirstM] = useState(0);
+  // const [secondM, setSecondM] = useState(0);
+  // const [firstH, setFirstH] = useState(0);
+  // const [secondH, setSecondH] = useState(0);
+
+  //traverse left
+  const [selection1, setSelection1] = useState();
+
+  //traverse right
+  const [selection2, setSelection2] = useState();
+
+  //replace/delete
+  const [selection3, setSelection3] = useState();
+
+  //traverse input
+  const [inputEle1, setInputEle1] = useState();
+
+  //replacing/deleting digit
+  const [inputEle2, setInputEle2] = useState();
+
+  //prevent access to 0
+  const [selection4, setSelection4] = useState();
+  
+    //travese input left
+    useEffect(() => {
+      if (!selection1) return;  // prevent running on start
+      const {start, end} = selection1;
+      inputEle1.previousElementSibling.focus();
+      inputEle1.previousElementSibling.setSelectionRange(start, end);
+    }, [selection1])
+  
+    //traverse input right
+    useEffect(() => {
+      if (!selection2) return;  
+      const {start, end} = selection2;
+      inputEle1.nextElementSibling.focus();
+      inputEle1.nextElementSibling.setSelectionRange(start, end);
+    }, [selection2])
+  
+    //replace/delete digit
+    useEffect(() => {
+      if (!selection3) return;  
+      const {start, end} = selection3;
+      inputEle2.setSelectionRange(start, end);
+    },[selection3])
+  
+    //prevent access to 0
+    useEffect(() => {
+      if (!selection4) return;  
+      const {start, end} = selection4;
+      timerH.current.setSelectionRange(start, end);
+    },[selection4])
+
+  const notation = ["s", "m", "h"];
+
+  //use ref for hours input
+  const timerH = useRef();
+
+  function handleClick() {
+    // setInputEle3(timerH)
+    timerH.current.focus();
+    setSelection4({ start: 1, end: 1 });
+  }
+
+  function handleKeyDown(e) {
+    const input = e.target;
+
+    setInputEle1(input);
+
+    //moving left
+    //prevent access past final digit inside all input
+    if (
+      input.previousElementSibling &&
+      input.value.length === 2 &&
+      input.selectionEnd === 1 &&
+      e.keyCode === 37
+    ) {
+      setSelection1({ start: 2, end: 2 });
+    } else if (
+      !input.previousElementSibling &&
+      input.value.length === 2 &&
+      input.selectionEnd === 1 &&
+      e.keyCode === 37
+    ) {
+      e.preventDefault();
+    }
+
+    //moving right
+    if (
+      input.nextElementSibling &&
+      (input.selectionEnd === 2 || input.selectionEnd === 0) &&
+      e.keyCode === 39
+    ) {
+      setSelection2({ start: 1, end: 1 });
+    }
+  }
+
+  function handleChangeSecond(event) {
+    let input = event.target.value;
+    const target = event.target;
+    setInputEle2(target);
+    const initialPosition = target.selectionStart;
+
+    //keep caret position if u change 2nd digit
+    if (target.selectionStart === 2) {
+      setSelection3({ start: initialPosition, end: initialPosition - 1 });
+      //if u delete
+    } else if (target.selectionEnd === initialPosition) {
+      setSelection3({ start: initialPosition + 1, end: initialPosition + 1 });
+    }
+
+    while (input.length > 2) {
+      input = input.substring(1);
+    }
+
+    if (!input) {
+      input = "00";
+    } else if (input.length === 1) {
+      input = "0" + input.substring(0);
+    }
+
+    console.log("INPUT", input);
+
+    // switch (input.length) {
+    //   case 0:
+    //     setFirstS(0);
+    //     setSecondS(0);
+    //     break;
+    //   case 1:
+    //     setFirstS(input.substring(0, 1));
+    //     setSecondS(0);
+    //     break;
+    //   case 2:
+    //     setFirstS(input.substring(1, 2));
+    //     setSecondS(input.substring(0, 1));
+    //     break;
+    //   default:
+    //     break;
+    // }
+    setInputTimerSecond(input);
+  }
+
+  function handleChangeMinute(event) {
+    let input = event.target.value;
+    const target = event.target;
+    setInputEle2(target);
+    const initialPosition = target.selectionStart;
+
+    //keep caret position if u change 2nd digit
+    if (target.selectionStart === 2) {
+      setSelection3({ start: initialPosition, end: initialPosition - 1 });
+      //if u delete
+    } else if (target.selectionEnd === initialPosition) {
+      setSelection3({ start: initialPosition + 1, end: initialPosition + 1 });
+    }
+
+    while (input.length > 2) {
+      input = input.substring(1);
+    }
+
+    if (!input) {
+      input = "00";
+    } else if (input.length === 1) {
+      input = "0" + input.substring(0);
+    }
+
+    // switch (input.length) {
+    //   case 0:
+    //     setFirstM(0);
+    //     setSecondM(0);
+    //     break;
+    //   case 1:
+    //     setFirstM(input.substring(0, 1));
+    //     setSecondM(0);
+    //     break;
+    //   case 2:
+    //     setFirstM(input.substring(1, 2));
+    //     setSecondM(input.substring(0, 1));
+    //     break;
+    //   default:
+    //     break;
+    // }
+    setInputTimerMinute(input);
+  }
+
+  function handleChangeHour(event) {
+    let input = event.target.value;
+
+    const target = event.target;
+    setInputEle2(target);
+    const initialPosition = target.selectionStart;
+
+    //keep caret position if u change 2nd digit
+    if (target.selectionStart === 2) {
+      setSelection3({ start: initialPosition, end: initialPosition - 1 });
+      //if u delete
+    } else if (target.selectionEnd === initialPosition) {
+      setSelection3({ start: initialPosition + 1, end: initialPosition + 1 });
+    }
+
+    while (input.length > 2) {
+      input = input.substring(1);
+    }
+
+    if (!input) {
+      input = "00";
+    } else if (input.length === 1) {
+      input = "0" + input.substring(0);
+    }
+
+    // switch (input.length) {
+    //   case 0:
+    //     setFirstH(0);
+    //     setSecondH(0);
+    //     break;
+    //   case 1:
+    //     setFirstH(input.substring(0, 1));
+    //     setSecondH(0);
+    //     break;
+    //   case 2:
+    //     setFirstH(input.substring(1, 2));
+    //     setSecondH(input.substring(0, 1));
+    //     break;
+    //   default:
+    //     break;
+    // }
+    setInputTimerHour(input);
+  }
+
+  /**
+   * IMPORTED FROM TEST
+   */
+
   return (
     <div className="container">
       <div className="timer-container">
@@ -338,6 +580,51 @@ function Main() {
               onKeyPress={numOnly}
               autoFocus
             ></input>
+            <div className="box" onClick={handleClick}></div>
+            <div className="all-inputs">
+              <input
+                className="hoursInput"
+                type="text"
+                id="timerx1"
+                ref={timerH}
+                value={inputTimerHour}
+                onChange={handleChangeHour}
+                onKeyDown={handleKeyDown}
+                onKeyPress={numOnly}
+                maxLength={3}
+              ></input>
+              <input
+                className="minutesInput"
+                type="text"
+                id="timerx2"
+                value={inputTimerMinute}
+                onChange={handleChangeMinute}
+                onKeyDown={handleKeyDown}
+                onKeyPress={numOnly}
+                maxLength={3}
+              ></input>
+              <input
+                className="secondsInput"
+                type="text"
+                id="timerx3"
+                value={inputTimerSecond}
+                onChange={handleChangeSecond}
+                onKeyDown={handleKeyDown}
+                onKeyPress={numOnly}
+                maxLength={3}
+              ></input>
+            </div>
+            <div className="notation">
+              <div className="hours">
+                <span className="notationH">{notation[2]}</span>
+              </div>
+              <div className="minutes">
+                <span className="notationM">{notation[1]}</span>
+              </div>
+              <div className="seconds">
+                <span className="notationS">{notation[0]}</span>
+              </div>
+            </div>
           </div>
         )}
         <div id="timer-button-container">
