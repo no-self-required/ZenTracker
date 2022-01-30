@@ -55,9 +55,18 @@ function Main() {
     }
   }, [timerState, intervalID]);
 
+  //take all three inputs, combine and calculate seconds
+  //step 1: display timer based off input -- complete
+  //step 2: set timer values based off display timer -- incomplete
+
   function startTimer() {
+
+    let tripleInputArray = [inputTimerHour, inputTimerMinute, inputTimerSecond]
+    let tripleCombined = tripleInputArray.join('');
+
+
     const calculated = calculateSeconds(initialTime);
-    const newInputTimer = calculateSeconds(inputTimer);
+    const newInputTimer = calculateSeconds(tripleCombined);
     //if initial time has already started
     if (timerState === TIMER_STATES["EDIT"]) {
       console.log("START FROM EDIT STATE");
@@ -170,7 +179,7 @@ function Main() {
     return formatted;
   }
 
-  //set input timer based on displayed timer
+  //set input timer based on displayed timer //**** important: display timer > input timer */
   function fillZeros() {
     let input = displayInputValue();
 
@@ -327,6 +336,7 @@ function Main() {
    * IMPORTED FROM TEST
    */
 
+  //INPUT VALUES COME FROM HERE
   const [inputTimerSecond, setInputTimerSecond] = useState("00");
   const [inputTimerMinute, setInputTimerMinute] = useState("00");
   const [inputTimerHour, setInputTimerHour] = useState("00");
