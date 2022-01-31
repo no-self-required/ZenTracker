@@ -57,7 +57,7 @@ function Main() {
 
   //update display spans on every tick
   useEffect(() => {
-    splitTimer();
+    omitZero();
   }, [totalSeconds]);
 
   function startTimer() {
@@ -196,14 +196,14 @@ function Main() {
     setInputTimerSecond(input[2]);
   }
 
-  const [firstS, setFirstS] = useState(0);
-  const [secondS, setSecondS] = useState(0);
+  const [firstS, setFirstS] = useState(null);
+  const [secondS, setSecondS] = useState(null);
 
-  const [firstM, setFirstM] = useState(0);
-  const [secondM, setSecondM] = useState(0);
+  const [firstM, setFirstM] = useState(null);
+  const [secondM, setSecondM] = useState(null);
 
-  const [firstH, setFirstH] = useState(0);
-  const [secondH, setSecondH] = useState(0);
+  const [firstH, setFirstH] = useState(null);
+  const [secondH, setSecondH] = useState(null);
 
   function displayTime() {
     let formatTime = totalSeconds;
@@ -263,50 +263,96 @@ function Main() {
 
     console.log("splitTimer", splitTimer);
 
-    switch (splitTimer.length) {
+    return splitTimer;
+  }
+
+  function omitZero() {
+    const splitTime = splitTimer();
+
+    let omitZero = [];
+    //remove zeros before start of timer
+
+    if (totalSeconds === 0) {
+      omitZero = ["0"];
+    } else {
+      for (let i = 0; i < splitTime.length; i++) {
+        if (splitTime[i] !== "0") {
+          omitZero = splitTime.slice(i);
+          break;
+        }
+      }
+    }
+
+    if (totalSeconds !== 0) {
+      for (let i = 0; i < splitTime.length; i++) {
+        if (splitTime[i] !== "0") {
+          omitZero = splitTime.slice(i);
+          break;
+        }
+      }
+    } else {
+      omitZero = ["0"];
+    }
+
+    switch (omitZero.length) {
+      case 0:
+      case 1:
+        setFirstH(null);
+        setSecondH(null);
+        setFirstM(null);
+        setSecondM(null);
+        setFirstS(null);
+        setSecondS(omitZero[0]);
+        break;
+      case 2:
+        setFirstH(null);
+        setSecondH(null);
+        setFirstM(null);
+        setSecondM(null);
+        setFirstS(omitZero[0]);
+        setSecondS(omitZero[1]);
+        break;
+      case 3:
+        setFirstH(null);
+        setSecondH(null);
+        setFirstM(null);
+        setSecondM(omitZero[0]);
+        setFirstS(omitZero[1]);
+        setSecondS(omitZero[2]);
+        break;
+      case 4:
+        setFirstH(null);
+        setSecondH(null);
+        setFirstM(omitZero[0]);
+        setSecondM(omitZero[1]);
+        setFirstS(omitZero[2]);
+        setSecondS(omitZero[3]);
+        break;
+      case 5:
+        setFirstH(null);
+        setSecondH(omitZero[0]);
+        setFirstM(omitZero[1]);
+        setSecondM(omitZero[2]);
+        setFirstS(omitZero[3]);
+        setSecondS(omitZero[4]);
+        break;
       case 6:
-        setFirstH(splitTimer[0]);
-        setSecondH(splitTimer[1]);
-        setFirstM(splitTimer[2]);
-        setSecondM(splitTimer[3]);
-        setFirstS(splitTimer[4]);
-        setSecondS(splitTimer[5]);
+        setFirstH(omitZero[0]);
+        setSecondH(omitZero[1]);
+        setFirstM(omitZero[2]);
+        setSecondM(omitZero[3]);
+        setFirstS(omitZero[4]);
+        setSecondS(omitZero[5]);
+        break;
+
       default:
         break;
     }
 
-    return splitTimer;
+    console.log("omitZero", omitZero);
+
+    return omitZero;
   }
-
-  // function omitZero() {
-  //   const splitTime = splitTimer();
-
-  //   let omitZero = [];
-  //   //remove zeros before start of timer
-
-  //   if (totalSeconds === 0) {
-  //     omitZero = ["0"];
-  //   } else {
-  //     for (let i = 0; i < splitTime.length; i++) {
-  //       if (splitTime[i] !== "0") {
-  //         omitZero = splitTime.slice(i);
-  //         break;
-  //       }
-  //     }
-  //   }
-
-  //   if (totalSeconds !== 0) {
-  //     for (let i = 0; i < splitTime.length; i++) {
-  //       if (splitTime[i] !== "0") {
-  //         omitZero = splitTime.slice(i);
-  //         break;
-  //       }
-  //     }
-  //   } else {
-  //     omitZero = ["0"];
-  //   }
-  //   return omitZero;
-  // }
 
   // displayTime > omitZero > addTimeNotation
 
@@ -649,21 +695,27 @@ function Main() {
             <div id="timer-button-absolute-container">
               <div id="" onClick={editTimerState}>
                 <div className="notationDisplay">
-                  {/* dont display firstH = 0 if secondH ! = 0 */}
                   <div className="hours">
                     <span className="firstH">{firstH}</span>
                     <span className="secondH">{secondH}</span>
+                    {(firstH || secondH) && (
                     <span className="notationH">{notation[2]}</span>
+                    )}
                   </div>
                   <div className="minutes">
                     <span className="firstM">{firstM}</span>
                     <span className="secondM">{secondM}</span>
+                    {(firstM || secondM) && (
                     <span className="notationM">{notation[1]}</span>
+                    )}
                   </div>
                   <div className="seconds">
                     <span className="firstS">{firstS}</span>
                     <span className="secondS">{secondS}</span>
+                    {(firstS || secondS) && (
                     <span className="notationS">{notation[0]}</span>
+
+                    )}
                   </div>
                 </div>
               </div>
