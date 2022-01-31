@@ -24,10 +24,10 @@ function calculateSeconds(initialTime) {
   const totMin = minutes[0] * 600 + minutes[1] * 60;
   const totHours = hours[0] * 36000 + hours[1] * 3600;
   let calculatedTotalSeconds = totSec + totMin + totHours;
-  console.log("calculatedTotalSeconds", calculatedTotalSeconds)
+  console.log("calculatedTotalSeconds", calculatedTotalSeconds);
   //if time entered is more than 99hours, set to 99 hours
-  if(calculatedTotalSeconds > 360000) {
-    calculatedTotalSeconds = 359999
+  if (calculatedTotalSeconds > 360000) {
+    calculatedTotalSeconds = 359999;
   }
   return calculatedTotalSeconds;
 }
@@ -55,9 +55,9 @@ function Main() {
     }
   }, [timerState, intervalID]);
 
-  //update display spans on every tick 
+  //update display spans on every tick
   useEffect(() => {
-    addTimeNotation();
+    displayTime();
   }, [totalSeconds]);
 
   function startTimer() {
@@ -208,6 +208,10 @@ function Main() {
     setInputTimerSecond(input[2]);
   }
 
+  const [firstS, setFirstS] = useState(0);
+  const [firstM, setFirstM] = useState(0);
+  const [firstH, setFirstH] = useState(0);
+
   function displayTime() {
     let formatTime = totalSeconds;
     let showHours = 0;
@@ -234,11 +238,31 @@ function Main() {
     formatted.push(showSec);
 
     //add a zero before single digits
-    for (let i = 0; i < formatted.length; i++) {
-      if (formatted[i].toString().length === 1) {
-        formatted[i] = "0" + formatted[i];
-      }
+    // for (let i = 0; i < formatted.length; i++) {
+    //   if (formatted[i].toString().length === 1) {
+    //     formatted[i] = "0" + formatted[i];
+    //   }
+    // }
+
+    switch (formatted.length) {
+      case 0:
+      case 1:
+        setFirstS(formatted[0]);
+        break;
+      case 2:
+        setFirstM(formatted[0]);
+        setFirstS(formatted[1]);
+        break;
+      case 3:
+        setFirstH(formatted[0]);
+        setFirstM(formatted[1]);
+        setFirstS(formatted[2]);
+        break;
+      default:
+        break;
     }
+
+    console.log("formatted inside displayTime", formatted);
     return formatted;
   }
 
@@ -250,42 +274,42 @@ function Main() {
    *
    * @returns An array where each element is a digit of the current displayed time
    */
-  function splitTimer() {
-    const timer = displayTime();
-    const joinTimer = timer.join("");
-    const splitTimer = joinTimer.split("");
-    return splitTimer;
-  }
+  // function splitTimer() {
+  //   const timer = displayTime();
+  //   const joinTimer = timer.join("");
+  //   const splitTimer = joinTimer.split("");
+  //   return splitTimer;
+  // }
 
-  function omitZero() {
-    const splitTime = splitTimer();
+  // function omitZero() {
+  //   const splitTime = splitTimer();
 
-    let omitZero = [];
-    //remove zeros before start of timer
+  //   let omitZero = [];
+  //   //remove zeros before start of timer
 
-    if (totalSeconds === 0) {
-      omitZero = ["0"];
-    } else {
-      for (let i = 0; i < splitTime.length; i++) {
-        if (splitTime[i] !== "0") {
-          omitZero = splitTime.slice(i);
-          break;
-        }
-      }
-    }
+  //   if (totalSeconds === 0) {
+  //     omitZero = ["0"];
+  //   } else {
+  //     for (let i = 0; i < splitTime.length; i++) {
+  //       if (splitTime[i] !== "0") {
+  //         omitZero = splitTime.slice(i);
+  //         break;
+  //       }
+  //     }
+  //   }
 
-    if (totalSeconds !== 0) {
-      for (let i = 0; i < splitTime.length; i++) {
-        if (splitTime[i] !== "0") {
-          omitZero = splitTime.slice(i);
-          break;
-        }
-      }
-    } else {
-      omitZero = ["0"];
-    }
-    return omitZero;
-  }
+  //   if (totalSeconds !== 0) {
+  //     for (let i = 0; i < splitTime.length; i++) {
+  //       if (splitTime[i] !== "0") {
+  //         omitZero = splitTime.slice(i);
+  //         break;
+  //       }
+  //     }
+  //   } else {
+  //     omitZero = ["0"];
+  //   }
+  //   return omitZero;
+  // }
 
   // displayTime > omitZero > addTimeNotation
 
@@ -296,42 +320,39 @@ function Main() {
   //if input is empty: timer is = 0
   //timer will never be empty due to auto fill zeros
 
-  const [firstS, setFirstS] = useState(0);
-  const [firstM, setFirstM] = useState(0);
-  const [firstH, setFirstH] = useState(0);
-
-  function addTimeNotation() {
-    const formatted = omitZero();
-    switch (formatted.length) {
-      case 0:
-      case 1:
-        setFirstS(formatted[0]);
-        break;
-      case 2:
-        setFirstS(formatted[0] + formatted[1]);
-        break;
-      case 3:
-        setFirstM(formatted[0]);
-        setFirstS(formatted[1] + formatted[2]);
-        break;
-      case 4:
-        setFirstM(formatted[0] + formatted[1]);
-        setFirstS(formatted[2] + formatted[3]);
-        break;
-      case 5:
-        setFirstH(formatted[0]);
-        setFirstM(formatted[1] + formatted[2]);
-        setFirstS(formatted[3] + formatted[4]);
-        break;
-      case 6:
-        setFirstH(formatted[0] + formatted[1]);
-        setFirstM(formatted[2] + formatted[3]);
-        setFirstS(formatted[4] + formatted[5]);
-        break;
-      default:
-        break;
-    }
-  }
+  //Hours and minutes keep old spans if Seconds is updated
+  // function addTimeNotation() {
+  //   const formatted = omitZero();
+  //   switch (formatted.length) {
+  //     case 0:
+  //     case 1:
+  //       setFirstS(formatted[0]);
+  //       break;
+  //     case 2:
+  //       setFirstS(formatted[0] + formatted[1]);
+  //       break;
+  //     case 3:
+  //       setFirstM(formatted[0]);
+  //       setFirstS(formatted[1] + formatted[2]);
+  //       break;
+  //     case 4:
+  //       setFirstM(formatted[0] + formatted[1]);
+  //       setFirstS(formatted[2] + formatted[3]);
+  //       break;
+  //     case 5:
+  //       setFirstH(formatted[0]);
+  //       setFirstM(formatted[1] + formatted[2]);
+  //       setFirstS(formatted[3] + formatted[4]);
+  //       break;
+  //     case 6:
+  //       setFirstH(formatted[0] + formatted[1]);
+  //       setFirstM(formatted[2] + formatted[3]);
+  //       setFirstS(formatted[4] + formatted[5]);
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  // }
 
   //disable reset button if timer is not running
 
@@ -634,10 +655,23 @@ function Main() {
                       <span className="notationH">{notation[2]}</span>
                     </div>
                   )}
+                  {firstM === 0 && (
+                    <div className="minutes">
+                      <span className="firstM">00</span>
+                      <span className="notationM">{notation[1]}</span>
+                    </div>
+                  )}
                   {firstM !== 0 && (
                     <div className="minutes">
                       <span className="firstM">{firstM}</span>
                       <span className="notationM">{notation[1]}</span>
+                    </div>
+                  )}
+                  {/* show two zeros if seconds = 0*/}
+                  {firstS === 0 && (
+                    <div className="seconds">
+                      <span className="firstS">00</span>
+                      <span className="notationS">{notation[0]}</span>
                     </div>
                   )}
                   {firstS !== 0 && (
