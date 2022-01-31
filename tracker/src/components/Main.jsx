@@ -64,13 +64,17 @@ function Main() {
     let tripleCombined = inputTimerHour + inputTimerMinute + inputTimerSecond;
 
     const calculated = calculateSeconds(initialTime);
+
     const newInputTimer = calculateSeconds(tripleCombined);
+
     //if initial time has already started
     if (timerState === TIMER_STATES["EDIT"]) {
       console.log("START FROM EDIT STATE");
       //logic to start from new initial input
       console.log("START FROM EDIT WITH NEW INITIAL INPUT");
       setTotalSeconds(newInputTimer);
+      //set new initial time to sum of inputs > replaces default total seconds state
+      setInitialTime(tripleCombined);
       setTimerState(TIMER_STATES["STARTED"]);
       return;
     } else if (timerState === TIMER_STATES["STOPPED"]) {
@@ -189,8 +193,9 @@ function Main() {
         input[2] = "0" + input[2];
       }
     }
-    let initialTime = input.join("");
-    setInitialTime(initialTime);
+    // let initialTime = input.join("");
+    // ***????****
+
     setInputTimerHour(input[0]);
     setInputTimerMinute(input[1]);
     setInputTimerSecond(input[2]);
@@ -699,22 +704,21 @@ function Main() {
                     <span className="firstH">{firstH}</span>
                     <span className="secondH">{secondH}</span>
                     {(firstH || secondH) && (
-                    <span className="notationH">{notation[2]}</span>
+                      <span className="notationH">{notation[2]}</span>
                     )}
                   </div>
                   <div className="minutes">
                     <span className="firstM">{firstM}</span>
                     <span className="secondM">{secondM}</span>
                     {(firstM || secondM) && (
-                    <span className="notationM">{notation[1]}</span>
+                      <span className="notationM">{notation[1]}</span>
                     )}
                   </div>
                   <div className="seconds">
                     <span className="firstS">{firstS}</span>
                     <span className="secondS">{secondS}</span>
                     {(firstS || secondS) && (
-                    <span className="notationS">{notation[0]}</span>
-
+                      <span className="notationS">{notation[0]}</span>
                     )}
                   </div>
                 </div>
