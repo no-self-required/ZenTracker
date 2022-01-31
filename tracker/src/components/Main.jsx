@@ -57,7 +57,7 @@ function Main() {
 
   //update display spans on every tick
   useEffect(() => {
-    displayTime();
+    splitTimer();
   }, [totalSeconds]);
 
   function startTimer() {
@@ -130,18 +130,6 @@ function Main() {
     });
   }
 
-  //stretch: on fresh edit state: any new input will delete previous timer
-  //old input
-  // function handleChange(event) {
-  //   let timerInput = event.target.value;
-  //   while (timerInput.length > 6) {
-  //     timerInput = timerInput.substring(1);
-  //   }
-
-  //   setInputTimer(timerInput);
-  //   setInitialTime(timerInput);
-  // }
-
   //only accept numbers for timer input
   function numOnly(event) {
     if (!/[0-9]/.test(event.key)) {
@@ -209,8 +197,13 @@ function Main() {
   }
 
   const [firstS, setFirstS] = useState(0);
+  const [secondS, setSecondS] = useState(0);
+
   const [firstM, setFirstM] = useState(0);
+  const [secondM, setSecondM] = useState(0);
+
   const [firstH, setFirstH] = useState(0);
+  const [secondH, setSecondH] = useState(0);
 
   function displayTime() {
     let formatTime = totalSeconds;
@@ -237,30 +230,13 @@ function Main() {
     formatted.push(showMin);
     formatted.push(showSec);
 
-    //add a zero before single digits
-    // for (let i = 0; i < formatted.length; i++) {
-    //   if (formatted[i].toString().length === 1) {
-    //     formatted[i] = "0" + formatted[i];
-    //   }
-    // }
-
-    switch (formatted.length) {
-      case 0:
-      case 1:
-        setFirstS(formatted[0]);
-        break;
-      case 2:
-        setFirstM(formatted[0]);
-        setFirstS(formatted[1]);
-        break;
-      case 3:
-        setFirstH(formatted[0]);
-        setFirstM(formatted[1]);
-        setFirstS(formatted[2]);
-        break;
-      default:
-        break;
+    for (let i = 0; i < formatted.length; i++) {
+      if (formatted[i].toString().length === 1) {
+        formatted[i] = "0" + formatted[i];
+      }
     }
+
+    //assign values to H:M:S spans
 
     console.log("formatted inside displayTime", formatted);
     return formatted;
@@ -274,12 +250,33 @@ function Main() {
    *
    * @returns An array where each element is a digit of the current displayed time
    */
-  // function splitTimer() {
-  //   const timer = displayTime();
-  //   const joinTimer = timer.join("");
-  //   const splitTimer = joinTimer.split("");
-  //   return splitTimer;
-  // }
+
+  //return fill zeros for single digits
+  //switch case based off length to assign values to first and second digits of H:M:S
+
+  function splitTimer() {
+    const timer = displayTime();
+    const joinTimer = timer.join("");
+    console.log("joinTimer", joinTimer);
+
+    const splitTimer = joinTimer.split("");
+
+    console.log("splitTimer", splitTimer);
+
+    switch (splitTimer.length) {
+      case 6:
+        setFirstH(splitTimer[0]);
+        setSecondH(splitTimer[1]);
+        setFirstM(splitTimer[2]);
+        setSecondM(splitTimer[3]);
+        setFirstS(splitTimer[4]);
+        setSecondS(splitTimer[5]);
+      default:
+        break;
+    }
+
+    return splitTimer;
+  }
 
   // function omitZero() {
   //   const splitTime = splitTimer();
@@ -357,6 +354,7 @@ function Main() {
   //disable reset button if timer is not running
 
   // const formattedTime = addTimeNotation();
+
   /**
    * IMPORTED FROM TEST
    */
@@ -592,6 +590,8 @@ function Main() {
    * IMPORTED FROM TEST
    */
 
+  //dont show any Zeros before actual timer
+
   return (
     <div className="container">
       <div className="timer-container">
@@ -649,37 +649,22 @@ function Main() {
             <div id="timer-button-absolute-container">
               <div id="" onClick={editTimerState}>
                 <div className="notationDisplay">
-                  {firstH !== 0 && (
-                    <div className="hours">
-                      <span className="firstH">{firstH}</span>
-                      <span className="notationH">{notation[2]}</span>
-                    </div>
-                  )}
-                  {firstM === 0 && (
-                    <div className="minutes">
-                      <span className="firstM">00</span>
-                      <span className="notationM">{notation[1]}</span>
-                    </div>
-                  )}
-                  {firstM !== 0 && (
-                    <div className="minutes">
-                      <span className="firstM">{firstM}</span>
-                      <span className="notationM">{notation[1]}</span>
-                    </div>
-                  )}
-                  {/* show two zeros if seconds = 0*/}
-                  {firstS === 0 && (
-                    <div className="seconds">
-                      <span className="firstS">00</span>
-                      <span className="notationS">{notation[0]}</span>
-                    </div>
-                  )}
-                  {firstS !== 0 && (
-                    <div className="seconds">
-                      <span className="firstS">{firstS}</span>
-                      <span className="notationS">{notation[0]}</span>
-                    </div>
-                  )}
+                  {/* dont display firstH = 0 if secondH ! = 0 */}
+                  <div className="hours">
+                    <span className="firstH">{firstH}</span>
+                    <span className="secondH">{secondH}</span>
+                    <span className="notationH">{notation[2]}</span>
+                  </div>
+                  <div className="minutes">
+                    <span className="firstM">{firstM}</span>
+                    <span className="secondM">{secondM}</span>
+                    <span className="notationM">{notation[1]}</span>
+                  </div>
+                  <div className="seconds">
+                    <span className="firstS">{firstS}</span>
+                    <span className="secondS">{secondS}</span>
+                    <span className="notationS">{notation[0]}</span>
+                  </div>
                 </div>
               </div>
             </div>
