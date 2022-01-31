@@ -1,10 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../styling/main.scss";
 
-//store input length and value as state > input is invisible
-//pass state into master component of input
-//if length = 1, value = 1. > update single digit of seconds component to show.
-//
 function splitInput(initialTime) {
   const parsedTimer = parseInt(initialTime);
   const arr = Array.from(parsedTimer.toString()).map(Number);
@@ -27,7 +23,12 @@ function calculateSeconds(initialTime) {
   const totSec = seconds[0] * 10 + seconds[1];
   const totMin = minutes[0] * 600 + minutes[1] * 60;
   const totHours = hours[0] * 36000 + hours[1] * 3600;
-  const calculatedTotalSeconds = totSec + totMin + totHours;
+  let calculatedTotalSeconds = totSec + totMin + totHours;
+  console.log("calculatedTotalSeconds", calculatedTotalSeconds)
+  //if time entered is more than 99hours, set to 99 hours
+  if(calculatedTotalSeconds > 360000) {
+    calculatedTotalSeconds = 359999
+  }
   return calculatedTotalSeconds;
 }
 
@@ -46,7 +47,6 @@ function Main() {
   const [initialTime, setInitialTime] = useState(500);
   const [intervalID, setIntervalID] = useState();
   const [timerState, setTimerState] = useState(TIMER_STATES["INITIAL"]);
-  // const [inputTimer, setInputTimer] = useState(initialTime);
 
   useEffect(() => {
     if (timerState === TIMER_STATES["STARTED"] && !intervalID) {
@@ -55,13 +55,10 @@ function Main() {
     }
   }, [timerState, intervalID]);
 
+  //update display spans on every tick 
   useEffect(() => {
     addTimeNotation();
   }, [totalSeconds]);
-
-  //take all three inputs, combine and calculate seconds
-  //step 1: display timer based off input -- complete
-  //step 2: set timer values based off display timer -- incomplete
 
   function startTimer() {
     let tripleCombined = inputTimerHour + inputTimerMinute + inputTimerSecond;
@@ -204,8 +201,8 @@ function Main() {
         input[2] = "0" + input[2];
       }
     }
-    let x = input.join("");
-    setInitialTime(x);
+    let initialTime = input.join("");
+    setInitialTime(initialTime);
     setInputTimerHour(input[0]);
     setInputTimerMinute(input[1]);
     setInputTimerSecond(input[2]);
@@ -287,7 +284,6 @@ function Main() {
     } else {
       omitZero = ["0"];
     }
-    console.log("omitZero array inside splitTimer", omitZero);
     return omitZero;
   }
 
@@ -301,53 +297,33 @@ function Main() {
   //timer will never be empty due to auto fill zeros
 
   const [firstS, setFirstS] = useState(0);
-  // const [secondS, setSecondS] = useState(0);
   const [firstM, setFirstM] = useState(0);
-  // const [secondM, setSecondM] = useState(0);
   const [firstH, setFirstH] = useState(0);
-  // const [secondH, setSecondH] = useState(0);
 
   function addTimeNotation() {
     const formatted = omitZero();
-    console.log(
-      "formatted inside addTimeNotation before formatting",
-      formatted
-    );
-    //[5, 0, 0]
     switch (formatted.length) {
       case 0:
       case 1:
-        // formatted[0] = formatted[0] + "s ";
         setFirstS(formatted[0]);
         break;
       case 2:
-        // formatted[1] = formatted[1] + "s ";
         setFirstS(formatted[0] + formatted[1]);
         break;
       case 3:
-        // formatted[0] = formatted[0] + "m ";
-        // formatted[2] = formatted[2] + "s ";
         setFirstM(formatted[0]);
         setFirstS(formatted[1] + formatted[2]);
         break;
       case 4:
-        // formatted[1] = formatted[1] + "m ";
-        // formatted[3] = formatted[3] + "s ";
         setFirstM(formatted[0] + formatted[1]);
         setFirstS(formatted[2] + formatted[3]);
         break;
       case 5:
-        // formatted[0] = formatted[0] + "h ";
-        // formatted[2] = formatted[2] + "m ";
-        // formatted[4] = formatted[4] + "s ";
         setFirstH(formatted[0]);
         setFirstM(formatted[1] + formatted[2]);
         setFirstS(formatted[3] + formatted[4]);
         break;
       case 6:
-        // formatted[1] = formatted[1] + "h ";
-        // formatted[3] = formatted[3] + "m ";
-        // formatted[5] = formatted[5] + "s ";
         setFirstH(formatted[0] + formatted[1]);
         setFirstM(formatted[2] + formatted[3]);
         setFirstS(formatted[4] + formatted[5]);
@@ -355,8 +331,6 @@ function Main() {
       default:
         break;
     }
-
-    // return formatted;
   }
 
   //disable reset button if timer is not running
