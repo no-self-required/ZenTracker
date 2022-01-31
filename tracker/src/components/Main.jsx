@@ -654,25 +654,24 @@ function Main() {
             <div id="timer-button-absolute-container">
               <div id="" onClick={editTimerState}>
                 <div className="notationDisplay">
-                  <div className="hours">
-                    {/* <span className="secondH">{secondH}</span> */}
-                    {firstH !== 0 && (
-                      <div>
-                        <span className="firstH">{firstH}</span>
-                        <span className="notationH">{notation[2]}</span>
-                      </div>
-                    )}
-                  </div>
-                  <div className="minutes">
-                    {/* <span className="secondM">{secondM}</span> */}
-                    <span className="firstM">{firstM}</span>
-                    <span className="notationM">{notation[1]}</span>
-                  </div>
-                  <div className="seconds">
-                    {/* <span className="secondS">{secondS}</span> */}
-                    <span className="firstS">{firstS}</span>
-                    <span className="notationS">{notation[0]}</span>
-                  </div>
+                  {firstH !== 0 && (
+                    <div className="hours">
+                      <span className="firstH">{firstH}</span>
+                      <span className="notationH">{notation[2]}</span>
+                    </div>
+                  )}
+                  {firstM !== 0 && (
+                    <div className="minutes">
+                      <span className="firstM">{firstM}</span>
+                      <span className="notationM">{notation[1]}</span>
+                    </div>
+                  )}
+                  {firstS !== 0 && (
+                    <div className="seconds">
+                      <span className="firstS">{firstS}</span>
+                      <span className="notationS">{notation[0]}</span>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
