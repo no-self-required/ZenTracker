@@ -46,7 +46,7 @@ function Main() {
   const [initialTime, setInitialTime] = useState(500);
   const [intervalID, setIntervalID] = useState();
   const [timerState, setTimerState] = useState(TIMER_STATES["INITIAL"]);
-  const [inputTimer, setInputTimer] = useState(initialTime);
+  // const [inputTimer, setInputTimer] = useState(initialTime);
 
   useEffect(() => {
     if (timerState === TIMER_STATES["STARTED"] && !intervalID) {
@@ -55,12 +55,16 @@ function Main() {
     }
   }, [timerState, intervalID]);
 
+  useEffect(() => {
+    addTimeNotation();
+  }, [totalSeconds]);
+
   //take all three inputs, combine and calculate seconds
   //step 1: display timer based off input -- complete
   //step 2: set timer values based off display timer -- incomplete
 
   function startTimer() {
-    let tripleCombined = inputTimerHour + inputTimerMinute + inputTimerSecond
+    let tripleCombined = inputTimerHour + inputTimerMinute + inputTimerSecond;
 
     const calculated = calculateSeconds(initialTime);
     const newInputTimer = calculateSeconds(tripleCombined);
@@ -130,15 +134,16 @@ function Main() {
   }
 
   //stretch: on fresh edit state: any new input will delete previous timer
-  function handleChange(event) {
-    let timerInput = event.target.value;
-    while (timerInput.length > 6) {
-      timerInput = timerInput.substring(1);
-    }
+  //old input
+  // function handleChange(event) {
+  //   let timerInput = event.target.value;
+  //   while (timerInput.length > 6) {
+  //     timerInput = timerInput.substring(1);
+  //   }
 
-    setInputTimer(timerInput);
-    setInitialTime(timerInput);
-  }
+  //   setInputTimer(timerInput);
+  //   setInitialTime(timerInput);
+  // }
 
   //only accept numbers for timer input
   function numOnly(event) {
@@ -199,11 +204,11 @@ function Main() {
         input[2] = "0" + input[2];
       }
     }
-    let x = input.join("")
-    setInputTimerHour(input[0])
-    setInputTimerMinute(input[1])
-    setInputTimerSecond(input[2])
-
+    let x = input.join("");
+    setInitialTime(x);
+    setInputTimerHour(input[0]);
+    setInputTimerMinute(input[1]);
+    setInputTimerSecond(input[2]);
   }
 
   function displayTime() {
@@ -282,7 +287,7 @@ function Main() {
     } else {
       omitZero = ["0"];
     }
-    console.log("omitZero inside omitZero", omitZero);
+    console.log("omitZero array inside splitTimer", omitZero);
     return omitZero;
   }
 
@@ -293,46 +298,70 @@ function Main() {
   //ex: 99:99:99 > 99:59:59
 
   //if input is empty: timer is = 0
+  //timer will never be empty due to auto fill zeros
+
+  const [firstS, setFirstS] = useState(0);
+  // const [secondS, setSecondS] = useState(0);
+  const [firstM, setFirstM] = useState(0);
+  // const [secondM, setSecondM] = useState(0);
+  const [firstH, setFirstH] = useState(0);
+  // const [secondH, setSecondH] = useState(0);
+
   function addTimeNotation() {
     const formatted = omitZero();
+    console.log(
+      "formatted inside addTimeNotation before formatting",
+      formatted
+    );
+    //[5, 0, 0]
     switch (formatted.length) {
       case 0:
       case 1:
-        formatted[0] = formatted[0] + "s ";
+        // formatted[0] = formatted[0] + "s ";
+        setFirstS(formatted[0]);
         break;
       case 2:
-        formatted[1] = formatted[1] + "s ";
+        // formatted[1] = formatted[1] + "s ";
+        setFirstS(formatted[0] + formatted[1]);
         break;
       case 3:
-        formatted[0] = formatted[0] + "m ";
-        formatted[2] = formatted[2] + "s ";
+        // formatted[0] = formatted[0] + "m ";
+        // formatted[2] = formatted[2] + "s ";
+        setFirstM(formatted[0]);
+        setFirstS(formatted[1] + formatted[2]);
         break;
       case 4:
-        formatted[1] = formatted[1] + "m ";
-        formatted[3] = formatted[3] + "s ";
+        // formatted[1] = formatted[1] + "m ";
+        // formatted[3] = formatted[3] + "s ";
+        setFirstM(formatted[0] + formatted[1]);
+        setFirstS(formatted[2] + formatted[3]);
         break;
       case 5:
-        formatted[0] = formatted[0] + "h ";
-        formatted[2] = formatted[2] + "m ";
-        formatted[4] = formatted[4] + "s ";
+        // formatted[0] = formatted[0] + "h ";
+        // formatted[2] = formatted[2] + "m ";
+        // formatted[4] = formatted[4] + "s ";
+        setFirstH(formatted[0]);
+        setFirstM(formatted[1] + formatted[2]);
+        setFirstS(formatted[3] + formatted[4]);
         break;
       case 6:
-        formatted[1] = formatted[1] + "h ";
-        formatted[3] = formatted[3] + "m ";
-        formatted[5] = formatted[5] + "s ";
+        // formatted[1] = formatted[1] + "h ";
+        // formatted[3] = formatted[3] + "m ";
+        // formatted[5] = formatted[5] + "s ";
+        setFirstH(formatted[0] + formatted[1]);
+        setFirstM(formatted[2] + formatted[3]);
+        setFirstS(formatted[4] + formatted[5]);
         break;
       default:
         break;
     }
-    return formatted;
+
+    // return formatted;
   }
 
   //disable reset button if timer is not running
 
-  const formattedTime = addTimeNotation();
-
-  console.log("timer check", inputTimer);
-
+  // const formattedTime = addTimeNotation();
   /**
    * IMPORTED FROM TEST
    */
@@ -341,13 +370,6 @@ function Main() {
   const [inputTimerSecond, setInputTimerSecond] = useState("00");
   const [inputTimerMinute, setInputTimerMinute] = useState("00");
   const [inputTimerHour, setInputTimerHour] = useState("00");
-
-  // const [firstS, setFirstS] = useState(0);
-  // const [secondS, setSecondS] = useState(0);
-  // const [firstM, setFirstM] = useState(0);
-  // const [secondM, setSecondM] = useState(0);
-  // const [firstH, setFirstH] = useState(0);
-  // const [secondH, setSecondH] = useState(0);
 
   //traverse left
   const [selection1, setSelection1] = useState();
@@ -366,36 +388,36 @@ function Main() {
 
   //prevent access to 0
   const [selection4, setSelection4] = useState();
-  
-    //travese input left
-    useEffect(() => {
-      if (!selection1) return;  // prevent running on start
-      const {start, end} = selection1;
-      inputEle1.previousElementSibling.focus();
-      inputEle1.previousElementSibling.setSelectionRange(start, end);
-    }, [selection1])
-  
-    //traverse input right
-    useEffect(() => {
-      if (!selection2) return;  
-      const {start, end} = selection2;
-      inputEle1.nextElementSibling.focus();
-      inputEle1.nextElementSibling.setSelectionRange(start, end);
-    }, [selection2])
-  
-    //replace/delete digit
-    useEffect(() => {
-      if (!selection3) return;  
-      const {start, end} = selection3;
-      inputEle2.setSelectionRange(start, end);
-    },[selection3])
-  
-    //prevent access to 0
-    useEffect(() => {
-      if (!selection4) return;  
-      const {start, end} = selection4;
-      timerH.current.setSelectionRange(start, end);
-    },[selection4])
+
+  //travese input left
+  useEffect(() => {
+    if (!selection1) return; // prevent running on start
+    const { start, end } = selection1;
+    inputEle1.previousElementSibling.focus();
+    inputEle1.previousElementSibling.setSelectionRange(start, end);
+  }, [selection1]);
+
+  //traverse input right
+  useEffect(() => {
+    if (!selection2) return;
+    const { start, end } = selection2;
+    inputEle1.nextElementSibling.focus();
+    inputEle1.nextElementSibling.setSelectionRange(start, end);
+  }, [selection2]);
+
+  //replace/delete digit
+  useEffect(() => {
+    if (!selection3) return;
+    const { start, end } = selection3;
+    inputEle2.setSelectionRange(start, end);
+  }, [selection3]);
+
+  //prevent access to 0
+  useEffect(() => {
+    if (!selection4) return;
+    const { start, end } = selection4;
+    timerH.current.setSelectionRange(start, end);
+  }, [selection4]);
 
   const notation = ["s", "m", "h"];
 
@@ -464,8 +486,6 @@ function Main() {
     } else if (input.length === 1) {
       input = "0" + input.substring(0);
     }
-
-    console.log("INPUT", input);
 
     // switch (input.length) {
     //   case 0:
@@ -632,8 +652,28 @@ function Main() {
         <div id="timer-button-container">
           {timerState !== TIMER_STATES["EDIT"] && (
             <div id="timer-button-absolute-container">
-              <div id="absolute-timer" onClick={editTimerState}>
-                {formattedTime}
+              <div id="" onClick={editTimerState}>
+                <div className="notationDisplay">
+                  <div className="hours">
+                    {/* <span className="secondH">{secondH}</span> */}
+                    {firstH !== 0 && (
+                      <div>
+                        <span className="firstH">{firstH}</span>
+                        <span className="notationH">{notation[2]}</span>
+                      </div>
+                    )}
+                  </div>
+                  <div className="minutes">
+                    {/* <span className="secondM">{secondM}</span> */}
+                    <span className="firstM">{firstM}</span>
+                    <span className="notationM">{notation[1]}</span>
+                  </div>
+                  <div className="seconds">
+                    {/* <span className="secondS">{secondS}</span> */}
+                    <span className="firstS">{firstS}</span>
+                    <span className="notationS">{notation[0]}</span>
+                  </div>
+                </div>
               </div>
             </div>
           )}
