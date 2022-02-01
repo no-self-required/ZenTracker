@@ -32,13 +32,12 @@ function calculateSeconds(initialTime) {
   return calculatedTotalSeconds;
 }
 
-//todo: when timer hits 0, sound alarm, and switch button to "OK" that stops alarm.
+//todo:
 //restructure into components
 //make pure functions
 //styling
 
 function Main() {
-
   const TIMER_STATES = {
     INITIAL: 0,
     STARTED: 1,
@@ -56,6 +55,67 @@ function Main() {
   const [intervalID, setIntervalID] = useState();
   const [timerState, setTimerState] = useState(TIMER_STATES["INITIAL"]);
 
+  //State tags for each digit
+  const [firstS, setFirstS] = useState(null);
+  const [secondS, setSecondS] = useState(null);
+  const [firstM, setFirstM] = useState(null);
+  const [secondM, setSecondM] = useState(null);
+  const [firstH, setFirstH] = useState(null);
+  const [secondH, setSecondH] = useState(null);
+
+  //Input values
+  const [inputTimerSecond, setInputTimerSecond] = useState("00");
+  const [inputTimerMinute, setInputTimerMinute] = useState("00");
+  const [inputTimerHour, setInputTimerHour] = useState("00");
+
+  //Store inputs to traverse between them
+  //traverse left
+  const [selection1, setSelection1] = useState();
+  //traverse right
+  const [selection2, setSelection2] = useState();
+  //replace/delete
+  const [selection3, setSelection3] = useState();
+  //traverse input
+  const [inputEle1, setInputEle1] = useState();
+  //replacing/deleting digit
+  const [inputEle2, setInputEle2] = useState();
+  //prevent access to 0
+  const [selection4, setSelection4] = useState();
+
+  const notation = ["s", "m", "h"];
+
+  //run focus and setSelectionRange for target inputs
+  //travese input left
+  useEffect(() => {
+    if (!selection1) return; // prevent running on start
+    const { start, end } = selection1;
+    inputEle1.previousElementSibling.focus();
+    inputEle1.previousElementSibling.setSelectionRange(start, end);
+  }, [selection1]);
+
+  //traverse input right
+  useEffect(() => {
+    if (!selection2) return;
+    const { start, end } = selection2;
+    inputEle1.nextElementSibling.focus();
+    inputEle1.nextElementSibling.setSelectionRange(start, end);
+  }, [selection2]);
+
+  //replace/delete digit
+  useEffect(() => {
+    if (!selection3) return;
+    const { start, end } = selection3;
+    inputEle2.setSelectionRange(start, end);
+  }, [selection3]);
+
+  //prevent access to 0
+  useEffect(() => {
+    if (!selection4) return;
+    const { start, end } = selection4;
+    timerH.current.setSelectionRange(start, end);
+  }, [selection4]);
+
+  //Decrement timer if timer has started, and there is an interval
   useEffect(() => {
     if (timerState === TIMER_STATES["STARTED"] && !intervalID) {
       if (totalSeconds !== 0) {
@@ -66,7 +126,7 @@ function Main() {
     } else if (timerState === TIMER_STATES["FINISHED"]) {
       startAlarm();
     }
-  }, [timerState, intervalID, TIMER_STATES, decrementTotalSeconds, startAlarm, totalSeconds]);
+  }, [timerState, intervalID, decrementTotalSeconds, startAlarm, totalSeconds]);
 
   //update display spans on every tick
   useEffect(() => {
@@ -113,9 +173,6 @@ function Main() {
     alarm1.play();
   }
 
-
-
-  //stop alarm sound here
   function stopAlarm() {
     alarm1.pause();
   }
@@ -193,8 +250,6 @@ function Main() {
     return formatted;
   }
 
-  //set input timer based on displayed timer //**** important: display timer > input timer */
-
   function fillZeros() {
     let input = displayInputValue();
     for (let i = 0; i < input.length; i++) {
@@ -216,22 +271,10 @@ function Main() {
         input[2] = "0" + input[2];
       }
     }
-    // let initialTime = input.join("");
-    // ***????****
-
     setInputTimerHour(input[0]);
     setInputTimerMinute(input[1]);
     setInputTimerSecond(input[2]);
   }
-
-  const [firstS, setFirstS] = useState(null);
-  const [secondS, setSecondS] = useState(null);
-
-  const [firstM, setFirstM] = useState(null);
-  const [secondM, setSecondM] = useState(null);
-
-  const [firstH, setFirstH] = useState(null);
-  const [secondH, setSecondH] = useState(null);
 
   function displayTime() {
     let formatTime = totalSeconds;
@@ -264,9 +307,6 @@ function Main() {
       }
     }
 
-    //assign values to H:M:S spans
-
-    console.log("formatted inside displayTime", formatted);
     return formatted;
   }
 
@@ -384,115 +424,15 @@ function Main() {
 
   // displayTime > omitZero > addTimeNotation
 
-  //time notation for every length case
-  //if input goes above 99:59:59 > default timer to 99:59:59
-  //ex: 99:99:99 > 99:59:59
-
-  //if input is empty: timer is = 0
-  //timer will never be empty due to auto fill zeros
-
-  //Hours and minutes keep old spans if Seconds is updated
-  // function addTimeNotation() {
-  //   const formatted = omitZero();
-  //   switch (formatted.length) {
-  //     case 0:
-  //     case 1:
-  //       setFirstS(formatted[0]);
-  //       break;
-  //     case 2:
-  //       setFirstS(formatted[0] + formatted[1]);
-  //       break;
-  //     case 3:
-  //       setFirstM(formatted[0]);
-  //       setFirstS(formatted[1] + formatted[2]);
-  //       break;
-  //     case 4:
-  //       setFirstM(formatted[0] + formatted[1]);
-  //       setFirstS(formatted[2] + formatted[3]);
-  //       break;
-  //     case 5:
-  //       setFirstH(formatted[0]);
-  //       setFirstM(formatted[1] + formatted[2]);
-  //       setFirstS(formatted[3] + formatted[4]);
-  //       break;
-  //     case 6:
-  //       setFirstH(formatted[0] + formatted[1]);
-  //       setFirstM(formatted[2] + formatted[3]);
-  //       setFirstS(formatted[4] + formatted[5]);
-  //       break;
-  //     default:
-  //       break;
-  //   }
-  // }
-
-  //disable reset button if timer is not running
-
-  // const formattedTime = addTimeNotation();
-
   /**
    * IMPORTED FROM TEST
    */
 
-  //INPUT VALUES COME FROM HERE
-  const [inputTimerSecond, setInputTimerSecond] = useState("00");
-  const [inputTimerMinute, setInputTimerMinute] = useState("00");
-  const [inputTimerHour, setInputTimerHour] = useState("00");
-
-  //traverse left
-  const [selection1, setSelection1] = useState();
-
-  //traverse right
-  const [selection2, setSelection2] = useState();
-
-  //replace/delete
-  const [selection3, setSelection3] = useState();
-
-  //traverse input
-  const [inputEle1, setInputEle1] = useState();
-
-  //replacing/deleting digit
-  const [inputEle2, setInputEle2] = useState();
-
-  //prevent access to 0
-  const [selection4, setSelection4] = useState();
-
-  //travese input left
-  useEffect(() => {
-    if (!selection1) return; // prevent running on start
-    const { start, end } = selection1;
-    inputEle1.previousElementSibling.focus();
-    inputEle1.previousElementSibling.setSelectionRange(start, end);
-  }, [selection1]);
-
-  //traverse input right
-  useEffect(() => {
-    if (!selection2) return;
-    const { start, end } = selection2;
-    inputEle1.nextElementSibling.focus();
-    inputEle1.nextElementSibling.setSelectionRange(start, end);
-  }, [selection2]);
-
-  //replace/delete digit
-  useEffect(() => {
-    if (!selection3) return;
-    const { start, end } = selection3;
-    inputEle2.setSelectionRange(start, end);
-  }, [selection3]);
-
-  //prevent access to 0
-  useEffect(() => {
-    if (!selection4) return;
-    const { start, end } = selection4;
-    timerH.current.setSelectionRange(start, end);
-  }, [selection4]);
-
-  const notation = ["s", "m", "h"];
-
   //use ref for hours input
   const timerH = useRef();
 
-  function handleClick() {
-    // setInputEle3(timerH)
+  //redirect focus to setSelectionRange(1, 1) if div is clicked
+  function handleClickH() {
     timerH.current.focus();
     setSelection4({ start: 1, end: 1 });
   }
@@ -503,7 +443,8 @@ function Main() {
     setInputEle1(input);
 
     //moving left
-    //prevent access past final digit inside all input
+    //prevent access past final digit inside all inputs
+    //ex: [11] > [|11] cannot reach |
     if (
       input.previousElementSibling &&
       input.value.length === 2 &&
@@ -671,7 +612,7 @@ function Main() {
       <div className="timer-container">
         {timerState === TIMER_STATES["EDIT"] && (
           <div id="notation-timer">
-            <div className="box" onClick={handleClick}></div>
+            <div className="box" onClick={handleClickH}></div>
             <div className="all-inputs">
               <input
                 className="hoursInput"
@@ -766,9 +707,16 @@ function Main() {
                 Ok
               </button>
             )}
-            <button id="reset-button" onClick={resetTimer}>
-              Reset
-            </button>
+            {timerState !== TIMER_STATES["INITIAL"] && (
+              <button id="reset-button" onClick={resetTimer}>
+                Reset
+              </button>
+            )}
+            {timerState === TIMER_STATES["INITIAL"] && (
+              <button id="reset-button" disabled>
+                Reset
+              </button>
+            )}
           </div>
         </div>
       </div>
