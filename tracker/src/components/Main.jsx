@@ -33,8 +33,12 @@ function calculateSeconds(initialTime) {
 }
 
 //todo: when timer hits 0, sound alarm, and switch button to "OK" that stops alarm.
+//restructure into components
+//make pure functions
+//styling
 
 function Main() {
+
   const TIMER_STATES = {
     INITIAL: 0,
     STARTED: 1,
@@ -43,6 +47,10 @@ function Main() {
     FINISHED: 4,
   };
 
+  const alarm1 = new Audio(
+    "https://freesound.org/people/suburban%20grilla/sounds/2166/download/2166__suburban-grilla__bowl-struck.wav"
+  );
+
   const [totalSeconds, setTotalSeconds] = useState(300);
   const [initialTime, setInitialTime] = useState(500);
   const [intervalID, setIntervalID] = useState();
@@ -50,10 +58,15 @@ function Main() {
 
   useEffect(() => {
     if (timerState === TIMER_STATES["STARTED"] && !intervalID) {
-      const intervalID = setInterval(decrementTotalSeconds, 1000);
-      setIntervalID(intervalID);
+      if (totalSeconds !== 0) {
+        const intervalID = setInterval(decrementTotalSeconds, 1000);
+        setIntervalID(intervalID);
+        console.log("totalSeconds", totalSeconds);
+      }
+    } else if (timerState === TIMER_STATES["FINISHED"]) {
+      startAlarm();
     }
-  }, [timerState, intervalID]);
+  }, [timerState, intervalID, TIMER_STATES, decrementTotalSeconds, startAlarm, totalSeconds]);
 
   //update display spans on every tick
   useEffect(() => {
@@ -95,7 +108,17 @@ function Main() {
     setIntervalID(undefined);
   }
 
-  function stopAlarm() {}
+  function startAlarm() {
+    alarm1.loop = false;
+    alarm1.play();
+  }
+
+
+
+  //stop alarm sound here
+  function stopAlarm() {
+    alarm1.pause();
+  }
 
   function editTimerState() {
     console.log("ENTER EDIT STATE");
