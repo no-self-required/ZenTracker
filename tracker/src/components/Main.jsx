@@ -222,7 +222,8 @@ function Main() {
   }
 
   //take totalseconds and calculate display input
-  function displayInputValue() {
+  //pure
+  function displayInputValue(totalSeconds) {
     let formatTime = totalSeconds;
     let showHours = 0;
     let showMin = 0;
@@ -251,7 +252,7 @@ function Main() {
   }
 
   function fillZeros() {
-    let input = displayInputValue();
+    let input = displayInputValue(totalSeconds);
     for (let i = 0; i < input.length; i++) {
       if (input[0] === 0) {
         input[0] = "00";
@@ -276,25 +277,24 @@ function Main() {
     setInputTimerSecond(input[2]);
   }
 
-  function displayTime() {
-    let formatTime = totalSeconds;
+  function displayTime(totalSeconds) {
     let showHours = 0;
     let showMin = 0;
     let showSec = 0;
     let formatted = [];
 
-    while (formatTime >= 3600) {
+    while (totalSeconds >= 3600) {
       showHours += 1;
-      formatTime -= 3600;
+      totalSeconds -= 3600;
     }
 
-    while (formatTime >= 60) {
+    while (totalSeconds >= 60) {
       showMin += 1;
-      formatTime -= 60;
+      totalSeconds -= 60;
     }
 
-    if (formatTime < 60) {
-      showSec = formatTime;
+    if (totalSeconds < 60) {
+      showSec = totalSeconds;
     }
 
     formatted.push(showHours);
@@ -306,7 +306,6 @@ function Main() {
         formatted[i] = "0" + formatted[i];
       }
     }
-
     return formatted;
   }
 
@@ -322,8 +321,8 @@ function Main() {
   //return fill zeros for single digits
   //switch case based off length to assign values to first and second digits of H:M:S
 
-  function splitTimer() {
-    const timer = displayTime();
+  function splitTimer(totalSeconds) {
+    const timer = displayTime(totalSeconds);
     const joinTimer = timer.join("");
     console.log("joinTimer", joinTimer);
 
@@ -335,7 +334,7 @@ function Main() {
   }
 
   function omitZero() {
-    const splitTime = splitTimer();
+    const splitTime = splitTimer(totalSeconds);
 
     let omitZero = [];
     //remove zeros before start of timer
@@ -431,7 +430,7 @@ function Main() {
   //use ref for hours input
   const timerH = useRef();
 
-  //redirect focus to setSelectionRange(1, 1) if div is clicked
+  //redirect focus to setSelectionRange(1, 1) if div is clicked. Prevent cursor access past final digit when clicking 
   function handleClickH() {
     timerH.current.focus();
     setSelection4({ start: 1, end: 1 });
@@ -443,8 +442,8 @@ function Main() {
     setInputEle1(input);
 
     //moving left
-    //prevent access past final digit inside all inputs
-    //ex: [11] > [|11] cannot reach |
+    //prevent cursor access past final digit inside all inputs when traversing with left and right arrows
+    //ex: [11] > [|11] : cannot reach "|"
     if (
       input.previousElementSibling &&
       input.value.length === 2 &&
