@@ -32,6 +32,83 @@ function calculateSeconds(initialTime) {
   return calculatedTotalSeconds;
 }
 
+function displayTime(totalSeconds) {
+  let showHours = 0;
+  let showMin = 0;
+  let showSec = 0;
+  let formatted = [];
+
+  while (totalSeconds >= 3600) {
+    showHours += 1;
+    totalSeconds -= 3600;
+  }
+
+  while (totalSeconds >= 60) {
+    showMin += 1;
+    totalSeconds -= 60;
+  }
+
+  if (totalSeconds < 60) {
+    showSec = totalSeconds;
+  }
+
+  formatted.push(showHours);
+  formatted.push(showMin);
+  formatted.push(showSec);
+
+  for (let i = 0; i < formatted.length; i++) {
+    if (formatted[i].toString().length === 1) {
+      formatted[i] = "0" + formatted[i];
+    }
+  }
+  return formatted;
+}
+
+/**
+ * Split timer takes the display time which consists of an array of elements where each element is two digits representing either hours, minutes or seconds, and reformats it so that every digit is its own element in an array.
+ *
+ * For example, if the display time input would have the value of: ["00", "05", "02"], then,
+ * the splitTimer() function would return: ["0", "0", "0", "5", "0", "2"]
+ *
+ * @returns An array where each element is a digit of the current displayed time
+ */
+
+function splitTimer(totalSeconds) {
+  const timer = displayTime(totalSeconds);
+  const joinTimer = timer.join("");
+  const splitTimer = joinTimer.split("");
+  return splitTimer;
+}
+
+//take totalseconds and calculate display input
+function displayInputValue(totalSeconds) {
+  let formatTime = totalSeconds;
+  let showHours = 0;
+  let showMin = 0;
+  let showSec = 0;
+  let formatted = [];
+
+  while (formatTime >= 3600) {
+    showHours += 1;
+    formatTime -= 3600;
+  }
+
+  while (formatTime >= 60) {
+    showMin += 1;
+    formatTime -= 60;
+  }
+
+  if (formatTime < 60) {
+    showSec = formatTime;
+  }
+
+  formatted.push(showHours);
+  formatted.push(showMin);
+  formatted.push(showSec);
+
+  return formatted;
+}
+
 //todo:
 //restructure into components
 //make pure functions
@@ -83,6 +160,9 @@ function Main() {
   const [selection4, setSelection4] = useState();
 
   const notation = ["s", "m", "h"];
+
+  //use ref for hours input. Will need useRef for minutes and seconds input. Used to block cursor click on left side on input.
+  const timerH = useRef();
 
   //run focus and setSelectionRange for target inputs
   //travese input left
@@ -221,36 +301,6 @@ function Main() {
     }
   }
 
-  //take totalseconds and calculate display input
-  //pure
-  function displayInputValue(totalSeconds) {
-    let formatTime = totalSeconds;
-    let showHours = 0;
-    let showMin = 0;
-    let showSec = 0;
-    let formatted = [];
-
-    while (formatTime >= 3600) {
-      showHours += 1;
-      formatTime -= 3600;
-    }
-
-    while (formatTime >= 60) {
-      showMin += 1;
-      formatTime -= 60;
-    }
-
-    if (formatTime < 60) {
-      showSec = formatTime;
-    }
-
-    formatted.push(showHours);
-    formatted.push(showMin);
-    formatted.push(showSec);
-
-    return formatted;
-  }
-
   function fillZeros() {
     let input = displayInputValue(totalSeconds);
     for (let i = 0; i < input.length; i++) {
@@ -275,62 +325,6 @@ function Main() {
     setInputTimerHour(input[0]);
     setInputTimerMinute(input[1]);
     setInputTimerSecond(input[2]);
-  }
-
-  function displayTime(totalSeconds) {
-    let showHours = 0;
-    let showMin = 0;
-    let showSec = 0;
-    let formatted = [];
-
-    while (totalSeconds >= 3600) {
-      showHours += 1;
-      totalSeconds -= 3600;
-    }
-
-    while (totalSeconds >= 60) {
-      showMin += 1;
-      totalSeconds -= 60;
-    }
-
-    if (totalSeconds < 60) {
-      showSec = totalSeconds;
-    }
-
-    formatted.push(showHours);
-    formatted.push(showMin);
-    formatted.push(showSec);
-
-    for (let i = 0; i < formatted.length; i++) {
-      if (formatted[i].toString().length === 1) {
-        formatted[i] = "0" + formatted[i];
-      }
-    }
-    return formatted;
-  }
-
-  /**
-   * Split timer takes the display time which consists of an array of elements where each element is two digits representing either hours, minutes or seconds, and reformats it so that every digit is its own element in an array.
-   *
-   * For example, if the display time input would have the value of: ["00", "05", "02"], then,
-   * the splitTimer() function would return: ["0", "0", "0", "5", "0", "2"]
-   *
-   * @returns An array where each element is a digit of the current displayed time
-   */
-
-  //return fill zeros for single digits
-  //switch case based off length to assign values to first and second digits of H:M:S
-
-  function splitTimer(totalSeconds) {
-    const timer = displayTime(totalSeconds);
-    const joinTimer = timer.join("");
-    console.log("joinTimer", joinTimer);
-
-    const splitTimer = joinTimer.split("");
-
-    console.log("splitTimer", splitTimer);
-
-    return splitTimer;
   }
 
   function omitZero() {
@@ -421,16 +415,7 @@ function Main() {
     return omitZero;
   }
 
-  // displayTime > omitZero > addTimeNotation
-
-  /**
-   * IMPORTED FROM TEST
-   */
-
-  //use ref for hours input
-  const timerH = useRef();
-
-  //redirect focus to setSelectionRange(1, 1) if div is clicked. Prevent cursor access past final digit when clicking 
+  //redirect focus to setSelectionRange(1, 1) if div is clicked. Prevent cursor access past final digit when clicking
   function handleClickH() {
     timerH.current.focus();
     setSelection4({ start: 1, end: 1 });
@@ -438,9 +423,7 @@ function Main() {
 
   function handleKeyDown(e) {
     const input = e.target;
-
     setInputEle1(input);
-
     //moving left
     //prevent cursor access past final digit inside all inputs when traversing with left and right arrows
     //ex: [11] > [|11] : cannot reach "|"
@@ -494,22 +477,6 @@ function Main() {
       input = "0" + input.substring(0);
     }
 
-    // switch (input.length) {
-    //   case 0:
-    //     setFirstS(0);
-    //     setSecondS(0);
-    //     break;
-    //   case 1:
-    //     setFirstS(input.substring(0, 1));
-    //     setSecondS(0);
-    //     break;
-    //   case 2:
-    //     setFirstS(input.substring(1, 2));
-    //     setSecondS(input.substring(0, 1));
-    //     break;
-    //   default:
-    //     break;
-    // }
     setInputTimerSecond(input);
   }
 
@@ -537,22 +504,6 @@ function Main() {
       input = "0" + input.substring(0);
     }
 
-    // switch (input.length) {
-    //   case 0:
-    //     setFirstM(0);
-    //     setSecondM(0);
-    //     break;
-    //   case 1:
-    //     setFirstM(input.substring(0, 1));
-    //     setSecondM(0);
-    //     break;
-    //   case 2:
-    //     setFirstM(input.substring(1, 2));
-    //     setSecondM(input.substring(0, 1));
-    //     break;
-    //   default:
-    //     break;
-    // }
     setInputTimerMinute(input);
   }
 
@@ -581,30 +532,8 @@ function Main() {
       input = "0" + input.substring(0);
     }
 
-    // switch (input.length) {
-    //   case 0:
-    //     setFirstH(0);
-    //     setSecondH(0);
-    //     break;
-    //   case 1:
-    //     setFirstH(input.substring(0, 1));
-    //     setSecondH(0);
-    //     break;
-    //   case 2:
-    //     setFirstH(input.substring(1, 2));
-    //     setSecondH(input.substring(0, 1));
-    //     break;
-    //   default:
-    //     break;
-    // }
     setInputTimerHour(input);
   }
-
-  /**
-   * IMPORTED FROM TEST
-   */
-
-  //dont show any Zeros before actual timer
 
   return (
     <div className="container">
