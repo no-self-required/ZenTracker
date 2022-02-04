@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../styling/main.scss";
 
+import TimerHMS from "./inputs/inputHMS";
+
 function splitInput(initialTime) {
   const parsedTimer = parseInt(initialTime);
   const arr = Array.from(parsedTimer.toString()).map(Number);
@@ -109,11 +111,6 @@ function displayInputValue(totalSeconds) {
   return formatted;
 }
 
-//todo:
-//restructure into components
-//make pure functions
-//styling
-
 function Main() {
   const TIMER_STATES = {
     INITIAL: 0,
@@ -132,7 +129,7 @@ function Main() {
   const [intervalID, setIntervalID] = useState();
   const [timerState, setTimerState] = useState(TIMER_STATES["INITIAL"]);
 
-  //State tags for each digit
+  //State tags for each digit (display timer)
   const [firstS, setFirstS] = useState(null);
   const [secondS, setSecondS] = useState(null);
   const [firstM, setFirstM] = useState(null);
@@ -535,6 +532,10 @@ function Main() {
     setInputTimerHour(input);
   }
 
+  //todo:
+  //restructure into components
+  //styling
+
   return (
     <div className="container">
       <div className="timer-container">
@@ -542,37 +543,17 @@ function Main() {
           <div id="notation-timer">
             <div className="box" onClick={handleClickH}></div>
             <div className="all-inputs">
-              <input
-                className="hoursInput"
-                type="text"
-                id="timerx1"
+              <TimerHMS
                 ref={timerH}
-                value={inputTimerHour}
-                onChange={handleChangeHour}
-                onKeyDown={handleKeyDown}
+                valueH={inputTimerHour}
+                valueM={inputTimerMinute}
+                valueS={inputTimerSecond}
+                onChangeH={handleChangeHour}
+                onChangeM={handleChangeMinute}
+                onChangeS={handleChangeSecond}
+                onKeydown={handleKeyDown}
                 onKeyPress={numOnly}
-                maxLength={3}
-              ></input>
-              <input
-                className="minutesInput"
-                type="text"
-                id="timerx2"
-                value={inputTimerMinute}
-                onChange={handleChangeMinute}
-                onKeyDown={handleKeyDown}
-                onKeyPress={numOnly}
-                maxLength={3}
-              ></input>
-              <input
-                className="secondsInput"
-                type="text"
-                id="timerx3"
-                value={inputTimerSecond}
-                onChange={handleChangeSecond}
-                onKeyDown={handleKeyDown}
-                onKeyPress={numOnly}
-                maxLength={3}
-              ></input>
+              ></TimerHMS>
             </div>
             <div className="notation">
               <div className="hours">
