@@ -2,9 +2,23 @@ import React, { useState, useEffect, useRef } from "react";
 import "../styling/main.scss";
 
 import TimerHMS from "./inputs/InputHMS";
+
 import NotationH from "./notations/NotationH";
 import NotationM from "./notations/NotationM";
 import NotationS from "./notations/NotationS";
+
+import FirstH from "./displayDigits/FirstH";
+import SecondH from "./displayDigits/SecondH";
+import FirstM from "./displayDigits/FirstM";
+import SecondM from "./displayDigits/SecondM";
+import FirstS from "./displayDigits/FirstS";
+import SecondS from "./displayDigits/SecondS";
+
+import Start from "./buttons/Start";
+import Stop from "./buttons/Stop";
+import Ok from "./buttons/Ok";
+import Reset from "./buttons/Reset"
+import ResetDisabled from "./buttons/ResetDisabled";
 
 function splitInput(initialTime) {
   const parsedTimer = parseInt(initialTime);
@@ -30,7 +44,7 @@ function calculateSeconds(initialTime) {
   const totHours = hours[0] * 36000 + hours[1] * 3600;
   let calculatedTotalSeconds = totSec + totMin + totHours;
   console.log("calculatedTotalSeconds", calculatedTotalSeconds);
-  //if time entered is more than 99hours, set to 99 hours
+  //if time entered is more than 99hours, set to 99h/59m/59s
   if (calculatedTotalSeconds > 360000) {
     calculatedTotalSeconds = 359999;
   }
@@ -577,22 +591,23 @@ function Main() {
               <div id="" onClick={editTimerState}>
                 <div className="notationDisplay">
                   <div className="hours">
-                    <span className="firstH">{firstH}</span>
-                    <span className="secondH">{secondH}</span>
+                    {/* <span className="firstH">{firstH}</span> */}
+                    <FirstH value={firstH}/>
+                    <SecondH value={secondH}/>
                     {(firstH || secondH) && (
                       <NotationH/>
                     )}
                   </div>
                   <div className="minutes">
-                    <span className="firstM">{firstM}</span>
-                    <span className="secondM">{secondM}</span>
+                    <FirstM value={firstM}/>
+                    <SecondM value={secondM}/>
                     {(firstM || secondM) && (
                       <NotationM/>
                     )}
                   </div>
                   <div className="seconds">
-                    <span className="firstS">{firstS}</span>
-                    <span className="secondS">{secondS}</span>
+                    <FirstS value={firstS}/>
+                    <SecondS value={secondS}/>
                     {(firstS || secondS) && (
                       <NotationS/>
                     )}
@@ -605,29 +620,19 @@ function Main() {
             {(timerState === TIMER_STATES["INITIAL"] ||
               timerState === TIMER_STATES["STOPPED"] ||
               timerState === TIMER_STATES["EDIT"]) && (
-              <button id="start-button" onClick={startTimer}>
-                Start
-              </button>
+              <Start onClick={startTimer}/>
             )}
             {timerState === TIMER_STATES["STARTED"] && (
-              <button id="stop-button" onClick={stopTimer}>
-                Stop
-              </button>
+              <Stop onClick={stopTimer}/>
             )}
             {timerState === TIMER_STATES["FINISHED"] && (
-              <button id="ok-button" onClick={stopAlarm}>
-                Ok
-              </button>
+              <Ok onClick={stopAlarm}/>
             )}
             {timerState !== TIMER_STATES["INITIAL"] && (
-              <button id="reset-button" onClick={resetTimer}>
-                Reset
-              </button>
+              <Reset onClick={resetTimer}/>
             )}
             {timerState === TIMER_STATES["INITIAL"] && (
-              <button id="reset-button" disabled>
-                Reset
-              </button>
+              <ResetDisabled/>
             )}
           </div>
         </div>
