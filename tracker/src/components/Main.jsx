@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../styling/main.scss";
 
-import TimerHMS from "./inputs/inputHMS";
+import TimerHMS from "./inputs/InputHMS";
+import NotationH from "./notations/NotationH";
+import NotationM from "./notations/NotationM";
+import NotationS from "./notations/NotationS";
 
 function splitInput(initialTime) {
   const parsedTimer = parseInt(initialTime);
@@ -557,13 +560,13 @@ function Main() {
             </div>
             <div className="notation">
               <div className="hours">
-                <span className="notationH">{notation[2]}</span>
+                <NotationH/>
               </div>
               <div className="minutes">
-                <span className="notationM">{notation[1]}</span>
+                <NotationM/>
               </div>
               <div className="seconds">
-                <span className="notationS">{notation[0]}</span>
+                <NotationS/>
               </div>
             </div>
           </div>
@@ -577,21 +580,21 @@ function Main() {
                     <span className="firstH">{firstH}</span>
                     <span className="secondH">{secondH}</span>
                     {(firstH || secondH) && (
-                      <span className="notationH">{notation[2]}</span>
+                      <NotationH/>
                     )}
                   </div>
                   <div className="minutes">
                     <span className="firstM">{firstM}</span>
                     <span className="secondM">{secondM}</span>
                     {(firstM || secondM) && (
-                      <span className="notationM">{notation[1]}</span>
+                      <NotationM/>
                     )}
                   </div>
                   <div className="seconds">
                     <span className="firstS">{firstS}</span>
                     <span className="secondS">{secondS}</span>
                     {(firstS || secondS) && (
-                      <span className="notationS">{notation[0]}</span>
+                      <NotationS/>
                     )}
                   </div>
                 </div>
