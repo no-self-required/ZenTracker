@@ -166,15 +166,8 @@ function Main() {
   const [inputTimerMinute, setInputTimerMinute] = useState("00");
   const [inputTimerHour, setInputTimerHour] = useState("00");
 
-  //Store inputs to traverse between them
-  //traverse left
-  const [selection1, setSelection1] = useState();
-  //traverse right
-  const [selection2, setSelection2] = useState();
   //replace/delete
   const [selection3, setSelection3] = useState();
-  //traverse input
-  const [inputEle1, setInputEle1] = useState();
   //replacing/deleting digit
   const [inputEle2, setInputEle2] = useState();
   //prevent access to 0
@@ -182,23 +175,6 @@ function Main() {
 
   //use ref for hours input. Will need useRef for minutes and seconds input. Used to block cursor click on left side on input.
   // const timerH = useRef();
-
-  //run focus and setSelectionRange for target inputs
-  //travese input left
-  useEffect(() => {
-    if (!selection1) return; // prevent running on start
-    const { start, end } = selection1;
-    inputEle1.previousElementSibling.focus();
-    inputEle1.previousElementSibling.setSelectionRange(start, end);
-  }, [selection1]);
-
-  //traverse input right
-  useEffect(() => {
-    if (!selection2) return;
-    const { start, end } = selection2;
-    inputEle1.nextElementSibling.focus();
-    inputEle1.nextElementSibling.setSelectionRange(start, end);
-  }, [selection2]);
 
   //replace/delete digit
   useEffect(() => {
@@ -575,6 +551,11 @@ function Main() {
                 onChangeM={handleChangeMinute}
                 onChangeS={handleChangeSecond}
                 onKeyPress={numOnly}
+                selection3={selection3}
+                setSelection3={setSelection3}
+                inputEle2={inputEle2}
+                setInputEle2={setInputEle2}
+
               ></TimerHMS>
             </div>
             <div className="notation">

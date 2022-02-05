@@ -1,18 +1,13 @@
-import React, {useState, useEffect, useRef}from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 function TimerHMS(props) {
-
   //Store inputs to traverse between them
   //traverse left
   const [selection1, setSelection1] = useState();
   //traverse right
   const [selection2, setSelection2] = useState();
-  //replace/delete
-  const [selection3, setSelection3] = useState();
   //traverse input
   const [inputEle1, setInputEle1] = useState();
-  //replacing/deleting digit
-  const [inputEle2, setInputEle2] = useState();
   //prevent access to 0
   // const [selection4, setSelection4] = useState();
 
@@ -38,12 +33,12 @@ function TimerHMS(props) {
 
   //replace/delete digit
   useEffect(() => {
-    if (!selection3) return;
-    const { start, end } = selection3;
-    inputEle2.setSelectionRange(start, end);
-  }, [selection3]);
+    if (!props.selection3) return;
+    const { start, end } = props.selection3;
+    props.inputEle2.setSelectionRange(start, end);
+  }, [props.selection3]);
 
-  //prevent  clickaccess to 0 
+  //prevent  clickaccess to 0
   // useEffect(() => {
   //   if (!selection4) return;
   //   const { start, end } = selection4;
@@ -88,7 +83,6 @@ function TimerHMS(props) {
     }
   }
 
-  
   return (
     <div>
       <input
