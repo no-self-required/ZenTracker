@@ -14,7 +14,7 @@ function TimerHMS(props) {
   //replacing/deleting digit
   const [inputEle2, setInputEle2] = useState();
   //prevent access to 0
-  const [selection4, setSelection4] = useState();
+  // const [selection4, setSelection4] = useState();
 
   //use ref for hours input. Will need useRef for minutes and seconds input. Used to block cursor click on left side on input.
   // const timerH = useRef();

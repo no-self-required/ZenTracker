@@ -1,9 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../styling/main.scss";
 
-//after triple input implemented: initial time bug * even before that
-//NEED TO SET INITIAL TIME FOR ALL THREE INPUTS
-
 //H:M:S inputs
 import TimerHMS from "./inputs/InputHMS";
 
@@ -23,7 +20,7 @@ import SecondS from "./displayDigits/SecondS";
 import Start from "./buttons/Start";
 import Stop from "./buttons/Stop";
 import Ok from "./buttons/Ok";
-import Reset from "./buttons/Reset"
+import Reset from "./buttons/Reset";
 import ResetDisabled from "./buttons/ResetDisabled";
 
 function splitInput(initialTime) {
@@ -36,9 +33,10 @@ function splitInput(initialTime) {
   }
   return arr;
 }
-
+//calculated time becomes new split Arr???
 function calculateSeconds(initialTime) {
   const splitArr = splitInput(initialTime);
+  console.log("splitArray inside calc seconds", splitArr);
   const seconds = [];
   const minutes = [];
   const hours = [];
@@ -150,10 +148,11 @@ function Main() {
   );
 
   const [totalSeconds, setTotalSeconds] = useState(300);
+  //initialTime is running off array [5, 0, 0]
   const [initialTime, setInitialTime] = useState(500);
   const [intervalID, setIntervalID] = useState();
   const [timerState, setTimerState] = useState(TIMER_STATES["INITIAL"]);
-  
+
   //State tags for each digit (display timer)
   const [firstS, setFirstS] = useState(null);
   const [secondS, setSecondS] = useState(null);
@@ -179,11 +178,10 @@ function Main() {
   //replacing/deleting digit
   const [inputEle2, setInputEle2] = useState();
   //prevent access to 0
-  const [selection4, setSelection4] = useState();
-
+  // const [selection4, setSelection4] = useState();
 
   //use ref for hours input. Will need useRef for minutes and seconds input. Used to block cursor click on left side on input.
-  const timerH = useRef();
+  // const timerH = useRef();
 
   //run focus and setSelectionRange for target inputs
   //travese input left
@@ -210,11 +208,11 @@ function Main() {
   }, [selection3]);
 
   //prevent access to 0
-  useEffect(() => {
-    if (!selection4) return;
-    const { start, end } = selection4;
-    timerH.current.setSelectionRange(start, end);
-  }, [selection4]);
+  // useEffect(() => {
+  //   if (!selection4) return;
+  //   const { start, end } = selection4;
+  //   timerH.current.setSelectionRange(start, end);
+  // }, [selection4]);
 
   //Decrement timer if timer has started, and there is an interval
   useEffect(() => {
@@ -234,29 +232,24 @@ function Main() {
   }, [totalSeconds]);
 
   function startTimer() {
-    //full digit input bug here
-    //try setting a new state 
-    
-    let tripleInputs = inputTimerHour + inputTimerMinute + inputTimerSecond
-    let newInputTimer = calculateSeconds(tripleInputs);
-
-    const calculated = calculateSeconds(initialTime);
-
     //if initial time has already started
     if (timerState === TIMER_STATES["EDIT"]) {
       console.log("START FROM EDIT STATE");
+      let tripleInputs = inputTimerHour + inputTimerMinute + inputTimerSecond;
+      const newInputTimer = calculateSeconds(tripleInputs);
       //logic to start from new initial input
-      console.log("START FROM EDIT WITH NEW INITIAL INPUT");
       setTotalSeconds(newInputTimer);
-      //set new initial time to sum of inputs > replaces default total seconds state
-      setInitialTime(newInputTimer);
       setTimerState(TIMER_STATES["STARTED"]);
+      //set new initial time to concatenated inputs
+      setInitialTime(tripleInputs);
+
       return;
     } else if (timerState === TIMER_STATES["STOPPED"]) {
       console.log("START FROM STOPPED STATE");
       setTimerState(TIMER_STATES["STARTED"]);
       return;
     } else if (timerState === TIMER_STATES["INITIAL"]) {
+      const calculated = calculateSeconds(initialTime);
       console.log("START FROM INITIAL STATE");
       setTimerState(TIMER_STATES["STARTED"]);
       setTotalSeconds(calculated);
@@ -283,9 +276,9 @@ function Main() {
   function editTimerState() {
     console.log("ENTER EDIT STATE");
     setTimerState(TIMER_STATES["EDIT"]);
-    fillZeros();
     clearInterval(intervalID);
     setIntervalID(undefined);
+    fillZeros();
   }
 
   function decrementTotalSeconds() {
@@ -300,11 +293,12 @@ function Main() {
 
   function resetTimer() {
     console.log("ENTER INITIAL STATE");
-    setTimerState(TIMER_STATES["INITIAL"]);
     clearInterval(intervalID);
     setIntervalID(undefined);
     const initialTimeInSeconds = calculateSeconds(initialTime);
+    console.log('initialTimeInSeconds', initialTimeInSeconds)
     setTotalSeconds(initialTimeInSeconds);
+    setTimerState(TIMER_STATES["INITIAL"]);
   }
 
   // const inputId = document.getElementById("timer");
@@ -324,6 +318,7 @@ function Main() {
     }
   }
 
+  //sets triple input values based off total seconds
   function fillZeros() {
     let input = displayInputValue(totalSeconds);
     for (let i = 0; i < input.length; i++) {
@@ -345,11 +340,14 @@ function Main() {
         input[2] = "0" + input[2];
       }
     }
-    setInputTimerHour(input[0]);
-    setInputTimerMinute(input[1]);
-    setInputTimerSecond(input[2]);
+
+    //convert to strings for input values
+    setInputTimerHour(input[0].toString());
+    setInputTimerMinute(input[1].toString());
+    setInputTimerSecond(input[2].toString());
   }
 
+  //remove zeros and set update display timer spans
   function omitZero() {
     const splitTime = splitTimer(totalSeconds);
 
@@ -380,6 +378,7 @@ function Main() {
 
     switch (omitZero.length) {
       case 0:
+        break;
       case 1:
         setFirstH(null);
         setSecondH(null);
@@ -432,46 +431,47 @@ function Main() {
       default:
         break;
     }
+    console.log('omit zero', omitZero);
     return omitZero;
   }
 
   //redirect focus to setSelectionRange(1, 1) if div is clicked. Prevent cursor access past final digit when clicking
-  function handleClickH() {
-    timerH.current.focus();
-    setSelection4({ start: 1, end: 1 });
-  }
+  // function handleClickH() {
+  //   timerH.current.focus();
+  //   setSelection4({ start: 1, end: 1 });
+  // }
 
-  function handleKeyDown(e) {
-    const input = e.target;
-    setInputEle1(input);
-    //moving left
-    //prevent cursor access past final digit inside all inputs when traversing with left and right arrows
-    //ex: [11] > [|11] : cannot reach "|"
-    if (
-      input.previousElementSibling &&
-      input.value.length === 2 &&
-      input.selectionEnd === 1 &&
-      e.keyCode === 37
-    ) {
-      setSelection1({ start: 2, end: 2 });
-    } else if (
-      !input.previousElementSibling &&
-      input.value.length === 2 &&
-      input.selectionEnd === 1 &&
-      e.keyCode === 37
-    ) {
-      e.preventDefault();
-    }
+  // function handleKeyDown(e) {
+  //   const input = e.target;
+  //   setInputEle1(input);
+  //   //moving left
+  //   //prevent cursor access past final digit inside all inputs when traversing with left and right arrows
+  //   //ex: [11] > [|11] : cannot reach "|"
+  //   if (
+  //     input.previousElementSibling &&
+  //     input.value.length === 2 &&
+  //     input.selectionEnd === 1 &&
+  //     e.keyCode === 37
+  //   ) {
+  //     setSelection1({ start: 2, end: 2 });
+  //   } else if (
+  //     !input.previousElementSibling &&
+  //     input.value.length === 2 &&
+  //     input.selectionEnd === 1 &&
+  //     e.keyCode === 37
+  //   ) {
+  //     e.preventDefault();
+  //   }
 
-    //moving right
-    if (
-      input.nextElementSibling &&
-      (input.selectionEnd === 2 || input.selectionEnd === 0) &&
-      e.keyCode === 39
-    ) {
-      setSelection2({ start: 1, end: 1 });
-    }
-  }
+  //   //moving right
+  //   if (
+  //     input.nextElementSibling &&
+  //     (input.selectionEnd === 2 || input.selectionEnd === 0) &&
+  //     e.keyCode === 39
+  //   ) {
+  //     setSelection2({ start: 1, end: 1 });
+  //   }
+  // }
 
   function handleChangeSecond(event) {
     let input = event.target.value;
@@ -555,7 +555,6 @@ function Main() {
     setInputTimerHour(input);
   }
 
-  //bug: put in 6 digits > start > stop > edit > start > total seconds is incorrect
   //todo:
   //div block clicks to 0 on inputs
   //styling
@@ -565,29 +564,28 @@ function Main() {
       <div className="timer-container">
         {timerState === TIMER_STATES["EDIT"] && (
           <div id="notation-timer">
-            <div className="box" onClick={handleClickH}></div>
+            {/* <div className="box" onClick={}></div> */}
             <div className="all-inputs">
               <TimerHMS
-                ref={timerH}
+                // ref={timerH}
                 valueH={inputTimerHour}
                 valueM={inputTimerMinute}
                 valueS={inputTimerSecond}
                 onChangeH={handleChangeHour}
                 onChangeM={handleChangeMinute}
                 onChangeS={handleChangeSecond}
-                onKeydown={handleKeyDown}
                 onKeyPress={numOnly}
               ></TimerHMS>
             </div>
             <div className="notation">
               <div className="hours">
-                <NotationH/>
+                <NotationH />
               </div>
               <div className="minutes">
-                <NotationM/>
+                <NotationM />
               </div>
               <div className="seconds">
-                <NotationS/>
+                <NotationS />
               </div>
             </div>
           </div>
@@ -599,25 +597,19 @@ function Main() {
                 <div className="notationDisplay">
                   <div className="hours">
                     {/* <span className="firstH">{firstH}</span> */}
-                    <FirstH value={firstH}/>
-                    <SecondH value={secondH}/>
-                    {(firstH || secondH) && (
-                      <NotationH/>
-                    )}
+                    <FirstH value={firstH} />
+                    <SecondH value={secondH} />
+                    {(firstH || secondH) && <NotationH />}
                   </div>
                   <div className="minutes">
-                    <FirstM value={firstM}/>
-                    <SecondM value={secondM}/>
-                    {(firstM || secondM) && (
-                      <NotationM/>
-                    )}
+                    <FirstM value={firstM} />
+                    <SecondM value={secondM} />
+                    {(firstM || secondM) && <NotationM />}
                   </div>
                   <div className="seconds">
-                    <FirstS value={firstS}/>
-                    <SecondS value={secondS}/>
-                    {(firstS || secondS) && (
-                      <NotationS/>
-                    )}
+                    <FirstS value={firstS} />
+                    <SecondS value={secondS} />
+                    {(firstS || secondS) && <NotationS />}
                   </div>
                 </div>
               </div>
@@ -627,20 +619,18 @@ function Main() {
             {(timerState === TIMER_STATES["INITIAL"] ||
               timerState === TIMER_STATES["STOPPED"] ||
               timerState === TIMER_STATES["EDIT"]) && (
-              <Start onClick={startTimer}/>
+              <Start onClick={startTimer} />
             )}
             {timerState === TIMER_STATES["STARTED"] && (
-              <Stop onClick={stopTimer}/>
+              <Stop onClick={stopTimer} />
             )}
             {timerState === TIMER_STATES["FINISHED"] && (
-              <Ok onClick={stopAlarm}/>
+              <Ok onClick={stopAlarm} />
             )}
             {timerState !== TIMER_STATES["INITIAL"] && (
-              <Reset onClick={resetTimer}/>
+              <Reset onClick={resetTimer} />
             )}
-            {timerState === TIMER_STATES["INITIAL"] && (
-              <ResetDisabled/>
-            )}
+            {timerState === TIMER_STATES["INITIAL"] && <ResetDisabled />}
           </div>
         </div>
       </div>
