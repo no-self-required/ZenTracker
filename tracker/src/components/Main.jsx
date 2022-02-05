@@ -1,12 +1,17 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../styling/main.scss";
 
+//after triple input implemented: initial time bug * even before that
+//NEED TO SET INITIAL TIME FOR ALL THREE INPUTS
+
+//H:M:S inputs
 import TimerHMS from "./inputs/InputHMS";
 
 import NotationH from "./notations/NotationH";
 import NotationM from "./notations/NotationM";
 import NotationS from "./notations/NotationS";
 
+//Display timer digits
 import FirstH from "./displayDigits/FirstH";
 import SecondH from "./displayDigits/SecondH";
 import FirstM from "./displayDigits/FirstM";
@@ -14,6 +19,7 @@ import SecondM from "./displayDigits/SecondM";
 import FirstS from "./displayDigits/FirstS";
 import SecondS from "./displayDigits/SecondS";
 
+//Buttons
 import Start from "./buttons/Start";
 import Stop from "./buttons/Stop";
 import Ok from "./buttons/Ok";
@@ -43,7 +49,9 @@ function calculateSeconds(initialTime) {
   const totMin = minutes[0] * 600 + minutes[1] * 60;
   const totHours = hours[0] * 36000 + hours[1] * 3600;
   let calculatedTotalSeconds = totSec + totMin + totHours;
+
   console.log("calculatedTotalSeconds", calculatedTotalSeconds);
+
   //if time entered is more than 99hours, set to 99h/59m/59s
   if (calculatedTotalSeconds > 360000) {
     calculatedTotalSeconds = 359999;
@@ -145,7 +153,7 @@ function Main() {
   const [initialTime, setInitialTime] = useState(500);
   const [intervalID, setIntervalID] = useState();
   const [timerState, setTimerState] = useState(TIMER_STATES["INITIAL"]);
-
+  
   //State tags for each digit (display timer)
   const [firstS, setFirstS] = useState(null);
   const [secondS, setSecondS] = useState(null);
@@ -173,7 +181,6 @@ function Main() {
   //prevent access to 0
   const [selection4, setSelection4] = useState();
 
-  const notation = ["s", "m", "h"];
 
   //use ref for hours input. Will need useRef for minutes and seconds input. Used to block cursor click on left side on input.
   const timerH = useRef();
@@ -215,7 +222,6 @@ function Main() {
       if (totalSeconds !== 0) {
         const intervalID = setInterval(decrementTotalSeconds, 1000);
         setIntervalID(intervalID);
-        console.log("totalSeconds", totalSeconds);
       }
     } else if (timerState === TIMER_STATES["FINISHED"]) {
       startAlarm();
@@ -228,11 +234,13 @@ function Main() {
   }, [totalSeconds]);
 
   function startTimer() {
-    let tripleCombined = inputTimerHour + inputTimerMinute + inputTimerSecond;
+    //full digit input bug here
+    //try setting a new state 
+    
+    let tripleInputs = inputTimerHour + inputTimerMinute + inputTimerSecond
+    let newInputTimer = calculateSeconds(tripleInputs);
 
     const calculated = calculateSeconds(initialTime);
-
-    const newInputTimer = calculateSeconds(tripleCombined);
 
     //if initial time has already started
     if (timerState === TIMER_STATES["EDIT"]) {
@@ -241,7 +249,7 @@ function Main() {
       console.log("START FROM EDIT WITH NEW INITIAL INPUT");
       setTotalSeconds(newInputTimer);
       //set new initial time to sum of inputs > replaces default total seconds state
-      setInitialTime(tripleCombined);
+      setInitialTime(newInputTimer);
       setTimerState(TIMER_STATES["STARTED"]);
       return;
     } else if (timerState === TIMER_STATES["STOPPED"]) {
@@ -252,6 +260,7 @@ function Main() {
       console.log("START FROM INITIAL STATE");
       setTimerState(TIMER_STATES["STARTED"]);
       setTotalSeconds(calculated);
+      return;
     }
   }
 
@@ -298,15 +307,15 @@ function Main() {
     setTotalSeconds(initialTimeInSeconds);
   }
 
-  const inputId = document.getElementById("timer");
+  // const inputId = document.getElementById("timer");
 
-  if (document.getElementById("timer")) {
-    inputId.addEventListener("keyup", function onEvent(e) {
-      if (e.key === "Enter") {
-        startTimer();
-      }
-    });
-  }
+  // if (document.getElementById("timer")) {
+  //   inputId.addEventListener("keyup", function onEvent(e) {
+  //     if (e.key === "Enter") {
+  //       startTimer();
+  //     }
+  //   });
+  // }
 
   //only accept numbers for timer input
   function numOnly(event) {
@@ -423,9 +432,6 @@ function Main() {
       default:
         break;
     }
-
-    console.log("omitZero", omitZero);
-
     return omitZero;
   }
 
@@ -549,8 +555,9 @@ function Main() {
     setInputTimerHour(input);
   }
 
+  //bug: put in 6 digits > start > stop > edit > start > total seconds is incorrect
   //todo:
-  //restructure into components
+  //div block clicks to 0 on inputs
   //styling
 
   return (
@@ -587,8 +594,8 @@ function Main() {
         )}
         <div id="timer-button-container">
           {timerState !== TIMER_STATES["EDIT"] && (
-            <div id="timer-button-absolute-container">
-              <div id="" onClick={editTimerState}>
+            <div id="display-timer-container">
+              <div className="absolute-timer" onClick={editTimerState}>
                 <div className="notationDisplay">
                   <div className="hours">
                     {/* <span className="firstH">{firstH}</span> */}

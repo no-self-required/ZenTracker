@@ -15,41 +15,79 @@
       align-items: center;
       flex-direction: column;
       width: 100%;
-      
+
       //not responsive
       #timer {
         text-align: right;
         height: 65%;
         width: 40%;
         border: none;
-        font-size: 144px;
       }
     }
 
     #timer-button-container {
-      display: flex;
-      flex-direction: column;
+      display: grid;
+      grid-template-rows: 1fr 1fr;
 
-      #timer-button-absolute-container {
-        display: flex; 
-        width: 100%; 
+      #display-timer-container {
+        display: flex;
         justify-content: center;
       }
 
-      #absolute-timer {
-        width: fit-content;
-        font-size: 144px;
-        border-bottom: solid rgba(128, 128, 128, 0.596) 2px;
+      .absolute-timer {
+
+
+        .notationDisplay {
+          display: flex;
+          justify-content: center;
+
+
+          width: fit-content;
+          font-size: 144px;
+          // border-bottom: solid rgba(128, 128, 128, 0.596) 2px;
+          
+          .hours {
+            display: grid;
+            grid-template-columns: 0.5fr 0.5fr 0.5fr;
+
+            .notationH {
+              font-size: 50px;
+              padding-top: 1.86em;
+              padding-right: 0.4em;
+
+            }
+          }
+
+          .minutes {
+            display: grid;
+            grid-template-columns: 0.5fr 0.5fr 0.5fr;
+            .notationM {
+              font-size: 50px;
+              padding-top: 1.86em;
+              padding-right: 0.4em;
+
+            }
+          }
+
+          .seconds {
+            display: grid;
+            grid-template-columns: 0.5fr 0.5fr 0.5fr;
+            .notationS {
+              font-size: 50px;
+              padding-top: 1.86em;
+              padding-right: 0.4em;
+
+
+            }
+          }
+        }
       }
     }
-
-
 
     #start-button,
     #stop-button,
     #ok-button,
     #reset-button {
-      font-family: "Hind Madurai", sans-serif;
       font-size: 24px;
       width: 6em;
       height: 2.3em;
