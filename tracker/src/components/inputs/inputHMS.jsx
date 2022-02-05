@@ -8,11 +8,6 @@ function TimerHMS(props) {
   const [selection2, setSelection2] = useState();
   //traverse input
   const [inputEle1, setInputEle1] = useState();
-  //prevent access to 0
-  // const [selection4, setSelection4] = useState();
-
-  //use ref for hours input. Will need useRef for minutes and seconds input. Used to block cursor click on left side on input.
-  // const timerH = useRef();
 
   //run focus and setSelectionRange for target inputs
   //travese input left
@@ -38,12 +33,57 @@ function TimerHMS(props) {
     props.inputEle2.setSelectionRange(start, end);
   }, [props.selection3]);
 
-  //prevent  clickaccess to 0
-  // useEffect(() => {
-  //   if (!selection4) return;
-  //   const { start, end } = selection4;
-  //   timerH.current.setSelectionRange(start, end);
-  // }, [selection4]);
+  //prevent access to 0
+  const [selection4, setSelection4] = useState();
+  const [selection5, setSelection5] = useState();
+  const [selection6, setSelection6] = useState();
+
+  //use ref for hours input. Will need useRef for minutes and seconds input. Used to block cursor click on left side on input.
+  const timerH = useRef();
+  const timerM = useRef();
+  const timerS = useRef();
+
+  //prevent clickaccess to 0: Hours
+  useEffect(() => {
+    if (!selection4) return;
+    const { start, end } = selection4;
+    timerH.current.setSelectionRange(start, end);
+  }, [selection4]);
+
+  function handleClickH() {
+    timerH.current.focus();
+    setSelection4({ start: 1, end: 1 });
+  }
+
+  //Minutes
+  useEffect(() => {
+    if (!selection5) return;
+    const { start, end } = selection5;
+    timerM.current.setSelectionRange(start, end);
+  }, [selection5]);
+
+  function handleClickM() {
+    timerM.current.focus();
+    setSelection5({ start: 1, end: 1 });
+  }
+
+  //Seconds
+  useEffect(() => {
+    if (!selection6) return;
+    const { start, end } = selection6;
+    timerS.current.setSelectionRange(start, end);
+  }, [selection6]);
+
+  function handleClickS() {
+    timerS.current.focus();
+    setSelection6({ start: 1, end: 1 });
+  }
+  
+  //redirect focus to setSelectionRange(1, 1) if div is clicked. Prevent cursor access past final digit when clicking
+
+
+
+
 
   function handleKeyDown(e) {
     const input = e.target;
@@ -85,36 +125,44 @@ function TimerHMS(props) {
 
   return (
     <div>
-      <input
-        className="hoursInput"
-        type="text"
-        id="timerHour"
-        value={props.valueH}
-        onChange={props.onChangeH}
-        onKeyDown={handleKeyDown}
-        onKeyPress={numOnly}
-        maxLength={3}
-      ></input>
-      <input
-        className="minutesInput"
-        type="text"
-        id="timerMinute"
-        value={props.valueM}
-        onChange={props.onChangeM}
-        onKeyDown={handleKeyDown}
-        onKeyPress={numOnly}
-        maxLength={3}
-      ></input>
-      <input
-        className="secondsInput"
-        type="text"
-        id="timerSecond"
-        value={props.valueS}
-        onChange={props.onChangeS}
-        onKeyDown={handleKeyDown}
-        onKeyPress={numOnly}
-        maxLength={3}
-      ></input>
+      <div className="boxH" onClick={handleClickH}></div>
+      <div className="boxM" onClick={handleClickM}></div>
+      <div className="boxS" onClick={handleClickS}></div>
+      <div>
+        <input
+          ref={timerH}
+          className="hoursInput"
+          type="text"
+          id="timerHour"
+          value={props.valueH}
+          onChange={props.onChangeH}
+          onKeyDown={handleKeyDown}
+          onKeyPress={numOnly}
+          maxLength={3}
+        ></input>
+        <input
+          ref={timerM}
+          className="minutesInput"
+          type="text"
+          id="timerMinute"
+          value={props.valueM}
+          onChange={props.onChangeM}
+          onKeyDown={handleKeyDown}
+          onKeyPress={numOnly}
+          maxLength={3}
+        ></input>
+        <input
+          ref={timerS}
+          className="secondsInput"
+          type="text"
+          id="timerSecond"
+          value={props.valueS}
+          onChange={props.onChangeS}
+          onKeyDown={handleKeyDown}
+          onKeyPress={numOnly}
+          maxLength={3}
+        ></input>
+      </div>
     </div>
   );
 }

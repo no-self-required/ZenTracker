@@ -417,38 +417,6 @@ function Main() {
   //   setSelection4({ start: 1, end: 1 });
   // }
 
-  // function handleKeyDown(e) {
-  //   const input = e.target;
-  //   setInputEle1(input);
-  //   //moving left
-  //   //prevent cursor access past final digit inside all inputs when traversing with left and right arrows
-  //   //ex: [11] > [|11] : cannot reach "|"
-  //   if (
-  //     input.previousElementSibling &&
-  //     input.value.length === 2 &&
-  //     input.selectionEnd === 1 &&
-  //     e.keyCode === 37
-  //   ) {
-  //     setSelection1({ start: 2, end: 2 });
-  //   } else if (
-  //     !input.previousElementSibling &&
-  //     input.value.length === 2 &&
-  //     input.selectionEnd === 1 &&
-  //     e.keyCode === 37
-  //   ) {
-  //     e.preventDefault();
-  //   }
-
-  //   //moving right
-  //   if (
-  //     input.nextElementSibling &&
-  //     (input.selectionEnd === 2 || input.selectionEnd === 0) &&
-  //     e.keyCode === 39
-  //   ) {
-  //     setSelection2({ start: 1, end: 1 });
-  //   }
-  // }
-
   function handleChangeSecond(event) {
     let input = event.target.value;
     const target = event.target;
@@ -540,7 +508,6 @@ function Main() {
       <div className="timer-container">
         {timerState === TIMER_STATES["EDIT"] && (
           <div id="notation-timer">
-            {/* <div className="box" onClick={}></div> */}
             <div className="all-inputs">
               <TimerHMS
                 // ref={timerH}
