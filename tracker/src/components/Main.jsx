@@ -508,7 +508,7 @@ function Main() {
       <div className="timer-container">
         {timerState === TIMER_STATES["EDIT"] && (
           <div id="notation-timer">
-            {/* <div className="notation">
+            <div className="notation">
               <div className="notation-hours">
                 <NotationH />
               </div>
@@ -518,7 +518,7 @@ function Main() {
               <div className="notation-seconds">
                 <NotationS />
               </div>
-            </div> */}
+            </div>
             <TimerHMS
               // ref={timerH}
               valueH={inputTimerHour}
