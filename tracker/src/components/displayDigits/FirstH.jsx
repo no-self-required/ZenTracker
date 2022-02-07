@@ -1,5 +1,5 @@
 import React from "react";
-import "../../styling/digits.scss";
+
 
 function FirstH(props) {
   return(
