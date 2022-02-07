@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import "../../styling/inputs.scss";
 
 function TimerHMS(props) {
   //Store inputs to traverse between them
@@ -78,12 +79,8 @@ function TimerHMS(props) {
     timerS.current.focus();
     setSelection6({ start: 1, end: 1 });
   }
-  
+
   //redirect focus to setSelectionRange(1, 1) if div is clicked. Prevent cursor access past final digit when clicking
-
-
-
-
 
   function handleKeyDown(e) {
     const input = e.target;
@@ -124,11 +121,13 @@ function TimerHMS(props) {
   }
 
   return (
-    <div>
-      <div className="boxH" onClick={handleClickH}></div>
-      <div className="boxM" onClick={handleClickM}></div>
-      <div className="boxS" onClick={handleClickS}></div>
-      <div>
+    <div className="inputs-boxes">
+      <div className="boxes">
+        <div className="boxH" onClick={handleClickH}></div>
+        <div className="boxM" onClick={handleClickM}></div>
+        <div className="boxS" onClick={handleClickS}></div>
+      </div>
+      <div className="inputs">
         <input
           ref={timerH}
           className="hoursInput"

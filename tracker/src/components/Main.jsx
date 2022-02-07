@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import "../styling/main.scss";
 
 //H:M:S inputs
@@ -272,7 +272,7 @@ function Main() {
     clearInterval(intervalID);
     setIntervalID(undefined);
     const initialTimeInSeconds = calculateSeconds(initialTime);
-    console.log('initialTimeInSeconds', initialTimeInSeconds)
+    console.log("initialTimeInSeconds", initialTimeInSeconds);
     setTotalSeconds(initialTimeInSeconds);
     setTimerState(TIMER_STATES["INITIAL"]);
   }
@@ -407,7 +407,7 @@ function Main() {
       default:
         break;
     }
-    console.log('omit zero', omitZero);
+    console.log("omit zero", omitZero);
     return omitZero;
   }
 
@@ -508,34 +508,31 @@ function Main() {
       <div className="timer-container">
         {timerState === TIMER_STATES["EDIT"] && (
           <div id="notation-timer">
-            <div className="all-inputs">
-              <TimerHMS
-                // ref={timerH}
-                valueH={inputTimerHour}
-                valueM={inputTimerMinute}
-                valueS={inputTimerSecond}
-                onChangeH={handleChangeHour}
-                onChangeM={handleChangeMinute}
-                onChangeS={handleChangeSecond}
-                onKeyPress={numOnly}
-                selection3={selection3}
-                setSelection3={setSelection3}
-                inputEle2={inputEle2}
-                setInputEle2={setInputEle2}
-
-              ></TimerHMS>
-            </div>
-            <div className="notation">
-              <div className="hours">
+            {/* <div className="notation">
+              <div className="notation-hours">
                 <NotationH />
               </div>
-              <div className="minutes">
+              <div className="notation-minutes">
                 <NotationM />
               </div>
-              <div className="seconds">
+              <div className="notation-seconds">
                 <NotationS />
               </div>
-            </div>
+            </div> */}
+            <TimerHMS
+              // ref={timerH}
+              valueH={inputTimerHour}
+              valueM={inputTimerMinute}
+              valueS={inputTimerSecond}
+              onChangeH={handleChangeHour}
+              onChangeM={handleChangeMinute}
+              onChangeS={handleChangeSecond}
+              onKeyPress={numOnly}
+              selection3={selection3}
+              setSelection3={setSelection3}
+              inputEle2={inputEle2}
+              setInputEle2={setInputEle2}
+            ></TimerHMS>
           </div>
         )}
         <div id="timer-button-container">
@@ -544,7 +541,6 @@ function Main() {
               <div className="absolute-timer" onClick={editTimerState}>
                 <div className="notationDisplay">
                   <div className="hours">
-                    {/* <span className="firstH">{firstH}</span> */}
                     <FirstH value={firstH} />
                     <SecondH value={secondH} />
                     {(firstH || secondH) && <NotationH />}
