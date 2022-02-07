@@ -500,7 +500,8 @@ function Main() {
   }
 
   //todo:
-  //div block clicks to 0 on inputs
+  //up/down arrow key: implement setselection?
+  //start timer on enter
   //styling
 
   return (

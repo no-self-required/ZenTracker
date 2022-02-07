@@ -102,6 +102,11 @@ function TimerHMS(props) {
       e.keyCode === 37
     ) {
       e.preventDefault();
+    } else if (e.keyCode === 38 ) { //disable arrow up and down
+      e.preventDefault();
+
+    } else if (e.keyCode === 40) {
+      e.preventDefault();
     }
 
     //moving right
@@ -117,7 +122,7 @@ function TimerHMS(props) {
   function numOnly(event) {
     if (!/[0-9]/.test(event.key)) {
       event.preventDefault();
-    }
+    } 
   }
 
   return (
