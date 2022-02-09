@@ -528,6 +528,8 @@ function Main() {
               setSelection3={setSelection3}
               inputEle2={inputEle2}
               setInputEle2={setInputEle2}
+              InputTimerHour={inputTimerHour}
+              setInputTimerHour={setInputTimerHour}
             ></TimerHMS>
           </div>
         )}

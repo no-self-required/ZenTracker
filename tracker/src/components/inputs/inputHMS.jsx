@@ -149,8 +149,52 @@ function TimerHMS(props) {
     }
   }
 
+  function handleButtonClickUpH() {
+    let value = props.InputTimerHour;
+    let newValue;
+    let stringToInt = parseInt(value)+1
+    let x = stringToInt.toString();
+
+    if (value === '99') {
+      newValue = '00'
+    }
+    if (x.length === 1) {
+      newValue = '0' + x
+    }
+    if (x.length === 2) {
+      newValue = x
+    }
+
+    props.setInputTimerHour(newValue);
+    console.log("value", value)
+  }
+
+  function handleButtonClickDownH() {
+    let value = props.InputTimerHour;
+    let newValue;
+    let stringToInt = parseInt(value)-1
+    let x = stringToInt.toString();
+
+    if (value === '00') {
+      newValue = '99'
+    } else if (x.length === 2) {
+        newValue = x
+      }
+    if (x.length === 1) {
+      newValue = '0' + x
+    }
+
+    console.log('newvalue', newValue)
+
+    props.setInputTimerHour(newValue);
+  }
+
   return (
     <div className="inputs-boxes">
+      <div className="buttons">
+        <button className="button-up-H" onClick={handleButtonClickUpH}>upH</button>
+        <button className="button-down-H" onClick={handleButtonClickDownH}>downH</button>
+      </div>
       <div className="boxes">
         <div className="boxH" onClick={handleClickH}></div>
         <div className="boxM" onClick={handleClickM}></div>

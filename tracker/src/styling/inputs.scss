@@ -1,5 +1,10 @@
 .inputs-boxes {
   height: 10.84375em;
+
+  .buttons {
+    position: absolute;
+    z-index: 3;
+  }
   .boxes {
     .boxH {
       height: 11em;
