@@ -10,6 +10,9 @@ function TimerHMS(props) {
   //traverse input
   const [inputEle1, setInputEle1] = useState();
 
+  const [inputEleH, setInputEleH] = useState();
+  const [inputEleS, setInputEleS] = useState();
+
   //run focus and setSelectionRange for target inputs
   //travese input left
   useEffect(() => {
@@ -38,6 +41,9 @@ function TimerHMS(props) {
   const [selection4, setSelection4] = useState();
   const [selection5, setSelection5] = useState();
   const [selection6, setSelection6] = useState();
+
+  const [selectionH, setSelectionH] = useState();
+  const [selectionS, setSelectionS] = useState();
 
   //use ref for hours input. Will need useRef for minutes and seconds input. Used to block cursor click on left side on input.
   const timerH = useRef();
@@ -75,13 +81,26 @@ function TimerHMS(props) {
     timerS.current.setSelectionRange(start, end);
   }, [selection6]);
 
+  //up arrow sets focus to hours and SR: 1,1
+  useEffect(() => {
+    if (!selectionH) return;
+    const { start, end } = selectionH;
+    inputEleH.current.setSelectionRange(start, end);
+  }, [selectionH]);
+
+  //up arrow sets focus to seconds and SR: 2,2
+  useEffect(() => {
+    if (!selectionS) return;
+    const { start, end } = selectionS;
+    inputEleS.current.setSelectionRange(start, end);
+  }, [selectionS]);
+
   function handleClickS() {
     timerS.current.focus();
     setSelection6({ start: 1, end: 1 });
   }
 
   //redirect focus to setSelectionRange(1, 1) if div is clicked. Prevent cursor access past final digit when clicking
-
   function handleKeyDown(e) {
     const input = e.target;
     setInputEle1(input);
@@ -102,11 +121,16 @@ function TimerHMS(props) {
       e.keyCode === 37
     ) {
       e.preventDefault();
-    } else if (e.keyCode === 38 ) { //disable arrow up and down
-      e.preventDefault();
-
+    } else if (e.keyCode === 38) {
+      //key up sets focus to Hours input with SelectionRange 1,1
+      setInputEleH(timerH);
+      timerH.current.focus();
+      setSelectionH({ start: 1, end: 1 });
     } else if (e.keyCode === 40) {
-      e.preventDefault();
+      //key down sets focus to Seconds input with SelectionRange 2,2
+      setInputEleS(timerS);
+      timerS.current.focus();
+      setSelectionS({ start: 2, end: 2 });
     }
 
     //moving right
@@ -122,7 +146,7 @@ function TimerHMS(props) {
   function numOnly(event) {
     if (!/[0-9]/.test(event.key)) {
       event.preventDefault();
-    } 
+    }
   }
 
   return (

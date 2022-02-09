@@ -211,11 +211,11 @@ function Main() {
     //if initial time has already started
     if (timerState === TIMER_STATES["EDIT"]) {
       console.log("START FROM EDIT STATE");
+      setTimerState(TIMER_STATES["STARTED"]);
       let tripleInputs = inputTimerHour + inputTimerMinute + inputTimerSecond;
       const newInputTimer = calculateSeconds(tripleInputs);
       //logic to start from new initial input
       setTotalSeconds(newInputTimer);
-      setTimerState(TIMER_STATES["STARTED"]);
       //set new initial time to concatenated inputs
       setInitialTime(tripleInputs);
 
@@ -411,12 +411,6 @@ function Main() {
     return omitZero;
   }
 
-  //redirect focus to setSelectionRange(1, 1) if div is clicked. Prevent cursor access past final digit when clicking
-  // function handleClickH() {
-  //   timerH.current.focus();
-  //   setSelection4({ start: 1, end: 1 });
-  // }
-
   function handleChangeSecond(event) {
     let input = event.target.value;
     const target = event.target;
@@ -500,9 +494,10 @@ function Main() {
   }
 
   //todo:
+  //input edit arrows to increase/decrease by 1 for each input
   //up/down arrow key: implement setselection?
   //start timer on enter
-  //styling
+  //styling: dark mode, fullscreen 
 
   return (
     <div className="container">
