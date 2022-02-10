@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../../styling/inputs.scss";
+import useLongPress from "../../hooks/longPress";
 
 function TimerHMS(props) {
   //Store inputs to traverse between them
@@ -152,48 +153,42 @@ function TimerHMS(props) {
   function handleButtonClickUpH() {
     let value = props.InputTimerHour;
     let newValue;
-    let stringToInt = parseInt(value)+1
+    let stringToInt = parseInt(value) + 1;
     let x = stringToInt.toString();
 
-    if (value === '99') {
-      newValue = '00'
+    if (value === "99") {
+      newValue = "00";
     }
     if (x.length === 1) {
-      newValue = '0' + x
+      newValue = "0" + x;
     }
     if (x.length === 2) {
-      newValue = x
+      newValue = x;
     }
 
     props.setInputTimerHour(newValue);
-    console.log("value", value)
+    console.log("value", value);
   }
-
+  //implement on hold
   function handleButtonClickDownH() {
-    let value = props.InputTimerHour;
-    let newValue;
-    let stringToInt = parseInt(value)-1
-    let x = stringToInt.toString();
 
-    if (value === '00') {
-      newValue = '99'
-    } else if (x.length === 2) {
-        newValue = x
-      }
-    if (x.length === 1) {
-      newValue = '0' + x
-    }
-
-    console.log('newvalue', newValue)
-
-    props.setInputTimerHour(newValue);
   }
+
+  function handleButtonOnHoldUpH() {
+    setInterval(handleButtonClickUpH, 500);
+  }
+
+  const longPressDown = useLongPress(handleButtonClickUpH, 100);
 
   return (
     <div className="inputs-boxes">
       <div className="buttons">
-        <button className="button-up-H" onClick={handleButtonClickUpH}>upH</button>
-        <button className="button-down-H" onClick={handleButtonClickDownH}>downH</button>
+        <button className="button-up-H" onClick={handleButtonClickUpH} {...longPressDown}>
+          upH
+        </button>
+        <button className="button-down-H" onClick={handleButtonClickDownH}>
+          downH
+        </button>
       </div>
       <div className="boxes">
         <div className="boxH" onClick={handleClickH}></div>

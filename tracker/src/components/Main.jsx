@@ -148,7 +148,7 @@ function Main() {
   );
 
   const [totalSeconds, setTotalSeconds] = useState(300);
-  //initialTime is running off array [5, 0, 0]
+  //initialTime is running off array converison[5, 0, 0]
   const [initialTime, setInitialTime] = useState(500);
   const [intervalID, setIntervalID] = useState();
   const [timerState, setTimerState] = useState(TIMER_STATES["INITIAL"]);
@@ -495,6 +495,7 @@ function Main() {
 
   //todo:
   //input edit arrows to increase/decrease by 1 for each input
+  //mute sound icon/button
   //up/down arrow key: implement setselection?
   //start timer on enter
   //styling: dark mode, fullscreen 
