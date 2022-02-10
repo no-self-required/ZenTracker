@@ -1,9 +1,63 @@
 .inputs-boxes {
   height: 10.84375em;
-
+  display: flex;
+  justify-content: center;
   .buttons {
     position: absolute;
-    z-index: 3;
+    z-index: 1;
+
+    .button-up-H, .button-down-H, .button-up-M, .button-down-M, .button-up-S, .button-down-S{
+      border: none;
+      background: none;
+      opacity: 15%;
+      height: 1em;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .up {
+      display: flex;
+      justify-content: space-between;
+      width: 40em;
+      padding-top: .9em;
+      .button-up-H{
+        margin-left: 4.6em;
+      }
+
+      .button-up-M{
+        margin-right: .5em;
+      }
+
+      .button-up-S{
+        margin-right: 8em;
+      }
+    }
+
+    .down {
+      display: flex;
+      justify-content: space-between;
+      width: 40em;
+      padding-top: 7.8em;
+      .button-down-H{
+        margin-left: 4.6em;
+      }
+
+      .button-down-M{
+        margin-right: .5em;
+      }
+
+      .button-down-S{
+        margin-right: 8em;
+      }
+    }
+    // .button-up-H, .button-down-H, .button-up-M, .button-down-M, .button-up-S, .button-down-S:hover{
+    //   border: 1px solid grey;
+    // }
+
+    .material-icons {
+
+    }
   }
   .boxes {
     .boxH {
@@ -46,6 +100,7 @@
     width: 40.60625em;
     height: 10.84375em;
     border-bottom: 1px solid gray;
+    // z-index: 1;
     .hoursInput, .minutesInput, .secondsInput {
       border: none;
       outline: none;

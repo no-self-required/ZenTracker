@@ -167,28 +167,163 @@ function TimerHMS(props) {
     }
 
     props.setInputTimerHour(newValue);
-    console.log("value", value);
   }
-  //implement on hold
+
+  function handleButtonClickUpM() {
+    let value = props.InputTimerMinute;
+    let newValue;
+    let stringToInt = parseInt(value) + 1;
+    let x = stringToInt.toString();
+
+    if (value === "99") {
+      newValue = "00";
+    }
+    if (x.length === 1) {
+      newValue = "0" + x;
+    }
+    if (x.length === 2) {
+      newValue = x;
+    }
+
+    props.setInputTimerMinute(newValue);
+  }
+
   function handleButtonClickDownH() {
+    let value = props.InputTimerHour;
+    let newValue;
+    let stringToInt = parseInt(value) - 1;
+    let x = stringToInt.toString();
 
+    if (value === "00") {
+      newValue = "99";
+    } else if (x.length === 2) {
+      newValue = x;
+    }
+    if (x.length === 1) {
+      newValue = "0" + x;
+    }
+
+    console.log("newvalue", newValue);
+
+    props.setInputTimerHour(newValue);
   }
 
-  function handleButtonOnHoldUpH() {
-    setInterval(handleButtonClickUpH, 500);
+  function handleButtonClickDownM() {
+    let value = props.InputTimerMinute;
+    let newValue;
+    let stringToInt = parseInt(value) - 1;
+    let x = stringToInt.toString();
+
+    if (value === "00") {
+      newValue = "99";
+    } else if (x.length === 2) {
+      newValue = x;
+    }
+    if (x.length === 1) {
+      newValue = "0" + x;
+    }
+
+    console.log("newvalue", newValue);
+
+    props.setInputTimerMinute(newValue);
   }
 
-  const longPressDown = useLongPress(handleButtonClickUpH, 100);
+  function handleButtonClickUpS() {
+    let value = props.InputTimerSecond;
+    let newValue;
+    let stringToInt = parseInt(value) + 1;
+    let x = stringToInt.toString();
 
+    if (value === "99") {
+      newValue = "00";
+    }
+    if (x.length === 1) {
+      newValue = "0" + x;
+    }
+    if (x.length === 2) {
+      newValue = x;
+    }
+
+    props.setInputTimerSecond(newValue);
+  }
+
+  function handleButtonClickDownS() {
+    let value = props.InputTimerSecond;
+    let newValue;
+    let stringToInt = parseInt(value) - 1;
+    let x = stringToInt.toString();
+
+    if (value === "00") {
+      newValue = "99";
+    } else if (x.length === 2) {
+      newValue = x;
+    }
+    if (x.length === 1) {
+      newValue = "0" + x;
+    }
+
+    console.log("newvalue", newValue);
+
+    props.setInputTimerSecond(newValue);
+  }
+  const longPressUpH = useLongPress(handleButtonClickUpH, 135);
+  const longPressDownH = useLongPress(handleButtonClickDownH, 135);
+
+  const longPressUpM = useLongPress(handleButtonClickUpM, 135);
+  const longPressDownM = useLongPress(handleButtonClickDownM, 135);
+
+  const longPressUpS = useLongPress(handleButtonClickUpS, 135);
+  const longPressDownS = useLongPress(handleButtonClickDownS, 135);
   return (
     <div className="inputs-boxes">
       <div className="buttons">
-        <button className="button-up-H" onClick={handleButtonClickUpH} {...longPressDown}>
-          upH
-        </button>
-        <button className="button-down-H" onClick={handleButtonClickDownH}>
-          downH
-        </button>
+        <div className="up">
+          <button
+            className="button-up-H"
+            onClick={handleButtonClickUpH}
+            {...longPressUpH}
+          >
+            <span class="material-icons" >arrow_drop_up</span>
+          </button>
+          <button
+            className="button-up-M"
+            onClick={handleButtonClickUpM}
+            {...longPressUpM}
+          >
+            <span class="material-icons" >arrow_drop_up</span>
+          </button>
+          <button
+            className="button-up-S"
+            onClick={handleButtonClickUpS}
+            {...longPressUpS}
+          >
+            <span class="material-icons">arrow_drop_up</span>
+          </button>
+        </div>
+        <div className="down">
+          <button
+            className="button-down-H"
+            onClick={handleButtonClickDownH}
+            {...longPressDownH}
+          >
+            <span class="material-icons">arrow_drop_down</span>
+          </button>
+
+          <button
+            className="button-down-M"
+            onClick={handleButtonClickDownM}
+            {...longPressDownM}
+          >
+            <span class="material-icons">arrow_drop_down</span>
+          </button>
+          <button
+            className="button-down-S"
+            onClick={handleButtonClickDownS}
+            {...longPressDownS}
+          >
+            <span class="material-icons">arrow_drop_down</span>
+          </button>
+        </div>
       </div>
       <div className="boxes">
         <div className="boxH" onClick={handleClickH}></div>

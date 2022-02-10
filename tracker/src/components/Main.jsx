@@ -531,6 +531,10 @@ function Main() {
               setInputEle2={setInputEle2}
               InputTimerHour={inputTimerHour}
               setInputTimerHour={setInputTimerHour}
+              InputTimerMinute={inputTimerMinute}
+              setInputTimerMinute={setInputTimerMinute}
+              InputTimerSecond={inputTimerSecond}
+              setInputTimerSecond={setInputTimerSecond}
             ></TimerHMS>
           </div>
         )}
