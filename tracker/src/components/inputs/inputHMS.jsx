@@ -364,7 +364,7 @@ function TimerHMS(props) {
           onKeyDown={handleKeyDown}
           onKeyPress={numOnly}
           maxLength={3}
-          // autoFocus
+          autoFocus
         ></input>
       </div>
     </div>
