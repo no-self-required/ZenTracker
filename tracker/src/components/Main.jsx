@@ -499,6 +499,7 @@ function Main() {
   //up/down arrow key: implement setselection?
   //start timer on enter
   //styling: dark mode, fullscreen 
+  //remove all position: fixed, resize inputs so incre buttons can be pressed/placed
 
   return (
     <div className="container">

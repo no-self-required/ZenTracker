@@ -266,6 +266,7 @@ function TimerHMS(props) {
 
     props.setInputTimerSecond(newValue);
   }
+
   const longPressUpH = useLongPress(handleButtonClickUpH, 135);
   const longPressDownH = useLongPress(handleButtonClickDownH, 135);
 
@@ -363,7 +364,7 @@ function TimerHMS(props) {
           onKeyDown={handleKeyDown}
           onKeyPress={numOnly}
           maxLength={3}
-          autoFocus
+          // autoFocus
         ></input>
       </div>
     </div>

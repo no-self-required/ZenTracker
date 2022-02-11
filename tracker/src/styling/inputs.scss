@@ -4,7 +4,7 @@
   justify-content: center;
   .buttons {
     position: absolute;
-    z-index: 1;
+    // z-index: 1;
 
     .button-up-H, .button-down-H, .button-up-M, .button-down-M, .button-up-S, .button-down-S{
       border: none;
@@ -20,17 +20,17 @@
       display: flex;
       justify-content: space-between;
       width: 40em;
-      padding-top: .9em;
+      padding-top: .6em;
       .button-up-H{
-        margin-left: 4.6em;
+        margin-left: 4.75em;
       }
 
       .button-up-M{
-        margin-right: .5em;
+        margin-right: .94em;
       }
 
       .button-up-S{
-        margin-right: 8em;
+        margin-right: 7.8em;
       }
     }
 
@@ -38,17 +38,17 @@
       display: flex;
       justify-content: space-between;
       width: 40em;
-      padding-top: 7.8em;
+      padding-top: 8em;
       .button-down-H{
-        margin-left: 4.6em;
+        margin-left: 4.75em;
       }
 
       .button-down-M{
-        margin-right: .5em;
+        margin-right: .94em;
       }
 
       .button-down-S{
-        margin-right: 8em;
+        margin-right: 7.8em;
       }
     }
     // .button-up-H, .button-down-H, .button-up-M, .button-down-M, .button-up-S, .button-down-S:hover{
@@ -96,11 +96,13 @@
 
   .inputs {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     width: 40.60625em;
     height: 10.84375em;
-    border-bottom: 1px solid gray;
-    // z-index: 1;
+    padding-top: 1.61em;
+    padding-right: .5em;
+    // border-bottom: 1px solid gray;
+
     .hoursInput, .minutesInput, .secondsInput {
       border: none;
       outline: none;
@@ -109,23 +111,22 @@
       opacity: 55%;
       font-family: 'Lato', sans-serif;
       width: 1.2em;
-      height: 1.16em;
+      height: .8em;
       padding-top: 0.022em;
     }
 
     .hoursInput {
-      margin-right: 3.31em;
-      position: fixed;
+      margin-left: .015em;
     }
 
     .minutesInput {
-      position: fixed;
-      margin-right: 0.34em;
+      margin-left: -.09em;
+
     }
 
     .secondsInput {
-      position: fixed;
-      margin-left: 2.81em;
+margin-right: .209em;
+
     }
   }
 }
