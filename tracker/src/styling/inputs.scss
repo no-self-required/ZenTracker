@@ -24,21 +24,22 @@
     .material-icons {
       font-size: 3em;
     }
+
     .up {
       display: flex;
       justify-content: space-between;
       width: 40em;
       padding-top: 0.6em;
       .button-up-H {
-        margin-left: 4.75em;
+        margin-left: 4.2em;
       }
 
       .button-up-M {
-        margin-right: 0.94em;
+        margin-right: 1em;
       }
 
       .button-up-S {
-        margin-right: 7.8em;
+        margin-right: 7.2em;
       }
     }
 
@@ -48,23 +49,21 @@
       width: 40em;
       padding-top: 8.5em;
       .button-down-H {
-        margin-left: 4.75em;
+        margin-left: 4.2em;
       }
 
       .button-down-M {
-        margin-right: 0.94em;
+        margin-right: 1em;
       }
 
       .button-down-S {
-        margin-right: 7.8em;
+        margin-right: 7.2em;
       }
     }
     // .button-up-H, .button-down-H, .button-up-M, .button-down-M, .button-up-S, .button-down-S:hover{
     //   border: 1px solid grey;
     // }
 
-    .material-icons {
-    }
   }
   .boxes {
     .boxH {
