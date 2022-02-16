@@ -3,6 +3,9 @@ import Nav from "./components/Nav";
 import Main from "./components/Main";
 
 import "./styling/app.scss";
+import Login from "./components/Login";
+import Signup from "./components/Signup";
+
 
 // import useLocalStorage from "use-local-storage";
 
@@ -17,11 +20,9 @@ function App() {
   //   const newTheme = theme === 'light' ? 'dark' : 'light';
   //   setTheme(newTheme)
   // }
-  
+
   return (
-    <div className="App"  >
-      {/* <button onClick={switchTheme}>
-      </button> */}
+    <div className="App">
       <Nav></Nav>
       <Main></Main>
     </div>

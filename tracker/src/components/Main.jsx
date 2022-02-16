@@ -248,7 +248,7 @@ function Main() {
   function stopAlarm() {
     alarm1.pause();
   }
-
+  
   function editTimerState() {
     console.log("ENTER EDIT STATE");
     setTimerState(TIMER_STATES["EDIT"]);
