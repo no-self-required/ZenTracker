@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import "../styling/main.scss";
+import { FullScreen, useFullScreenHandle } from "react-full-screen";
 
+import "../styling/main.scss";
 //H:M:S inputs
 import TimerHMS from "./inputs/InputHMS";
 
@@ -248,7 +249,7 @@ function Main() {
   function stopAlarm() {
     alarm1.pause();
   }
-  
+
   function editTimerState() {
     console.log("ENTER EDIT STATE");
     setTimerState(TIMER_STATES["EDIT"]);
@@ -494,95 +495,111 @@ function Main() {
   }
 
   //todo:
-  //input edit arrows to increase/decrease by 1 for each input
   //mute sound icon/button
-  //up/down arrow key: implement setselection?
   //start timer on enter
-  //styling: dark mode, fullscreen 
-  //remove all position: fixed, resize inputs so incre buttons can be pressed/placed
+  //styling: dark mode, fullscreen
+
+  const handle = useFullScreenHandle();
+  const [isFullScreen, setIsFullScreen] = useState(false);
+
+  function onClickFsExit() {
+    handle.exit();
+    setIsFullScreen(false);
+  }
+
+  function onClickFsEnter() {
+    handle.enter();
+    setIsFullScreen(true);
+  }
 
   return (
-    <div className="container">
-      <div className="timer-container">
-        {timerState === TIMER_STATES["EDIT"] && (
-          <div id="notation-timer">
-            <div className="notation">
-              <div className="notation-hours">
-                <NotationH />
+    <FullScreen handle={handle}>
+      <div className="container">
+        <div className="timer-container">
+          {timerState === TIMER_STATES["EDIT"] && (
+            <div id="notation-timer">
+              <div className="notation">
+                <div className="notation-hours">
+                  <NotationH />
+                </div>
+                <div className="notation-minutes">
+                  <NotationM />
+                </div>
+                <div className="notation-seconds">
+                  <NotationS />
+                </div>
               </div>
-              <div className="notation-minutes">
-                <NotationM />
-              </div>
-              <div className="notation-seconds">
-                <NotationS />
-              </div>
+              <TimerHMS
+                // ref={timerH}
+                valueH={inputTimerHour}
+                valueM={inputTimerMinute}
+                valueS={inputTimerSecond}
+                onChangeH={handleChangeHour}
+                onChangeM={handleChangeMinute}
+                onChangeS={handleChangeSecond}
+                onKeyPress={numOnly}
+                selection3={selection3}
+                setSelection3={setSelection3}
+                inputEle2={inputEle2}
+                setInputEle2={setInputEle2}
+                InputTimerHour={inputTimerHour}
+                setInputTimerHour={setInputTimerHour}
+                InputTimerMinute={inputTimerMinute}
+                setInputTimerMinute={setInputTimerMinute}
+                InputTimerSecond={inputTimerSecond}
+                setInputTimerSecond={setInputTimerSecond}
+              ></TimerHMS>
             </div>
-            <TimerHMS
-              // ref={timerH}
-              valueH={inputTimerHour}
-              valueM={inputTimerMinute}
-              valueS={inputTimerSecond}
-              onChangeH={handleChangeHour}
-              onChangeM={handleChangeMinute}
-              onChangeS={handleChangeSecond}
-              onKeyPress={numOnly}
-              selection3={selection3}
-              setSelection3={setSelection3}
-              inputEle2={inputEle2}
-              setInputEle2={setInputEle2}
-              InputTimerHour={inputTimerHour}
-              setInputTimerHour={setInputTimerHour}
-              InputTimerMinute={inputTimerMinute}
-              setInputTimerMinute={setInputTimerMinute}
-              InputTimerSecond={inputTimerSecond}
-              setInputTimerSecond={setInputTimerSecond}
-            ></TimerHMS>
-          </div>
-        )}
-        <div id="timer-button-container">
-          {timerState !== TIMER_STATES["EDIT"] && (
-            <div id="display-timer-container">
-              <div className="absolute-timer" onClick={editTimerState}>
-                <div className="notationDisplay">
-                  <div className="hours">
-                    <FirstH value={firstH} />
-                    <SecondH value={secondH} />
-                    {(firstH || secondH) && <NotationH />}
-                  </div>
-                  <div className="minutes">
-                    <FirstM value={firstM} />
-                    <SecondM value={secondM} />
-                    {(firstM || secondM) && <NotationM />}
-                  </div>
-                  <div className="seconds">
-                    <FirstS value={firstS} />
-                    <SecondS value={secondS} />
-                    {(firstS || secondS) && <NotationS />}
+          )}
+          <div id="timer-button-container">
+            {timerState !== TIMER_STATES["EDIT"] && (
+              <div id="display-timer-container">
+                <div className="absolute-timer" onClick={editTimerState}>
+                  <div className="notationDisplay">
+                    <div className="hours">
+                      <FirstH value={firstH} />
+                      <SecondH value={secondH} />
+                      {(firstH || secondH) && <NotationH />}
+                    </div>
+                    <div className="minutes">
+                      <FirstM value={firstM} />
+                      <SecondM value={secondM} />
+                      {(firstM || secondM) && <NotationM />}
+                    </div>
+                    <div className="seconds">
+                      <FirstS value={firstS} />
+                      <SecondS value={secondS} />
+                      {(firstS || secondS) && <NotationS />}
+                    </div>
                   </div>
                 </div>
               </div>
+            )}
+            <div id="button-container">
+              {(timerState === TIMER_STATES["INITIAL"] ||
+                timerState === TIMER_STATES["STOPPED"] ||
+                timerState === TIMER_STATES["EDIT"]) && (
+                <Start onClick={startTimer} />
+              )}
+              {timerState === TIMER_STATES["STARTED"] && (
+                <Stop onClick={stopTimer} />
+              )}
+              {timerState === TIMER_STATES["FINISHED"] && (
+                <Ok onClick={stopAlarm} />
+              )}
+              {timerState !== TIMER_STATES["INITIAL"] && (
+                <Reset onClick={resetTimer} />
+              )}
+              {timerState === TIMER_STATES["INITIAL"] && <ResetDisabled />}
+              <div>
+                {isFullScreen && <button onClick={onClickFsExit}>exit</button>}
+                {!isFullScreen && <button onClick={onClickFsEnter}>enter</button>}
+              </div>
             </div>
-          )}
-          <div id="button-container">
-            {(timerState === TIMER_STATES["INITIAL"] ||
-              timerState === TIMER_STATES["STOPPED"] ||
-              timerState === TIMER_STATES["EDIT"]) && (
-              <Start onClick={startTimer} />
-            )}
-            {timerState === TIMER_STATES["STARTED"] && (
-              <Stop onClick={stopTimer} />
-            )}
-            {timerState === TIMER_STATES["FINISHED"] && (
-              <Ok onClick={stopAlarm} />
-            )}
-            {timerState !== TIMER_STATES["INITIAL"] && (
-              <Reset onClick={resetTimer} />
-            )}
-            {timerState === TIMER_STATES["INITIAL"] && <ResetDisabled />}
           </div>
         </div>
       </div>
-    </div>
+    </FullScreen>
   );
 }
 

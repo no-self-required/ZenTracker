@@ -1,6 +1,7 @@
 .container {
   display: flex;
   justify-content: center;
+  height: 100%;
 
   .timer-container {
     display: flex;
@@ -97,6 +98,11 @@
           }
         }
       }
+
+      #button-container{
+        display: flex;
+        align-items: center;
+      }
     }
 
     #start-button,
@@ -152,4 +158,12 @@
       outline: none;
     }
   }
+}
+
+.container {
+  background: #fff;
+}
+
+.fullscreen-enabled .container {
+  background: rgb(255, 255, 255);
 }

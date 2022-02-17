@@ -1,6 +1,6 @@
 import React from "react";
 import Modal from "react-modal";
-import { Routes, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import "../styling/nav.scss";
 import LogInsignUp from "./LogInSignUp";
@@ -38,7 +38,7 @@ function Nav() {
           <Link to="/login" className="login" onClick={openModal}>
             Log In
           </Link>
-          <Link to="/signup" clasName="signup" onClick={openModal}>
+          <Link to="/signup" className="signup" onClick={openModal}>
             Sign Up
           </Link>
           <Modal
