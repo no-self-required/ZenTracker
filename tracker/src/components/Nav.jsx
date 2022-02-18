@@ -16,6 +16,7 @@ const customStyles = {
   },
 };
 
+Modal.setAppElement('#root');
 function Nav() {
   const [modalIsOpen, setIsOpen] = React.useState(false);
 
@@ -34,7 +35,7 @@ function Nav() {
         <div id="navbar-logo">ZenTracker</div>
       </div>
       <nav id="navbar-links">
-        <div>
+        <div id="login-signup">
           <Link to="/login" className="login" onClick={openModal}>
             Log In
           </Link>
@@ -43,7 +44,7 @@ function Nav() {
           </Link>
           <Modal
             isOpen={modalIsOpen}
-            onRequestClose={false}
+            onRequestClose={closeModal}
             style={customStyles}
             shouldCloseOnOverlayClick={false}
           >

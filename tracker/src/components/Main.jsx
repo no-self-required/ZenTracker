@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
+import { Link } from "react-router-dom";
+import Modal from "react-modal";
 
 import "../styling/main.scss";
 //H:M:S inputs
@@ -198,11 +200,15 @@ function Main() {
         const intervalID = setInterval(decrementTotalSeconds, 1000);
         setIntervalID(intervalID);
       }
-    } else if (timerState === TIMER_STATES["FINISHED"]) {
-      startAlarm();
     }
-  }, [timerState, intervalID, decrementTotalSeconds, startAlarm, totalSeconds]);
+  }, [timerState, intervalID, decrementTotalSeconds, totalSeconds]);
 
+  useEffect(() => {
+    if (timerState === TIMER_STATES["FINISHED"]) {
+      startAlarm();
+      onCompletion();
+    }
+  }, [timerState]);
   //update display spans on every tick
   useEffect(() => {
     omitZero();
@@ -234,6 +240,276 @@ function Main() {
     }
   }
 
+  //1sec = 000001
+  //remove zeros then calculate message
+
+  function removeZeros(string) {
+    console.log("string", string);
+    let splitString = string.split("");
+
+    for (let i = 0; i < splitString.length; i++) {
+      if (splitString[i] !== "0") {
+        splitString = splitString.slice(i);
+        break;
+      }
+    }
+    console.log("stringSplit", splitString);
+
+    return splitString;
+  }
+
+  function completedTime() {
+    let array = removeZeros(initialTime.toString());
+    console.log("array", array);
+    let message;
+    switch (array.length) {
+      case 0:
+        break;
+      case 1:
+        if (array[0] === "1") {
+          message = "You completed " + array[0] + " second";
+        } else if (array[0] !== "1")
+          message = "You completed " + array[0] + " seconds";
+        break;
+      case 2:
+        message = "You completed " + array[0] + array[1] + " seconds";
+        break;
+      case 3:
+        if (array[0] === "1" && array[1] === "0" && array[2] === "0") {
+          //single minutes 0 seconds
+          message = "You completed " + array[0] + " minute";
+        } else if (array[0] !== "1" && array[1] === "0" && array[2] === "0") {
+          //multiple minutes, 0 seconds
+          message = "You completed " + array[0] + " minutes";
+        } else if (array[0] === "1" && array[1] === "0" && array[2] !== "1") {
+          //single minute, multiple seconds, single digit second
+          message =
+            "You completed " +
+            array[0] +
+            " minute and " +
+            array[2] +
+            " seconds";
+        } else if (array[0] === "1" && array[1] === "0" && array[2] === "1") {
+          //single minutes, single second (1:01)
+          message =
+            "You completed " + array[0] + " minute and " + array[2] + " second";
+        } else if (array[0] === "1" && array[1] + array[2] !== "0") {
+          //single minute, multiple seconds, double digit seconds
+          message =
+            "You completed " +
+            array[0] +
+            " minute and " +
+            array[1] +
+            array[2] +
+            " seconds";
+        }
+        break;
+      case 4:
+        if (array[2] === "0" && array[3] === "0") {
+          message = "You completed " + (array[0] + array[1]) + " minutes";
+        } else if (array[2] === "0" && array[3] === "1") {
+          message =
+            "You completed " +
+            (array[0] + array[1]) +
+            " minutes and " +
+            array[3] +
+            " second";
+        } else if (array[2] === "0" && array[3] !== "0") {
+          message =
+            "You completed " +
+            (array[0] + array[1]) +
+            " minutes and " +
+            array[3] +
+            " seconds";
+        } else if (array[2] + array[3] !== "0") {
+          message =
+            "You completed " +
+            (array[0] + array[1]) +
+            " minutes and " +
+            (array[2] + array[3]) +
+            " seconds";
+        }
+        break;
+      case 5:
+        if (
+          array[1] === "0" &&
+          array[2] === "0" &&
+          array[3] === "0" &&
+          array[4] === "0"
+        ) {
+          message = "You completed " + array[0] + " hour";
+        } else if (
+          array[1] === "0" &&
+          array[2] === "1" &&
+          array[3] === "0" &&
+          array[4] === "0"
+        ) {
+          message =
+            "You completed " + array[0] + " hour and " + array[2] + " minute";
+        } else if (
+          array[1] === "0" &&
+          array[2] === "0" &&
+          array[3] === "0" &&
+          array[4] === "1"
+        ) {
+          message =
+            "You completed " + array[0] + " hour and " + array[4] + " second";
+        } else if (
+          array[1] === "0" &&
+          array[2] === "0" &&
+          array[3] === "0" &&
+          array[4] !== "1"
+        ) {
+          message =
+            "You completed " + array[0] + " hour and " + array[4] + " seconds";
+        } else if (
+          array[1] === "0" &&
+          array[2] === "1" &&
+          array[3] === "0" &&
+          array[4] === "1"
+        ) {
+          message =
+            "You completed " +
+            array[0] +
+            " hour, " +
+            array[2] +
+            " minute and " +
+            array[4] +
+            " second";
+        } else if (
+          array[1] === "0" &&
+          array[2] !== "1" &&
+          array[3] === "0" &&
+          array[4] === "0"
+        ) {
+          message =
+            "You completed " +
+            array[0] +
+            " hour, " +
+            array[2] +
+            " minutes";
+        } else if (
+          array[1] === "0" &&
+          array[2] === "0" &&
+          array[3] === "0" &&
+          array[4] === "1"
+        ) {
+          message =
+            "You completed " + array[0] + " hour and " + array[4] + " second";
+        } else if (
+          array[1] === "0" &&
+          array[2] === "1" &&
+          array[3] + array[4] !== "0"
+        ) {
+          message =
+            "You completed " +
+            array[0] +
+            " hour, " +
+            array[2] +
+            " minute and " +
+            array[3] +
+            array[4] +
+            " seconds";
+        } else if (
+          array[1] === "0" &&
+          array[2] === "1" &&
+          array[3] + array[4] === "0"
+        ) {
+          message =
+            "You completed " + array[0] + " hour, " + array[2] + " minute";
+        } else if (
+          array[1] + array[2] !== "1" &&
+          array[3] === "0" &&
+          array[4] === "1"
+        ) {
+          message =
+            "You completed " +
+            array[0] +
+            " hour, " +
+            array[1] +
+            array[2] +
+            " minutes and " +
+            array[4] +
+            " second";
+        } else if (
+          array[1] === '0' && array[2] !== "1" &&
+          array[3] === "0" &&
+          array[4] === "0"
+        ) {
+          message =
+            "You completed " +
+            array[0] +
+            " hour and " +
+            array[2] +
+            " minutes";
+        } else if (
+          array[1] + array[2] !== "1" &&
+          array[3] === "0" &&
+          array[4] === "0"
+        ) {
+          message =
+            "You completed " +
+            array[0] +
+            " hour and " +
+            array[1] +
+            array[2] +
+            " minutes";
+        } else if (
+          //(1:00:12)
+          array[1] === '0' && array[2] === '0' &&
+          array[3] + array[4] !== "00"
+        ) {
+          message =
+            "You completed " +
+            array[0] +
+            " hour, " +
+            array[3] +
+            array[4] +
+            " seconds";
+        } 
+        else if (array[1] !== '0' && array[2] !== "0" && array[3] !== "0" && array[4] !== "0") {
+          //(1:10:12)
+          message =
+            "You completed " +
+            array[0] +
+            " hour, " +
+            array[1] +
+            array[2] +
+            " minutes and " +
+            array[3] +
+            array[4] +
+            " seconds";
+        } 
+        
+      default:
+        break;
+    }
+    console.log("message", message);
+    return message;
+  }
+
+  const message = completedTime();
+  const [modalIsOpen, setIsOpen] = useState(false);
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
+  //CreateUserSession here
+  //modal pop up:
+  //Display session length
+  //consecutive days
+  //highlight day of completion
+  //finish button
+  function onCompletion() {
+    openModal();
+    console.log("check oncompletion");
+  }
+
   function stopTimer() {
     console.log("ENTER STOP STATE");
     setTimerState(TIMER_STATES["STOPPED"]);
@@ -244,6 +520,7 @@ function Main() {
   function startAlarm() {
     alarm1.loop = false;
     alarm1.play();
+    console.log("startalarm check");
   }
 
   function stopAlarm() {
@@ -512,6 +789,19 @@ function Main() {
     setIsFullScreen(true);
   }
 
+  const [loggedin, setLoggedIn] = useState(true);
+
+  const customStyles = {
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)",
+    },
+  };
+
   return (
     <FullScreen handle={handle}>
       <div className="container">
@@ -587,13 +877,30 @@ function Main() {
               {timerState === TIMER_STATES["FINISHED"] && (
                 <Ok onClick={stopAlarm} />
               )}
+              {timerState === TIMER_STATES["FINISHED"] && loggedin && (
+                <div>
+                  <Modal
+                    isOpen={modalIsOpen}
+                    onRequestClose={closeModal}
+                    style={customStyles}
+                    shouldCloseOnOverlayClick={false}
+                  >
+                    <div>{message}</div>
+                    <button onClick={closeModal}>close</button>
+                  </Modal>
+                </div>
+              )}
               {timerState !== TIMER_STATES["INITIAL"] && (
                 <Reset onClick={resetTimer} />
               )}
               {timerState === TIMER_STATES["INITIAL"] && <ResetDisabled />}
-              <div>
-                {isFullScreen && <button onClick={onClickFsExit}>exit</button>}
-                {!isFullScreen && <button onClick={onClickFsEnter}>enter</button>}
+              <div className="fullscreen-mute">
+                {!isFullScreen && (
+                  <button onClick={onClickFsEnter}>enFS</button>
+                )}
+                {isFullScreen && (
+                  <button onClick={onClickFsExit}>exitFS</button>
+                )}
               </div>
             </div>
           </div>
