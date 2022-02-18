@@ -480,7 +480,6 @@ function Main() {
             array[4] +
             " seconds";
         } 
-        
       default:
         break;
     }

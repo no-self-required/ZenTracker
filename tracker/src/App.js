@@ -2,6 +2,8 @@ import "./App.css";
 import Nav from "./components/Nav";
 import Main from "./components/Main";
 
+import { Hello } from "./components/Hello";
+
 import "./styling/app.scss";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
@@ -23,8 +25,9 @@ function App() {
 
   return (
     <div className="App">
-      <Nav></Nav>
-      <Main></Main>
+      {/* <Nav></Nav>
+      <Main></Main> */}
+      <Hello></Hello>
     </div>
   );
 }
