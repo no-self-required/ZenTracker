@@ -1,13 +1,45 @@
-const express = require('express'),
+const express = require("express");
+const app = express();
+const cors = require("cors");
+const mongoose = require("mongoose");
+const User = require('./models/user.model')
 
-app = express()
+require("dotenv").config();
 
-require('dotenv').config()
-app.set('view engine', 'ejs')
-app.use('/api/', require('./routes/hello'))
+app.use(cors());
+app.use(express.json());
 
-const PORT = process.env.PORT || 3000
+mongoose.connect("mongodb://localhost:27017/zentracker-db");
 
-app.listen(PORT, ()=> {
-  console.log(`Listening on Port: ${PORT}`)
-})
+const PORT = process.env.PORT || 3000;
+
+app.post("/api/register", async (req, res) => {
+  console.log(req.body);
+  try {
+    const user = await User.create({
+      username: req.body.username,
+      email: req.body.email,
+      password: req.body.password,
+    });
+    res.json({ status: "ok" });
+  } catch (err) {
+    res.json({ status: "error", error: "Dupilicate email" });
+  }
+});
+
+app.post("/api/login", async (req, res) => {
+  const user = await User.findOne({
+    email: req.body.email,
+    password: req.body.password,
+  });
+  if(user) {
+    return res.json({ status: 'ok', user: true })
+  } else {
+    return res.json({ status: 'error', user: false })
+  }
+});
+
+app.listen(PORT, () => {
+  console.log(`Listening on Port: ${PORT}`);
+});
+//register not showing in network

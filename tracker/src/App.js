@@ -25,8 +25,8 @@ function App() {
 
   return (
     <div className="App">
-      {/* <Nav></Nav>
-      <Main></Main> */}
+      <Nav></Nav>
+      <Main></Main>
       <Hello></Hello>
     </div>
   );
