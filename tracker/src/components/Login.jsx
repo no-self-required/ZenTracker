@@ -28,11 +28,11 @@ function Login() {
       <form id="login1" onSubmit={loginUser}>
         <label for="username-login">Username</label>
         <br />
-        <input id="username-login" name="username-login" onChange={(e) => setUsername(e.target.value)}/>
+        <input id="username-login" name="username-login" type="text" onChange={(e) => setUsername(e.target.value)}/>
         <br />
         <label for="password-login">Password</label>
         <br />
-        <input id="password-login" name="password-login" onChange={(e) => setPassword(e.target.value)} />
+        <input id="password-login" name="password-login" type="password" onChange={(e) => setPassword(e.target.value)} />
         <br />
       </form>
       <button type="submit" form="login1" value="Login">

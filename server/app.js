@@ -29,7 +29,7 @@ app.post("/api/register", async (req, res) => {
 
 app.post("/api/login", async (req, res) => {
   const user = await User.findOne({
-    email: req.body.email,
+    username: req.body.username,
     password: req.body.password,
   });
   if(user) {
