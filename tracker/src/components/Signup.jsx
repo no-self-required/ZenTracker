@@ -1,6 +1,8 @@
-import React, { useState }from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Signup() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -20,7 +22,10 @@ function Signup() {
     })
 
   const data = await response.json()
-
+  
+  if (data.status === 'ok') {
+    navigate('/login')
+  }
   console.log('data', data)
   }
 

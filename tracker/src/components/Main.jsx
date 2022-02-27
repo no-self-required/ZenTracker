@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { Link } from "react-router-dom";
 import Modal from "react-modal";
+import jwt from 'jsonwebtoken'
+import { useNavigate } from 'react-router-dom'
 
 import "../styling/main.scss";
 //H:M:S inputs
@@ -186,13 +188,22 @@ function Main() {
     inputEle2.setSelectionRange(start, end);
   }, [selection3]);
 
-  //prevent access to 0
-  // useEffect(() => {
-  //   if (!selection4) return;
-  //   const { start, end } = selection4;
-  //   timerH.current.setSelectionRange(start, end);
-  // }, [selection4]);
+  const [loggedin, setLoggedIn] = useState(false);
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    const token = localStorage.getItem('token')
+    if (token) {
+      const user = jwt.decode(token)
+      if (!user) {
+        localStorage.removeItem('token')
+        navigate('/login')
+      } else {
+        setLoggedIn(true)
+      }
+    }
+  })
+  
   //Decrement timer if timer has started, and there is an interval
   useEffect(() => {
     if (timerState === TIMER_STATES["STARTED"] && !intervalID) {
@@ -203,6 +214,7 @@ function Main() {
     }
   }, [timerState, intervalID, decrementTotalSeconds, totalSeconds]);
 
+  
   useEffect(() => {
     if (timerState === TIMER_STATES["FINISHED"]) {
       startAlarm();
@@ -788,7 +800,6 @@ function Main() {
     setIsFullScreen(true);
   }
 
-  const [loggedin, setLoggedIn] = useState(true);
 
   const customStyles = {
     content: {
