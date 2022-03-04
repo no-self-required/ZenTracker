@@ -2,23 +2,27 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const mongoose = require("mongoose");
-const User = require('./models/user.model')
-const jwt = require('jsonwebtoken')
+const User = require("./models/user.model");
+const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 app.use(cors());
 app.use(express.json());
 
+const usersRouter = require("./routes/users");
+
 mongoose.connect("mongodb://localhost:27017/zentracker-db");
 
 const PORT = process.env.PORT || 3000;
+
+app.use("/api/users", usersRouter);
 
 app.post("/api/register", async (req, res) => {
   console.log(req.body);
   try {
     const user = await User.create({
-      username: req.body.username,
       email: req.body.email,
+      username: req.body.username,
       password: req.body.password,
     });
     res.json({ status: "ok" });
@@ -33,19 +37,24 @@ app.post("/api/login", async (req, res) => {
     password: req.body.password,
   });
 
-
-  if(user) {
+  if (user) {
     const token = jwt.sign(
       {
-        email: user.email,
-      }, 'secretcode123')
-    return res.json({ status: 'ok', user: token})
+        id: user._id,
+      },
+      "secretcode123"
+    );
+    return res.json({ status: "ok", user: token, username: user});
   } else {
-    return res.json({ status: 'error', user: false })
+    return res.json({ status: "error", user: false });
   }
 });
+
+// app.get("/api/logout", async (req, res) => {
+
+// })
 
 app.listen(PORT, () => {
   console.log(`Listening on Port: ${PORT}`);
 });
-//register not showing in network
+

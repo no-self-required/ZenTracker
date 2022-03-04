@@ -256,7 +256,7 @@ function Main() {
   //remove zeros then calculate message
 
   function removeZeros(string) {
-    console.log("string", string);
+    // console.log("string", string);
     let splitString = string.split("");
 
     for (let i = 0; i < splitString.length; i++) {
@@ -265,14 +265,14 @@ function Main() {
         break;
       }
     }
-    console.log("stringSplit", splitString);
+    // console.log("stringSplit", splitString);
 
     return splitString;
   }
 
   function completedTime() {
     let array = removeZeros(initialTime.toString());
-    console.log("array", array);
+    // console.log("array", array);
     let message;
     switch (array.length) {
       case 0:
@@ -495,7 +495,7 @@ function Main() {
       default:
         break;
     }
-    console.log("message", message);
+    // console.log("message", message);
     return message;
   }
 
@@ -696,7 +696,7 @@ function Main() {
       default:
         break;
     }
-    console.log("omit zero", omitZero);
+    // console.log("omit zero", omitZero);
     return omitZero;
   }
 

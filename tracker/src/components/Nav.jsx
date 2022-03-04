@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import Modal from "react-modal";
 import { Link } from "react-router-dom";
+import { UserContext } from "../App";
 
 import "../styling/nav.scss";
 import LogInsignUp from "./LogInSignUp";
+import Logout from "./Logout";
 
 const customStyles = {
   content: {
@@ -16,8 +18,10 @@ const customStyles = {
   },
 };
 
-Modal.setAppElement('#root');
+Modal.setAppElement("#root");
 function Nav() {
+  const { userData, setUserData } = useContext(UserContext);
+
   const [modalIsOpen, setIsOpen] = React.useState(false);
 
   function openModal() {
@@ -35,25 +39,33 @@ function Nav() {
         <div id="navbar-logo">ZenTracker</div>
       </div>
       <nav id="navbar-links">
-        <div id="login-signup">
-          <Link to="/login" className="login" onClick={openModal}>
-            Log In
-          </Link>
-          <Link to="/signup" className="signup" onClick={openModal}>
-            Sign Up
-          </Link>
-          <Modal
-            isOpen={modalIsOpen}
-            onRequestClose={closeModal}
-            style={customStyles}
-            shouldCloseOnOverlayClick={false}
-          >
-            <Link to="/" className="closeModal" onClick={closeModal}>
-              close
+        {userData.user !== undefined && (
+          <div>
+            <div>Hello, {userData.user.username}</div>
+            <Logout></Logout>
+          </div>
+        )}
+        {userData.user === undefined && (
+          <div id="login-signup">
+            <Link to="/login" className="login" onClick={openModal}>
+              Log In
             </Link>
-            <LogInsignUp />
-          </Modal>
-        </div>
+            <Link to="/signup" className="signup" onClick={openModal}>
+              Sign Up
+            </Link>
+            <Modal
+              isOpen={modalIsOpen}
+              onRequestClose={closeModal}
+              style={customStyles}
+              shouldCloseOnOverlayClick={false}
+            >
+              <Link to="/" className="closeModal" onClick={closeModal}>
+                close
+              </Link>
+              <LogInsignUp />
+            </Modal>
+          </div>
+        )}
       </nav>
     </div>
   );
