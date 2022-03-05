@@ -8,30 +8,6 @@ function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  // async function loginUser(event) {
-  //   event.preventDefault();
-  //   const response = await fetch("http://localhost:3000/api/login", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({
-  //       username,
-  //       password,
-  //     }),
-  //   });
-
-  //   const data = await response.json();
-
-  //   if (data.user) {
-  //     localStorage.setItem("token", data.user);
-  //     window.location.href = "/";
-  //     console.log("userdata.user inside login", userData.user);
-  //   } else {
-  //     alert("Please check your username and password");
-  //   }
-  // }
-
   async function loginUser(event) {
     event.preventDefault();
     try {

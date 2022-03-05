@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { UserContext } from "../App";
-
+import "../styling/logout.scss";
 //clear jwt, usercontext logged in: set user data: false
 function Logout() {
   const { userData, setUserData } = useContext(UserContext);
@@ -14,7 +14,7 @@ function Logout() {
     localStorage.setItem("token", '');
     window.location.href = "/";
   }
-  return <div onClick={logOut}>Log out</div>;
+  return <div className="logout" onClick={logOut}>Log out</div>;
 }
 
 export default Logout

@@ -8,28 +8,6 @@ function Signup() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  // async function registerUser(event) {
-  //   event.preventDefault();
-  //   const response = await fetch("http://localhost:3000/api/register", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({
-  //       email,
-  //       username,
-  //       password,
-  //     }),
-  //   });
-
-  //   const data = await response.json();
-
-  //   if (data.status === "ok") {
-  //     navigate("/login");
-  //   }
-  //   console.log("data", data);
-  // }
-
   async function registerUser(event) {
     event.preventDefault();
     try {

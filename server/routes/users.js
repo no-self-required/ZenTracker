@@ -5,7 +5,6 @@ const auth = require("../middleware/auth");
 
 router.get("/profile", auth, async (req, res) => {
   console.log('req inside users profile', req)
-  // const user = await User.find({ email: req.user.email });
   const user = await User.findById(req.user.id);
 
   console.log('user inside /users profile', user)
@@ -39,5 +38,11 @@ router.post("/tokenIsValid", async (req, res) => {
     res.status(500).json({ msg: err.message });
   }
 });
+
+//add session to current user
+router.put('/:id', async (req, res) => {
+  await User.updateOne({_id: req.params.id}, req.body)
+  // await User.findByIdAndUpdate({_id: req.params.id}, req.body)
+})
 
 module.exports = router;

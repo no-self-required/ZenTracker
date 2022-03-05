@@ -37,7 +37,7 @@ The type of error that occured
 
 ## CreateUserSession 
 
-Creates a session for logged in user with timer length, date, and log
+Creates a session for logged in user with date, timer length, and log
 
 ### Parameters
 --- 
@@ -51,14 +51,14 @@ Creates a session for logged in user with timer length, date, and log
 
     The unique identifier for the session to be created
 
-- sessionLength: number
-
-    The length of the session
-
 - sessionDate: Date
 
     The date of the session completion
 
+- sessionLength: number
+
+    The length of the session
+    
 - sessionLog: string (optional)
 
     The users notes of the session

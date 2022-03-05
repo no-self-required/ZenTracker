@@ -40,9 +40,9 @@ function Nav() {
       </div>
       <nav id="navbar-links">
         {userData.user !== undefined && (
-          <div>
+          <div className="logged-in">
             <div>Hello, {userData.user.username}</div>
-            <Logout></Logout>
+            <Logout className="logout"></Logout>
           </div>
         )}
         {userData.user === undefined && (
