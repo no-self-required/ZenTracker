@@ -4,14 +4,15 @@ const jwt = require("jsonwebtoken");
 const auth = require("../middleware/auth");
 
 router.get("/profile", auth, async (req, res) => {
-  console.log('req inside users profile', req)
+  // console.log('req inside users profile', req)
   const user = await User.findById(req.user.id);
 
-  console.log('user inside /users profile', user)
+  // console.log('user inside /users profile', user)
   res.json({
     id: user._id,
     username: user.username,
     email: user.email,
+    sessions: user.sessions
   });
 });
 
@@ -42,7 +43,12 @@ router.post("/tokenIsValid", async (req, res) => {
 //add session to current user
 router.put('/:id', async (req, res) => {
   await User.updateOne({_id: req.params.id}, req.body)
-  // await User.findByIdAndUpdate({_id: req.params.id}, req.body)
 })
+
+// router.get('/:id', async (req, res) => {
+//   // console.log('req.body get stats', req.body)
+//   await User.findOne({_id: req.params.id})
+//   // console.log('res', res)
+// })
 
 module.exports = router;

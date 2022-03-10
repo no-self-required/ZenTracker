@@ -3,17 +3,18 @@ import Nav from "./components/Nav";
 import Main from "./components/Main";
 import axios from "axios";
 
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import "./styling/app.scss";
-
+import ProfileStats from "./components/stats/ProfileStats";
 // import useLocalStorage from "use-local-storage";
 
 export const UserContext = createContext();
 
 function App() {
   const [userData, setUserData] = useState({
-    token: undefined,
-    user: undefined,
+    token: '',
+    user: '',
   });
 
   useEffect(() => {
@@ -25,14 +26,14 @@ function App() {
       }
 
       const tokenResponse = await axios.post("/api/users/tokenIsValid", null, {
-        headers: { "token": token },
+        headers: { token: token },
       });
 
-      console.log('tokenResponse.data', tokenResponse.data);
+      // console.log("tokenResponse.data", tokenResponse.data);
 
-      if(tokenResponse.data === true) {
+      if (tokenResponse.data === true) {
         const userResponse = await axios.get("/api/users/profile", {
-          headers: { "token": token },
+          headers: { token: token },
         });
         setUserData({
           token: token,
@@ -46,12 +47,17 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
-      <UserContext.Provider value={{ userData, setUserData }}>
-        <Nav></Nav>
-        <Main></Main>
-      </UserContext.Provider>
-    </div>
+    <UserContext.Provider value={{ userData, setUserData }}>
+      <BrowserRouter>
+        <div className="App">
+          <Nav/>
+          <Routes>
+            <Route path="/profile" exact element={<ProfileStats />} />
+            <Route path="/" exact element={<Main />} />
+          </Routes>
+        </div>
+      </BrowserRouter>
+    </UserContext.Provider>
   );
 }
 

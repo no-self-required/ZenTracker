@@ -12,7 +12,6 @@ function Logout() {
       user: undefined,
     })
     localStorage.setItem("token", '');
-    window.location.href = "/";
   }
   return <div className="logout" onClick={logOut}>Log out</div>;
 }

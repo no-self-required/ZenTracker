@@ -524,6 +524,7 @@ function Main() {
     const length = calculateSeconds(initialTime);
     const log = "test1222";
     const date = new Date();
+
     await axios.put(`/api/users/${id}`, {
       $set: {
         ["sessions." + constantId]: {
