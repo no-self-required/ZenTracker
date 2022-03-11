@@ -181,7 +181,7 @@ function Main() {
   const [inputEle2, setInputEle2] = useState();
 
   //context for logged in user
-  const { userData, setUserData } = useContext(UserContext);
+  const { userData } = useContext(UserContext);
 
   //replace/delete digit
   useEffect(() => {

@@ -20,7 +20,7 @@ const customStyles = {
 
 Modal.setAppElement("#root");
 function Nav() {
-  const { userData, setUserData } = useContext(UserContext);
+  const { userData } = useContext(UserContext);
 
   const [modalIsOpen, setIsOpen] = React.useState(false);
   const [loginOrSignup, setLoginOrSignup] = useState(null);

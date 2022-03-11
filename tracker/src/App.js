@@ -7,14 +7,13 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import "./styling/app.scss";
 import ProfileStats from "./components/stats/ProfileStats";
-// import useLocalStorage from "use-local-storage";
 
 export const UserContext = createContext();
 
 function App() {
   const [userData, setUserData] = useState({
-    token: '',
-    user: '',
+    token: undefined,
+    user: undefined,
   });
 
   useEffect(() => {
@@ -39,18 +38,32 @@ function App() {
           token: token,
           user: userResponse.data,
         });
+
+        window.localStorage.setItem("udata", JSON.stringify(userResponse.data));
       } else {
         return;
       }
     };
+
     isLoggedIn();
   }, []);
+
+  // useEffect(() => {
+  //   console.log
+  // }, [])
+
+  // useEffect(() => {
+  //   const gData = window.localStorage.getItem('udata')
+  //   setUserData(JSON.parse(gData))
+  // }, [])
+
+  console.log("userData", userData);
 
   return (
     <UserContext.Provider value={{ userData, setUserData }}>
       <BrowserRouter>
         <div className="App">
-          <Nav/>
+          <Nav />
           <Routes>
             <Route path="/profile" exact element={<ProfileStats />} />
             <Route path="/" exact element={<Main />} />

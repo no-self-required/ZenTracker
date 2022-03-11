@@ -1,9 +1,7 @@
 import React, { useState, useContext } from "react";
-import { UserContext } from "../App";
 import axios from "axios";
 
 function Login() {
-  const { userData, setUserData } = useContext(UserContext);
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
