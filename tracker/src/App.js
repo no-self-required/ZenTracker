@@ -38,8 +38,7 @@ function App() {
           token: token,
           user: userResponse.data,
         });
-
-        window.localStorage.setItem("udata", JSON.stringify(userResponse.data));
+        // window.localStorage.setItem("udata", JSON.stringify(userResponse.data));
       } else {
         return;
       }
@@ -57,7 +56,7 @@ function App() {
   //   setUserData(JSON.parse(gData))
   // }, [])
 
-  console.log("userData", userData);
+  // console.log("userData", userData);
 
   return (
     <UserContext.Provider value={{ userData, setUserData }}>

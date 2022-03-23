@@ -506,7 +506,9 @@ function Main() {
   }
 
   function closeModal() {
+    submitSession();
     setIsOpen(false);
+    window.location.href = "/";
   }
 
   //CreateUserSession here
@@ -517,30 +519,31 @@ function Main() {
   //highlight day of completion
 
   //adding log must be done through a handler 
+  const [log, setLog] = useState('')
+
   async function submitSession() {
     const id = userData.user.id;
     let generateId = uuidv4();
     const constantId = generateId;
     const length = calculateSeconds(initialTime);
-    const log = "test1222";
+    const sessionLog = log;
+    console.log('sessionLog', sessionLog)
     const date = new Date();
 
     await axios.put(`/api/users/${id}`, {
       $set: {
         ["sessions." + constantId]: {
           id: constantId,
-          date: date,
+          date: date.toString(),
           length: length,
-          log: log,
+          log: sessionLog,
         },
       },
     });
-    // console.log('sessionR', sessionResponse);
   }
 
   function onCompletion() {
     openModal();
-    submitSession();
   }
 
   function stopTimer() {
@@ -833,6 +836,7 @@ function Main() {
     },
   };
 
+
   return (
     <FullScreen handle={fsHandle}>
       <div className="container">
@@ -912,12 +916,13 @@ function Main() {
                 <div>
                   <Modal
                     isOpen={modalIsOpen}
-                    onRequestClose={closeModal}
                     style={customStyles}
                     shouldCloseOnOverlayClick={false}
                   >
                     <div>{message}</div>
-                    <button onClick={closeModal}>close</button>
+                    <label for="logInput">Log:</label>
+                    <input className="logInput" onChange={(e) => setLog(e.target.value)}></input>
+                    <button onClick={closeModal}>submit</button>
                   </Modal>
                 </div>
               )}

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function Signup() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -20,7 +20,8 @@ function Signup() {
       );
 
       if (response.statusText === "OK") {
-        navigate("/login");
+        //register should log in automatically
+        window.location.href = "/";
       }
       console.log("response: ", response);
     } catch (err) {
