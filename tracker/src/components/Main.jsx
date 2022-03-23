@@ -42,6 +42,7 @@ function splitInput(initialTime) {
   }
   return arr;
 }
+
 //calculated time becomes new split Arr???
 function calculateSeconds(initialTime) {
   const splitArr = splitInput(initialTime);
@@ -499,15 +500,15 @@ function Main() {
   }
 
   const message = completedTime();
-  const [modalIsOpen, setIsOpen] = useState(false);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   function openModal() {
-    setIsOpen(true);
+    setModalIsOpen(true);
   }
 
   function closeModal() {
     submitSession();
-    setIsOpen(false);
+    setModalIsOpen(false);
     window.location.href = "/";
   }
 
@@ -525,7 +526,8 @@ function Main() {
     const id = userData.user.id;
     let generateId = uuidv4();
     const constantId = generateId;
-    const length = calculateSeconds(initialTime);
+    // const length = calculateSeconds(initialTime);
+    const formattedTime = displayInputValue(calculateSeconds(initialTime))
     const sessionLog = log;
     console.log('sessionLog', sessionLog)
     const date = new Date();
@@ -535,7 +537,7 @@ function Main() {
         ["sessions." + constantId]: {
           id: constantId,
           date: date.toString(),
-          length: length,
+          length: formattedTime,
           log: sessionLog,
         },
       },
@@ -758,7 +760,7 @@ function Main() {
     setInputEle2(target);
     const initialPosition = target.selectionStart;
 
-    //keep caret position if u change 2nd digit
+    //keep caret position if you change 2nd digit
     if (target.selectionStart === 2) {
       setSelection3({ start: initialPosition, end: initialPosition - 1 });
       //if u delete
