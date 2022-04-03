@@ -593,16 +593,6 @@ function Main() {
     setTimerState(TIMER_STATES["INITIAL"]);
   }
 
-  // const inputId = document.getElementById("timer");
-
-  // if (document.getElementById("timer")) {
-  //   inputId.addEventListener("keyup", function onEvent(e) {
-  //     if (e.key === "Enter") {
-  //       startTimer();
-  //     }
-  //   });
-  // }
-
   //only accept numbers for timer input
   function numOnly(event) {
     if (!/[0-9]/.test(event.key)) {

@@ -77,37 +77,6 @@ The type of error that occured
 
 #### ErrorCodes 
 - 
-## UpdateUserSessionLog
-
-Updates a session log with specified userId and sessionId
-
-### Parameters
----
-- method: 'updateUserSessionLog'
-- userid: string
-
-    The unique identifier of the session's user to be updated
-
-- sessionid: string
-
-    The unique identifier of the session to be updated
-
-- sessionLog: string
-
-    The string to be updated to the session log
-
-### Responses
----
-#### 200
-- createAt: string
-
-The unix timestamp of when the session was updated
-
-#### 500
-- errorCode: ErrorCode the type of error that occured
-
-#### ErrorCodes
-- 
 
 ## DeleteSession 
 

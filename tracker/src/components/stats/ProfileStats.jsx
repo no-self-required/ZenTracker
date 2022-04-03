@@ -41,7 +41,7 @@ function calculateSeconds(initialTime) {
 
 function displayInputValue(totalSeconds) {
   let formatTime = totalSeconds;
-  console.log('formatTime inside DIV', formatTime)
+  console.log("formatTime inside DIV", formatTime);
   let showHours = 0;
   let showMin = 0;
   let showSec = 0;
@@ -65,7 +65,7 @@ function displayInputValue(totalSeconds) {
   formatted.push(showMin);
   formatted.push(showSec);
 
-  console.log('formatted', formatted)
+  console.log("formatted", formatted);
   return formatted;
 }
 
@@ -79,7 +79,7 @@ function ProfileStats() {
   const [inputTimerMinute, setInputTimerMinute] = useState("00");
   const [inputTimerSecond, setInputTimerSecond] = useState("00");
 
-  const [newDate, setNewDate] = useState();
+  const [newDate, setNewDate] = useState(new Date());
 
   useEffect(() => {
     const isLoggedIn = async () => {
@@ -113,12 +113,15 @@ function ProfileStats() {
     setModalIsOpen(true);
   }
 
-  function closeModal() {
+  function closeModalSubmit() {
     submitSession();
-    setInputTimerHour('00')
-    setInputTimerMinute('00')
-    setInputTimerSecond('00')
+    setInputTimerHour("00");
+    setInputTimerMinute("00");
+    setInputTimerSecond("00");
+    setModalIsOpen(false);
+  }
 
+  function closeModalEsc() {
     setModalIsOpen(false);
   }
 
@@ -127,16 +130,25 @@ function ProfileStats() {
     const id = currentData.user.id;
     let generateId = uuidv4();
     const constantId = generateId;
-    const totalSeconds = calculateSeconds(tripleInputs)
-    const length = displayInputValue(totalSeconds)
+    const totalSeconds = calculateSeconds(tripleInputs);
+    const length = displayInputValue(totalSeconds);
     const sessionLog = log;
     const date = newDate;
+    console.log('date e.target.value', date)
+    //calculate DoY:
+    const now = new Date();
+    console.log('newDate()', now)
+    const start = new Date(now.getFullYear(), 0, 0);
+    const diff = (now - start) + ((start.getTimezoneOffset() - now.getTimezoneOffset()) * 60 * 1000);
+    const oneDay = 1000 * 60 * 60 * 24;
+    const day = Math.floor(diff / oneDay);
 
     await axios.put(`/api/users/${id}`, {
       $set: {
         ["sessions." + constantId]: {
           id: constantId,
           date: date.toString(),
+          dayOfYear: day,
           length: length,
           log: sessionLog,
         },
@@ -144,15 +156,64 @@ function ProfileStats() {
     });
   }
 
+  let fullYearArray = [];
+
+  function yearArray() {
+    for (let x = 0; x < 52; x++) {
+      fullYearArray.push([]);
+    }
+  }
+
+  function fillYearArray() {
+    for (let x = 0; x < fullYearArray.length; x++) {
+      fullYearArray[x].push([], [], [], [], [], [], []);
+    }
+  }
+
+  function addLastDay() {
+    fullYearArray.push([[]]);
+  }
+
+  yearArray();
+  fillYearArray();
+  addLastDay();
+
+  function calcColor(numOfSessions) {
+    switch (true) {
+      case numOfSessions === 0:
+        return "square";
+      case numOfSessions === 1:
+      case numOfSessions === 2:
+        return "square-light";
+      case numOfSessions === 3:
+      case numOfSessions === 4:
+        return "square-medium";
+      case numOfSessions > 4:
+        return "square-dark";
+    }
+  }
+
+  function totalSessionsUser(object) {
+    let x = Object.keys(object);
+    let count = 0;
+    if (x) {
+      for (let i = 0; i < x.length; i++) {
+        count++;
+      }
+    }
+    return count;
+  }
+
+  //sessionsData = currentData.user.sessions
+
   if (currentData) {
     let sessionsData = currentData.user.sessions;
+
     function totalSessions() {
       let count = 0;
-
       for (const key in Object.keys(sessionsData)) {
         count += 1;
       }
-
       return count;
     }
 
@@ -181,9 +242,35 @@ function ProfileStats() {
       },
     };
 
+    const printSq = fullYearArray.map((week, index1, array1) => {
+      return (
+        <div className={`week-${index1 + 1}`}>
+          {week.map((days, index2, array2) => {
+            if (currentData.user.sessions) {
+              return (
+                <div className={`day-${index2 + 1} single-day`} id="square">
+                  <span class="tooltiptext">
+                    Total Sessions: {totalSessionsUser(array1[index1][index2])}
+                  </span>
+                </div>
+              );
+            } else {
+              return (
+                <div className={`day-${index2 + 1} single-day`} id="square">
+                  <span class="tooltiptext">Total Sessions: 0</span>
+                </div>
+              );
+            }
+          })}
+        </div>
+      );
+    });
+
+    //time is currently being shown as array
     return (
       <div>
         <div>Total Sessions: {totalSessions()}</div>
+        <div className="calendar-container">{printSq}</div>
         <div>
           <button className="add-session" onClick={openModal}>
             Add session
@@ -192,7 +279,7 @@ function ProfileStats() {
         <div>
           <Modal
             isOpen={modalIsOpen}
-            onRequestClose={closeModal}
+            onRequestClose={closeModalEsc}
             style={customStyles}
             shouldCloseOnOverlayClick={false}
           >
@@ -234,7 +321,7 @@ function ProfileStats() {
               className="logInput"
               onChange={(e) => setLog(e.target.value)}
             ></input>
-            <button onClick={closeModal}>submit</button>
+            <button onClick={closeModalSubmit}>submit</button>
           </Modal>
         </div>
         <div>{allSessions}</div>
