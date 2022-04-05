@@ -36,5 +36,16 @@
     .login {
       margin-right: 1em;
     }
+
+    .logged-in{
+      width: 9em;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .login-signup-links {
+      display: flex;
+    }
+
   }
 }
