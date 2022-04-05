@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import Modal from "react-modal";
 import { Link } from "react-router-dom";
-
+import { UserContext } from "../App";
+import { useNavigate } from "react-router-dom";
 import "../styling/nav.scss";
 import LogInsignUp from "./LogInSignUp";
+import Logout from "./Logout";
 
 const customStyles = {
   content: {
@@ -16,12 +18,22 @@ const customStyles = {
   },
 };
 
-Modal.setAppElement('#root');
+Modal.setAppElement("#root");
 function Nav() {
-  const [modalIsOpen, setIsOpen] = React.useState(false);
+  const { userData } = useContext(UserContext);
 
-  function openModal() {
+  const [modalIsOpen, setIsOpen] = React.useState(false);
+  const [loginOrSignup, setLoginOrSignup] = useState(null);
+  const navigate = useNavigate();
+  
+  function openModalLogin() {
     setIsOpen(true);
+    setLoginOrSignup("login");
+  }
+
+  function openModalSignup() {
+    setIsOpen(true);
+    setLoginOrSignup("signup");
   }
 
   function closeModal() {
@@ -32,28 +44,53 @@ function Nav() {
     <div className="navbar">
       <div id="navbar-dot-logo">
         <span id="navbar-dot"></span>
-        <div id="navbar-logo">ZenTracker</div>
+        <div
+          id="navbar-logo"
+          onClick={() => {
+            navigate("/");
+          }}
+        >
+          ZenTracker
+        </div>
       </div>
       <nav id="navbar-links">
-        <div id="login-signup">
-          <Link to="/login" className="login" onClick={openModal}>
-            Log In
-          </Link>
-          <Link to="/signup" className="signup" onClick={openModal}>
-            Sign Up
-          </Link>
-          <Modal
-            isOpen={modalIsOpen}
-            onRequestClose={closeModal}
-            style={customStyles}
-            shouldCloseOnOverlayClick={false}
-          >
-            <Link to="/" className="closeModal" onClick={closeModal}>
-              close
+        {userData.user !== undefined && (
+          <div className="logged-in">
+            <div>Hello, {userData.user.username}</div>
+            <Logout className="logout"></Logout>
+            <Link to="/profile" className="profile">
+              Profile
             </Link>
-            <LogInsignUp />
-          </Modal>
-        </div>
+          </div>
+        )}
+        {userData.user === undefined && (
+          <div id="login-signup">
+            <div className="login-signup-links">
+              <p className="login" onClick={openModalLogin}>
+                Log In
+              </p>
+              <p className="signup" onClick={openModalSignup}>
+                Sign Up
+              </p>
+            </div>
+            <Modal
+              isOpen={modalIsOpen}
+              onRequestClose={closeModal}
+              style={customStyles}
+              shouldCloseOnOverlayClick={false}
+            >
+              <div>
+                <p to="/" className="closeModal" onClick={closeModal}>
+                  close
+                </p>
+                <LogInsignUp
+                  loginOrSignup={loginOrSignup}
+                  setLoginOrSignup={setLoginOrSignup}
+                />
+              </div>
+            </Modal>
+          </div>
+        )}
       </nav>
     </div>
   );

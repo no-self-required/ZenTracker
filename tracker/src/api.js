@@ -1,12 +1,12 @@
-export async function createUser(userId, password) {
-  const response = await axios.post("/", {
-    userId,
-    password,
-    method: "createUser",
-  });
+// export async function createUser(userId, password) {
+//   const response = await axios.post("/", {
+//     userId,
+//     password,
+//     method: "createUser",
+//   });
 
-  return response.data.createdAt;
-}
+//   return response.data.createdAt;
+// }
 
 /**
  * useEffect(() => {

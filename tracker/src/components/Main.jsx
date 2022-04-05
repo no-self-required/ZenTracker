@@ -1,9 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
-import { Link } from "react-router-dom";
 import Modal from "react-modal";
+import jwt from "jsonwebtoken";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { UserContext } from "../App";
+
+import { v4 as uuidv4 } from 'uuid';
+
+import { format } from 'date-fns'
+import getDayOfYear from 'date-fns/getDayOfYear'
 
 import "../styling/main.scss";
+
 //H:M:S inputs
 import TimerHMS from "./inputs/InputHMS";
 
@@ -36,6 +45,7 @@ function splitInput(initialTime) {
   }
   return arr;
 }
+
 //calculated time becomes new split Arr???
 function calculateSeconds(initialTime) {
   const splitArr = splitInput(initialTime);
@@ -151,7 +161,7 @@ function Main() {
   );
 
   const [totalSeconds, setTotalSeconds] = useState(300);
-  //initialTime is running off array converison[5, 0, 0]
+  //initialTime is running off array converison: 500 => [5, 0, 0] (5 min 0 seconds)
   const [initialTime, setInitialTime] = useState(500);
   const [intervalID, setIntervalID] = useState();
   const [timerState, setTimerState] = useState(TIMER_STATES["INITIAL"]);
@@ -173,11 +183,9 @@ function Main() {
   const [selection3, setSelection3] = useState();
   //replacing/deleting digit
   const [inputEle2, setInputEle2] = useState();
-  //prevent access to 0
-  // const [selection4, setSelection4] = useState();
 
-  //use ref for hours input. Will need useRef for minutes and seconds input. Used to block cursor click on left side on input.
-  // const timerH = useRef();
+  //context for logged in user
+  const { userData } = useContext(UserContext);
 
   //replace/delete digit
   useEffect(() => {
@@ -186,12 +194,21 @@ function Main() {
     inputEle2.setSelectionRange(start, end);
   }, [selection3]);
 
-  //prevent access to 0
-  // useEffect(() => {
-  //   if (!selection4) return;
-  //   const { start, end } = selection4;
-  //   timerH.current.setSelectionRange(start, end);
-  // }, [selection4]);
+  const [loggedin, setLoggedIn] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const user = jwt.decode(token);
+      if (!user) {
+        localStorage.removeItem("token");
+        navigate("/login");
+      } else {
+        setLoggedIn(true);
+      }
+    }
+  });
 
   //Decrement timer if timer has started, and there is an interval
   useEffect(() => {
@@ -201,7 +218,7 @@ function Main() {
         setIntervalID(intervalID);
       }
     }
-  }, [timerState, intervalID, decrementTotalSeconds, totalSeconds]);
+  }, [timerState, intervalID]);
 
   useEffect(() => {
     if (timerState === TIMER_STATES["FINISHED"]) {
@@ -209,6 +226,7 @@ function Main() {
       onCompletion();
     }
   }, [timerState]);
+
   //update display spans on every tick
   useEffect(() => {
     omitZero();
@@ -242,9 +260,8 @@ function Main() {
 
   //1sec = 000001
   //remove zeros then calculate message
-
   function removeZeros(string) {
-    console.log("string", string);
+    // console.log("string", string);
     let splitString = string.split("");
 
     for (let i = 0; i < splitString.length; i++) {
@@ -253,14 +270,14 @@ function Main() {
         break;
       }
     }
-    console.log("stringSplit", splitString);
+    // console.log("stringSplit", splitString);
 
     return splitString;
   }
 
   function completedTime() {
     let array = removeZeros(initialTime.toString());
-    console.log("array", array);
+    // console.log("array", array);
     let message;
     switch (array.length) {
       case 0:
@@ -383,11 +400,7 @@ function Main() {
           array[4] === "0"
         ) {
           message =
-            "You completed " +
-            array[0] +
-            " hour, " +
-            array[2] +
-            " minutes";
+            "You completed " + array[0] + " hour, " + array[2] + " minutes";
         } else if (
           array[1] === "0" &&
           array[2] === "0" &&
@@ -432,16 +445,13 @@ function Main() {
             array[4] +
             " second";
         } else if (
-          array[1] === '0' && array[2] !== "1" &&
+          array[1] === "0" &&
+          array[2] !== "1" &&
           array[3] === "0" &&
           array[4] === "0"
         ) {
           message =
-            "You completed " +
-            array[0] +
-            " hour and " +
-            array[2] +
-            " minutes";
+            "You completed " + array[0] + " hour and " + array[2] + " minutes";
         } else if (
           array[1] + array[2] !== "1" &&
           array[3] === "0" &&
@@ -456,7 +466,8 @@ function Main() {
             " minutes";
         } else if (
           //(1:00:12)
-          array[1] === '0' && array[2] === '0' &&
+          array[1] === "0" &&
+          array[2] === "0" &&
           array[3] + array[4] !== "00"
         ) {
           message =
@@ -466,8 +477,12 @@ function Main() {
             array[3] +
             array[4] +
             " seconds";
-        } 
-        else if (array[1] !== '0' && array[2] !== "0" && array[3] !== "0" && array[4] !== "0") {
+        } else if (
+          array[1] !== "0" &&
+          array[2] !== "0" &&
+          array[3] !== "0" &&
+          array[4] !== "0"
+        ) {
           //(1:10:12)
           message =
             "You completed " +
@@ -479,34 +494,62 @@ function Main() {
             array[3] +
             array[4] +
             " seconds";
-        } 
+        }
       default:
         break;
     }
-    console.log("message", message);
+    // console.log("message", message);
     return message;
   }
 
   const message = completedTime();
-  const [modalIsOpen, setIsOpen] = useState(false);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   function openModal() {
-    setIsOpen(true);
+    setModalIsOpen(true);
   }
 
   function closeModal() {
-    setIsOpen(false);
+    submitSession();
+    setModalIsOpen(false);
+    window.location.href = "/";
   }
 
   //CreateUserSession here
+  //need: user id, length of session
   //modal pop up:
   //Display session length
   //consecutive days
   //highlight day of completion
-  //finish button
+
+  //adding log must be done through a handler 
+  const [log, setLog] = useState('')
+
+  async function submitSession() {
+    const id = userData.user.id;
+    let generateId = uuidv4();
+    const constantId = generateId;
+    // const length = calculateSeconds(initialTime);
+    const formattedTime = displayInputValue(calculateSeconds(initialTime))
+    const sessionLog = log;
+    const date = new Date();
+    const day = getDayOfYear(new Date())
+
+    await axios.put(`/api/users/${id}`, {
+      $set: {
+        ["sessions." + constantId]: {
+          id: constantId,
+          date: date.toString(),
+          dayOfYear: day,
+          length: formattedTime,
+          log: sessionLog,
+        },
+      },
+    });
+  }
+
   function onCompletion() {
     openModal();
-    console.log("check oncompletion");
   }
 
   function stopTimer() {
@@ -553,16 +596,6 @@ function Main() {
     setTotalSeconds(initialTimeInSeconds);
     setTimerState(TIMER_STATES["INITIAL"]);
   }
-
-  // const inputId = document.getElementById("timer");
-
-  // if (document.getElementById("timer")) {
-  //   inputId.addEventListener("keyup", function onEvent(e) {
-  //     if (e.key === "Enter") {
-  //       startTimer();
-  //     }
-  //   });
-  // }
 
   //only accept numbers for timer input
   function numOnly(event) {
@@ -684,7 +717,7 @@ function Main() {
       default:
         break;
     }
-    console.log("omit zero", omitZero);
+    // console.log("omit zero", omitZero);
     return omitZero;
   }
 
@@ -721,7 +754,7 @@ function Main() {
     setInputEle2(target);
     const initialPosition = target.selectionStart;
 
-    //keep caret position if u change 2nd digit
+    //keep caret position if you change 2nd digit
     if (target.selectionStart === 2) {
       setSelection3({ start: initialPosition, end: initialPosition - 1 });
       //if u delete
@@ -775,20 +808,18 @@ function Main() {
   //start timer on enter
   //styling: dark mode, fullscreen
 
-  const handle = useFullScreenHandle();
+  const fsHandle = useFullScreenHandle();
   const [isFullScreen, setIsFullScreen] = useState(false);
 
   function onClickFsExit() {
-    handle.exit();
+    fsHandle.exit();
     setIsFullScreen(false);
   }
 
   function onClickFsEnter() {
-    handle.enter();
+    fsHandle.enter();
     setIsFullScreen(true);
   }
-
-  const [loggedin, setLoggedIn] = useState(true);
 
   const customStyles = {
     content: {
@@ -801,8 +832,9 @@ function Main() {
     },
   };
 
+
   return (
-    <FullScreen handle={handle}>
+    <FullScreen handle={fsHandle}>
       <div className="container">
         <div className="timer-container">
           {timerState === TIMER_STATES["EDIT"] && (
@@ -880,12 +912,13 @@ function Main() {
                 <div>
                   <Modal
                     isOpen={modalIsOpen}
-                    onRequestClose={closeModal}
                     style={customStyles}
                     shouldCloseOnOverlayClick={false}
                   >
                     <div>{message}</div>
-                    <button onClick={closeModal}>close</button>
+                    <label for="logInput">Log:</label>
+                    <input className="logInput" onChange={(e) => setLog(e.target.value)}></input>
+                    <button onClick={closeModal}>submit</button>
                   </Modal>
                 </div>
               )}
