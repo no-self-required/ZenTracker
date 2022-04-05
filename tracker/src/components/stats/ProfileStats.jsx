@@ -5,7 +5,6 @@ import Modal from "react-modal";
 
 import { v4 as uuidv4 } from "uuid";
 
-import { format } from 'date-fns'
 import getDayOfYear from 'date-fns/getDayOfYear'
 
 
@@ -140,6 +139,7 @@ function ProfileStats() {
     const length = displayInputValue(totalSeconds);
     const sessionLog = log;
     const date = newDate;
+
     console.log("date input short format", date)
 
     const yearSlice = date.slice(0, 4)

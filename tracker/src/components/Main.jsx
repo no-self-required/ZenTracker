@@ -8,6 +8,9 @@ import { UserContext } from "../App";
 
 import { v4 as uuidv4 } from 'uuid';
 
+import { format } from 'date-fns'
+import getDayOfYear from 'date-fns/getDayOfYear'
+
 import "../styling/main.scss";
 
 //H:M:S inputs
@@ -529,14 +532,15 @@ function Main() {
     // const length = calculateSeconds(initialTime);
     const formattedTime = displayInputValue(calculateSeconds(initialTime))
     const sessionLog = log;
-    console.log('sessionLog', sessionLog)
     const date = new Date();
+    const day = getDayOfYear(new Date())
 
     await axios.put(`/api/users/${id}`, {
       $set: {
         ["sessions." + constantId]: {
           id: constantId,
           date: date.toString(),
+          dayOfYear: day,
           length: formattedTime,
           log: sessionLog,
         },
