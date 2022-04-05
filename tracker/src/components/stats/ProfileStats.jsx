@@ -2,7 +2,13 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import SingleSession from "./SingleSession";
 import Modal from "react-modal";
+
 import { v4 as uuidv4 } from "uuid";
+
+import { format } from 'date-fns'
+import getDayOfYear from 'date-fns/getDayOfYear'
+
+
 
 function splitInput(initialTime) {
   const parsedTimer = parseInt(initialTime);
@@ -134,20 +140,21 @@ function ProfileStats() {
     const length = displayInputValue(totalSeconds);
     const sessionLog = log;
     const date = newDate;
-    console.log('date e.target.value', date)
-    //calculate DoY:
-    const now = new Date();
-    console.log('newDate()', now)
-    const start = new Date(now.getFullYear(), 0, 0);
-    const diff = (now - start) + ((start.getTimezoneOffset() - now.getTimezoneOffset()) * 60 * 1000);
-    const oneDay = 1000 * 60 * 60 * 24;
-    const day = Math.floor(diff / oneDay);
+    console.log("date input short format", date)
+
+    const yearSlice = date.slice(0, 4)
+    const monthSlice = date.slice(5, 7)
+    const daySlice = date.slice(8, 10)
+    const newFormat = [yearSlice, monthSlice-1, daySlice]
+    //newDate : YYYY-MM-DD
+    //fns format : yyyy, mm, dd
+    const day = getDayOfYear(new Date(newFormat[0], newFormat[1].toString(), newFormat[2]))
 
     await axios.put(`/api/users/${id}`, {
       $set: {
         ["sessions." + constantId]: {
           id: constantId,
-          date: date.toString(),
+          date: date,
           dayOfYear: day,
           length: length,
           log: sessionLog,
@@ -204,9 +211,31 @@ function ProfileStats() {
     return count;
   }
 
+
+
   //sessionsData = currentData.user.sessions
 
   if (currentData) {
+    fillCalendar();
+
+    function fillCalendar() {
+      // console.log(fullYearArray)
+      let sessionKeysLength = Object.keys(currentData.user.sessions).length;
+      let sessionKeys = Object.keys(currentData.user.sessions);
+      for (let x = 0; x < sessionKeysLength; x++) {
+        if (currentData.user.sessions) {
+          // console.log(currentData.user.sessions)
+          const dayOfYear = currentData.user.sessions[sessionKeys[x]].dayOfYear;
+          const index = dayOfYear - 1;
+          const calcIndexRemainder = index % 7;
+          const weekIndex = Math.floor(index / 7);
+          fullYearArray[weekIndex][calcIndexRemainder].push(
+            currentData.user.sessions[sessionKeys[x]]
+          );
+        }
+      }
+    }
+
     let sessionsData = currentData.user.sessions;
 
     function totalSessions() {
@@ -248,7 +277,7 @@ function ProfileStats() {
           {week.map((days, index2, array2) => {
             if (currentData.user.sessions) {
               return (
-                <div className={`day-${index2 + 1} single-day`} id="square">
+                <div className={`day-${index2 + 1} single-day`} id={calcColor(totalSessionsUser(array1[index1][index2]))}>
                   <span class="tooltiptext">
                     Total Sessions: {totalSessionsUser(array1[index1][index2])}
                   </span>
