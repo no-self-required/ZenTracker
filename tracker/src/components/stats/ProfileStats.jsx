@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import SingleSession from "./SingleSession";
+import SingleDay from "./SingleDay";
 import Modal from "react-modal";
 
 import { v4 as uuidv4 } from "uuid";
 
-import getDayOfYear from 'date-fns/getDayOfYear'
-
-
+import getDayOfYear from "date-fns/getDayOfYear";
+import startOfYear from "date-fns/startOfYear";
 
 function splitInput(initialTime) {
   const parsedTimer = parseInt(initialTime);
@@ -84,7 +84,13 @@ function ProfileStats() {
   const [inputTimerMinute, setInputTimerMinute] = useState("00");
   const [inputTimerSecond, setInputTimerSecond] = useState("00");
 
-  const [newDate, setNewDate] = useState(new Date());
+  const currentDate = new Date()
+  // console.log(currentDate)
+  const year = currentDate.getUTCFullYear();
+  const month = currentDate.getMonth();
+  const day = currentDate.getDate();
+  // console.log('year, month, day', year, month, day)
+  const [newDate, setNewDate] = useState(`${year}, ${month+1}, ${day}`);
 
   useEffect(() => {
     const isLoggedIn = async () => {
@@ -140,15 +146,17 @@ function ProfileStats() {
     const sessionLog = log;
     const date = newDate;
 
-    console.log("date input short format", date)
+    console.log("date input short format", date);
 
-    const yearSlice = date.slice(0, 4)
-    const monthSlice = date.slice(5, 7)
-    const daySlice = date.slice(8, 10)
-    const newFormat = [yearSlice, monthSlice-1, daySlice]
+    const yearSlice = date.slice(0, 4);
+    const monthSlice = date.slice(5, 7);
+    const daySlice = date.slice(8, 10);
+    const newFormat = [yearSlice, monthSlice - 1, daySlice];
     //newDate : YYYY-MM-DD
     //fns format : yyyy, mm, dd
-    const day = getDayOfYear(new Date(newFormat[0], newFormat[1].toString(), newFormat[2]))
+    const day = getDayOfYear(
+      new Date(newFormat[0], newFormat[1].toString(), newFormat[2])
+    );
 
     await axios.put(`/api/users/${id}`, {
       $set: {
@@ -211,27 +219,42 @@ function ProfileStats() {
     return count;
   }
 
-
-
-  //sessionsData = currentData.user.sessions
+  //sessionsData = current    Data.user.sessions
+  const dayRef = useRef(null);
 
   if (currentData) {
+    // fillCalendarObject()
     fillCalendar();
 
+    // function fillCalendarObject() {
+    //   for (let x = 0; x < fullYearArray.length; x++) {
+    //     for (let y = 0; y < fullYearArray[x].length ; y++) {
+    //       fullYearArray[x][y].push(
+    //         {}
+    //       );
+    //     }
+
+    //   }
+    // }
+
     function fillCalendar() {
-      // console.log(fullYearArray)
       let sessionKeysLength = Object.keys(currentData.user.sessions).length;
       let sessionKeys = Object.keys(currentData.user.sessions);
+      // console.log("sesh keys",sessionKeys)
       for (let x = 0; x < sessionKeysLength; x++) {
         if (currentData.user.sessions) {
-          // console.log(currentData.user.sessions)
           const dayOfYear = currentData.user.sessions[sessionKeys[x]].dayOfYear;
           const index = dayOfYear - 1;
           const calcIndexRemainder = index % 7;
           const weekIndex = Math.floor(index / 7);
-          fullYearArray[weekIndex][calcIndexRemainder].push(
-            currentData.user.sessions[sessionKeys[x]]
-          );
+          const sessions = currentData.user.sessions[sessionKeys[x]];
+          // const dayObj = {[`${currentData.user.sessions[sessionKeys[x]].date}`]: currentData.user.sessions[sessionKeys[x]]}
+
+          //array of object of object of objects
+          // dayObj[`${currentData.user.sessions[sessionKeys[x]].date}`]=currentData.user.sessions[sessionKeys[x]]
+          // console.log('dayObj',dayObj)
+          fullYearArray[weekIndex][calcIndexRemainder].push(sessions);
+          // fullYearArray[weekIndex][calcIndexRemainder]=dayObj
         }
       }
     }
@@ -245,6 +268,16 @@ function ProfileStats() {
       }
       return count;
     }
+
+    // function calcDate(array1, index1, index2) {
+    //   console.log("index1, index2" , index1, index2)
+    //   console.log('array check', array1[index1][index2])
+    //   if(array1[index1][index2][0]) {
+    //     return array1[index1][index2][0].date
+    //   }
+    // }
+
+
 
     const allSessions = Object.keys(sessionsData).map(function (key) {
       return (
@@ -271,23 +304,23 @@ function ProfileStats() {
       },
     };
 
-    const printSq = fullYearArray.map((week, index1, array1) => {
+    //can use calcdate for elements with information
+    //need to assign a date to each element
+    //trying to access data-date for now > then use a function to set data-date
+
+    const printSq = fullYearArray.map((week, weekIndex, array1) => {
       return (
-        <div className={`week-${index1 + 1}`}>
-          {week.map((days, index2, array2) => {
+        <div className={`week-${weekIndex + 1}`}>
+          {week.map((days, daysIndex, array2) => {
             if (currentData.user.sessions) {
               return (
-                <div className={`day-${index2 + 1} single-day`} id={calcColor(totalSessionsUser(array1[index1][index2]))}>
-                  <span class="tooltiptext">
-                    Total Sessions: {totalSessionsUser(array1[index1][index2])}
-                  </span>
-                </div>
-              );
-            } else {
-              return (
-                <div className={`day-${index2 + 1} single-day`} id="square">
-                  <span class="tooltiptext">Total Sessions: 0</span>
-                </div>
+                <SingleDay
+                  array1={array1}
+                  daysIndex={daysIndex}
+                  weekIndex={weekIndex}
+                  calcColor={calcColor}
+                  totalSessionsUser={totalSessionsUser}
+                ></SingleDay>
               );
             }
           })}
@@ -295,7 +328,27 @@ function ProfileStats() {
       );
     });
 
+    // if (currentData.user.sessions && dayRef.current) {
+    //   let date = dayRef.current.getAttribute("data-date")
+    //   return (
+    //     <div className={`day-${daysIndex + 1} single-day`} id={calcColor(totalSessionsUser(array1[weekIndex][daysIndex]))} data-date={assignDate(array1, weekIndex, daysIndex)} ref={dayRef}>
+    //       <span class="tooltiptext">
+    //         {totalSessionsUser(array1[weekIndex][daysIndex])} sessions on {date}
+    //       </span>
+    //     </div>
+    //   );
+    // }
+    // else{
+    //   return (
+    //     <div className={`day-${daysIndex + 1} single-day`} id="square" ref={dayRef}>
+    //       <span class="tooltiptext">Total Sessions: 0 </span>
+    //     </div>
+    //   );
+    // }
+
+    // console.log('fullyeararray', fullYearArray)
     //time is currently being shown as array
+
     return (
       <div>
         <div>Total Sessions: {totalSessions()}</div>
