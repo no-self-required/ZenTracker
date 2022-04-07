@@ -275,6 +275,7 @@ function Main() {
     return splitString;
   }
 
+  //*** maybe can use fns: formatDuration() */
   function completedTime() {
     let array = removeZeros(initialTime.toString());
     // console.log("array", array);
@@ -532,7 +533,7 @@ function Main() {
     // const length = calculateSeconds(initialTime);
     const formattedTime = displayInputValue(calculateSeconds(initialTime))
     const sessionLog = log;
-    const date = new Date();
+    const date = format(new Date(), 'yyyy-MM-dd');
     const day = getDayOfYear(new Date())
 
     await axios.put(`/api/users/${id}`, {
