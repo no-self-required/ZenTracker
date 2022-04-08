@@ -2,7 +2,6 @@ import React, { useState, useContext } from "react";
 import axios from "axios";
 
 function Login() {
-
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -16,15 +15,14 @@ function Login() {
           headers: { "Content-Type": "application/json" },
         }
       );
-      
-      console.log('res: ', response)
+
+      console.log("res: ", response);
       if (response.data.user) {
         localStorage.setItem("token", response.data.user);
         window.location.href = "/";
       } else {
         alert("Please check your username and password");
       }
-
     } catch (err) {
       console.log("error: ", err);
     }

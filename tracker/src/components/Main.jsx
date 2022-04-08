@@ -537,17 +537,31 @@ function Main() {
     const day = getDayOfYear(new Date())
 
     await axios.put(`/api/users/${id}`, {
-      $set: {
-        ["sessions." + constantId]: {
-          id: constantId,
-          date: date.toString(),
-          dayOfYear: day,
-          length: formattedTime,
-          log: sessionLog,
-        },
-      },
+      $push: {
+        sessions:
+          {
+            id: constantId,
+            date: date.toString(),
+            dayOfYear: day,
+            length: formattedTime,
+            log: sessionLog,
+          },
+      }
     });
   }
+
+  // await axios.put(`/api/users/${id}`, {
+  //   $push: {
+  //     sessions:
+  //       {
+  //         id: constantId,
+  //         date: date.toString(),
+  //         dayOfYear: day,
+  //         length: formattedTime,
+  //         log: sessionLog,
+  //       },
+  //   }
+  // });
 
   function onCompletion() {
     openModal();

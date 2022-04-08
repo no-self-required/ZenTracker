@@ -159,18 +159,35 @@ function ProfileStats() {
     );
 
     await axios.put(`/api/users/${id}`, {
-      $set: {
-        ["sessions." + constantId]: {
-          id: constantId,
-          date: date,
-          dayOfYear: day,
-          length: length,
-          log: sessionLog,
-        },
-      },
+      $push: {
+        sessions:
+          {
+            id: constantId,
+            date: date,
+            dayOfYear: day,
+            length: length,
+            log: sessionLog,
+          },
+      }
     });
   }
 
+  // await axios.put(`/api/users/${id}`, {
+  //   $set: {
+  //     sessions:[
+  //       {
+  //         id: constantId,
+  //         date: date,
+  //         dayOfYear: day,
+  //         length: length,
+  //         log: sessionLog,
+  //       },
+  //     ]
+  //   }
+  // });
+
+
+  
   let fullYearArray = [];
 
   function yearArray() {
