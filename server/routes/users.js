@@ -45,11 +45,4 @@ router.put('/:id', async (req, res) => {
   await User.updateOne({_id: req.params.id}, req.body)
 })
 
-//delete session of current user
-// router.delete('/:id', async (req, res) => {
-//   console.log('req.body get stats', req.body)
-//   await User.findOne({_id: req.params.id}, req.body)
-//   console.log('res', res)
-// })
-
 module.exports = router;
