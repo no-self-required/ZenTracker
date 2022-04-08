@@ -14,10 +14,12 @@ function SingleSession(props) {
     const userid = userData.user.id;
 
     await axios.put(`/api/users/${userid}`, {
-      $unset: { ['sessions.'+id] : ''}
+      $pull: { sessions: { id: id} }
     });
 
   }
+
+  // $unset: { ['sessions.'+id] : ''}
 
   function deleteRefresh() {
     deleteSession();
