@@ -84,13 +84,13 @@ function ProfileStats() {
   const [inputTimerMinute, setInputTimerMinute] = useState("00");
   const [inputTimerSecond, setInputTimerSecond] = useState("00");
 
-  const currentDate = new Date()
+  const currentDate = new Date();
   // console.log(currentDate)
   const year = currentDate.getUTCFullYear();
   const month = currentDate.getMonth();
   const day = currentDate.getDate();
   // console.log('year, month, day', year, month, day)
-  const [newDate, setNewDate] = useState(`${year}, ${month+1}, ${day}`);
+  const [newDate, setNewDate] = useState(`${year}, ${month + 1}, ${day}`);
 
   useEffect(() => {
     const isLoggedIn = async () => {
@@ -160,18 +160,17 @@ function ProfileStats() {
 
     await axios.put(`/api/users/${id}`, {
       $push: {
-        sessions:
-          {
-            id: constantId,
-            date: date,
-            dayOfYear: day,
-            length: length,
-            log: sessionLog,
-          },
-      }
+        sessions: {
+          id: constantId,
+          date: date,
+          dayOfYear: day,
+          length: length,
+          log: sessionLog,
+        },
+      },
     });
   }
-  
+
   let fullYearArray = [];
 
   function yearArray() {
@@ -223,7 +222,6 @@ function ProfileStats() {
   const dayRef = useRef(null);
 
   if (currentData) {
-
     fillCalendar();
 
     function fillCalendar() {
@@ -238,7 +236,6 @@ function ProfileStats() {
           const sessions = currentData.user.sessions[sessionKeys[x]];
 
           fullYearArray[weekIndex][calcIndexRemainder].push(sessions);
-
         }
       }
     }
@@ -282,17 +279,15 @@ function ProfileStats() {
       return (
         <div className={`week-${weekIndex + 1}`}>
           {week.map((days, daysIndex, array2) => {
-            if (currentData.user.sessions) {
-              return (
-                <SingleDay
-                  array1={array1}
-                  daysIndex={daysIndex}
-                  weekIndex={weekIndex}
-                  calcColor={calcColor}
-                  totalSessionsUser={totalSessionsUser}
-                ></SingleDay>
-              );
-            }
+            return (
+              <SingleDay
+                array1={array1}
+                daysIndex={daysIndex}
+                weekIndex={weekIndex}
+                calcColor={calcColor}
+                totalSessionsUser={totalSessionsUser}
+              ></SingleDay>
+            );
           })}
         </div>
       );
