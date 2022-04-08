@@ -513,7 +513,7 @@ function Main() {
   function closeModal() {
     submitSession();
     setModalIsOpen(false);
-    window.location.href = "/";
+    resetTimer();
   }
 
   //CreateUserSession here
@@ -549,19 +549,6 @@ function Main() {
       }
     });
   }
-
-  // await axios.put(`/api/users/${id}`, {
-  //   $push: {
-  //     sessions:
-  //       {
-  //         id: constantId,
-  //         date: date.toString(),
-  //         dayOfYear: day,
-  //         length: formattedTime,
-  //         log: sessionLog,
-  //       },
-  //   }
-  // });
 
   function onCompletion() {
     openModal();
