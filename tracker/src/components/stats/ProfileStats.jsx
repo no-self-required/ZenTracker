@@ -171,22 +171,6 @@ function ProfileStats() {
       }
     });
   }
-
-  // await axios.put(`/api/users/${id}`, {
-  //   $set: {
-  //     sessions:[
-  //       {
-  //         id: constantId,
-  //         date: date,
-  //         dayOfYear: day,
-  //         length: length,
-  //         log: sessionLog,
-  //       },
-  //     ]
-  //   }
-  // });
-
-
   
   let fullYearArray = [];
 
@@ -236,28 +220,15 @@ function ProfileStats() {
     return count;
   }
 
-  //sessionsData = current    Data.user.sessions
   const dayRef = useRef(null);
 
   if (currentData) {
-    // fillCalendarObject()
+
     fillCalendar();
-
-    // function fillCalendarObject() {
-    //   for (let x = 0; x < fullYearArray.length; x++) {
-    //     for (let y = 0; y < fullYearArray[x].length ; y++) {
-    //       fullYearArray[x][y].push(
-    //         {}
-    //       );
-    //     }
-
-    //   }
-    // }
 
     function fillCalendar() {
       let sessionKeysLength = Object.keys(currentData.user.sessions).length;
       let sessionKeys = Object.keys(currentData.user.sessions);
-      // console.log("sesh keys",sessionKeys)
       for (let x = 0; x < sessionKeysLength; x++) {
         if (currentData.user.sessions) {
           const dayOfYear = currentData.user.sessions[sessionKeys[x]].dayOfYear;
@@ -265,13 +236,9 @@ function ProfileStats() {
           const calcIndexRemainder = index % 7;
           const weekIndex = Math.floor(index / 7);
           const sessions = currentData.user.sessions[sessionKeys[x]];
-          // const dayObj = {[`${currentData.user.sessions[sessionKeys[x]].date}`]: currentData.user.sessions[sessionKeys[x]]}
 
-          //array of object of object of objects
-          // dayObj[`${currentData.user.sessions[sessionKeys[x]].date}`]=currentData.user.sessions[sessionKeys[x]]
-          // console.log('dayObj',dayObj)
           fullYearArray[weekIndex][calcIndexRemainder].push(sessions);
-          // fullYearArray[weekIndex][calcIndexRemainder]=dayObj
+
         }
       }
     }
@@ -285,16 +252,6 @@ function ProfileStats() {
       }
       return count;
     }
-
-    // function calcDate(array1, index1, index2) {
-    //   console.log("index1, index2" , index1, index2)
-    //   console.log('array check', array1[index1][index2])
-    //   if(array1[index1][index2][0]) {
-    //     return array1[index1][index2][0].date
-    //   }
-    // }
-
-
 
     const allSessions = Object.keys(sessionsData).map(function (key) {
       return (
@@ -321,10 +278,6 @@ function ProfileStats() {
       },
     };
 
-    //can use calcdate for elements with information
-    //need to assign a date to each element
-    //trying to access data-date for now > then use a function to set data-date
-
     const printSq = fullYearArray.map((week, weekIndex, array1) => {
       return (
         <div className={`week-${weekIndex + 1}`}>
@@ -344,27 +297,6 @@ function ProfileStats() {
         </div>
       );
     });
-
-    // if (currentData.user.sessions && dayRef.current) {
-    //   let date = dayRef.current.getAttribute("data-date")
-    //   return (
-    //     <div className={`day-${daysIndex + 1} single-day`} id={calcColor(totalSessionsUser(array1[weekIndex][daysIndex]))} data-date={assignDate(array1, weekIndex, daysIndex)} ref={dayRef}>
-    //       <span class="tooltiptext">
-    //         {totalSessionsUser(array1[weekIndex][daysIndex])} sessions on {date}
-    //       </span>
-    //     </div>
-    //   );
-    // }
-    // else{
-    //   return (
-    //     <div className={`day-${daysIndex + 1} single-day`} id="square" ref={dayRef}>
-    //       <span class="tooltiptext">Total Sessions: 0 </span>
-    //     </div>
-    //   );
-    // }
-
-    // console.log('fullyeararray', fullYearArray)
-    //time is currently being shown as array
 
     return (
       <div>
@@ -427,11 +359,6 @@ function ProfileStats() {
       </div>
     );
   }
-
-  // let data = JSON.parse(localStorage.getItem("udata"));
-  // console.log("udata profilestats", data);
-  // const sessions = data.sessions;
-  // console.log("sessions", sessions);
 
   return <div></div>;
 }
