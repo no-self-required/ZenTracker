@@ -8,9 +8,9 @@ import { UserContext } from "../App";
 
 import { v4 as uuidv4 } from "uuid";
 
-import { format } from "date-fns";
 import getDayOfYear from "date-fns/getDayOfYear";
 import formatDuration from "date-fns/formatDuration";
+import format from 'date-fns/format'
 
 import "../styling/main.scss";
 
@@ -349,15 +349,15 @@ function Main() {
     // const length = calculateSeconds(initialTime);
     const formattedTime = displayInputValue(calculateSeconds(initialTime));
     const sessionLog = log;
-    const date = format(new Date(), "yyyy-MM-dd");
-    const day = getDayOfYear(new Date());
+    const formattedDate = format(new Date(), "PPP")
+    const dayOfYear = getDayOfYear(new Date());
 
     await axios.put(`/api/users/${id}`, {
       $push: {
         sessions: {
           id: constantId,
-          date: date.toString(),
-          dayOfYear: day,
+          date: formattedDate,
+          dayOfYear: dayOfYear,
           length: formattedTime,
           log: sessionLog,
         },

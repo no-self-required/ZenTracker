@@ -7,7 +7,7 @@ import Modal from "react-modal";
 import { v4 as uuidv4 } from "uuid";
 
 import getDayOfYear from "date-fns/getDayOfYear";
-import startOfYear from "date-fns/startOfYear";
+import format from 'date-fns/format'
 
 function splitInput(initialTime) {
   const parsedTimer = parseInt(initialTime);
@@ -46,7 +46,6 @@ function calculateSeconds(initialTime) {
 
 function displayInputValue(totalSeconds) {
   let formatTime = totalSeconds;
-  console.log("formatTime inside DIV", formatTime);
   let showHours = 0;
   let showMin = 0;
   let showSec = 0;
@@ -137,33 +136,32 @@ function ProfileStats() {
   }
 
   async function submitSession() {
-    let tripleInputs = inputTimerHour + inputTimerMinute + inputTimerSecond;
-    const id = currentData.user.id;
+    const tripleInputs = inputTimerHour + inputTimerMinute + inputTimerSecond;
     let generateId = uuidv4();
+    const id = currentData.user.id;
     const constantId = generateId;
     const totalSeconds = calculateSeconds(tripleInputs);
     const length = displayInputValue(totalSeconds);
     const sessionLog = log;
     const date = newDate;
 
-    console.log("date input short format", date);
-
     const yearSlice = date.slice(0, 4);
     const monthSlice = date.slice(5, 7);
     const daySlice = date.slice(8, 10);
     const newFormat = [yearSlice, monthSlice - 1, daySlice];
-    //newDate : YYYY-MM-DD
-    //fns format : yyyy, mm, dd
-    const day = getDayOfYear(
+
+    const dayOfYear = getDayOfYear(
       new Date(newFormat[0], newFormat[1].toString(), newFormat[2])
     );
 
+    const formattedDate = format(new Date(yearSlice, monthSlice-1, daySlice), "PPP")
+    
     await axios.put(`/api/users/${id}`, {
       $push: {
         sessions: {
           id: constantId,
-          date: date,
-          dayOfYear: day,
+          date: formattedDate,
+          dayOfYear: dayOfYear,
           length: length,
           log: sessionLog,
         },
