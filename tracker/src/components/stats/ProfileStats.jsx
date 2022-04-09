@@ -7,6 +7,7 @@ import Modal from "react-modal";
 import { v4 as uuidv4 } from "uuid";
 
 import getDayOfYear from "date-fns/getDayOfYear";
+import formatDuration from "date-fns/formatDuration";
 import format from 'date-fns/format'
 
 function splitInput(initialTime) {
@@ -156,13 +157,15 @@ function ProfileStats() {
 
     const formattedDate = format(new Date(yearSlice, monthSlice-1, daySlice), "PPP")
     
+    const lengthString = formatDuration({ hours: length[0], minutes: length[1], seconds: length[2]})
+
     await axios.put(`/api/users/${id}`, {
       $push: {
         sessions: {
           id: constantId,
           date: formattedDate,
           dayOfYear: dayOfYear,
-          length: length,
+          length: lengthString,
           log: sessionLog,
         },
       },

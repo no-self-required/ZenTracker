@@ -271,12 +271,9 @@ function Main() {
         break;
       }
     }
-    // console.log("stringSplit", splitString);
-
     return splitString;
   }
 
-  //*** maybe can use fns: formatDuration() */
   function completedTime() {
     let array = removeZeros(initialTime.toString());
     let message = "You completed ";
@@ -352,13 +349,15 @@ function Main() {
     const formattedDate = format(new Date(), "PPP")
     const dayOfYear = getDayOfYear(new Date());
 
+    const lengthString = formatDuration({ hours: formattedTime[0], minutes: formattedTime[1], seconds: formattedTime[2]})
+
     await axios.put(`/api/users/${id}`, {
       $push: {
         sessions: {
           id: constantId,
           date: formattedDate,
           dayOfYear: dayOfYear,
-          length: formattedTime,
+          length: lengthString,
           log: sessionLog,
         },
       },
