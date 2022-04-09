@@ -6,10 +6,11 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { UserContext } from "../App";
 
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
-import { format } from 'date-fns'
-import getDayOfYear from 'date-fns/getDayOfYear'
+import { format } from "date-fns";
+import getDayOfYear from "date-fns/getDayOfYear";
+import formatDuration from "date-fns/formatDuration";
 
 import "../styling/main.scss";
 
@@ -278,228 +279,43 @@ function Main() {
   //*** maybe can use fns: formatDuration() */
   function completedTime() {
     let array = removeZeros(initialTime.toString());
-    // console.log("array", array);
-    let message;
+    let message = "You completed ";
     switch (array.length) {
       case 0:
         break;
       case 1:
-        if (array[0] === "1") {
-          message = "You completed " + array[0] + " second";
-        } else if (array[0] !== "1")
-          message = "You completed " + array[0] + " seconds";
+        message += formatDuration({ seconds: parseInt(array[0]) });
         break;
       case 2:
-        message = "You completed " + array[0] + array[1] + " seconds";
+        message += formatDuration({ seconds: parseInt(array[0] + array[1]) });
         break;
       case 3:
-        if (array[0] === "1" && array[1] === "0" && array[2] === "0") {
-          //single minutes 0 seconds
-          message = "You completed " + array[0] + " minute";
-        } else if (array[0] !== "1" && array[1] === "0" && array[2] === "0") {
-          //multiple minutes, 0 seconds
-          message = "You completed " + array[0] + " minutes";
-        } else if (array[0] === "1" && array[1] === "0" && array[2] !== "1") {
-          //single minute, multiple seconds, single digit second
-          message =
-            "You completed " +
-            array[0] +
-            " minute and " +
-            array[2] +
-            " seconds";
-        } else if (array[0] === "1" && array[1] === "0" && array[2] === "1") {
-          //single minutes, single second (1:01)
-          message =
-            "You completed " + array[0] + " minute and " + array[2] + " second";
-        } else if (array[0] === "1" && array[1] + array[2] !== "0") {
-          //single minute, multiple seconds, double digit seconds
-          message =
-            "You completed " +
-            array[0] +
-            " minute and " +
-            array[1] +
-            array[2] +
-            " seconds";
-        }
+        message += formatDuration({
+          minutes: parseInt(array[0]),
+          seconds: parseInt(array[1] + array[2]),
+        });
         break;
       case 4:
-        if (array[2] === "0" && array[3] === "0") {
-          message = "You completed " + (array[0] + array[1]) + " minutes";
-        } else if (array[2] === "0" && array[3] === "1") {
-          message =
-            "You completed " +
-            (array[0] + array[1]) +
-            " minutes and " +
-            array[3] +
-            " second";
-        } else if (array[2] === "0" && array[3] !== "0") {
-          message =
-            "You completed " +
-            (array[0] + array[1]) +
-            " minutes and " +
-            array[3] +
-            " seconds";
-        } else if (array[2] + array[3] !== "0") {
-          message =
-            "You completed " +
-            (array[0] + array[1]) +
-            " minutes and " +
-            (array[2] + array[3]) +
-            " seconds";
-        }
+        message += formatDuration({
+          minutes: parseInt(array[0] + array[1]),
+          seconds: parseInt(array[2] + array[3]),
+        });
         break;
       case 5:
-        if (
-          array[1] === "0" &&
-          array[2] === "0" &&
-          array[3] === "0" &&
-          array[4] === "0"
-        ) {
-          message = "You completed " + array[0] + " hour";
-        } else if (
-          array[1] === "0" &&
-          array[2] === "1" &&
-          array[3] === "0" &&
-          array[4] === "0"
-        ) {
-          message =
-            "You completed " + array[0] + " hour and " + array[2] + " minute";
-        } else if (
-          array[1] === "0" &&
-          array[2] === "0" &&
-          array[3] === "0" &&
-          array[4] === "1"
-        ) {
-          message =
-            "You completed " + array[0] + " hour and " + array[4] + " second";
-        } else if (
-          array[1] === "0" &&
-          array[2] === "0" &&
-          array[3] === "0" &&
-          array[4] !== "1"
-        ) {
-          message =
-            "You completed " + array[0] + " hour and " + array[4] + " seconds";
-        } else if (
-          array[1] === "0" &&
-          array[2] === "1" &&
-          array[3] === "0" &&
-          array[4] === "1"
-        ) {
-          message =
-            "You completed " +
-            array[0] +
-            " hour, " +
-            array[2] +
-            " minute and " +
-            array[4] +
-            " second";
-        } else if (
-          array[1] === "0" &&
-          array[2] !== "1" &&
-          array[3] === "0" &&
-          array[4] === "0"
-        ) {
-          message =
-            "You completed " + array[0] + " hour, " + array[2] + " minutes";
-        } else if (
-          array[1] === "0" &&
-          array[2] === "0" &&
-          array[3] === "0" &&
-          array[4] === "1"
-        ) {
-          message =
-            "You completed " + array[0] + " hour and " + array[4] + " second";
-        } else if (
-          array[1] === "0" &&
-          array[2] === "1" &&
-          array[3] + array[4] !== "0"
-        ) {
-          message =
-            "You completed " +
-            array[0] +
-            " hour, " +
-            array[2] +
-            " minute and " +
-            array[3] +
-            array[4] +
-            " seconds";
-        } else if (
-          array[1] === "0" &&
-          array[2] === "1" &&
-          array[3] + array[4] === "0"
-        ) {
-          message =
-            "You completed " + array[0] + " hour, " + array[2] + " minute";
-        } else if (
-          array[1] + array[2] !== "1" &&
-          array[3] === "0" &&
-          array[4] === "1"
-        ) {
-          message =
-            "You completed " +
-            array[0] +
-            " hour, " +
-            array[1] +
-            array[2] +
-            " minutes and " +
-            array[4] +
-            " second";
-        } else if (
-          array[1] === "0" &&
-          array[2] !== "1" &&
-          array[3] === "0" &&
-          array[4] === "0"
-        ) {
-          message =
-            "You completed " + array[0] + " hour and " + array[2] + " minutes";
-        } else if (
-          array[1] + array[2] !== "1" &&
-          array[3] === "0" &&
-          array[4] === "0"
-        ) {
-          message =
-            "You completed " +
-            array[0] +
-            " hour and " +
-            array[1] +
-            array[2] +
-            " minutes";
-        } else if (
-          //(1:00:12)
-          array[1] === "0" &&
-          array[2] === "0" &&
-          array[3] + array[4] !== "00"
-        ) {
-          message =
-            "You completed " +
-            array[0] +
-            " hour, " +
-            array[3] +
-            array[4] +
-            " seconds";
-        } else if (
-          array[1] !== "0" &&
-          array[2] !== "0" &&
-          array[3] !== "0" &&
-          array[4] !== "0"
-        ) {
-          //(1:10:12)
-          message =
-            "You completed " +
-            array[0] +
-            " hour, " +
-            array[1] +
-            array[2] +
-            " minutes and " +
-            array[3] +
-            array[4] +
-            " seconds";
-        }
-      default:
+        message += formatDuration({
+          hours: parseInt(array[0]),
+          minutes: parseInt(array[1] + array[2]),
+          seconds: parseInt(array[3] + array[4]),
+        });
+        break;
+      case 6:
+        message += formatDuration({
+          hours: parseInt(array[0] + array[1]),
+          minutes: parseInt(array[2] + array[3]),
+          seconds: parseInt(array[4] + array[5]),
+        });
         break;
     }
-    // console.log("message", message);
     return message;
   }
 
@@ -523,30 +339,29 @@ function Main() {
   //consecutive days
   //highlight day of completion
 
-  //adding log must be done through a handler 
-  const [log, setLog] = useState('')
+  //adding log must be done through a handler
+  const [log, setLog] = useState("");
 
   async function submitSession() {
     const id = userData.user.id;
     let generateId = uuidv4();
     const constantId = generateId;
     // const length = calculateSeconds(initialTime);
-    const formattedTime = displayInputValue(calculateSeconds(initialTime))
+    const formattedTime = displayInputValue(calculateSeconds(initialTime));
     const sessionLog = log;
-    const date = format(new Date(), 'yyyy-MM-dd');
-    const day = getDayOfYear(new Date())
+    const date = format(new Date(), "yyyy-MM-dd");
+    const day = getDayOfYear(new Date());
 
     await axios.put(`/api/users/${id}`, {
       $push: {
-        sessions:
-          {
-            id: constantId,
-            date: date.toString(),
-            dayOfYear: day,
-            length: formattedTime,
-            log: sessionLog,
-          },
-      }
+        sessions: {
+          id: constantId,
+          date: date.toString(),
+          dayOfYear: day,
+          length: formattedTime,
+          log: sessionLog,
+        },
+      },
     });
   }
 
@@ -834,7 +649,6 @@ function Main() {
     },
   };
 
-
   return (
     <FullScreen handle={fsHandle}>
       <div className="container">
@@ -919,7 +733,10 @@ function Main() {
                   >
                     <div>{message}</div>
                     <label for="logInput">Log:</label>
-                    <input className="logInput" onChange={(e) => setLog(e.target.value)}></input>
+                    <input
+                      className="logInput"
+                      onChange={(e) => setLog(e.target.value)}
+                    ></input>
                     <button onClick={closeModal}>submit</button>
                   </Modal>
                 </div>
