@@ -329,12 +329,7 @@ function Main() {
     resetTimer();
   }
 
-  //CreateUserSession here
-  //need: user id, length of session
-  //modal pop up:
-  //Display session length
-  //consecutive days
-  //highlight day of completion
+
 
   //adding log must be done through a handler
   const [log, setLog] = useState("");
@@ -533,7 +528,6 @@ function Main() {
       default:
         break;
     }
-    // console.log("omit zero", omitZero);
     return omitZero;
   }
 
@@ -619,10 +613,7 @@ function Main() {
     setInputTimerHour(input);
   }
 
-  //todo:
-  //mute sound icon/button
-  //start timer on enter
-  //styling: dark mode, fullscreen
+
 
   const fsHandle = useFullScreenHandle();
   const [isFullScreen, setIsFullScreen] = useState(false);
