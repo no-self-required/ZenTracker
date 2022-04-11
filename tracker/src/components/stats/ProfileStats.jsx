@@ -288,6 +288,24 @@ function ProfileStats() {
       const lengthString = formatDuration({ hours: formatedLength[0], minutes: formatedLength[1], seconds: formatedLength[2]})
       return lengthString
     }
+
+    function longestLength() {
+      let longestLength = 0;
+      for (const object of sessionsData) {
+        for (const property in object) {
+          if (property === 'lengthSeconds') {
+            // longestLength = object[property]
+            if (object[property] > longestLength) {
+              longestLength = object[property]
+            }
+          }
+        }
+      }
+      const formatedLength = displayInputValue(longestLength);
+      const lengthString = formatDuration({ hours: formatedLength[0], minutes: formatedLength[1], seconds: formatedLength[2]})
+      return lengthString
+    }
+
     const allSessions = Object.keys(sessionsData).map(function (key) {
       return (
         <div>
@@ -342,6 +360,8 @@ function ProfileStats() {
           Time:
           <div>Total: {totalTime()}</div>
           <div>Average session length: {averageLength()}</div>
+          <div>Longest session length: {longestLength()}</div>
+
 
         </div>
         <div className="calendar-container">{printSq}</div>
