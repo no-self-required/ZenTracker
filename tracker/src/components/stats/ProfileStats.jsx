@@ -70,7 +70,7 @@ function displayInputValue(totalSeconds) {
   formatted.push(showMin);
   formatted.push(showSec);
 
-  console.log("formatted", formatted);
+  // console.log("formatted", formatted);
   return formatted;
 }
 
@@ -166,6 +166,7 @@ function ProfileStats() {
           date: formattedDate,
           dayOfYear: dayOfYear,
           length: lengthString,
+          lengthSeconds: totalSeconds,
           log: sessionLog,
         },
       },
@@ -250,6 +251,27 @@ function ProfileStats() {
       }
       return count;
     }
+    // console.log("sessionsdata", sessionsData)
+
+    function totalTime() {
+      let totalTimeInSeconds = 0;
+      for (const object of sessionsData) {
+        // console.log('object', object)
+        for (const property in object) {
+          // console.log('property', property)
+          if (property === 'lengthSeconds') {
+            totalTimeInSeconds += object[property]
+            // console.log("object property", object[property])
+          }
+        }
+      }
+      // console.log('totalTime', totalTimeInSeconds)
+      const formatedLength = displayInputValue(totalTimeInSeconds);
+
+      const lengthString = formatDuration({ hours: formatedLength[0], minutes: formatedLength[1], seconds: formatedLength[2]})
+
+      return lengthString
+    }
 
     const allSessions = Object.keys(sessionsData).map(function (key) {
       return (
@@ -296,7 +318,15 @@ function ProfileStats() {
 
     return (
       <div>
-        <div>Total Sessions: {totalSessions()}</div>
+        <div className="session-stats">
+          Sessions:
+          <div>Total: {totalSessions()}</div>
+          <br></br>
+        </div>
+        <div className="time-stats">
+          Time:
+          <div>Total: {totalTime()}</div>
+        </div>
         <div className="calendar-container">{printSq}</div>
         <div>
           <button className="add-session" onClick={openModal}>

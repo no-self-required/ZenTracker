@@ -339,6 +339,7 @@ function Main() {
     let generateId = uuidv4();
     const constantId = generateId;
     // const length = calculateSeconds(initialTime);
+    const totalSeconds = calculateSeconds(initialTime)
     const formattedTime = displayInputValue(calculateSeconds(initialTime));
     const sessionLog = log;
     const formattedDate = format(new Date(), "PPP")
@@ -353,6 +354,7 @@ function Main() {
           date: formattedDate,
           dayOfYear: dayOfYear,
           length: lengthString,
+          lengthSeconds: totalSeconds,
           log: sessionLog,
         },
       },
