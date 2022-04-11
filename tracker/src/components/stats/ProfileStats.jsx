@@ -256,23 +256,38 @@ function ProfileStats() {
     function totalTime() {
       let totalTimeInSeconds = 0;
       for (const object of sessionsData) {
-        // console.log('object', object)
         for (const property in object) {
-          // console.log('property', property)
           if (property === 'lengthSeconds') {
             totalTimeInSeconds += object[property]
-            // console.log("object property", object[property])
           }
         }
       }
-      // console.log('totalTime', totalTimeInSeconds)
+      
       const formatedLength = displayInputValue(totalTimeInSeconds);
-
       const lengthString = formatDuration({ hours: formatedLength[0], minutes: formatedLength[1], seconds: formatedLength[2]})
-
       return lengthString
     }
 
+    function averageLength() {
+      let totalTimeInSeconds = 0;
+      for (const object of sessionsData) {
+        for (const property in object) {
+          if (property === 'lengthSeconds') {
+            totalTimeInSeconds += object[property]
+          }
+        }
+      }
+
+      let count = 0;
+      for (const key in Object.keys(sessionsData)) {
+        count += 1;
+      }
+
+      const averageSeconds = totalTimeInSeconds/count
+      const formatedLength = displayInputValue(averageSeconds);
+      const lengthString = formatDuration({ hours: formatedLength[0], minutes: formatedLength[1], seconds: formatedLength[2]})
+      return lengthString
+    }
     const allSessions = Object.keys(sessionsData).map(function (key) {
       return (
         <div>
@@ -326,6 +341,8 @@ function ProfileStats() {
         <div className="time-stats">
           Time:
           <div>Total: {totalTime()}</div>
+          <div>Average session length: {averageLength()}</div>
+
         </div>
         <div className="calendar-container">{printSq}</div>
         <div>
