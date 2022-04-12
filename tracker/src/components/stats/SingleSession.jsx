@@ -32,7 +32,8 @@ function SingleSession(props) {
       <br/>
       length: {props.length}
       <br/>
-      log: {props.log}
+      {props.log && <div>log: {props.log}</div>}
+      {/* log: {props.log} */}
       </div> 
       <button className="delete-button" onClick={deleteRefresh}>Delete</button>
     </div>
