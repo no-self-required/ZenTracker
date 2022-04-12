@@ -7,6 +7,7 @@ import Modal from "react-modal";
 import { v4 as uuidv4 } from "uuid";
 
 import getDayOfYear from "date-fns/getDayOfYear";
+import getYear from 'date-fns/getYear';
 import formatDuration from "date-fns/formatDuration";
 import format from 'date-fns/format'
 
@@ -167,6 +168,7 @@ function ProfileStats() {
           dayOfYear: dayOfYear,
           length: lengthString,
           lengthSeconds: totalSeconds,
+          year: parseInt(yearSlice),
           log: sessionLog,
         },
       },
