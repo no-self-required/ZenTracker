@@ -14,11 +14,11 @@ function SingleDay(props) {
   return (
     <div
       className={`day-${props.daysIndex + 1} single-day`}
-      id={props.calcColor(props.totalSessionsUser(props.array1[props.weekIndex][props.daysIndex]))}
+      id={props.calcColor(props.totalSessionsUser(props.array2[props.weekIndex][props.daysIndex]))}
     >
-        {(props.totalSessionsUser(props.array1[props.weekIndex][props.daysIndex]) === 0 || props.totalSessionsUser(props.array1[props.weekIndex][props.daysIndex]) > 1) && <span class="tooltiptext">{props.totalSessionsUser(props.array1[props.weekIndex][props.daysIndex])} sessions on {formatted}
+        {(props.totalSessionsUser(props.array2[props.weekIndex][props.daysIndex]) === 0 || props.totalSessionsUser(props.array2[props.weekIndex][props.daysIndex]) > 1) && <span class="tooltiptext">{props.totalSessionsUser(props.array2[props.weekIndex][props.daysIndex])} sessions on {formatted}
         </span>}
-        {props.totalSessionsUser(props.array1[props.weekIndex][props.daysIndex]) === 1 && <span class="tooltiptext">{props.totalSessionsUser(props.array1[props.weekIndex][props.daysIndex])} session on {formatted}
+        {props.totalSessionsUser(props.array2[props.weekIndex][props.daysIndex]) === 1 && <span class="tooltiptext">{props.totalSessionsUser(props.array2[props.weekIndex][props.daysIndex])} session on {formatted}
         </span>}
     </div>
   );
