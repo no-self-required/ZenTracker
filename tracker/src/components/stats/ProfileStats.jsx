@@ -7,9 +7,9 @@ import Modal from "react-modal";
 import { v4 as uuidv4 } from "uuid";
 
 import getDayOfYear from "date-fns/getDayOfYear";
-import getYear from 'date-fns/getYear';
+import getYear from "date-fns/getYear";
 import formatDuration from "date-fns/formatDuration";
-import format from 'date-fns/format'
+import format from "date-fns/format";
 
 function splitInput(initialTime) {
   const parsedTimer = parseInt(initialTime);
@@ -156,9 +156,16 @@ function ProfileStats() {
       new Date(newFormat[0], newFormat[1].toString(), newFormat[2])
     );
 
-    const formattedDate = format(new Date(yearSlice, monthSlice-1, daySlice), "PPP")
-    
-    const lengthString = formatDuration({ hours: length[0], minutes: length[1], seconds: length[2]})
+    const formattedDate = format(
+      new Date(yearSlice, monthSlice - 1, daySlice),
+      "PPP"
+    );
+
+    const lengthString = formatDuration({
+      hours: length[0],
+      minutes: length[1],
+      seconds: length[2],
+    });
 
     await axios.put(`/api/users/${id}`, {
       $push: {
@@ -176,6 +183,7 @@ function ProfileStats() {
   }
 
   let fullYearArray = [];
+  let allYearSessions = [];
 
   function yearArray() {
     for (let x = 0; x < 52; x++) {
@@ -223,10 +231,52 @@ function ProfileStats() {
     return count;
   }
 
-  const dayRef = useRef(null);
-
   if (currentData) {
-    fillCalendar();
+    let sessionsData = currentData.user.sessions;
+
+    let yearSessions = {};
+
+    sortSessionsByYear();
+    fillCalendarByYear();
+    // console.log('year sessions', yearSessions)
+
+    function sortSessionsByYear() {
+      const yearSet = new Set();
+
+      for (const session of sessionsData) {
+        if (!yearSet.has(session["year"])) {
+          yearSet.add(session["year"]);
+          yearSet.forEach((year) => (yearSessions[year] = []));
+        }
+      }
+
+      for (const session of sessionsData) {
+        if (yearSet.has(session["year"])) {
+          const year = session["year"];
+          yearSessions[year].push(session);
+        }
+      }
+      // console.log(yearSessions)
+    }
+
+    //fill cloned array for every year > push cloned arrays to array of arrays
+    function fillCalendarByYear() {
+      // console.log('sesh keys', Object.values(yearSessions))
+      //yearKey : array of sessions (obj)
+
+      let sessionKeys = Object.values(currentData.user.sessions);
+      for (const yearKey of Object.values(yearSessions)) {
+        const clonedArray = structuredClone(fullYearArray);
+        for (const session of yearKey) {
+          const dayOfYear = session["dayOfYear"];
+          const index = dayOfYear - 1;
+          const calcIndexRemainder = index % 7;
+          const weekIndex = Math.floor(index / 7);
+          clonedArray[weekIndex][calcIndexRemainder].push(session);
+        }
+        allYearSessions.push(clonedArray);
+      }
+    }
 
     function fillCalendar() {
       let sessionKeysLength = Object.keys(currentData.user.sessions).length;
@@ -244,8 +294,6 @@ function ProfileStats() {
       }
     }
 
-    let sessionsData = currentData.user.sessions;
-
     function totalSessions() {
       let count = 0;
       for (const key in Object.keys(sessionsData)) {
@@ -253,29 +301,32 @@ function ProfileStats() {
       }
       return count;
     }
-    // console.log("sessionsdata", sessionsData)
 
     function totalTime() {
       let totalTimeInSeconds = 0;
       for (const object of sessionsData) {
         for (const property in object) {
-          if (property === 'lengthSeconds') {
-            totalTimeInSeconds += object[property]
+          if (property === "lengthSeconds") {
+            totalTimeInSeconds += object[property];
           }
         }
       }
-      
+
       const formatedLength = displayInputValue(totalTimeInSeconds);
-      const lengthString = formatDuration({ hours: formatedLength[0], minutes: formatedLength[1], seconds: formatedLength[2]})
-      return lengthString
+      const lengthString = formatDuration({
+        hours: formatedLength[0],
+        minutes: formatedLength[1],
+        seconds: formatedLength[2],
+      });
+      return lengthString;
     }
 
     function averageLength() {
       let totalTimeInSeconds = 0;
       for (const object of sessionsData) {
         for (const property in object) {
-          if (property === 'lengthSeconds') {
-            totalTimeInSeconds += object[property]
+          if (property === "lengthSeconds") {
+            totalTimeInSeconds += object[property];
           }
         }
       }
@@ -285,27 +336,35 @@ function ProfileStats() {
         count += 1;
       }
 
-      const averageSeconds = totalTimeInSeconds/count
+      const averageSeconds = totalTimeInSeconds / count;
       const formatedLength = displayInputValue(averageSeconds);
-      const lengthString = formatDuration({ hours: formatedLength[0], minutes: formatedLength[1], seconds: formatedLength[2]})
-      return lengthString
+      const lengthString = formatDuration({
+        hours: formatedLength[0],
+        minutes: formatedLength[1],
+        seconds: formatedLength[2],
+      });
+      return lengthString;
     }
 
     function longestLength() {
       let longestLength = 0;
       for (const object of sessionsData) {
+        // console.log('object', object)
         for (const property in object) {
-          if (property === 'lengthSeconds') {
-            // longestLength = object[property]
+          if (property === "lengthSeconds") {
             if (object[property] > longestLength) {
-              longestLength = object[property]
+              longestLength = object[property];
             }
           }
         }
       }
       const formatedLength = displayInputValue(longestLength);
-      const lengthString = formatDuration({ hours: formatedLength[0], minutes: formatedLength[1], seconds: formatedLength[2]})
-      return lengthString
+      const lengthString = formatDuration({
+        hours: formatedLength[0],
+        minutes: formatedLength[1],
+        seconds: formatedLength[2],
+      });
+      return lengthString;
     }
 
     const allSessions = Object.keys(sessionsData).map(function (key) {
@@ -333,23 +392,49 @@ function ProfileStats() {
       },
     };
 
-    const printSq = fullYearArray.map((week, weekIndex, array1) => {
+    // console.log('fullYearArray', fullYearArray)
+
+    const printSqs = allYearSessions.map((year, yearIndex, array1) => {
       return (
-        <div className={`week-${weekIndex + 1}`}>
-          {week.map((days, daysIndex, array2) => {
+        <div className={`year-${yearIndex + 1} year`}>
+          {year.map((week, weekIndex, array2) => {
             return (
-              <SingleDay
-                array1={array1}
-                daysIndex={daysIndex}
-                weekIndex={weekIndex}
-                calcColor={calcColor}
-                totalSessionsUser={totalSessionsUser}
-              ></SingleDay>
+              <div className={`week-${weekIndex + 1}`}>
+                {week.map((days, daysIndex, array3) => {
+                  return (
+                    <SingleDay
+                      array2={array2}
+                      daysIndex={daysIndex}
+                      weekIndex={weekIndex}
+                      calcColor={calcColor}
+                      totalSessionsUser={totalSessionsUser}
+                    ></SingleDay>
+                  );
+                })}
+              </div>
             );
           })}
         </div>
       );
     });
+
+    // const printSqs = fullYearArray.map((week, weekIndex, array1) => {
+    //   return (
+    //     <div className={`week-${weekIndex + 1}`}>
+    //       {week.map((days, daysIndex, array2) => {
+    //         return (
+    //           <SingleDay
+    //             array1={array1}
+    //             daysIndex={daysIndex}
+    //             weekIndex={weekIndex}
+    //             calcColor={calcColor}
+    //             totalSessionsUser={totalSessionsUser}
+    //           ></SingleDay>
+    //         );
+    //       })}
+    //     </div>
+    //   );
+    // });
 
     return (
       <div>
@@ -363,10 +448,8 @@ function ProfileStats() {
           <div>Total: {totalTime()}</div>
           <div>Average session length: {averageLength()}</div>
           <div>Longest session length: {longestLength()}</div>
-
-
         </div>
-        <div className="calendar-container">{printSq}</div>
+        <div className="calendar-container">{printSqs}</div>
         <div>
           <button className="add-session" onClick={openModal}>
             Add session

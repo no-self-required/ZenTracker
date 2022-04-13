@@ -3,10 +3,13 @@
 }
 
 .calendar-container {
-  display: flex;
   padding-top: 1em;
   padding-bottom: 1em;
 
+  .year {
+    display: flex;
+    padding: 1em;
+  }
 }
 
 #square {
