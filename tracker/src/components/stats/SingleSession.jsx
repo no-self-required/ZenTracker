@@ -1,29 +1,29 @@
-import React, { useContext, useEffect } from "react";
-import { UserContext } from "../../App";
+import React from "react";
+// import { UserContext } from "../../App";
 import axios from 'axios';
 
 import '../../styling/profilestats.scss'
 
 
 function SingleSession(props) {
-  const { userData, setUserData } = useContext(UserContext);
-  // console.log('sessionid:', props.sessionId)
+  // const { userData, setUserData } = useContext(UserContext);
+
   const id = props.sessionId;
 
   async function deleteSession() {
-    const userid = userData.user.id;
-
+    // const userid = userData.user.id;
+    const userid = props.currentData.user.id
+    // console.log("current data userid", props.currentData.user.id)
+    
     await axios.put(`/api/users/${userid}`, {
       $pull: { sessions: { id: id} }
     });
 
   }
 
-  // $unset: { ['sessions.'+id] : ''}
-
   function deleteRefresh() {
     deleteSession();
-    // window.location.href = "/profile";
+    props.getSessions()
   }
   return (
     <div>
