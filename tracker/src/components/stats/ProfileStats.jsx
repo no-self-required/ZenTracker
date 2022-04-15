@@ -7,7 +7,6 @@ import Modal from "react-modal";
 import { v4 as uuidv4 } from "uuid";
 
 import getDayOfYear from "date-fns/getDayOfYear";
-import getYear from "date-fns/getYear";
 import formatDuration from "date-fns/formatDuration";
 import format from "date-fns/format";
 
@@ -93,33 +92,108 @@ function ProfileStats() {
   // console.log('year, month, day', year, month, day)
   const [newDate, setNewDate] = useState(`${year}, ${month + 1}, ${day}`);
 
+  const token = localStorage.getItem("token");
+
   useEffect(() => {
-    const isLoggedIn = async () => {
-      let token = localStorage.getItem("token");
-      if (token === null) {
-        localStorage.setItem("token", "");
-        token = "";
-      }
+    const getSessions = async () => {
 
-      const tokenResponse = await axios.post("/api/users/tokenIsValid", null, {
-        headers: { token: token },
-      });
+      //check if object needs to be updated
+      //ex: if (tokenResponse.data === true && currenData) 
+      //is currentData already set?
+      //is user response data different than currentData? => if so setCurrentData
 
-      if (tokenResponse.data === true) {
+      //user response will always be different after session submit/delete
+      //hook must work before optimizing 
+      // console.log('current data', currentData)
+
+      if (!currentData) {
         const userResponse = await axios.get("/api/users/profile", {
           headers: { token: token },
         });
         setCurrentData({
-          token: token,
           user: userResponse.data,
         });
-      } else {
-        return;
-      }
-    };
+      } 
 
-    isLoggedIn();
-  }, [currentData]);
+      else if (currentData) {
+        const userResponse = await axios.get("/api/users/profile", {
+          headers: { token: token },
+        });
+
+        // console.log("currentData", currentData.user)
+        // console.log("userResponse data", userResponse.data)
+        // console.log("compare profiles", compareProfiles(currentData.user, userResponse.data))
+        if (compareProfiles(currentData.user, userResponse.data)) {
+          setCurrentData({
+            token: token,
+            user: userResponse.data,
+          });
+        }
+      }
+
+      // else if (currentData.user !== userResponse.data){
+      //   setCurrentData({
+      //     token: token,
+      //     user: userResponse.data,
+      //   });
+      // }
+    };
+    getSessions();
+  });
+
+  //   {
+  //     "id": "62505a36750d3f6dc993a620",
+  //     "username": "admin",
+  //     "email": "admin",
+  //     "sessions": [
+  //         {
+  //             "id": "1cce7722-9f84-4c6c-ac70-51694f666243",
+  //             "date": "April 1st, 2022",
+  //             "dayOfYear": 91,
+  //             "length": "",
+  //             "lengthSeconds": 0,
+  //             "year": 2022,
+  //             "log": ""
+  //         },
+  //         {
+  //             "id": "8b7899c4-47d7-4a23-bbce-78b77a554427",
+  //             "date": "April 1st, 2022",
+  //             "dayOfYear": 91,
+  //             "length": "",
+  //             "lengthSeconds": 0,
+  //             "year": 2022,
+  //             "log": ""
+  //         }
+  //     ]
+  // }
+
+  function compareProfiles(profileA, profileB) {
+    let sessionsEqual = profileA.sessions.length && profileB.sessions.length
+    if (sessionsEqual) {
+      profileA.sessions.forEach((_element, index) => { sessionsEqual = sessionsEqual && compareSessions(profileA.sessions[index], profileB.sessions[index])})
+    }
+    return profileA.id === profileB.id && profileA.username === profileB.username && profileA.email === profileB.email && sessionsEqual
+  }
+
+  function compareSessions(sessionsA, sessionsB) { 
+    return sessionsA.id === sessionsB.id && sessionsA.date === sessionsB.date && sessionsA.dayOfYear === sessionsB.dayOfYear && sessionsA.length === sessionsB.length && sessionsA.lengthSeconds === sessionsB.lengthSeconds && sessionsA.year === sessionsB.year && sessionsA.log === sessionsB.log
+  }
+
+  //create function that determines if they are the same
+
+  //shallow vs deep comparison
+
+  //idea => compare userresponse with currentData to determine if state should be set again
+  //idea => get user sessions, then set state after session submit/delete
+
+  async function getSessions() {
+    const userResponse = await axios.get("/api/users/profile", {
+      headers: { token: token },
+    });
+    setCurrentData({
+      user: userResponse.data,
+    });
+  }
 
   function openModal() {
     setModalIsOpen(true);
@@ -127,6 +201,7 @@ function ProfileStats() {
 
   function closeModalSubmit() {
     submitSession();
+    // getSessions();
     setInputTimerHour("00");
     setInputTimerMinute("00");
     setInputTimerSecond("00");
@@ -264,7 +339,7 @@ function ProfileStats() {
       // console.log('sesh keys', Object.values(yearSessions))
       //yearKey : array of sessions (obj)
 
-      let sessionKeys = Object.values(currentData.user.sessions);
+      // let sessionKeys = Object.values(currentData.user.sessions);
       for (const yearKey of Object.values(yearSessions)) {
         const clonedArray = structuredClone(fullYearArray);
         for (const session of yearKey) {
@@ -275,22 +350,6 @@ function ProfileStats() {
           clonedArray[weekIndex][calcIndexRemainder].push(session);
         }
         allYearSessions.push(clonedArray);
-      }
-    }
-
-    function fillCalendar() {
-      let sessionKeysLength = Object.keys(currentData.user.sessions).length;
-      let sessionKeys = Object.keys(currentData.user.sessions);
-      for (let x = 0; x < sessionKeysLength; x++) {
-        if (currentData.user.sessions) {
-          const dayOfYear = currentData.user.sessions[sessionKeys[x]].dayOfYear;
-          const index = dayOfYear - 1;
-          const calcIndexRemainder = index % 7;
-          const weekIndex = Math.floor(index / 7);
-          const sessions = currentData.user.sessions[sessionKeys[x]];
-
-          fullYearArray[weekIndex][calcIndexRemainder].push(sessions);
-        }
       }
     }
 
@@ -372,10 +431,12 @@ function ProfileStats() {
         <div>
           <div></div>
           <SingleSession
+            currentData={currentData}
             sessionId={sessionsData[key].id}
             date={sessionsData[key].date}
             length={sessionsData[key].length}
             log={sessionsData[key].log}
+            getSessions={getSessions}
           />
         </div>
       );
@@ -417,24 +478,6 @@ function ProfileStats() {
         </div>
       );
     });
-
-    // const printSqs = fullYearArray.map((week, weekIndex, array1) => {
-    //   return (
-    //     <div className={`week-${weekIndex + 1}`}>
-    //       {week.map((days, daysIndex, array2) => {
-    //         return (
-    //           <SingleDay
-    //             array1={array1}
-    //             daysIndex={daysIndex}
-    //             weekIndex={weekIndex}
-    //             calcColor={calcColor}
-    //             totalSessionsUser={totalSessionsUser}
-    //           ></SingleDay>
-    //         );
-    //       })}
-    //     </div>
-    //   );
-    // });
 
     return (
       <div>
