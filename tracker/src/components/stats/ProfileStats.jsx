@@ -94,6 +94,9 @@ function ProfileStats() {
 
   const token = localStorage.getItem("token");
 
+  const [isUpdated, setIsUpdated] = useState(false);
+
+  //after 5 add/delete sessions, site freezes => /profile doesnt load
   useEffect(() => {
     const getSessions = async () => {
 
@@ -106,6 +109,7 @@ function ProfileStats() {
       //hook must work before optimizing 
       // console.log('current data', currentData)
 
+      console.log("isUpdated", isUpdated)
       if (!currentData) {
         const userResponse = await axios.get("/api/users/profile", {
           headers: { token: token },
@@ -115,7 +119,7 @@ function ProfileStats() {
         });
       } 
 
-      else if (currentData) {
+      else if (currentData && isUpdated) {
         const userResponse = await axios.get("/api/users/profile", {
           headers: { token: token },
         });
@@ -123,50 +127,25 @@ function ProfileStats() {
         // console.log("currentData", currentData.user)
         // console.log("userResponse data", userResponse.data)
         // console.log("compare profiles", compareProfiles(currentData.user, userResponse.data))
-        if (compareProfiles(currentData.user, userResponse.data)) {
+
+        if (!compareProfiles(currentData.user, userResponse.data)) {
           setCurrentData({
-            token: token,
             user: userResponse.data,
           });
+          setIsUpdated(false)
+        } else {
+          setCurrentData({
+            user: userResponse.data,
+          });
+          setIsUpdated(false)
         }
       }
 
-      // else if (currentData.user !== userResponse.data){
-      //   setCurrentData({
-      //     token: token,
-      //     user: userResponse.data,
-      //   });
-      // }
     };
     getSessions();
   });
 
-  //   {
-  //     "id": "62505a36750d3f6dc993a620",
-  //     "username": "admin",
-  //     "email": "admin",
-  //     "sessions": [
-  //         {
-  //             "id": "1cce7722-9f84-4c6c-ac70-51694f666243",
-  //             "date": "April 1st, 2022",
-  //             "dayOfYear": 91,
-  //             "length": "",
-  //             "lengthSeconds": 0,
-  //             "year": 2022,
-  //             "log": ""
-  //         },
-  //         {
-  //             "id": "8b7899c4-47d7-4a23-bbce-78b77a554427",
-  //             "date": "April 1st, 2022",
-  //             "dayOfYear": 91,
-  //             "length": "",
-  //             "lengthSeconds": 0,
-  //             "year": 2022,
-  //             "log": ""
-  //         }
-  //     ]
-  // }
-
+  //suspect that delete session changes something about the comparisons of profiles
   function compareProfiles(profileA, profileB) {
     let sessionsEqual = profileA.sessions.length && profileB.sessions.length
     if (sessionsEqual) {
@@ -176,6 +155,9 @@ function ProfileStats() {
   }
 
   function compareSessions(sessionsA, sessionsB) { 
+    console.log("sessionsA, sessionsB", sessionsA, sessionsB)
+    //userResponse.data becomes undefined after delete session
+
     return sessionsA.id === sessionsB.id && sessionsA.date === sessionsB.date && sessionsA.dayOfYear === sessionsB.dayOfYear && sessionsA.length === sessionsB.length && sessionsA.lengthSeconds === sessionsB.lengthSeconds && sessionsA.year === sessionsB.year && sessionsA.log === sessionsB.log
   }
 
@@ -184,16 +166,8 @@ function ProfileStats() {
   //shallow vs deep comparison
 
   //idea => compare userresponse with currentData to determine if state should be set again
-  //idea => get user sessions, then set state after session submit/delete
 
-  async function getSessions() {
-    const userResponse = await axios.get("/api/users/profile", {
-      headers: { token: token },
-    });
-    setCurrentData({
-      user: userResponse.data,
-    });
-  }
+
 
   function openModal() {
     setModalIsOpen(true);
@@ -201,7 +175,7 @@ function ProfileStats() {
 
   function closeModalSubmit() {
     submitSession();
-    // getSessions();
+    setIsUpdated(true)
     setInputTimerHour("00");
     setInputTimerMinute("00");
     setInputTimerSecond("00");
@@ -255,6 +229,7 @@ function ProfileStats() {
         },
       },
     });
+
   }
 
   let fullYearArray = [];
@@ -313,7 +288,6 @@ function ProfileStats() {
 
     sortSessionsByYear();
     fillCalendarByYear();
-    // console.log('year sessions', yearSessions)
 
     function sortSessionsByYear() {
       const yearSet = new Set();
@@ -334,12 +308,7 @@ function ProfileStats() {
       // console.log(yearSessions)
     }
 
-    //fill cloned array for every year > push cloned arrays to array of arrays
     function fillCalendarByYear() {
-      // console.log('sesh keys', Object.values(yearSessions))
-      //yearKey : array of sessions (obj)
-
-      // let sessionKeys = Object.values(currentData.user.sessions);
       for (const yearKey of Object.values(yearSessions)) {
         const clonedArray = structuredClone(fullYearArray);
         for (const session of yearKey) {
@@ -400,7 +369,7 @@ function ProfileStats() {
       const lengthString = formatDuration({
         hours: formatedLength[0],
         minutes: formatedLength[1],
-        seconds: formatedLength[2],
+        seconds: Math.floor(formatedLength[2]),
       });
       return lengthString;
     }
@@ -436,7 +405,7 @@ function ProfileStats() {
             date={sessionsData[key].date}
             length={sessionsData[key].length}
             log={sessionsData[key].log}
-            getSessions={getSessions}
+            setIsUpdated={setIsUpdated}
           />
         </div>
       );
@@ -452,8 +421,6 @@ function ProfileStats() {
         transform: "translate(-50%, -50%)",
       },
     };
-
-    // console.log('fullYearArray', fullYearArray)
 
     const printSqs = allYearSessions.map((year, yearIndex, array1) => {
       return (

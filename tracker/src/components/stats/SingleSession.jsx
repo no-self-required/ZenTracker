@@ -1,4 +1,4 @@
-import React from "react";
+import React, {} from "react";
 // import { UserContext } from "../../App";
 import axios from 'axios';
 
@@ -9,7 +9,8 @@ function SingleSession(props) {
   // const { userData, setUserData } = useContext(UserContext);
 
   const id = props.sessionId;
-
+  
+  //stays as pending? actually gets deleted 
   async function deleteSession() {
     // const userid = userData.user.id;
     const userid = props.currentData.user.id
@@ -23,7 +24,7 @@ function SingleSession(props) {
 
   function deleteRefresh() {
     deleteSession();
-    props.getSessions()
+    props.setIsUpdated(true)
   }
   return (
     <div>
@@ -33,7 +34,6 @@ function SingleSession(props) {
       length: {props.length}
       <br/>
       {props.log && <div>log: {props.log}</div>}
-      {/* log: {props.log} */}
       </div> 
       <button className="delete-button" onClick={deleteRefresh}>Delete</button>
     </div>
