@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import SingleSession from "./SingleSession";
 import SingleDay from "./SingleDay";
@@ -99,17 +99,16 @@ function ProfileStats() {
   //after 5 add/delete sessions, site freezes => /profile doesnt load
   useEffect(() => {
     const getSessions = async () => {
-
       //check if object needs to be updated
-      //ex: if (tokenResponse.data === true && currenData) 
+      //ex: if (tokenResponse.data === true && currenData)
       //is currentData already set?
       //is user response data different than currentData? => if so setCurrentData
 
       //user response will always be different after session submit/delete
-      //hook must work before optimizing 
+      //hook must work before optimizing
       // console.log('current data', currentData)
 
-      console.log("isUpdated", isUpdated)
+      // console.log("isUpdated", isUpdated)
       if (!currentData) {
         const userResponse = await axios.get("/api/users/profile", {
           headers: { token: token },
@@ -117,9 +116,7 @@ function ProfileStats() {
         setCurrentData({
           user: userResponse.data,
         });
-      } 
-
-      else if (currentData && isUpdated) {
+      } else if (currentData && isUpdated) {
         const userResponse = await axios.get("/api/users/profile", {
           headers: { token: token },
         });
@@ -128,38 +125,38 @@ function ProfileStats() {
         // console.log("userResponse data", userResponse.data)
         // console.log("compare profiles", compareProfiles(currentData.user, userResponse.data))
 
-        if (!compareProfiles(currentData.user, userResponse.data)) {
+        // if (!compareProfiles(currentData.user, userResponse.data)) {
+        if (currentData.user !== userResponse.data) {
           setCurrentData({
             user: userResponse.data,
           });
-          setIsUpdated(false)
+          setIsUpdated(false);
         } else {
           setCurrentData({
             user: userResponse.data,
           });
-          setIsUpdated(false)
+          setIsUpdated(false);
         }
       }
-
     };
     getSessions();
   });
 
   //suspect that delete session changes something about the comparisons of profiles
-  function compareProfiles(profileA, profileB) {
-    let sessionsEqual = profileA.sessions.length && profileB.sessions.length
-    if (sessionsEqual) {
-      profileA.sessions.forEach((_element, index) => { sessionsEqual = sessionsEqual && compareSessions(profileA.sessions[index], profileB.sessions[index])})
-    }
-    return profileA.id === profileB.id && profileA.username === profileB.username && profileA.email === profileB.email && sessionsEqual
-  }
+  // function compareProfiles(profileA, profileB) {
+  //   let sessionsEqual = profileA.sessions.length && profileB.sessions.length
+  //   if (sessionsEqual) {
+  //     profileA.sessions.forEach((_element, index) => { sessionsEqual = sessionsEqual && compareSessions(profileA.sessions[index], profileB.sessions[index])})
+  //   }
+  //   return profileA.id === profileB.id && profileA.username === profileB.username && profileA.email === profileB.email && sessionsEqual
+  // }
 
-  function compareSessions(sessionsA, sessionsB) { 
-    console.log("sessionsA, sessionsB", sessionsA, sessionsB)
-    //userResponse.data becomes undefined after delete session
+  // function compareSessions(sessionsA, sessionsB) {
+  //   console.log("sessionsA, sessionsB", sessionsA, sessionsB)
+  //   //userResponse.data becomes undefined after delete session
 
-    return sessionsA.id === sessionsB.id && sessionsA.date === sessionsB.date && sessionsA.dayOfYear === sessionsB.dayOfYear && sessionsA.length === sessionsB.length && sessionsA.lengthSeconds === sessionsB.lengthSeconds && sessionsA.year === sessionsB.year && sessionsA.log === sessionsB.log
-  }
+  //   return sessionsA.id === sessionsB.id && sessionsA.date === sessionsB.date && sessionsA.dayOfYear === sessionsB.dayOfYear && sessionsA.length === sessionsB.length && sessionsA.lengthSeconds === sessionsB.lengthSeconds && sessionsA.year === sessionsB.year && sessionsA.log === sessionsB.log
+  // }
 
   //create function that determines if they are the same
 
@@ -167,15 +164,13 @@ function ProfileStats() {
 
   //idea => compare userresponse with currentData to determine if state should be set again
 
-
-
   function openModal() {
     setModalIsOpen(true);
   }
 
   function closeModalSubmit() {
     submitSession();
-    setIsUpdated(true)
+    setIsUpdated(true);
     setInputTimerHour("00");
     setInputTimerMinute("00");
     setInputTimerSecond("00");
@@ -196,10 +191,12 @@ function ProfileStats() {
     const sessionLog = log;
     const date = newDate;
 
+    // console.log("date submitSession", date)
     const yearSlice = date.slice(0, 4);
     const monthSlice = date.slice(5, 7);
-    const daySlice = date.slice(8, 10);
+    const daySlice = date.slice(8, 11);
     const newFormat = [yearSlice, monthSlice - 1, daySlice];
+    // console.log("newFormat check", newFormat)
 
     const dayOfYear = getDayOfYear(
       new Date(newFormat[0], newFormat[1].toString(), newFormat[2])
@@ -229,7 +226,6 @@ function ProfileStats() {
         },
       },
     });
-
   }
 
   let fullYearArray = [];
@@ -280,6 +276,8 @@ function ProfileStats() {
     }
     return count;
   }
+
+  const [childData, setChildData] = useState();
 
   if (currentData) {
     let sessionsData = currentData.user.sessions;
@@ -395,10 +393,12 @@ function ProfileStats() {
       return lengthString;
     }
 
-    const allSessions = Object.keys(sessionsData).map(function (key) {
+    //user clicks on square, filter allSessions for that date
+
+    // console.log("sessionsData", sessionsData)
+    let allSessions = Object.keys(sessionsData).map(function (key) {
       return (
         <div>
-          <div></div>
           <SingleSession
             currentData={currentData}
             sessionId={sessionsData[key].id}
@@ -410,6 +410,12 @@ function ProfileStats() {
         </div>
       );
     });
+
+    //doesnt work cause its being mapped
+    // function showSessions() {
+    //   // allSessions = sessionsData.filter(x => x.dayOfYear === daysToAdd)
+    //   console.log("childData", childData);
+    // }
 
     const customStyles = {
       content: {
@@ -431,6 +437,8 @@ function ProfileStats() {
                 {week.map((days, daysIndex, array3) => {
                   return (
                     <SingleDay
+                      // showSessions={showSessions}
+                      passChildData={setChildData}
                       array2={array2}
                       daysIndex={daysIndex}
                       weekIndex={weekIndex}
