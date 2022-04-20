@@ -11,16 +11,16 @@ function SingleDay(props) {
   startYearDate.setDate(startYearDate.getDate() + daysToAdd)
   const formatted = format(new Date(startYearDate), "PPP")
 
-  const functionHandler = () => {
-    props.passChildData(daysToAdd)
-  }
+  // const functionHandler = () => {
+  //   props.passChildData(daysToAdd)
+  // }
 
   // functionHandler();
   return (
     <div
       className={`day-${props.daysIndex + 1} single-day`}
       id={props.calcColor(props.totalSessionsUser(props.array2[props.weekIndex][props.daysIndex]))}
-      onClick={props.showSessions}
+      // onClick={props.showSessions}
     >
         {(props.totalSessionsUser(props.array2[props.weekIndex][props.daysIndex]) === 0 || props.totalSessionsUser(props.array2[props.weekIndex][props.daysIndex]) > 1) && <span class="tooltiptext">{props.totalSessionsUser(props.array2[props.weekIndex][props.daysIndex])} sessions on {formatted}
         </span>}
