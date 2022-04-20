@@ -85,11 +85,9 @@ function ProfileStats() {
   const [inputTimerSecond, setInputTimerSecond] = useState("00");
 
   const currentDate = new Date();
-  // console.log(currentDate)
   const year = currentDate.getUTCFullYear();
   const month = currentDate.getMonth();
   const day = currentDate.getDate();
-  // console.log('year, month, day', year, month, day)
   const [newDate, setNewDate] = useState(`${year}, ${month + 1}, ${day}`);
 
   const token = localStorage.getItem("token");
@@ -99,16 +97,6 @@ function ProfileStats() {
   //after 5 add/delete sessions, site freezes => /profile doesnt load
   useEffect(() => {
     const getSessions = async () => {
-      //check if object needs to be updated
-      //ex: if (tokenResponse.data === true && currenData)
-      //is currentData already set?
-      //is user response data different than currentData? => if so setCurrentData
-
-      //user response will always be different after session submit/delete
-      //hook must work before optimizing
-      // console.log('current data', currentData)
-
-      // console.log("isUpdated", isUpdated)
       if (!currentData) {
         const userResponse = await axios.get("/api/users/profile", {
           headers: { token: token },
@@ -120,10 +108,6 @@ function ProfileStats() {
         const userResponse = await axios.get("/api/users/profile", {
           headers: { token: token },
         });
-
-        // console.log("currentData", currentData.user)
-        // console.log("userResponse data", userResponse.data)
-        // console.log("compare profiles", compareProfiles(currentData.user, userResponse.data))
 
         // if (!compareProfiles(currentData.user, userResponse.data)) {
         if (currentData.user !== userResponse.data) {
@@ -158,12 +142,6 @@ function ProfileStats() {
   //   return sessionsA.id === sessionsB.id && sessionsA.date === sessionsB.date && sessionsA.dayOfYear === sessionsB.dayOfYear && sessionsA.length === sessionsB.length && sessionsA.lengthSeconds === sessionsB.lengthSeconds && sessionsA.year === sessionsB.year && sessionsA.log === sessionsB.log
   // }
 
-  //create function that determines if they are the same
-
-  //shallow vs deep comparison
-
-  //idea => compare userresponse with currentData to determine if state should be set again
-
   function openModal() {
     setModalIsOpen(true);
   }
@@ -191,12 +169,10 @@ function ProfileStats() {
     const sessionLog = log;
     const date = newDate;
 
-    // console.log("date submitSession", date)
     const yearSlice = date.slice(0, 4);
     const monthSlice = date.slice(5, 7);
     const daySlice = date.slice(8, 11);
     const newFormat = [yearSlice, monthSlice - 1, daySlice];
-    // console.log("newFormat check", newFormat)
 
     const dayOfYear = getDayOfYear(
       new Date(newFormat[0], newFormat[1].toString(), newFormat[2])
@@ -395,7 +371,6 @@ function ProfileStats() {
 
     //user clicks on square, filter allSessions for that date
 
-    // console.log("sessionsData", sessionsData)
     let allSessions = Object.keys(sessionsData).map(function (key) {
       return (
         <div>
