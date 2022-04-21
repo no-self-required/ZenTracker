@@ -375,12 +375,16 @@ function ProfileStats() {
     //user clicks on square, filter allSessions for that date
 
     //sort sessions to show latest session at the top
-    //not accounting years yet
-    const sortedSessions = sessionsData.sort(function(a, b) {
-      return b.dayOfYear - a.dayOfYear
+    const sortedSessionsByDay = sessionsData.sort(function(a, b) {
+      if (a.year === b.year) {
+        return b.dayOfYear - a.dayOfYear
+      }
+      return a.year < b.year ? 1: -1;
     })
+    
+    console.log('sortedSessionsByDay', sortedSessionsByDay)
 
-    const allSessions = Object.keys(sortedSessions).map(function (key) {
+    const allSessions = Object.keys(sortedSessionsByDay).map(function (key) {
       return (
         <div>
           <SingleSession
@@ -395,7 +399,6 @@ function ProfileStats() {
       );
     });
 
-    
     //doesnt work cause its being mapped
     // function showSessions() {
     //   // allSessions = sessionsData.filter(x => x.dayOfYear === daysToAdd)
