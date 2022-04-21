@@ -253,7 +253,7 @@ function ProfileStats() {
     return count;
   }
 
-  const [childData, setChildData] = useState();
+  // const [childData, setChildData] = useState();
 
   if (currentData) {
     let sessionsData = currentData.user.sessions;
@@ -279,7 +279,6 @@ function ProfileStats() {
           yearSessions[year].push(session);
         }
       }
-      // console.log(yearSessions)
     }
 
     function fillCalendarByYear() {
@@ -296,6 +295,7 @@ function ProfileStats() {
       }
     }
 
+    //Calculate number of all sessions
     function totalSessions() {
       let count = 0;
       for (const key in Object.keys(sessionsData)) {
@@ -304,6 +304,7 @@ function ProfileStats() {
       return count;
     }
 
+    //Calculate total time of all sessions
     function totalTime() {
       let totalTimeInSeconds = 0;
       for (const object of sessionsData) {
@@ -323,6 +324,7 @@ function ProfileStats() {
       return lengthString;
     }
 
+    //Calculate average time of all sessions
     function averageLength() {
       let totalTimeInSeconds = 0;
       for (const object of sessionsData) {
@@ -348,6 +350,7 @@ function ProfileStats() {
       return lengthString;
     }
 
+    //Caluculate longest session length
     function longestLength() {
       let longestLength = 0;
       for (const object of sessionsData) {
@@ -371,7 +374,13 @@ function ProfileStats() {
 
     //user clicks on square, filter allSessions for that date
 
-    let allSessions = Object.keys(sessionsData).map(function (key) {
+    //sort sessions to show latest session at the top
+    //not accounting years yet
+    const sortedSessions = sessionsData.sort(function(a, b) {
+      return b.dayOfYear - a.dayOfYear
+    })
+
+    const allSessions = Object.keys(sortedSessions).map(function (key) {
       return (
         <div>
           <SingleSession
@@ -386,6 +395,7 @@ function ProfileStats() {
       );
     });
 
+    
     //doesnt work cause its being mapped
     // function showSessions() {
     //   // allSessions = sessionsData.filter(x => x.dayOfYear === daysToAdd)
@@ -413,7 +423,7 @@ function ProfileStats() {
                   return (
                     <SingleDay
                       // showSessions={showSessions}
-                      passChildData={setChildData}
+                      // passChildData={setChildData}
                       array2={array2}
                       daysIndex={daysIndex}
                       weekIndex={weekIndex}
