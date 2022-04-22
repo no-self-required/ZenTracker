@@ -281,6 +281,10 @@ function ProfileStats() {
       }
     }
 
+    //Assign year to each yearCalendar
+    //ex:
+    //[{year: 2021, calendar: Array(53)}, {year: 2022, calendar: Array(53)}]
+    
     function fillCalendarByYear() {
       for (const yearKey of Object.values(yearSessions)) {
         const clonedArray = structuredClone(fullYearArray);
@@ -381,8 +385,8 @@ function ProfileStats() {
       }
       return a.year < b.year ? 1: -1;
     })
-    
-    console.log('sortedSessionsByDay', sortedSessionsByDay)
+
+    // console.log('sortedSessionsByDay', sortedSessionsByDay)
 
     const allSessions = Object.keys(sortedSessionsByDay).map(function (key) {
       return (
@@ -399,6 +403,7 @@ function ProfileStats() {
       );
     });
 
+    //on singleday click => filter sessions
     //doesnt work cause its being mapped
     // function showSessions() {
     //   // allSessions = sessionsData.filter(x => x.dayOfYear === daysToAdd)
@@ -416,9 +421,16 @@ function ProfileStats() {
       },
     };
 
+    // function calculateYear(allYearSessions) {
+    //   console.log("check calc year", allYearSessions)
+    // }
+
+    console.log('allYearSessions', allYearSessions)
+
     const printSqs = allYearSessions.map((year, yearIndex, array1) => {
       return (
         <div className={`year-${yearIndex + 1} year`}>
+          {/* <div>{calculateYear(allYearSessions)}</div> */}
           {year.map((week, weekIndex, array2) => {
             return (
               <div className={`week-${weekIndex + 1}`}>
@@ -427,6 +439,7 @@ function ProfileStats() {
                     <SingleDay
                       // showSessions={showSessions}
                       // passChildData={setChildData}
+                      allYearSessions={allYearSessions}
                       array2={array2}
                       daysIndex={daysIndex}
                       weekIndex={weekIndex}
