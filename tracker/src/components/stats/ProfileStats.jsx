@@ -281,24 +281,6 @@ function ProfileStats() {
       }
     }
 
-    //Assign year to each yearCalendar
-    //ex:
-    //[{year: 2021, calendar: Array(53)}, {year: 2022, calendar: Array(53)}]
-    
-    function fillCalendarByYear() {
-      for (const yearKey of Object.values(yearSessions)) {
-        const clonedArray = structuredClone(fullYearArray);
-        for (const session of yearKey) {
-          const dayOfYear = session["dayOfYear"];
-          const index = dayOfYear - 1;
-          const calcIndexRemainder = index % 7;
-          const weekIndex = Math.floor(index / 7);
-          clonedArray[weekIndex][calcIndexRemainder].push(session);
-        }
-        allYearSessions.push(clonedArray);
-      }
-    }
-
     //Calculate number of all sessions
     function totalSessions() {
       let count = 0;
@@ -379,12 +361,12 @@ function ProfileStats() {
     //user clicks on square, filter allSessions for that date
 
     //sort sessions to show latest session at the top
-    const sortedSessionsByDay = sessionsData.sort(function(a, b) {
+    const sortedSessionsByDay = sessionsData.sort(function (a, b) {
       if (a.year === b.year) {
-        return b.dayOfYear - a.dayOfYear
+        return b.dayOfYear - a.dayOfYear;
       }
-      return a.year < b.year ? 1: -1;
-    })
+      return a.year < b.year ? 1 : -1;
+    });
 
     // console.log('sortedSessionsByDay', sortedSessionsByDay)
 
@@ -421,12 +403,52 @@ function ProfileStats() {
       },
     };
 
-    // function calculateYear(allYearSessions) {
-    //   console.log("check calc year", allYearSessions)
+    console.log("allYearSessions", allYearSessions);
+
+    // let printSqs;
+
+    // for (let x = 0 ; x < allYearSessions.length ; x++) {
+    //   for (const key in allYearSessions[x]) {
+    //     // console.log('check', allYearSessions[x][key])
+
+    //   };
     // }
 
-    console.log('allYearSessions', allYearSessions)
+    // for (const object of allYearSessions) {
+    //   console.log("check", Object.keys(object))
+    //   for (const key of Object.keys(object)) {
 
+    //   }
+    // }
+
+    // Need to target calendar key in each object of allYearSessions
+    // .map() applied to "calendar key"
+
+    //Assign year to each yearCalendar
+    //ex:
+    //[{year: 2021, calendar: Array(53)}, {year: 2022, calendar: Array(53)}]
+
+    function fillCalendarByYear() {
+      for (const yearKey of Object.values(yearSessions)) {
+        const clonedArray = structuredClone(fullYearArray);
+        let year;
+        for (const session of yearKey) {
+          // console.log("session", session)
+          year = session["year"];
+          const dayOfYear = session["dayOfYear"];
+          const index = dayOfYear - 1;
+          const calcIndexRemainder = index % 7;
+          const weekIndex = Math.floor(index / 7);
+          clonedArray[weekIndex][calcIndexRemainder].push(session);
+        }
+        // allYearSessions.push({[year]: clonedArray});
+        // allYearSessions.push({year: year, calendar: clonedArray})
+        allYearSessions.push(clonedArray);
+        // console.log('clonedArray', clonedArray)
+      }
+    }
+
+    console.log('allyearSessions', allYearSessions)
     const printSqs = allYearSessions.map((year, yearIndex, array1) => {
       return (
         <div className={`year-${yearIndex + 1} year`}>
