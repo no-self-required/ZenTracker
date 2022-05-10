@@ -5,24 +5,10 @@ import startOfYear from "date-fns/startOfYear";
 import format from 'date-fns/format'
 
 function SingleDay(props) {
-  //only works for current year
-  const allYearSessions = props.allYearSessions
-  // console.log('allYearSessions', allYearSessions)
-  // let year;
-  // for (const yearArray of allYearSessions) {
-  //   for (const weekArray of yearArray) {
-  //     for (const dayArray of weekArray) {
-  //       if(dayArray[0]) {
-  //         // year = dayArray[0].year
-  //         console.log('dayyarray 0', dayArray[0])
-  //       }
-  //     }
-  //   }
-  // }
+  // console.log("allYearsSessions", props.allYearSessions)
+  //extract year from date inside sessions? ****
 
-  //get year of last element of allYearSessions
-  
-  // console.log('year', year)
+  //new Date() applies current year to every calendar
   const date = new Date();
   const startYearDate = startOfYear(new Date(date));
   const daysToAdd = 7*props.weekIndex+props.daysIndex
