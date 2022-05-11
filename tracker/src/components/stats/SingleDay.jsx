@@ -5,23 +5,36 @@ import startOfYear from "date-fns/startOfYear";
 import format from 'date-fns/format'
 
 function SingleDay(props) {
-  // console.log("allYearsSessions", props.allYearSessions)
+  console.log("array3", props.array3)
   //extract year from date inside sessions? ****
+
+  //can possibly get date instead
+  const getYear = (weekSessions) => {
+    //loop through array3,
+    let year;
+    for (const element of weekSessions) {
+      if (element[0]) {
+        year = element[0].year
+        break;
+      }
+    }
+    return year;
+  }
+
+  let yearOfCalendar = getYear(props.array3);
+
+  //make new date with year given
+
 
   //new Date() applies current year to every calendar
   const date = new Date();
+  // console.log("date", date)
+
   const startYearDate = startOfYear(new Date(date));
   const daysToAdd = 7*props.weekIndex+props.daysIndex
   startYearDate.setDate(startYearDate.getDate() + daysToAdd)
   const formatted = format(new Date(startYearDate), "PPP")
-  // console.log('formatted', formatted)
-  // const functionHandler = () => {
-  //   props.passChildData(daysToAdd)
-  // }
 
-  // functionHandler();
-
-  // Need to show correct year for different years of printSqs
   return (
     <div
       className={`day-${props.daysIndex + 1} single-day`}

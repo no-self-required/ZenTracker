@@ -463,6 +463,7 @@ function ProfileStats() {
                       // passChildData={setChildData}
                       allYearSessions={allYearSessions}
                       array2={array2}
+                      array3={array3}
                       daysIndex={daysIndex}
                       weekIndex={weekIndex}
                       calcColor={calcColor}
