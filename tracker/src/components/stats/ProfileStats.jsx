@@ -24,7 +24,7 @@ function splitInput(initialTime) {
 //temporarily calculate add new session length to seconds. (array > seconds)
 function calculateSeconds(initialTime) {
   const splitArr = splitInput(initialTime);
-  console.log("splitArray inside calc seconds", splitArr);
+  // console.log("splitArray inside calc seconds", splitArr);
   const seconds = [];
   const minutes = [];
   const hours = [];
@@ -36,7 +36,7 @@ function calculateSeconds(initialTime) {
   const totHours = hours[0] * 36000 + hours[1] * 3600;
   let calculatedTotalSeconds = totSec + totMin + totHours;
 
-  console.log("calculatedTotalSeconds", calculatedTotalSeconds);
+  // console.log("calculatedTotalSeconds", calculatedTotalSeconds);
 
   //if time entered is more than 99hours, set to 99h/59m/59s
   if (calculatedTotalSeconds > 360000) {
@@ -88,6 +88,9 @@ function ProfileStats() {
   const year = currentDate.getUTCFullYear();
   const month = currentDate.getMonth();
   const day = currentDate.getDate();
+
+  // console.log("currentDate check", year, month, day)
+  
   const [newDate, setNewDate] = useState(`${year}, ${month + 1}, ${day}`);
 
   const token = localStorage.getItem("token");
@@ -159,6 +162,7 @@ function ProfileStats() {
     setModalIsOpen(false);
   }
 
+  //YYYY, MM, DD
   async function submitSession() {
     const tripleInputs = inputTimerHour + inputTimerMinute + inputTimerSecond;
     let generateId = uuidv4();
@@ -177,7 +181,9 @@ function ProfileStats() {
     const dayOfYear = getDayOfYear(
       new Date(newFormat[0], newFormat[1].toString(), newFormat[2])
     );
-
+    
+    // console.log("new date", new Date(yearSlice, monthSlice-1, daySlice))
+    //buggin
     const formattedDate = format(
       new Date(yearSlice, monthSlice - 1, daySlice),
       "PPP"
@@ -189,10 +195,14 @@ function ProfileStats() {
       seconds: length[2],
     });
 
+    //include when submitting on timer session
+    const testFormat = new Date(yearSlice, monthSlice-1, daySlice)
+
     await axios.put(`/api/users/${id}`, {
       $push: {
         sessions: {
           id: constantId,
+          unformattedDate: testFormat,
           date: formattedDate,
           dayOfYear: dayOfYear,
           length: lengthString,
@@ -403,7 +413,7 @@ function ProfileStats() {
       },
     };
 
-    console.log("allYearSessions", allYearSessions);
+    // console.log("allYearSessions", allYearSessions);
 
     // let printSqs;
 
@@ -448,19 +458,19 @@ function ProfileStats() {
       }
     }
 
-    console.log('allyearSessions', allYearSessions)
+    // console.log('allyearSessions', allYearSessions)
+
+    //allYearsSessions = [[], []]
     const printSqs = allYearSessions.map((year, yearIndex, array1) => {
+      console.log("array1", allSessions)
       return (
         <div className={`year-${yearIndex + 1} year`}>
-          {/* <div>{calculateYear(allYearSessions)}</div> */}
           {year.map((week, weekIndex, array2) => {
             return (
               <div className={`week-${weekIndex + 1}`}>
                 {week.map((days, daysIndex, array3) => {
                   return (
                     <SingleDay
-                      // showSessions={showSessions}
-                      // passChildData={setChildData}
                       allYearSessions={allYearSessions}
                       array2={array2}
                       array3={array3}
