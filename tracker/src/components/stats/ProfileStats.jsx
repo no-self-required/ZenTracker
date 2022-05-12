@@ -461,6 +461,7 @@ function ProfileStats() {
     // console.log('allyearSessions', allYearSessions)
 
     //allYearsSessions = [[], []]
+    //might need to fix this nested map
     const printSqs = allYearSessions.map((year, yearIndex, array1) => {
       console.log("array1", allSessions)
       return (
