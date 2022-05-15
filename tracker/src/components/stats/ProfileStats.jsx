@@ -98,6 +98,8 @@ function ProfileStats() {
   const [isUpdated, setIsUpdated] = useState(false);
 
   //after 5 add/delete sessions, site freezes => /profile doesnt load
+  //use debugger to find freezing
+
   useEffect(() => {
     const getSessions = async () => {
       if (!currentData) {
@@ -263,7 +265,6 @@ function ProfileStats() {
 
   if (currentData) {
     let sessionsData = currentData.user.sessions;
-    console.log("sessionsData", sessionsData);
 
     let yearSessions = {};
 
@@ -273,6 +274,7 @@ function ProfileStats() {
     function sortSessionsByYear() {
       const yearSet = new Set();
 
+      //add all possible session years to yearSet
       for (const session of sessionsData) {
         if (!yearSet.has(session["year"])) {
           yearSet.add(session["year"]);
@@ -280,6 +282,7 @@ function ProfileStats() {
         }
       }
 
+      //if year exists in set, 
       for (const session of sessionsData) {
         if (yearSet.has(session["year"])) {
           const year = session["year"];
@@ -288,7 +291,6 @@ function ProfileStats() {
       }
     }
 
-    console.log("yearSessions", yearSessions);
     //Calculate number of all sessions
     function totalSessions() {
       let count = 0;
@@ -405,6 +407,7 @@ function ProfileStats() {
     //ex:
     //[{year: 2021, calendar: Array(53)}, {year: 2022, calendar: Array(53)}]
 
+
     //clone fullYearArray, fill it with sessions based on year from yearSessions
     function fillCalendarByYear() {
       for (const yearKey of Object.values(yearSessions)) {
@@ -419,22 +422,33 @@ function ProfileStats() {
           const weekIndex = Math.floor(index / 7);
           clonedArray[weekIndex][calcIndexRemainder].push(session);
         }
-        // allYearSessions.push({year: year, calendar: clonedArray})
-        allYearSessions.push(clonedArray);
+        allYearSessions.push({year: year, calendar: clonedArray})
+        // allYearSessions.push(clonedArray);
       }
     }
 
-    // console.log('allyearSessions', allYearSessions)
+    console.log('allyearSessions', allYearSessions)
+
+    /**
+     * n year -> 52 weeks -> 7 days
+     * 2
+     * CalendarArray = [2][52][7]{ sessionData: sessionData | null }
+     * [52]
+     * [{weeks: [52], year: 2018}]
+     * 
+     */
 
     const printSqs = allYearSessions.map((year, yearIndex, array1) => {
       return (
         <div className={`year-${yearIndex + 1} year`}>
-          {year.map((week, weekIndex, array2) => {
+          {year.calendar.map((week, weekIndex, array2) => {
             return (
               <div className={`week-${weekIndex + 1}`}>
                 {week.map((days, daysIndex, array3) => {
+                  console.log()
                   return (
                     <SingleDay
+                      year={year.year}
                       allYearSessions={allYearSessions}
                       array2={array2}
                       array3={array3}
