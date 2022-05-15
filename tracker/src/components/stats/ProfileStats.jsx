@@ -90,7 +90,7 @@ function ProfileStats() {
   const day = currentDate.getDate();
 
   // console.log("currentDate check", year, month, day)
-  
+
   const [newDate, setNewDate] = useState(`${year}, ${month + 1}, ${day}`);
 
   const token = localStorage.getItem("token");
@@ -181,9 +181,7 @@ function ProfileStats() {
     const dayOfYear = getDayOfYear(
       new Date(newFormat[0], newFormat[1].toString(), newFormat[2])
     );
-    
-    // console.log("new date", new Date(yearSlice, monthSlice-1, daySlice))
-    //buggin
+
     const formattedDate = format(
       new Date(yearSlice, monthSlice - 1, daySlice),
       "PPP"
@@ -196,7 +194,7 @@ function ProfileStats() {
     });
 
     //include when submitting on timer session
-    const testFormat = new Date(yearSlice, monthSlice-1, daySlice)
+    const testFormat = new Date(yearSlice, monthSlice - 1, daySlice);
 
     await axios.put(`/api/users/${id}`, {
       $push: {
@@ -263,10 +261,9 @@ function ProfileStats() {
     return count;
   }
 
-  // const [childData, setChildData] = useState();
-
   if (currentData) {
     let sessionsData = currentData.user.sessions;
+    console.log("sessionsData", sessionsData);
 
     let yearSessions = {};
 
@@ -291,6 +288,7 @@ function ProfileStats() {
       }
     }
 
+    console.log("yearSessions", yearSessions);
     //Calculate number of all sessions
     function totalSessions() {
       let count = 0;
@@ -368,8 +366,6 @@ function ProfileStats() {
       return lengthString;
     }
 
-    //user clicks on square, filter allSessions for that date
-
     //sort sessions to show latest session at the top
     const sortedSessionsByDay = sessionsData.sort(function (a, b) {
       if (a.year === b.year) {
@@ -378,8 +374,7 @@ function ProfileStats() {
       return a.year < b.year ? 1 : -1;
     });
 
-    // console.log('sortedSessionsByDay', sortedSessionsByDay)
-
+    //display all sessions with the sorted data
     const allSessions = Object.keys(sortedSessionsByDay).map(function (key) {
       return (
         <div>
@@ -395,13 +390,6 @@ function ProfileStats() {
       );
     });
 
-    //on singleday click => filter sessions
-    //doesnt work cause its being mapped
-    // function showSessions() {
-    //   // allSessions = sessionsData.filter(x => x.dayOfYear === daysToAdd)
-    //   console.log("childData", childData);
-    // }
-
     const customStyles = {
       content: {
         top: "50%",
@@ -413,31 +401,11 @@ function ProfileStats() {
       },
     };
 
-    // console.log("allYearSessions", allYearSessions);
-
-    // let printSqs;
-
-    // for (let x = 0 ; x < allYearSessions.length ; x++) {
-    //   for (const key in allYearSessions[x]) {
-    //     // console.log('check', allYearSessions[x][key])
-
-    //   };
-    // }
-
-    // for (const object of allYearSessions) {
-    //   console.log("check", Object.keys(object))
-    //   for (const key of Object.keys(object)) {
-
-    //   }
-    // }
-
-    // Need to target calendar key in each object of allYearSessions
-    // .map() applied to "calendar key"
-
     //Assign year to each yearCalendar
     //ex:
     //[{year: 2021, calendar: Array(53)}, {year: 2022, calendar: Array(53)}]
 
+    //clone fullYearArray, fill it with sessions based on year from yearSessions
     function fillCalendarByYear() {
       for (const yearKey of Object.values(yearSessions)) {
         const clonedArray = structuredClone(fullYearArray);
@@ -451,19 +419,14 @@ function ProfileStats() {
           const weekIndex = Math.floor(index / 7);
           clonedArray[weekIndex][calcIndexRemainder].push(session);
         }
-        // allYearSessions.push({[year]: clonedArray});
         // allYearSessions.push({year: year, calendar: clonedArray})
         allYearSessions.push(clonedArray);
-        // console.log('clonedArray', clonedArray)
       }
     }
 
     // console.log('allyearSessions', allYearSessions)
 
-    //allYearsSessions = [[], []]
-    //might need to fix this nested map
     const printSqs = allYearSessions.map((year, yearIndex, array1) => {
-      console.log("array1", allSessions)
       return (
         <div className={`year-${yearIndex + 1} year`}>
           {year.map((week, weekIndex, array2) => {
