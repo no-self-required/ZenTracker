@@ -25,7 +25,6 @@ function SingleDay(props) {
   // console.log("dateofcalendar", dateOfCalendar)
   //make new date with year given
 
-
   //new Date() applies current year to every calendar
   const date = new Date();
   // console.log("newDate", new Date(2000, 0, 1))
