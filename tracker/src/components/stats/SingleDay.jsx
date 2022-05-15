@@ -5,36 +5,24 @@ import startOfYear from "date-fns/startOfYear";
 import format from 'date-fns/format';
 
 function SingleDay(props) {
-  // console.log("array3", props.array3)
-  //extract year from date inside sessions? ****
-
-  //can possibly get date instead
-  //Can input date format needed to get year
-  // const getDate = (weekSessions) => {
-  //   let date;
-  //   for (const element of weekSessions) {
-  //     if (element[0]) {
-  //       date = element[0].unformattedDate
-  //       break;
-  //     }
-  //   }
-  //   return date;
-  // }
-
-  // let dateOfCalendar = getDate(props.array3);
-  // console.log("dateofcalendar", dateOfCalendar)
-  //make new date with year given
 
   //new Date() applies current year to every calendar
+
+  //create date given: year
+
+  //Find monthIndex, days
   const date = new Date();
-  // console.log("newDate", new Date(2000, 0, 1))
   const startYearDate = startOfYear(new Date(date));
+  // console.log("weekindex, daysindex", props.weekIndex, props.daysIndex)
+
+
   const daysToAdd = 7*props.weekIndex+props.daysIndex
   startYearDate.setDate(startYearDate.getDate() + daysToAdd)
   // console.log("startYearDate", startYearDate)
   const formatted = format(new Date(startYearDate), "PPP")
 
-  
+  //function profilestats as callback to singleday > onclick function changes state inside profilestats
+
   return (
     <div
       className={`day-${props.daysIndex + 1} single-day`}
