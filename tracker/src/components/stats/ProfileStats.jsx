@@ -445,7 +445,6 @@ function ProfileStats() {
             return (
               <div className={`week-${weekIndex + 1}`}>
                 {week.map((days, daysIndex, array3) => {
-                  console.log()
                   return (
                     <SingleDay
                       year={year.year}
