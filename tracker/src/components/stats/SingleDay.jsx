@@ -22,6 +22,7 @@ function SingleDay(props) {
   const daysToAdd = 7 * props.weekIndex + props.daysIndex;
 
   startYearDate.setDate(startYearDate.getDate() + daysToAdd);
+
   let newDateProperYear = setYear(startYearDate, props.year);
   let formatted = format(new Date(newDateProperYear), "PPP");
 
