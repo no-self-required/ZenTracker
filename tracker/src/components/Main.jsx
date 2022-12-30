@@ -150,6 +150,7 @@ function displayInputValue(totalSeconds) {
 }
 
 function Main() {
+
   const TIMER_STATES = {
     INITIAL: 0,
     STARTED: 1,
@@ -158,9 +159,10 @@ function Main() {
     FINISHED: 4,
   };
 
-  const alarm1 = new Audio(
-    "https://freesound.org/people/suburban%20grilla/sounds/2166/download/2166__suburban-grilla__bowl-struck.wav"
-  );
+  //disable alarm due to CORB issue
+  // const alarm1 = new Audio(
+  //   "https://freesound.org/people/suburban%20grilla/sounds/2166/download/2166__suburban-grilla__bowl-struck.wav"
+  // );
 
   const [totalSeconds, setTotalSeconds] = useState(300);
   //initialTime is running off array converison: 500 => [5, 0, 0] (5 min 0 seconds)
@@ -194,7 +196,7 @@ function Main() {
     if (!selection3) return;
     const { start, end } = selection3;
     inputEle2.setSelectionRange(start, end);
-  }, [selection3]);
+  }, [selection3, inputEle2]);
 
   const [loggedin, setLoggedIn] = useState(false);
   const navigate = useNavigate();
@@ -210,7 +212,7 @@ function Main() {
         setLoggedIn(true);
       }
     }
-  });
+  }, [navigate]);
 
   //Decrement timer if timer has started, and there is an interval
   useEffect(() => {
@@ -220,19 +222,19 @@ function Main() {
         setIntervalID(intervalID);
       }
     }
-  }, [timerState, intervalID]);
+  }, [timerState, TIMER_STATES, intervalID, totalSeconds, decrementTotalSeconds]);
 
   useEffect(() => {
     if (timerState === TIMER_STATES["FINISHED"]) {
       startAlarm();
       onCompletion();
     }
-  }, [timerState]);
+  }, [timerState, TIMER_STATES, onCompletion]);
 
   //update display spans on every tick
   useEffect(() => {
     omitZero();
-  }, [totalSeconds]);
+  }, [totalSeconds, omitZero]);
 
   function startTimer() {
     //if initial time has already started
@@ -375,13 +377,13 @@ function Main() {
   }
 
   function startAlarm() {
-    alarm1.loop = false;
-    alarm1.play();
+    // alarm1.loop = false;
+    // alarm1.play();
     console.log("startalarm check");
   }
 
   function stopAlarm() {
-    alarm1.pause();
+    // alarm1.pause();
   }
 
   function editTimerState() {
