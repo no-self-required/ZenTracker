@@ -26,6 +26,11 @@
   display: inline-block;
 }
 
+#single-session-container{
+  width: 50%;
+  border: 2px solid black;
+  margin-bottom: 1em;
+}
 
 .single-day:hover .tooltiptext{
   visibility: visible;
