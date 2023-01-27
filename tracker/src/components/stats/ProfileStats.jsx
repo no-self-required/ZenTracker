@@ -379,7 +379,7 @@ function ProfileStats() {
     //display all sessions with the sorted data
     const allSessions = Object.keys(sortedSessionsByDay).map(function (key) {
       return (
-        <div>
+        <div id="single-session-container">
           <SingleSession
             currentData={currentData}
             sessionId={sessionsData[key].id}
