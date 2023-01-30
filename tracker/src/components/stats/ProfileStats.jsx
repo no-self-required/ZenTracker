@@ -9,7 +9,6 @@ import { v4 as uuidv4 } from "uuid";
 import getDayOfYear from "date-fns/getDayOfYear";
 import formatDuration from "date-fns/formatDuration";
 import format from "date-fns/format";
-import { ca } from "date-fns/locale";
 
 function splitInput(initialTime) {
   const parsedTimer = parseInt(initialTime);
@@ -79,6 +78,9 @@ function ProfileStats() {
   const [currentData, setCurrentData] = useState();
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [log, setLog] = useState("");
+
+  //default state should be latest year
+  const [selectedYear, setSelectedYear] = useState();
 
   //Input values
   const [inputTimerHour, setInputTimerHour] = useState("00");
@@ -263,7 +265,7 @@ function ProfileStats() {
     }
     return count;
   }
-
+  
   if (currentData) {
     let sessionsData = currentData.user.sessions;
 
@@ -450,14 +452,26 @@ function ProfileStats() {
       return count
     }
 
-    const printSqs = allYearSessions.map((year, yearIndex, array1) => 
-    {
-    console.log("year", year)
+    //make list of all years:
+    console.log("allYearSessions", allYearSessions)
+    // const [selectedYear, setSelectedYear] = useState();
+    const listAllYears = () => {
+      let allYears = [];
+      for (const year of allYearSessions) {
+        allYears.push(year.year)
+      }
+      return allYears.reverse()
+    }
 
+    //Can add if conditional before "return" to display specific year
+    //CHANGE YEAR.YEAR to show year state
+    const printSqs = allYearSessions.map((year, yearIndex, array1) => 
+    { 
+      if(selectedYear === year.year)
       return (
         <>
         <div>
-        {totalSessionYear(year.calendar)} sessions in {year.year}
+        {totalSessionYear(year.calendar)} sessions in {selectedYear}
         </div>
         <div className={`year-${yearIndex + 1} year`}>
           {year.calendar.map((week, weekIndex, array2) => {
@@ -485,6 +499,17 @@ function ProfileStats() {
       );
     });
 
+    const allYearButtons = listAllYears().map((year) => 
+    {
+      return (
+        <>
+          <button onClick={(e) => setSelectedYear(year)}>
+            {year}
+          </button>
+        </>
+      )
+    })
+
     return (
       <div>
         <div className="session-stats">
@@ -499,6 +524,7 @@ function ProfileStats() {
           <div>Longest session length: {longestLength()}</div>
         </div>
         <div className="calendar-container">
+          {allYearButtons}
           {printSqs}
         </div>
         <div>
@@ -560,6 +586,7 @@ function ProfileStats() {
   }
 
   return <div></div>;
+  
 }
 
 export default ProfileStats;
