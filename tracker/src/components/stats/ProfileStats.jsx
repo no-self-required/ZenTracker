@@ -9,6 +9,7 @@ import { v4 as uuidv4 } from "uuid";
 import getDayOfYear from "date-fns/getDayOfYear";
 import formatDuration from "date-fns/formatDuration";
 import format from "date-fns/format";
+import { ca } from "date-fns/locale";
 
 function splitInput(initialTime) {
   const parsedTimer = parseInt(initialTime);
@@ -282,7 +283,7 @@ function ProfileStats() {
         }
       }
 
-      //if year exists in set, 
+      //if year exists in set,
       for (const session of sessionsData) {
         if (yearSet.has(session["year"])) {
           const year = session["year"];
@@ -407,7 +408,6 @@ function ProfileStats() {
     //ex:
     //[{year: 2021, calendar: Array(53)}, {year: 2022, calendar: Array(53)}]
 
-
     //clone fullYearArray, fill it with sessions based on year from yearSessions
     function fillCalendarByYear() {
       for (const yearKey of Object.values(yearSessions)) {
@@ -422,7 +422,7 @@ function ProfileStats() {
           const weekIndex = Math.floor(index / 7);
           clonedArray[weekIndex][calcIndexRemainder].push(session);
         }
-        allYearSessions.push({year: year, calendar: clonedArray})
+        allYearSessions.push({ year: year, calendar: clonedArray });
         // allYearSessions.push(clonedArray);
       }
     }
@@ -433,11 +433,32 @@ function ProfileStats() {
      * CalendarArray = [2][52][7]{ sessionData: sessionData | null }
      * [52]
      * [{weeks: [52], year: 2018}]
-     * 
+     *
      */
+    
+    //loop through year calendar (nested array)
+    //count all days with sessions
+    function totalSessionYear(yearArray) {
+      let count = 0;
+      for(const week of yearArray){
+        for(const day of week){
+          if(day) {
+            count += day.length
+          }
+        }
+      }
+      return count
+    }
 
-    const printSqs = allYearSessions.map((year, yearIndex, array1) => {
+    const printSqs = allYearSessions.map((year, yearIndex, array1) => 
+    {
+    console.log("year", year)
+
       return (
+        <>
+        <div>
+        {totalSessionYear(year.calendar)} sessions in {year.year}
+        </div>
         <div className={`year-${yearIndex + 1} year`}>
           {year.calendar.map((week, weekIndex, array2) => {
             return (
@@ -460,6 +481,7 @@ function ProfileStats() {
             );
           })}
         </div>
+        </>
       );
     });
 
@@ -476,7 +498,9 @@ function ProfileStats() {
           <div>Average session length: {averageLength()}</div>
           <div>Longest session length: {longestLength()}</div>
         </div>
-        <div className="calendar-container">{printSqs}</div>
+        <div className="calendar-container">
+          {printSqs}
+        </div>
         <div>
           <button className="add-session" onClick={openModal}>
             Add session
