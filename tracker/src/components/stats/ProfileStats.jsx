@@ -9,6 +9,7 @@ import { v4 as uuidv4 } from "uuid";
 import getDayOfYear from "date-fns/getDayOfYear";
 import formatDuration from "date-fns/formatDuration";
 import format from "date-fns/format";
+import getYear from 'date-fns/getYear'
 
 function splitInput(initialTime) {
   const parsedTimer = parseInt(initialTime);
@@ -80,7 +81,7 @@ function ProfileStats() {
   const [log, setLog] = useState("");
 
   //default state should be latest year
-  const [selectedYear, setSelectedYear] = useState();
+  const [selectedYear, setSelectedYear] = useState(getYear(Date.now()));
 
   //Input values
   const [inputTimerHour, setInputTimerHour] = useState("00");
@@ -220,6 +221,7 @@ function ProfileStats() {
   let fullYearArray = [];
   let allYearSessions = [];
 
+
   function yearArray() {
     for (let x = 0; x < 52; x++) {
       fullYearArray.push([]);
@@ -266,6 +268,8 @@ function ProfileStats() {
     return count;
   }
   
+
+
   if (currentData) {
     let sessionsData = currentData.user.sessions;
 
@@ -274,10 +278,25 @@ function ProfileStats() {
     sortSessionsByYear();
     fillCalendarByYear();
 
+    const mostSingleDaySessions = () => {
+      let highestCount = 0;
+      for (const year of allYearSessions) {
+        for (const week of year.calendar) {
+          for (const day of week) {
+            if (day.length > highestCount) {
+              highestCount = day.length
+            }
+          }
+        }
+      }
+      return highestCount
+    }
+
     function sortSessionsByYear() {
       const yearSet = new Set();
 
       //add all possible session years to yearSet
+      // console.log("sessionsData", sessionsData)
       for (const session of sessionsData) {
         if (!yearSet.has(session["year"])) {
           yearSet.add(session["year"]);
@@ -296,6 +315,7 @@ function ProfileStats() {
 
     //Calculate number of all sessions
     function totalSessions() {
+      // console.log("sessionsData", sessionsData)
       let count = 0;
       for (const key in Object.keys(sessionsData)) {
         count += 1;
@@ -406,6 +426,7 @@ function ProfileStats() {
       },
     };
 
+    
     //Assign year to each yearCalendar
     //ex:
     //[{year: 2021, calendar: Array(53)}, {year: 2022, calendar: Array(53)}]
@@ -425,7 +446,6 @@ function ProfileStats() {
           clonedArray[weekIndex][calcIndexRemainder].push(session);
         }
         allYearSessions.push({ year: year, calendar: clonedArray });
-        // allYearSessions.push(clonedArray);
       }
     }
 
@@ -452,9 +472,6 @@ function ProfileStats() {
       return count
     }
 
-    //make list of all years:
-    console.log("allYearSessions", allYearSessions)
-    // const [selectedYear, setSelectedYear] = useState();
     const listAllYears = () => {
       let allYears = [];
       for (const year of allYearSessions) {
@@ -515,6 +532,7 @@ function ProfileStats() {
         <div className="session-stats">
           Sessions:
           <div>Total: {totalSessions()}</div>
+          <div>Most in a single day: {mostSingleDaySessions()}</div>
           <br></br>
         </div>
         <div className="time-stats">
