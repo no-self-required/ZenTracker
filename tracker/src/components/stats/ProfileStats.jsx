@@ -292,6 +292,20 @@ function ProfileStats() {
       return highestCount
     }
 
+    const singleDaySessions = () => {
+      let singleDayCount = 0;
+      for (const year of allYearSessions) {
+        for (const week of year.calendar) {
+          for (const day of week) {
+            if (day.length) {
+              singleDayCount += 1;
+            }
+          }
+        }
+      }
+      return singleDayCount
+    }
+
     function sortSessionsByYear() {
       const yearSet = new Set();
 
@@ -533,6 +547,7 @@ function ProfileStats() {
           Sessions:
           <div>Total: {totalSessions()}</div>
           <div>Most in a single day: {mostSingleDaySessions()}</div>
+          <div>Days with at least one session: {singleDaySessions()}</div>
           <br></br>
         </div>
         <div className="time-stats">
