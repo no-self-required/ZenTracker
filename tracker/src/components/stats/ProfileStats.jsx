@@ -542,7 +542,7 @@ function ProfileStats() {
     })
 
     return (
-      <div>
+      <div className="profile-stats-container">
         <div className="session-stats">
           Sessions
           <hr className="line"/>
