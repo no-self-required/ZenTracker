@@ -9,7 +9,7 @@ import { v4 as uuidv4 } from "uuid";
 import getDayOfYear from "date-fns/getDayOfYear";
 import formatDuration from "date-fns/formatDuration";
 import format from "date-fns/format";
-import getYear from 'date-fns/getYear'
+import getYear from "date-fns/getYear";
 
 function splitInput(initialTime) {
   const parsedTimer = parseInt(initialTime);
@@ -221,7 +221,6 @@ function ProfileStats() {
   let fullYearArray = [];
   let allYearSessions = [];
 
-
   function yearArray() {
     for (let x = 0; x < 52; x++) {
       fullYearArray.push([]);
@@ -267,8 +266,6 @@ function ProfileStats() {
     }
     return count;
   }
-  
-
 
   if (currentData) {
     let sessionsData = currentData.user.sessions;
@@ -284,13 +281,13 @@ function ProfileStats() {
         for (const week of year.calendar) {
           for (const day of week) {
             if (day.length > highestCount) {
-              highestCount = day.length
+              highestCount = day.length;
             }
           }
         }
       }
-      return highestCount
-    }
+      return highestCount;
+    };
 
     const singleDaySessions = () => {
       let singleDayCount = 0;
@@ -303,8 +300,8 @@ function ProfileStats() {
           }
         }
       }
-      return singleDayCount
-    }
+      return singleDayCount;
+    };
 
     function sortSessionsByYear() {
       const yearSet = new Set();
@@ -440,7 +437,6 @@ function ProfileStats() {
       },
     };
 
-    
     //Assign year to each yearCalendar
     //ex:
     //[{year: 2021, calendar: Array(53)}, {year: 2022, calendar: Array(53)}]
@@ -471,97 +467,107 @@ function ProfileStats() {
      * [{weeks: [52], year: 2018}]
      *
      */
-    
+
     //loop through year calendar (nested array)
     //count all days with sessions
     function totalSessionYear(yearArray) {
       let count = 0;
-      for(const week of yearArray){
-        for(const day of week){
-          if(day) {
-            count += day.length
+      for (const week of yearArray) {
+        for (const day of week) {
+          if (day) {
+            count += day.length;
           }
         }
       }
-      return count
+      return count;
     }
 
     const listAllYears = () => {
       let allYears = [];
       for (const year of allYearSessions) {
-        allYears.push(year.year)
+        allYears.push(year.year);
       }
-      return allYears.reverse()
-    }
+      return allYears.reverse();
+    };
 
     //Can add if conditional before "return" to display specific year
     //CHANGE YEAR.YEAR to show year state
-    const printSqs = allYearSessions.map((year, yearIndex, array1) => 
-    { 
-      if(selectedYear === year.year)
+    const printSqs = allYearSessions.map((year, yearIndex, array1) => {
+      if (selectedYear === year.year)
+        return (
+          <>
+            <div className="stats-header">
+              {totalSessionYear(year.calendar)} sessions in {selectedYear}
+            </div>
+            <div className={`year-${yearIndex + 1} year`}>
+              {year.calendar.map((week, weekIndex, array2) => {
+                return (
+                  <div className={`week-${weekIndex + 1}`}>
+                    {week.map((days, daysIndex, array3) => {
+                      return (
+                        <SingleDay
+                          year={year.year}
+                          allYearSessions={allYearSessions}
+                          array2={array2}
+                          array3={array3}
+                          daysIndex={daysIndex}
+                          weekIndex={weekIndex}
+                          calcColor={calcColor}
+                          totalSessionsUser={totalSessionsUser}
+                        ></SingleDay>
+                      );
+                    })}
+                  </div>
+                );
+              })}
+            </div>
+          </>
+        );
+    });
+
+    const allYearButtons = listAllYears().map((year) => {
       return (
         <>
-        <div>
-        {totalSessionYear(year.calendar)} sessions in {selectedYear}
-        </div>
-        <div className={`year-${yearIndex + 1} year`}>
-          {year.calendar.map((week, weekIndex, array2) => {
-            return (
-              <div className={`week-${weekIndex + 1}`}>
-                {week.map((days, daysIndex, array3) => {
-                  return (
-                    <SingleDay
-                      year={year.year}
-                      allYearSessions={allYearSessions}
-                      array2={array2}
-                      array3={array3}
-                      daysIndex={daysIndex}
-                      weekIndex={weekIndex}
-                      calcColor={calcColor}
-                      totalSessionsUser={totalSessionsUser}
-                    ></SingleDay>
-                  );
-                })}
-              </div>
-            );
-          })}
-        </div>
+          <button onClick={(e) => setSelectedYear(year)}>{year}</button>
         </>
       );
     });
 
-    const allYearButtons = listAllYears().map((year) => 
-    {
-      return (
-        <>
-          <button onClick={(e) => setSelectedYear(year)}>
-            {year}
-          </button>
-        </>
-      )
-    })
-
     return (
       <div className="profile-stats-container">
         <div className="session-stats">
-          Sessions
-          <hr className="line"/>
-          <div className="total-container">Total: <div>{totalSessions()}</div></div>
-          <hr className="line"/>
-          <div className="singleday-container">Most in a single day: <div>{mostSingleDaySessions()}</div></div>
-          <hr className="line"/>
-          <div className="singleday-session-container">Days with at least one session: <div>{singleDaySessions()}</div></div>
-          <br></br>
+          <div className="stats-header">Sessions</div>
+          <hr className="line" />
+          <div className="stat-container">
+            Total <div>{totalSessions()}</div>
+          </div>
+          <hr className="line" />
+          <div className="stat-container">
+            Most in a single day <div>{mostSingleDaySessions()}</div>
+          </div>
+          <hr className="line" />
+          <div className="stat-container">
+            Days with at least one session <div>{singleDaySessions()}</div>
+          </div>
         </div>
         <div className="time-stats">
-          Time:
-          <div>Total: {totalTime()}</div>
-          <div>Average session length: {averageLength()}</div>
-          <div>Longest session length: {longestLength()}</div>
+        <div className="stats-header">Time</div>
+          <hr className="line" />
+          <div className="stat-container">
+            Total <div>{totalTime()}</div>
+          </div>
+          <hr className="line" />
+          <div className="stat-container">
+            Average session length <div>{averageLength()}</div>
+          </div>
+          <hr className="line" />
+          <div className="stat-container">
+            Longest session length <div>{longestLength()}</div>
+          </div>
         </div>
         <div className="calendar-container">
-          {allYearButtons}
           {printSqs}
+          <div className="button-group">{allYearButtons}</div>
         </div>
         <div>
           <button className="add-session" onClick={openModal}>
@@ -620,9 +626,7 @@ function ProfileStats() {
       </div>
     );
   }
-
-  return <div></div>;
-  
+  return <></>;
 }
 
 export default ProfileStats;
