@@ -544,10 +544,13 @@ function ProfileStats() {
     return (
       <div>
         <div className="session-stats">
-          Sessions:
-          <div>Total: {totalSessions()}</div>
-          <div>Most in a single day: {mostSingleDaySessions()}</div>
-          <div>Days with at least one session: {singleDaySessions()}</div>
+          Sessions
+          <hr className="line"/>
+          <div className="total-container">Total: <div>{totalSessions()}</div></div>
+          <hr className="line"/>
+          <div className="singleday-container">Most in a single day: <div>{mostSingleDaySessions()}</div></div>
+          <hr className="line"/>
+          <div className="singleday-session-container">Days with at least one session: <div>{singleDaySessions()}</div></div>
           <br></br>
         </div>
         <div className="time-stats">

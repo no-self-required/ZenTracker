@@ -1,78 +1,100 @@
-.delete-button{
-  margin: 1em;
-}
+@media only screen and (max-width: 600px) {
 
-.calendar-container {
-  padding-top: 1em;
-  padding-bottom: 1em;
-
-  .year {
-    display: flex;
-    padding: 1em;
+  .navbar {
+    margin-left: 0;
+    margin-bottom: 1em;
   }
-}
 
-#square {
-  width: 15px;
-  height: 15px;
-  outline: 1.4px solid rgb(53, 53, 53);
-  border-radius: 3px;
-  background-color: grey;
-  margin: .3em;
-}
-
-.single-day {
-  position: relative;
-  display: inline-block;
-}
-
-#single-session-container{
-  width: 50%;
-  border: 2px solid black;
-  margin-bottom: 1em;
-}
-
-.single-day:hover .tooltiptext{
-  visibility: visible;
-}
-
-/* Tooltip text */
-.single-day .tooltiptext {
-  visibility: hidden;
-  background-color: black;
-  color: #fff;
-  text-align: center;
-  padding: 5px 0;
-  border-radius: 6px;
- 
-  /* Position the tooltip text - see examples below! */
-  position: absolute;
-  z-index: 1;
-}
-
-#square-light {
-  width: 15px;
-  height: 15px;
-  outline: 1.4px solid rgb(53, 53, 53);
-  border-radius: 3px;
-  background-color: rgba(3, 158, 3, 0.582);
-  margin: .3em;
-}
-
-#square-medium {
-  width: 15px;
-  height: 15px;
-  outline: 1.4px solid rgb(53, 53, 53);
-  border-radius: 3px;
-  background-color: rgb(0, 167, 0);
-  margin: .3em;
-}
-
-#square-dark {
-  width: 15px;
-  height: 15px;
-  outline: 1.4px solid rgb(53, 53, 53);
-  border-radius: 3px;
-  background-color: rgb(0, 218, 0);
-  margin: .3em;
+  .session-stats {
+    width: 25em;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    
+    .line {
+      width: 24.5em;
+    }
+    .total-container, .singleday-container, .singleday-session-container{
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+  .delete-button{
+    margin: 1em;
+  }
+  
+  .calendar-container {
+    padding-top: 1em;
+    padding-bottom: 1em;
+  
+    .year {
+      display: flex;
+      padding: 1em;
+    }
+  }
+  
+  #square {
+    width: 15px;
+    height: 15px;
+    outline: 1.4px solid rgb(53, 53, 53);
+    border-radius: 3px;
+    background-color: grey;
+    margin: .3em;
+  }
+  
+  .single-day {
+    position: relative;
+    display: inline-block;
+  }
+  
+  #single-session-container{
+    width: 50%;
+    border: 2px solid black;
+    margin-bottom: 1em;
+  }
+  
+  .single-day:hover .tooltiptext{
+    visibility: visible;
+  }
+  
+  /* Tooltip text */
+  .single-day .tooltiptext {
+    visibility: hidden;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+   
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+  }
+  
+  #square-light {
+    width: 15px;
+    height: 15px;
+    outline: 1.4px solid rgb(53, 53, 53);
+    border-radius: 3px;
+    background-color: rgba(3, 158, 3, 0.582);
+    margin: .3em;
+  }
+  
+  #square-medium {
+    width: 15px;
+    height: 15px;
+    outline: 1.4px solid rgb(53, 53, 53);
+    border-radius: 3px;
+    background-color: rgb(0, 167, 0);
+    margin: .3em;
+  }
+  
+  #square-dark {
+    width: 15px;
+    height: 15px;
+    outline: 1.4px solid rgb(53, 53, 53);
+    border-radius: 3px;
+    background-color: rgb(0, 218, 0);
+    margin: .3em;
+  }
 }
