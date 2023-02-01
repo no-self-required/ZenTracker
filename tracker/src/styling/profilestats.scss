@@ -11,6 +11,7 @@
 
     .session-stats {
       width: 23em;
+      padding: 1.2em;
       display: flex;
       flex-direction: column;
       
@@ -37,6 +38,7 @@
         display: flex;
         padding: 1em;
         overflow-x: scroll;
+        overflow-y: hidden;
       }
     }
     
