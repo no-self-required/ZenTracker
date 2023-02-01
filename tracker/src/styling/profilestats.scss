@@ -8,13 +8,11 @@
   .profile-stats-container{
     display: flex;
     flex-direction: column;
-    align-items: center;
 
     .session-stats {
       width: 23em;
       display: flex;
       flex-direction: column;
-      justify-content: space-around;
       
       .line {
         width: 23em;
@@ -30,9 +28,11 @@
     }
     
     .calendar-container {
+      display: flex;
+      flex-direction: column;
       padding-top: 1em;
       padding-bottom: 1em;
-    
+      
       .year {
         display: flex;
         padding: 1em;
