@@ -622,7 +622,11 @@ function ProfileStats() {
             <button onClick={closeModalSubmit}>submit</button>
           </Modal>
         </div>
-        <div>{allSessions}</div>
+        <div>
+          <div>All Sessions:</div>
+          <hr className="line" />
+          {allSessions}
+        </div>
       </div>
     );
   }
