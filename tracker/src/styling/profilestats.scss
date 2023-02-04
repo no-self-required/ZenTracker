@@ -120,4 +120,11 @@
   .line {
     width: 23em;
   }
+
+  .all-sessions-container{
+    padding: 1.5em 1.3em 0 1.1em;
+    width: 23.3em;
+    display: flex;
+    flex-direction: column;
+  }
 }

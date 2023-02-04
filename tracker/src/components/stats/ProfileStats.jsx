@@ -622,8 +622,8 @@ function ProfileStats() {
             <button onClick={closeModalSubmit}>submit</button>
           </Modal>
         </div>
-        <div>
-          <div>All Sessions:</div>
+        <div className="all-sessions-container">
+          <div className="stats-header">All Sessions:</div>
           <hr className="line" />
           {allSessions}
         </div>
