@@ -551,7 +551,7 @@ function ProfileStats() {
           </div>
         </div>
         <div className="time-stats">
-        <div className="stats-header">Time</div>
+          <div className="stats-header">Time</div>
           <hr className="line" />
           <div className="stat-container">
             Total <div>{totalTime()}</div>
@@ -568,11 +568,6 @@ function ProfileStats() {
         <div className="calendar-container">
           {printSqs}
           <div className="button-group">{allYearButtons}</div>
-        </div>
-        <div>
-          <button className="add-session" onClick={openModal}>
-            Add session
-          </button>
         </div>
         <div>
           <Modal
@@ -623,6 +618,9 @@ function ProfileStats() {
           </Modal>
         </div>
         <div className="all-sessions-container">
+          <button className="add-session" onClick={openModal}>
+            Add session
+          </button>
           <div className="stats-header">All Sessions:</div>
           <hr className="line" />
           {allSessions}
