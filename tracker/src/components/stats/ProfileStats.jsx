@@ -37,8 +37,6 @@ function calculateSeconds(initialTime) {
   const totHours = hours[0] * 36000 + hours[1] * 3600;
   let calculatedTotalSeconds = totSec + totMin + totHours;
 
-  // console.log("calculatedTotalSeconds", calculatedTotalSeconds);
-
   //if time entered is more than 99hours, set to 99h/59m/59s
   if (calculatedTotalSeconds > 360000) {
     calculatedTotalSeconds = 359999;
@@ -71,7 +69,6 @@ function displayInputValue(totalSeconds) {
   formatted.push(showMin);
   formatted.push(showSec);
 
-  // console.log("formatted", formatted);
   return formatted;
 }
 
@@ -490,9 +487,8 @@ function ProfileStats() {
       return allYears.reverse();
     };
 
-    //Can add if conditional before "return" to display specific year
-    //CHANGE YEAR.YEAR to show year state
     const printSqs = allYearSessions.map((year, yearIndex, array1) => {
+      console.log("allYearSessions", allYearSessions)
       if (selectedYear === year.year)
         return (
           <>
@@ -566,7 +562,7 @@ function ProfileStats() {
           </div>
         </div>
         <div className="calendar-container">
-          {printSqs}
+            {printSqs}
           <div className="button-group">{allYearButtons}</div>
         </div>
         <div>
