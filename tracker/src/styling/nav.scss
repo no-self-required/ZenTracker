@@ -1,23 +1,29 @@
+@media only screen and (max-width: 600px) {
+  .navbar{
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+
 .navbar {
   display: flex;
   justify-content: space-between;
   margin-top: 1em;
   margin-left: 150px;
-  margin-right: 150px;
 
   #navbar-dot-logo {
   display: flex;
   align-items: center;
+
     #navbar-dot {
       height: 20px;
       width: 20px;
       background-color: rgb(92, 92, 92);
       border-radius: 50%;
-      margin-right: 1em;
     }
   
     #navbar-logo {
-      font-size: 40px;
+      font-size: 20px;
       font-weight: bold;
     }
   }
@@ -28,7 +34,7 @@
     align-items: center;
     justify-content: space-evenly;
     width: 10em;
-    font-size: 24px;
+    font-size: 10px;
 
     .login, .signup{
       text-decoration: none;
