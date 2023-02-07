@@ -13,15 +13,16 @@
       padding: 1.5em 1.3em 0 1.1em;
       display: flex;
       flex-direction: column;
-      
-      .line {
-        width: 23em;
-      }
+    
+    }
 
-      .stat-container{
-        display: flex;
-        justify-content: space-between;
-      }
+    .line {
+      width: 23em;
+    }
+
+    .stat-container{
+      display: flex;
+      justify-content: space-between;
     }
 
     .stats-header{
@@ -66,23 +67,18 @@
     }
     
     #single-session-container{
-      border: 1px solid black;
       margin-bottom: 1em;
 
       .session-info-container{
         display: flex;
         flex-direction: column;
 
-        .stat-container{
-          display: flex;
-          justify-content: space-between;
-
           #log-container{
             word-break: break-word;
             text-align: right;
             width: 10em;
           }
-        }
+
       }
     }
     
@@ -99,7 +95,7 @@
       padding: 5px 0;
       border-radius: 6px;
      
-      /* Position the tooltip text - see examples below! */
+      /* Position the tooltip text */
       position: absolute;
       z-index: 1;
     }

@@ -28,15 +28,19 @@ function SingleSession(props) {
     <div>
       <div className="session-info-container">
         <div className="stat-container">
-          date: <div>{props.date}</div>
+          Date <div>{props.date}</div>
         </div>
+        <hr className="line" />
         <div className="stat-container">
-          length: <div>{props.length}</div>
+          Length <div>{props.length}</div>
         </div>
         {props.log && (
+          <>
+          <hr className="line" />
           <div className="stat-container">
-            log: <div id="log-container">{props.log}</div>
+            Log <div id="log-container">{props.log}</div>
           </div>
+          </>
         )}
       </div>
       <button className="delete-button" onClick={deleteRefresh}>
