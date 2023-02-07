@@ -68,6 +68,22 @@
     #single-session-container{
       border: 1px solid black;
       margin-bottom: 1em;
+
+      .session-info-container{
+        display: flex;
+        flex-direction: column;
+
+        .stat-container{
+          display: flex;
+          justify-content: space-between;
+
+          #log-container{
+            word-break: break-word;
+            text-align: right;
+            width: 10em;
+          }
+        }
+      }
     }
     
     .single-day:hover .tooltiptext{
