@@ -496,6 +496,8 @@ function ProfileStats() {
               {totalSessionYear(year.calendar)} sessions in {selectedYear}
             </div>
             <div className={`year-${yearIndex + 1} year`}>
+            <div id="month-row"><div>Jan</div><div>Feb</div></div>
+            <div id="week-wrapper">
               {year.calendar.map((week, weekIndex, array2) => {
                 return (
                   <div className={`week-${weekIndex + 1}`}>
@@ -516,10 +518,13 @@ function ProfileStats() {
                   </div>
                 );
               })}
+              </div>
             </div>
           </>
         );
     });
+
+    const sqsWrapper = <><div id="month-row">Jan</div>{printSqs}</>
 
     const allYearButtons = listAllYears().map((year) => {
       return (
