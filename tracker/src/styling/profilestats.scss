@@ -56,9 +56,39 @@
       }
 
       #month-row{
-        display: flex;
+        display: flex; 
+        width: 50em;
         margin-top: 1em;
         font-size: 1.5rem;
+
+        #feb{
+          margin-left: 2.7em;
+        }
+
+        #mar{
+          margin-left: 2.5em;
+        }
+
+        #apr, #oct{
+          margin-left: 3.5em;
+        }
+
+        #may, #sep{
+          margin-left: 2.4em;
+        }
+
+        #jun, #dec{
+          margin-left: 2.2em;
+        }
+
+        #jul, #nov{
+          margin-left: 2.6em;
+        }
+
+        #aug{
+          margin-left: 3.9em;
+        }
+
       }
     }
     
@@ -108,7 +138,7 @@
       border-radius: 6px;
      
       /* Position the tooltip text */
-      position: absolute;
+      // position: absolute;
       z-index: 1;
     }
     

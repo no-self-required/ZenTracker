@@ -488,7 +488,7 @@ function ProfileStats() {
     };
 
     const printSqs = allYearSessions.map((year, yearIndex, array1) => {
-      console.log("allYearSessions", allYearSessions)
+      console.log("allYearSessions", allYearSessions);
       if (selectedYear === year.year)
         return (
           <>
@@ -496,35 +496,53 @@ function ProfileStats() {
               {totalSessionYear(year.calendar)} sessions in {selectedYear}
             </div>
             <div className={`year-${yearIndex + 1} year`}>
-            <div id="month-row"><div>Jan</div><div>Feb</div></div>
-            <div id="week-wrapper">
-              {year.calendar.map((week, weekIndex, array2) => {
-                return (
-                  <div className={`week-${weekIndex + 1}`}>
-                    {week.map((days, daysIndex, array3) => {
-                      return (
-                        <SingleDay
-                          year={year.year}
-                          allYearSessions={allYearSessions}
-                          array2={array2}
-                          array3={array3}
-                          daysIndex={daysIndex}
-                          weekIndex={weekIndex}
-                          calcColor={calcColor}
-                          totalSessionsUser={totalSessionsUser}
-                        ></SingleDay>
-                      );
-                    })}
-                  </div>
-                );
-              })}
+              <div id="month-row">
+                <div>Jan</div>
+                <div id="feb">Feb</div>
+                <div id="mar">Mar</div>
+                <div id="apr">Apr</div>
+                <div id="may">May</div>
+                <div id="jun">Jun</div>
+                <div id="jul">Jul</div>
+                <div id="aug">Aug</div>
+                <div id="sep">Sep</div>
+                <div id="oct">Oct</div>
+                <div id="nov">Nov</div>
+                <div id="dec">Dec</div>
+              </div>
+              <div id="week-wrapper">
+                {year.calendar.map((week, weekIndex, array2) => {
+                  return (
+                    <div className={`week-${weekIndex + 1}`}>
+                      {week.map((days, daysIndex, array3) => {
+                        return (
+                          <SingleDay
+                            year={year.year}
+                            allYearSessions={allYearSessions}
+                            array2={array2}
+                            array3={array3}
+                            daysIndex={daysIndex}
+                            weekIndex={weekIndex}
+                            calcColor={calcColor}
+                            totalSessionsUser={totalSessionsUser}
+                          ></SingleDay>
+                        );
+                      })}
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </>
         );
     });
 
-    const sqsWrapper = <><div id="month-row">Jan</div>{printSqs}</>
+    const sqsWrapper = (
+      <>
+        <div id="month-row">Jan</div>
+        {printSqs}
+      </>
+    );
 
     const allYearButtons = listAllYears().map((year) => {
       return (
@@ -567,7 +585,7 @@ function ProfileStats() {
           </div>
         </div>
         <div className="calendar-container">
-            {printSqs}
+          {printSqs}
           <div className="button-group">{allYearButtons}</div>
         </div>
         <div>
