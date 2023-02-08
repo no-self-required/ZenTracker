@@ -49,7 +49,8 @@
         flex-direction: column;
         overflow-x: scroll;
         overflow-y: hidden;
-
+        border-radius: 1em;
+        padding: .5em;
         #week-wrapper{
           display: flex;
         }
@@ -58,37 +59,40 @@
       #month-row{
         display: flex; 
         width: 50em;
-        margin-top: 1em;
-        font-size: 1.5rem;
-
+        font-size: 1rem;
+        margin-left: 2.2em;
         #feb{
           margin-left: 2.7em;
         }
 
-        #mar{
-          margin-left: 2.5em;
-        }
-
-        #apr, #oct{
-          margin-left: 3.5em;
-        }
-
-        #may, #sep{
+        #mar, #apr{
           margin-left: 2.4em;
         }
 
+        #oct{
+
+        }
+
+        #may, #sep{
+
+        }
+
         #jun, #dec{
-          margin-left: 2.2em;
+
         }
 
         #jul, #nov{
-          margin-left: 2.6em;
+
         }
 
         #aug{
-          margin-left: 3.9em;
+
         }
 
+      }
+
+      #day-column{
+        font-size: 1rem;
       }
     }
     
