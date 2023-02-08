@@ -510,7 +510,19 @@ function ProfileStats() {
                 <div id="nov">Nov</div>
                 <div id="dec">Dec</div>
               </div>
+
               <div id="week-wrapper">
+              <div id="day-column">
+                <div>
+                  Mon
+                </div>
+                <div>
+                  Wed
+                </div>
+                <div>
+                  Fri
+                </div>
+              </div>
                 {year.calendar.map((week, weekIndex, array2) => {
                   return (
                     <div className={`week-${weekIndex + 1}`}>
