@@ -92,7 +92,13 @@
       }
 
       #day-column{
+        margin-top: 2em;
         font-size: 1rem;
+        height: 8.2em;
+        // padding-right: em;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
       }
     }
     
@@ -115,7 +121,7 @@
       margin-top: 1em;
       margin-bottom: 1em;
       padding: 1em;
-      
+
       .session-info-container{
         display: flex;
         flex-direction: column;
