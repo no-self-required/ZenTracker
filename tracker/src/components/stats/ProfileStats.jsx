@@ -510,7 +510,6 @@ function ProfileStats() {
                 <div id="nov">Nov</div>
                 <div id="dec">Dec</div>
               </div>
-
               <div id="week-wrapper">
               <div id="day-column">
                 <div>
@@ -549,12 +548,12 @@ function ProfileStats() {
         );
     });
 
-    const sqsWrapper = (
-      <>
-        <div id="month-row">Jan</div>
-        {printSqs}
-      </>
-    );
+    // const sqsWrapper = (
+    //   <>
+    //     <div id="month-row">Jan</div>
+    //     {printSqs}
+    //   </>
+    // );
 
     const allYearButtons = listAllYears().map((year) => {
       return (
