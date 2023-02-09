@@ -114,7 +114,8 @@
       background-color: rgba(216, 217, 255, 0.84);
       margin-top: 1em;
       margin-bottom: 1em;
-
+      padding: 1em;
+      
       .session-info-container{
         display: flex;
         flex-direction: column;
@@ -125,6 +126,9 @@
             width: 10em;
           }
 
+          .line-single{
+            width: 82vw;
+          }
       }
     }
     

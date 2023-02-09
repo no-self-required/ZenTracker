@@ -30,13 +30,13 @@ function SingleSession(props) {
         <div className="stat-container">
           Date <div>{props.date}</div>
         </div>
-        <hr className="line" />
+        <hr className="line-single" />
         <div className="stat-container">
           Length <div>{props.length}</div>
         </div>
         {props.log && (
           <>
-          <hr className="line" />
+          <hr className="line-single" />
           <div className="stat-container">
             Log <div id="log-container">{props.log}</div>
           </div>
