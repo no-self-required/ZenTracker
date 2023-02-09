@@ -61,34 +61,31 @@
         width: 50em;
         font-size: 1rem;
         margin-left: 2.2em;
+
         #feb{
-          margin-left: 2.7em;
+          margin-left: 4.7em;
         }
 
-        #mar, #apr{
-          margin-left: 2.4em;
+        #mar, #jul, #nov{
+          margin-left: 4.6em;
         }
 
-        #oct{
-
+        #apr, #jun, #sep, #dec{
+          margin-left: 4.4em;
         }
 
-        #may, #sep{
-
-        }
-
-        #jun, #dec{
-
-        }
-
-        #jul, #nov{
-
+        #may{
+          margin-left: 6em;
         }
 
         #aug{
-
+          margin-left: 6.4em;
         }
 
+        #oct{
+          margin-left: 6.1em;
+        }
+        
       }
 
       #day-column{
