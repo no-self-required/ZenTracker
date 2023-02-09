@@ -130,7 +130,7 @@
           }
 
           .line-single{
-            width: 82vw;
+            width: 21.2em;
           }
       }
     }
@@ -149,8 +149,7 @@
       border-radius: 6px;
      
       /* Position the tooltip text */
-      // position: absolute;
-      z-index: 1;
+      // position: fixed;
     }
     
     #square-light {
