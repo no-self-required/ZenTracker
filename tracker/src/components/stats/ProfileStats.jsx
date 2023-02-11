@@ -511,17 +511,11 @@ function ProfileStats() {
                 <div id="dec">Dec</div>
               </div>
               <div id="week-wrapper">
-              <div id="day-column">
-                <div>
-                  Mon
+                <div id="day-column">
+                  <div>Mon</div>
+                  <div>Wed</div>
+                  <div>Fri</div>
                 </div>
-                <div>
-                  Wed
-                </div>
-                <div>
-                  Fri
-                </div>
-              </div>
                 {year.calendar.map((week, weekIndex, array2) => {
                   return (
                     <div className={`week-${weekIndex + 1}`}>
@@ -653,7 +647,7 @@ function ProfileStats() {
           </button>
           <div className="stats-header">All Sessions</div>
           <hr className="line" />
-          {allSessions}
+          <div id="all-sessions-wrapper">{allSessions}</div>
         </div>
       </div>
     );
