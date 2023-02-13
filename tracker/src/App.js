@@ -28,8 +28,6 @@ function App() {
         headers: { token: token },
       });
 
-      // console.log("tokenResponse.data", tokenResponse.data);
-
       if (tokenResponse.data === true) {
         const userResponse = await axios.get("/api/users/profile", {
           headers: { token: token },
@@ -46,17 +44,6 @@ function App() {
 
     isLoggedIn();
   }, []);
-
-  // useEffect(() => {
-  //   console.log
-  // }, [])
-
-  // useEffect(() => {
-  //   const gData = window.localStorage.getItem('udata')
-  //   setUserData(JSON.parse(gData))
-  // }, [])
-
-  // console.log("userData", userData);
 
   return (
     <UserContext.Provider value={{ userData, setUserData }}>

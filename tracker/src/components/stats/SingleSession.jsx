@@ -11,10 +11,7 @@ function SingleSession(props) {
 
   //stays as pending? actually gets deleted
   async function deleteSession() {
-    // const userid = userData.user.id;
     const userid = props.currentData.user.id;
-    // console.log("current data userid", props.currentData.user.id)
-
     await axios.put(`/api/users/${userid}`, {
       $pull: { sessions: { id: id } },
     });
@@ -25,7 +22,7 @@ function SingleSession(props) {
     props.setIsUpdated(true);
   }
   return (
-    <div>
+    <>
       <div className="session-info-container">
         <div className="stat-container">
           Date <div>{props.date}</div>
@@ -36,17 +33,17 @@ function SingleSession(props) {
         </div>
         {props.log && (
           <>
-          <hr className="line-single" />
-          <div className="stat-container">
-            Log <div id="log-container">{props.log}</div>
-          </div>
+            <hr className="line-single" />
+            <div className="stat-container">
+              Log <div id="log-container">{props.log}</div>
+            </div>
           </>
         )}
       </div>
       <button className="delete-button" onClick={deleteRefresh}>
         Delete
       </button>
-    </div>
+    </>
   );
 }
 
