@@ -444,7 +444,6 @@ function ProfileStats() {
         const clonedArray = structuredClone(fullYearArray);
         let year;
         for (const session of yearKey) {
-          // console.log("session", session)
           year = session["year"];
           const dayOfYear = session["dayOfYear"];
           const index = dayOfYear - 1;
@@ -488,7 +487,6 @@ function ProfileStats() {
     };
 
     const printSqs = allYearSessions.map((year, yearIndex, array1) => {
-      console.log("allYearSessions", allYearSessions);
       if (selectedYear === year.year)
         return (
           <>
