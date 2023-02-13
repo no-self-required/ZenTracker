@@ -1,9 +1,5 @@
 @media only screen and (max-width: 600px) {
 
-  .navbar {
-    // margin-left: 0;
-  }
-
   .profile-stats-container{
     display: flex;
     flex-direction: column;
@@ -183,6 +179,16 @@
   
   .line {
     width: 23em;
+  }
+
+  #modal-wrapper{
+    display: flex;
+    flex-direction: column;
+
+    #length-wrapper, .log-input, .date-input{
+      margin-bottom: 1em;
+    }
+
   }
 
   .all-sessions-container{
