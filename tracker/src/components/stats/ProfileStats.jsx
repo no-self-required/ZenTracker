@@ -599,45 +599,49 @@ function ProfileStats() {
             shouldCloseOnOverlayClick={false}
           >
             <div id="modal-wrapper">
-              <label for="date-input">Date of session:</label>
+              <label for="date-input">Date of session</label>
               <input
                 className="date-input"
                 type="date"
                 onChange={(e) => setNewDate(e.target.value)}
               ></input>
               <div id="length-wrapper">
-                <div>Length of session:</div>
-                <label for="length-input-hour">h</label>
-                <input
-                  className="length-input-hour"
-                  type="number"
-                  min="0"
-                  max="24"
-                  onChange={(e) => setInputTimerHour(e.target.value)}
-                ></input>
-                <label for="length-input-minute">m</label>
-                <input
-                  className="length-input-minute"
-                  type="number"
-                  min="0"
-                  max="59"
-                  onChange={(e) => setInputTimerMinute(e.target.value)}
-                ></input>
-                <label for="length-input-second">s</label>
-                <input
-                  className="length-input-second"
-                  type="number"
-                  min="0"
-                  max="59"
-                  onChange={(e) => setInputTimerSecond(e.target.value)}
-                ></input>
+                <div>Length of session</div>
+                <div id="input-wrapper">
+                  <label for="length-input-hour">h</label>
+                  <input
+                    className="length-input-hour"
+                    type="number"
+                    min="0"
+                    max="24"
+                    onChange={(e) => setInputTimerHour(e.target.value)}
+                  ></input>
+                  <label for="length-input-minute">m</label>
+                  <input
+                    className="length-input-minute"
+                    type="number"
+                    min="0"
+                    max="59"
+                    onChange={(e) => setInputTimerMinute(e.target.value)}
+                  ></input>
+                  <label for="length-input-second">s</label>
+                  <input
+                    className="length-input-second"
+                    type="number"
+                    min="0"
+                    max="59"
+                    onChange={(e) => setInputTimerSecond(e.target.value)}
+                  ></input>
+                </div>
               </div>
-              <label for="log-input">Log:</label>
+              <label for="log-input">Log</label>
               <input
                 className="log-input"
                 onChange={(e) => setLog(e.target.value)}
               ></input>
-              <button onClick={closeModalSubmit}>submit</button>
+              <button onClick={closeModalSubmit} id="submit-button">
+                submit
+              </button>
             </div>
           </Modal>
         </div>

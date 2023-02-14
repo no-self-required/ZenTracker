@@ -98,9 +98,9 @@
     #square {
       width: 15px;
       height: 15px;
-      outline: 1.4px solid rgb(53, 53, 53);
+      outline: 1.4px solid rgb(0, 0, 0);
       border-radius: 3px;
-      background-color: grey;
+      background-color: rgb(152, 152, 152);
       margin: .3em;
     }
     
@@ -110,11 +110,12 @@
     }
     
     #single-session-container{
-      background-color: rgba(216, 217, 255, 0.84);
+      background-color: rgba(183, 185, 252, 0.84);
       margin-top: 1em;
       margin-bottom: 1em;
       padding: 1em;
       border-radius: .5em;
+      border: .5px solid black;
 
       .session-info-container{
         display: flex;
@@ -189,6 +190,24 @@
       margin-bottom: 1em;
     }
 
+    .date-input{
+      margin-top: .5em;
+    }
+
+    #input-wrapper{
+      display: flex;
+      justify-content: space-around;
+      margin-top: .5em;
+    }
+
+    #submit-button{
+      width: 4em;
+      margin-top: .5em;
+    }
+
+    .log-input{
+      margin-top: .5em;
+    }
   }
 
   .all-sessions-container{
