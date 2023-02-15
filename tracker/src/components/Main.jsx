@@ -741,14 +741,14 @@ function Main() {
                 <Reset onClick={resetTimer} />
               )}
               {timerState === TIMER_STATES["INITIAL"] && <ResetDisabled />}
-              <div className="fullscreen-mute">
+              {/* <div className="fullscreen-mute">
                 {!isFullScreen && (
                   <button onClick={onClickFsEnter}>enFS</button>
                 )}
                 {isFullScreen && (
                   <button onClick={onClickFsExit}>exitFS</button>
                 )}
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
