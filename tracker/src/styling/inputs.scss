@@ -103,8 +103,9 @@
   .inputs {
     display: flex;
     justify-content: space-between;
-    width: 40.60625em;
-    height: 10.84375em;
+    flex-direction: column;
+    // width: 40.60625em;
+    // height: 10.84375em;
     padding-top: 1.61em;
     padding-right: 0.5em;
 
@@ -124,15 +125,15 @@
     }
 
     .hoursInput {
-      margin-left: 0.015em;
+      // margin-left: 0.015em;
     }
 
     .minutesInput {
-      margin-left: -0.09em;
+      // margin-left: -0.09em;
     }
 
     .secondsInput {
-      margin-right: 0.209em;
+      // margin-right: 0.209em;
     }
   }
 }
