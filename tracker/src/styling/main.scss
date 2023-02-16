@@ -1,55 +1,52 @@
-@media only screen and (max-width: 600px) {
+.container {
+  display: flex;
+  justify-content: center;
+  height: 100%;
 
-}
-// .container {
-//   display: flex;
-//   justify-content: center;
-//   height: 100%;
+  .timer-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin: 5em;
 
-//   .timer-container {
-//     display: flex;
-//     justify-content: center;
-//     flex-direction: column;
-//     margin: 5em;
+    #notation-timer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      width: 100%;
 
-//     #notation-timer {
-//       display: flex;
-//       justify-content: center;
-//       align-items: center;
-//       flex-direction: column;
-//       width: 100%;
+      #timer {
+        text-align: right;
+        height: 65%;
+        width: 40%;
+        border: none;
+      }
 
-//       #timer {
-//         text-align: right;
-//         height: 65%;
-//         width: 40%;
-//         border: none;
-//       }
+      .notation {
+        display: flex;
+        z-index: 2;
+        font-size: 50px;
 
-//       .notation {
-//         display: flex;
-//         z-index: 2;
-//         font-size: 50px;
+        .notation-hours {
+          position: absolute;
+          margin-top: 1.86em;
+          margin-left: -3.156em;
+        }
+        .notation-minutes {
+          position: absolute;
+          margin-top: 1.86em;
+          margin-left: 1.128em;
 
-//         .notation-hours {
-//           position: absolute;
-//           margin-top: 1.86em;
-//           margin-left: -3.156em;
-//         }
-//         .notation-minutes {
-//           position: absolute;
-//           margin-top: 1.86em;
-//           margin-left: 1.128em;
+        }
+        .notation-seconds {
+          position: absolute;
+          margin-top: 1.86em;
+          margin-left: 5.66em;
 
-//         }
-//         .notation-seconds {
-//           position: absolute;
-//           margin-top: 1.86em;
-//           margin-left: 5.66em;
-
-//         }
-//       }
-//     }
+        }
+      }
+    }
 
     #timer-button-container {
       display: grid;
@@ -62,7 +59,6 @@
       .absolute-timer {
         .notationDisplay {
           display: flex;
-          flex-direction: column;
           justify-content: center;
 
           width: fit-content;
@@ -151,28 +147,28 @@
     #reset-button:hover {
       border-color: #84a8ff;
     }
-//     /* remove number input arrows Chrome, Safari, Edge, Opera */
-//     #timer::-webkit-outer-spin-button,
-//     #timer::-webkit-inner-spin-button {
-//       -webkit-appearance: none;
-//       margin: 0;
-//     }
+    /* remove number input arrows Chrome, Safari, Edge, Opera */
+    #timer::-webkit-outer-spin-button,
+    #timer::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
 
-//     /* Firefox */
-//     #timer[type="number"] {
-//       -moz-appearance: textfield;
-//     }
+    /* Firefox */
+    #timer[type="number"] {
+      -moz-appearance: textfield;
+    }
 
-//     #timer:focus {
-//       outline: none;
-//     }
-//   }
-// }
+    #timer:focus {
+      outline: none;
+    }
+  }
+}
 
-// .container {
-//   background: #fff;
-// }
+.container {
+  background: #fff;
+}
 
-// .fullscreen-enabled .container {
-//   background: rgb(255, 255, 255);
-// }
+.fullscreen-enabled .container {
+  background: rgb(255, 255, 255);
+}
