@@ -646,7 +646,7 @@ function Main() {
   };
 
   return (
-    <FullScreen handle={fsHandle}>
+    // <FullScreen handle={fsHandle}>
       <div className="container">
         <div className="timer-container">
           {timerState === TIMER_STATES["EDIT"] && (
@@ -720,7 +720,7 @@ function Main() {
               {timerState === TIMER_STATES["FINISHED"] && (
                 <Ok onClick={stopAlarm} />
               )}
-              {timerState === TIMER_STATES["FINISHED"] && loggedin && (
+              {/* {timerState === TIMER_STATES["FINISHED"] && loggedin && (
                 <div>
                   <Modal
                     isOpen={modalIsOpen}
@@ -736,7 +736,7 @@ function Main() {
                     <button onClick={closeModal}>submit</button>
                   </Modal>
                 </div>
-              )}
+              )} */}
               {timerState !== TIMER_STATES["INITIAL"] && (
                 <Reset onClick={resetTimer} />
               )}
@@ -753,7 +753,7 @@ function Main() {
           </div>
         </div>
       </div>
-    </FullScreen>
+    // </FullScreen>
   );
 }
 
