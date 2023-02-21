@@ -2,6 +2,7 @@
   height: 10.84375em;
   display: flex;
   justify-content: center;
+  
   .buttons {
     position: absolute;
     // z-index: 1;
@@ -28,7 +29,6 @@
     .up {
       display: flex;
       justify-content: space-between;
-      width: 40em;
       padding-top: 0.6em;
       .button-up-H {
         margin-left: 4.2em;
@@ -46,7 +46,6 @@
     .down {
       display: flex;
       justify-content: space-between;
-      width: 40em;
       padding-top: 8.5em;
       .button-down-H {
         margin-left: 4.2em;
@@ -60,9 +59,9 @@
         margin-right: 7.2em;
       }
     }
-    // .button-up-H, .button-down-H, .button-up-M, .button-down-M, .button-up-S, .button-down-S:hover{
-    //   border: 1px solid grey;
-    // }
+    .button-up-H, .button-down-H, .button-up-M, .button-down-M, .button-up-S, .button-down-S:hover{
+      border: 1px solid grey;
+    }
 
   }
   .boxes {
