@@ -275,32 +275,10 @@ function TimerHMS(props) {
 
   const longPressUpS = useLongPress(handleButtonClickUpS, 135);
   const longPressDownS = useLongPress(handleButtonClickDownS, 135);
+  
   return (
     <div className="inputs-boxes">
       <div className="buttons">
-        <div className="up">
-          <button
-            className="button-up-H"
-            onClick={handleButtonClickUpH}
-            {...longPressUpH}
-          >
-            <span class="material-icons" >arrow_drop_up</span>
-          </button>
-          <button
-            className="button-up-M"
-            onClick={handleButtonClickUpM}
-            {...longPressUpM}
-          >
-            <span class="material-icons" >arrow_drop_up</span>
-          </button>
-          <button
-            className="button-up-S"
-            onClick={handleButtonClickUpS}
-            {...longPressUpS}
-          >
-            <span class="material-icons">arrow_drop_up</span>
-          </button>
-        </div>
         <div className="down">
           <button
             className="button-down-H"
@@ -323,6 +301,29 @@ function TimerHMS(props) {
             {...longPressDownS}
           >
             <span class="material-icons">arrow_drop_down</span>
+          </button>
+        </div>
+        <div className="up">
+          <button
+            className="button-up-H"
+            onClick={handleButtonClickUpH}
+            {...longPressUpH}
+          >
+            <span class="material-icons" >arrow_drop_up</span>
+          </button>
+          <button
+            className="button-up-M"
+            onClick={handleButtonClickUpM}
+            {...longPressUpM}
+          >
+            <span class="material-icons" >arrow_drop_up</span>
+          </button>
+          <button
+            className="button-up-S"
+            onClick={handleButtonClickUpS}
+            {...longPressUpS}
+          >
+            <span class="material-icons">arrow_drop_up</span>
           </button>
         </div>
       </div>
