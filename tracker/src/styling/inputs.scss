@@ -5,7 +5,7 @@
   
   .buttons {
     position: absolute;
-    // z-index: 1;
+    display: flex;
 
     .button-up-H,
     .button-down-H,
@@ -29,34 +29,36 @@
     .up {
       display: flex;
       justify-content: space-between;
-      padding-top: 0.6em;
+      transform: rotate(90deg);
+
       .button-up-H {
-        margin-left: 4.2em;
+
       }
 
       .button-up-M {
-        margin-right: 1em;
+
       }
 
       .button-up-S {
-        margin-right: 7.2em;
+
       }
     }
 
     .down {
       display: flex;
+      transform: rotate(90deg);
       justify-content: space-between;
-      padding-top: 8.5em;
+
       .button-down-H {
-        margin-left: 4.2em;
+
       }
 
       .button-down-M {
-        margin-right: 1em;
+
       }
 
       .button-down-S {
-        margin-right: 7.2em;
+
       }
     }
     .button-up-H, .button-down-H, .button-up-M, .button-down-M, .button-up-S, .button-down-S:hover{
@@ -66,36 +68,36 @@
   }
   .boxes {
     .boxH {
-      height: 11em;
-      width: 3em;
-      background-color: rgb(131, 131, 131);
-      opacity: 0%;
-      position: absolute;
-      z-index: 2;
-      right: 0;
-      margin-right: 64.8em;
+      // height: 11em;
+      // width: 3em;
+      // background-color: rgb(131, 131, 131);
+      // opacity: 0%;
+      // position: absolute;
+      // z-index: 2;
+      // right: 0;
+      // margin-right: 64.8em;
     }
 
     .boxM {
-      height: 11em;
-      width: 3em;
-      background-color: rgb(129, 80, 80);
-      opacity: 0%;
-      position: absolute;
-      z-index: 2;
-      right: 0;
-      margin-right: 51.4em;
+      // height: 11em;
+      // width: 3em;
+      // background-color: rgb(129, 80, 80);
+      // opacity: 0%;
+      // position: absolute;
+      // z-index: 2;
+      // right: 0;
+      // margin-right: 51.4em;
     }
 
     .boxS {
-      height: 11em;
-      width: 3em;
-      background-color: rgb(82, 50, 50);
-      opacity: 0%;
-      position: absolute;
-      z-index: 2;
-      right: 0;
-      margin-right: 37.2em;
+      // height: 11em;
+      // width: 3em;
+      // background-color: rgb(82, 50, 50);
+      // opacity: 0%;
+      // position: absolute;
+      // z-index: 2;
+      // right: 0;
+      // margin-right: 37.2em;
     }
   }
 
