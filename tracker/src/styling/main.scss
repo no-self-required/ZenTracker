@@ -57,42 +57,40 @@
       }
 
       .absolute-timer {
+
         .notationDisplay {
           display: flex;
           justify-content: center;
-
+          flex-direction: column;
           width: fit-content;
           font-size: 144px;
           // border-bottom: solid rgba(128, 128, 128, 0.596) 1px;
 
           .hours {
             display: grid;
-            grid-template-columns: 0.5fr 0.5fr 0.5fr;
+            grid-template-columns: 1fr 1fr 0.5fr;
 
             .notationH {
               font-size: 50px;
               padding-top: 1.86em;
-              padding-right: 0.4em;
             }
           }
 
           .minutes {
             display: grid;
-            grid-template-columns: 0.5fr 0.5fr 0.5fr;
+            grid-template-columns: 1fr 1fr 0.5fr;
             .notationM {
               font-size: 50px;
               padding-top: 1.86em;
-              padding-right: 0.4em;
             }
           }
 
           .seconds {
             display: grid;
-            grid-template-columns: 0.5fr 0.5fr 0.5fr;
+            grid-template-columns: 1fr 1fr 0.5fr;
             .notationS {
               font-size: 50px;
               padding-top: 1.86em;
-              padding-right: 0.4em;
             }
           }
         }
