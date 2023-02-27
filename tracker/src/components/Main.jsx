@@ -689,7 +689,6 @@ function Main() {
             </div>
           </div>
         )}
-        <div id="timer-button-container">
           {timerState !== TIMER_STATES["EDIT"] && (
             <div id="display-timer-container">
               <div className="absolute-timer" onClick={editTimerState}>
@@ -757,7 +756,6 @@ function Main() {
           </div>
         </div>
       </div>
-    </div>
     // </FullScreen>
   );
 }
