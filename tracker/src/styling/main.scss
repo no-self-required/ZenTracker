@@ -7,16 +7,15 @@
     display: flex;
     justify-content: space-between;
     flex-direction: column;
-    height: 100vh;
+    height: 95vh;
     // margin-top: 10em;
 
     #notation-timer {
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-left: 1em;
       margin-top: 10em;
-      width: 100%;
+      width: 95%;
       height: 24em;
 
       #timer {
@@ -49,7 +48,6 @@
     }
 
     #timer-button-container {
-margin-bottom: 1em;
 
       #display-timer-container {
         display: flex;
