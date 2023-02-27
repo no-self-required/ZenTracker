@@ -2,11 +2,13 @@
   // height: 10.84375em;
   display: flex;
   justify-content: center;
+  margin-left: 4em;
   
   .buttons {
     position: absolute;
     display: flex;
-    margin-top: 12em;
+    margin-top: 3.5em;
+    height: 18em;
 
     .button-up-H,
     .button-down-H,
@@ -30,8 +32,9 @@
     .up {
       display: flex;
       justify-content: space-between;
-      transform: rotate(90deg);
-      width: 20em;
+      flex-direction: column;
+      margin-left: 15em;
+
       .button-up-H {
 
       }
@@ -47,9 +50,8 @@
 
     .down {
       display: flex;
-      transform: rotate(90deg);
       justify-content: space-between;
-      width: 20em;
+      flex-direction: column;
 
       .button-down-H {
 

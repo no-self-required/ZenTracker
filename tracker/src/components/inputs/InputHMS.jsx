@@ -275,7 +275,7 @@ function TimerHMS(props) {
 
   const longPressUpS = useLongPress(handleButtonClickUpS, 135);
   const longPressDownS = useLongPress(handleButtonClickDownS, 135);
-  
+
   return (
     <div className="inputs-boxes">
       <div className="buttons">
@@ -285,7 +285,7 @@ function TimerHMS(props) {
             onClick={handleButtonClickDownH}
             {...longPressDownH}
           >
-            <span class="material-icons">arrow_drop_down</span>
+            <span class="material-icons">arrow_left</span>
           </button>
 
           <button
@@ -293,14 +293,14 @@ function TimerHMS(props) {
             onClick={handleButtonClickDownM}
             {...longPressDownM}
           >
-            <span class="material-icons">arrow_drop_down</span>
+            <span class="material-icons">arrow_left</span>
           </button>
           <button
             className="button-down-S"
             onClick={handleButtonClickDownS}
             {...longPressDownS}
           >
-            <span class="material-icons">arrow_drop_down</span>
+            <span class="material-icons">arrow_left</span>
           </button>
         </div>
         <div className="up">
@@ -309,21 +309,21 @@ function TimerHMS(props) {
             onClick={handleButtonClickUpH}
             {...longPressUpH}
           >
-            <span class="material-icons" >arrow_drop_up</span>
+            <span class="material-icons" >arrow_right</span>
           </button>
           <button
             className="button-up-M"
             onClick={handleButtonClickUpM}
             {...longPressUpM}
           >
-            <span class="material-icons" >arrow_drop_up</span>
+            <span class="material-icons" >arrow_right</span>
           </button>
           <button
             className="button-up-S"
             onClick={handleButtonClickUpS}
             {...longPressUpS}
           >
-            <span class="material-icons">arrow_drop_up</span>
+            <span class="material-icons">arrow_right</span>
           </button>
         </div>
       </div>
