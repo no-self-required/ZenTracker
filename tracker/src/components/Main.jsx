@@ -689,42 +689,51 @@ function Main() {
             </div>
           </div>
         )}
-          {timerState !== TIMER_STATES["EDIT"] && (
-            <div id="display-timer-container">
-              <div className="absolute-timer" onClick={editTimerState}>
-                <div className="notationDisplay">
+        {timerState !== TIMER_STATES["EDIT"] && (
+          <div id="display-timer-container">
+            <div className="absolute-timer" onClick={editTimerState}>
+              <div className="notationDisplay">
+                {(firstH || secondH) && (
                   <div className="hours">
                     <FirstH value={firstH} />
                     <SecondH value={secondH} />
-                    {(firstH || secondH) && <NotationH />}
+                    <NotationH />
                   </div>
-                  <div className="minutes">
-                    <FirstM value={firstM} />
-                    <SecondM value={secondM} />
-                    {(firstM || secondM) && <NotationM />}
-                  </div>
-                  <div className="seconds">
-                    <FirstS value={firstS} />
-                    <SecondS value={secondS} />
-                    {(firstS || secondS) && <NotationS />}
-                  </div>
+                )}
+
+
+                  {(firstM || secondM) && 
+                <div className="minutes">
+                                    <FirstM value={firstM} />
+                  <SecondM value={secondM} />
+                <NotationM />
                 </div>
+                }
+
+                  {(firstS || secondS) && 
+                <div className="seconds">
+                                    <FirstS value={firstS} />
+                  <SecondS value={secondS} />
+                <NotationS />
+                </div>
+                }
               </div>
             </div>
+          </div>
+        )}
+        <div id="button-container">
+          {(timerState === TIMER_STATES["INITIAL"] ||
+            timerState === TIMER_STATES["STOPPED"] ||
+            timerState === TIMER_STATES["EDIT"]) && (
+            <Start onClick={startTimer} />
           )}
-          <div id="button-container">
-            {(timerState === TIMER_STATES["INITIAL"] ||
-              timerState === TIMER_STATES["STOPPED"] ||
-              timerState === TIMER_STATES["EDIT"]) && (
-              <Start onClick={startTimer} />
-            )}
-            {timerState === TIMER_STATES["STARTED"] && (
-              <Stop onClick={stopTimer} />
-            )}
-            {timerState === TIMER_STATES["FINISHED"] && (
-              <Ok onClick={stopAlarm} />
-            )}
-            {/* {timerState === TIMER_STATES["FINISHED"] && loggedin && (
+          {timerState === TIMER_STATES["STARTED"] && (
+            <Stop onClick={stopTimer} />
+          )}
+          {timerState === TIMER_STATES["FINISHED"] && (
+            <Ok onClick={stopAlarm} />
+          )}
+          {/* {timerState === TIMER_STATES["FINISHED"] && loggedin && (
                 <div>
                   <Modal
                     isOpen={modalIsOpen}
@@ -741,11 +750,11 @@ function Main() {
                   </Modal>
                 </div>
               )} */}
-            {timerState !== TIMER_STATES["INITIAL"] && (
-              <Reset onClick={resetTimer} />
-            )}
-            {timerState === TIMER_STATES["INITIAL"] && <ResetDisabled />}
-            {/* <div className="fullscreen-mute">
+          {timerState !== TIMER_STATES["INITIAL"] && (
+            <Reset onClick={resetTimer} />
+          )}
+          {timerState === TIMER_STATES["INITIAL"] && <ResetDisabled />}
+          {/* <div className="fullscreen-mute">
                 {!isFullScreen && (
                   <button onClick={onClickFsEnter}>enFS</button>
                 )}
@@ -753,9 +762,9 @@ function Main() {
                   <button onClick={onClickFsExit}>exitFS</button>
                 )}
               </div> */}
-          </div>
         </div>
       </div>
+    </div>
     // </FullScreen>
   );
 }

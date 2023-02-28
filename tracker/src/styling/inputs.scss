@@ -35,38 +35,12 @@
       flex-direction: column;
       margin-left: 15em;
 
-      .button-up-H {
-
-      }
-
-      .button-up-M {
-
-      }
-
-      .button-up-S {
-
-      }
     }
 
     .down {
       display: flex;
       justify-content: space-between;
       flex-direction: column;
-
-      .button-down-H {
-
-      }
-
-      .button-down-M {
-
-      }
-
-      .button-down-S {
-
-      }
-    }
-    .button-up-H, .button-down-H, .button-up-M, .button-down-M, .button-up-S, .button-down-S:hover{
-      // border: 1px solid grey;
     }
 
   }
