@@ -9,9 +9,9 @@ import { UserContext } from "../App";
 import { v4 as uuidv4 } from "uuid";
 
 import getDayOfYear from "date-fns/getDayOfYear";
-import getYear from "date-fns/getYear";
+import getYear from 'date-fns/getYear';
 import formatDuration from "date-fns/formatDuration";
-import format from "date-fns/format";
+import format from 'date-fns/format'
 
 import "../styling/main.scss";
 
@@ -150,6 +150,7 @@ function displayInputValue(totalSeconds) {
 }
 
 function Main() {
+
   const TIMER_STATES = {
     INITIAL: 0,
     STARTED: 1,
@@ -221,13 +222,7 @@ function Main() {
         setIntervalID(intervalID);
       }
     }
-  }, [
-    timerState,
-    TIMER_STATES,
-    intervalID,
-    totalSeconds,
-    decrementTotalSeconds,
-  ]);
+  }, [timerState, TIMER_STATES, intervalID, totalSeconds, decrementTotalSeconds]);
 
   useEffect(() => {
     if (timerState === TIMER_STATES["FINISHED"]) {
@@ -337,6 +332,8 @@ function Main() {
     resetTimer();
   }
 
+
+
   //adding log must be done through a handler
   const [log, setLog] = useState("");
 
@@ -345,17 +342,13 @@ function Main() {
     let generateId = uuidv4();
     const constantId = generateId;
     // const length = calculateSeconds(initialTime);
-    const totalSeconds = calculateSeconds(initialTime);
+    const totalSeconds = calculateSeconds(initialTime)
     const formattedTime = displayInputValue(calculateSeconds(initialTime));
     const sessionLog = log;
-    const formattedDate = format(new Date(), "PPP");
+    const formattedDate = format(new Date(), "PPP")
     const dayOfYear = getDayOfYear(new Date());
-    const year = getYear(new Date());
-    const lengthString = formatDuration({
-      hours: formattedTime[0],
-      minutes: formattedTime[1],
-      seconds: formattedTime[2],
-    });
+    const year = getYear(new Date())
+    const lengthString = formatDuration({ hours: formattedTime[0], minutes: formattedTime[1], seconds: formattedTime[2]})
 
     await axios.put(`/api/users/${id}`, {
       $push: {
@@ -626,6 +619,8 @@ function Main() {
     setInputTimerHour(input);
   }
 
+
+
   const fsHandle = useFullScreenHandle();
   const [isFullScreen, setIsFullScreen] = useState(false);
 
@@ -651,89 +646,81 @@ function Main() {
   };
 
   return (
-    // <FullScreen handle={fsHandle}>
-    <div className="container">
-      <div className="timer-container">
-        {timerState === TIMER_STATES["EDIT"] && (
-          <div id="notation-timer">
-            <TimerHMS
-              // ref={timerH}
-              valueH={inputTimerHour}
-              valueM={inputTimerMinute}
-              valueS={inputTimerSecond}
-              onChangeH={handleChangeHour}
-              onChangeM={handleChangeMinute}
-              onChangeS={handleChangeSecond}
-              onKeyPress={numOnly}
-              selection3={selection3}
-              setSelection3={setSelection3}
-              inputEle2={inputEle2}
-              setInputEle2={setInputEle2}
-              InputTimerHour={inputTimerHour}
-              setInputTimerHour={setInputTimerHour}
-              InputTimerMinute={inputTimerMinute}
-              setInputTimerMinute={setInputTimerMinute}
-              InputTimerSecond={inputTimerSecond}
-              setInputTimerSecond={setInputTimerSecond}
-            ></TimerHMS>
-            <div className="notation">
-              <div className="notation-hours">
-                <NotationH />
+    <FullScreen handle={fsHandle}>
+      <div className="container">
+        <div className="timer-container">
+          {timerState === TIMER_STATES["EDIT"] && (
+            <div id="notation-timer">
+              <div className="notation">
+                <div className="notation-hours">
+                  <NotationH />
+                </div>
+                <div className="notation-minutes">
+                  <NotationM />
+                </div>
+                <div className="notation-seconds">
+                  <NotationS />
+                </div>
               </div>
-              <div className="notation-minutes">
-                <NotationM />
-              </div>
-              <div className="notation-seconds">
-                <NotationS />
-              </div>
+              <TimerHMS
+                // ref={timerH}
+                valueH={inputTimerHour}
+                valueM={inputTimerMinute}
+                valueS={inputTimerSecond}
+                onChangeH={handleChangeHour}
+                onChangeM={handleChangeMinute}
+                onChangeS={handleChangeSecond}
+                onKeyPress={numOnly}
+                selection3={selection3}
+                setSelection3={setSelection3}
+                inputEle2={inputEle2}
+                setInputEle2={setInputEle2}
+                InputTimerHour={inputTimerHour}
+                setInputTimerHour={setInputTimerHour}
+                InputTimerMinute={inputTimerMinute}
+                setInputTimerMinute={setInputTimerMinute}
+                InputTimerSecond={inputTimerSecond}
+                setInputTimerSecond={setInputTimerSecond}
+              ></TimerHMS>
             </div>
-          </div>
-        )}
-        {timerState !== TIMER_STATES["EDIT"] && (
-          <div id="display-timer-container">
-            <div className="absolute-timer" onClick={editTimerState}>
-              <div className="notationDisplay">
-                {(firstH || secondH) && (
-                  <div className="hours">
-                    <FirstH value={firstH} />
-                    <SecondH value={secondH} />
-                    <NotationH />
+          )}
+          <div id="timer-button-container">
+            {timerState !== TIMER_STATES["EDIT"] && (
+              <div id="display-timer-container">
+                <div className="absolute-timer" onClick={editTimerState}>
+                  <div className="notationDisplay">
+                    <div className="hours">
+                      <FirstH value={firstH} />
+                      <SecondH value={secondH} />
+                      {(firstH || secondH) && <NotationH />}
+                    </div>
+                    <div className="minutes">
+                      <FirstM value={firstM} />
+                      <SecondM value={secondM} />
+                      {(firstM || secondM) && <NotationM />}
+                    </div>
+                    <div className="seconds">
+                      <FirstS value={firstS} />
+                      <SecondS value={secondS} />
+                      {(firstS || secondS) && <NotationS />}
+                    </div>
                   </div>
-                )}
-
-
-                  {(firstM || secondM) && 
-                <div className="minutes">
-                                    <FirstM value={firstM} />
-                  <SecondM value={secondM} />
-                <NotationM />
                 </div>
-                }
-
-                  {(firstS || secondS) && 
-                <div className="seconds">
-                                    <FirstS value={firstS} />
-                  <SecondS value={secondS} />
-                <NotationS />
-                </div>
-                }
               </div>
-            </div>
-          </div>
-        )}
-        <div id="button-container">
-          {(timerState === TIMER_STATES["INITIAL"] ||
-            timerState === TIMER_STATES["STOPPED"] ||
-            timerState === TIMER_STATES["EDIT"]) && (
-            <Start onClick={startTimer} />
-          )}
-          {timerState === TIMER_STATES["STARTED"] && (
-            <Stop onClick={stopTimer} />
-          )}
-          {timerState === TIMER_STATES["FINISHED"] && (
-            <Ok onClick={stopAlarm} />
-          )}
-          {/* {timerState === TIMER_STATES["FINISHED"] && loggedin && (
+            )}
+            <div id="button-container">
+              {(timerState === TIMER_STATES["INITIAL"] ||
+                timerState === TIMER_STATES["STOPPED"] ||
+                timerState === TIMER_STATES["EDIT"]) && (
+                <Start onClick={startTimer} />
+              )}
+              {timerState === TIMER_STATES["STARTED"] && (
+                <Stop onClick={stopTimer} />
+              )}
+              {timerState === TIMER_STATES["FINISHED"] && (
+                <Ok onClick={stopAlarm} />
+              )}
+              {timerState === TIMER_STATES["FINISHED"] && loggedin && (
                 <div>
                   <Modal
                     isOpen={modalIsOpen}
@@ -749,23 +736,24 @@ function Main() {
                     <button onClick={closeModal}>submit</button>
                   </Modal>
                 </div>
-              )} */}
-          {timerState !== TIMER_STATES["INITIAL"] && (
-            <Reset onClick={resetTimer} />
-          )}
-          {timerState === TIMER_STATES["INITIAL"] && <ResetDisabled />}
-          {/* <div className="fullscreen-mute">
+              )}
+              {timerState !== TIMER_STATES["INITIAL"] && (
+                <Reset onClick={resetTimer} />
+              )}
+              {timerState === TIMER_STATES["INITIAL"] && <ResetDisabled />}
+              <div className="fullscreen-mute">
                 {!isFullScreen && (
                   <button onClick={onClickFsEnter}>enFS</button>
                 )}
                 {isFullScreen && (
                   <button onClick={onClickFsExit}>exitFS</button>
                 )}
-              </div> */}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-    // </FullScreen>
+    </FullScreen>
   );
 }
 
