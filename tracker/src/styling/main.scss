@@ -197,8 +197,13 @@
 
   #notation-timer {
     flex-direction: row !important;
+    justify-content: center;
   }
 
+  .notation{
+    order: 1;
+    flex-direction: column;
+  }
   .timer-container {
     margin: 0 !important;
   }
