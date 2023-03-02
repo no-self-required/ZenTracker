@@ -137,20 +137,23 @@
   }
 }
 
-// @media only screen and (max-width: 600px) {
-//   .inputs{
-//     flex-direction: column;
-//   }
+@media only screen and (max-width: 600px) {
+  .inputs{
+    flex-direction: column;
+    width: 11em !important;
+    height: 24.6em !important;
+    padding: 0em !important;
+    .hoursInput {
+      margin-left: 0em !important;
+    }
 
-//   .hoursInput {
-//     margin-left: 0;
-//   }
+    .minutesInput {
+      margin-left: 0em !important;
+    }
 
-//   .minutesInput {
-//     margin-left: 0;
-//   }
+    .secondsInput {
+      margin-left: 0em !important;
+    }
+  }
 
-//   .secondsInput {
-//     margin-right: 0;
-//   }
-// }
+}
