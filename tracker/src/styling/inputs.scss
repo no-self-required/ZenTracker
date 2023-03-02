@@ -138,6 +138,11 @@
 }
 
 @media only screen and (max-width: 600px) {
+
+  .inputs-boxes{
+    height: 33.84375rem !important;
+  }
+  
   .inputs{
     flex-direction: column;
     width: 11em !important;
