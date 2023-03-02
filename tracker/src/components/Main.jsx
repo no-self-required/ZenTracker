@@ -646,7 +646,7 @@ function Main() {
   };
 
   return (
-    <FullScreen handle={fsHandle}>
+    // <FullScreen handle={fsHandle}>
       <div className="container">
         <div className="timer-container">
           {timerState === TIMER_STATES["EDIT"] && (
@@ -741,19 +741,19 @@ function Main() {
                 <Reset onClick={resetTimer} />
               )}
               {timerState === TIMER_STATES["INITIAL"] && <ResetDisabled />}
-              <div className="fullscreen-mute">
+              {/* <div className="fullscreen-mute">
                 {!isFullScreen && (
                   <button onClick={onClickFsEnter}>enFS</button>
                 )}
                 {isFullScreen && (
                   <button onClick={onClickFsExit}>exitFS</button>
                 )}
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
       </div>
-    </FullScreen>
+    /* </FullScreen> */
   );
 }
 
