@@ -684,8 +684,7 @@ function Main() {
               ></TimerHMS>
             </div>
           )}
-          <div id="timer-button-container">
-            {timerState !== TIMER_STATES["EDIT"] && (
+                      {timerState !== TIMER_STATES["EDIT"] && (
               <div id="display-timer-container">
                 <div className="absolute-timer" onClick={editTimerState}>
                   <div className="notationDisplay">
@@ -708,6 +707,7 @@ function Main() {
                 </div>
               </div>
             )}
+          <div id="timer-button-container">
             <div id="button-container">
               {(timerState === TIMER_STATES["INITIAL"] ||
                 timerState === TIMER_STATES["STOPPED"] ||
