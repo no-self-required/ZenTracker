@@ -177,21 +177,23 @@
     width: 100%;
 
     .timer-container {
-      justify-content: space-evenly;
-      margin: 0 !important;
+      margin-top: 1em 0em 0em 0em;
+      height: 95%;
+
 
       #timer-button-container {
         margin-bottom: 2em;
-
+        height: 100%;
         #display-timer-container {
           .absolute-timer {
             .notation-display {
               display: flex !important;
               flex-direction: column !important;
+              margin-left: .5em;
 
               .hours {
                 display: grid;
-                grid-template-columns: 1fr 1fr 0.5fr;
+                grid-template-columns: 1fr 1fr 1fr;
                 height: 0.9em;
 
                 .notationH {
@@ -203,7 +205,7 @@
 
               .minutes {
                 display: grid;
-                grid-template-columns: 1fr 1fr 0.5fr;
+                grid-template-columns: 1fr 1fr 1fr;
                 height: 0.9em;
 
                 .notationM {
@@ -215,7 +217,7 @@
 
               .seconds {
                 display: grid;
-                grid-template-columns: 1fr 1fr 0.5fr;
+                grid-template-columns: 1fr 1fr 1fr;
                 // height: 0.9em;
 
                 .notationS {
