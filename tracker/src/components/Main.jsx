@@ -690,29 +690,37 @@ function Main() {
           </div>
         )}
         <div id="timer-button-container">
-        {timerState !== TIMER_STATES["EDIT"] && (
-          <div id="display-timer-container">
-            <div className="absolute-timer" onClick={editTimerState}>
-              <div className="notation-display">
-                <div className="hours">
-                  <FirstH value={firstH} />
-                  <SecondH value={secondH} />
-                  {(firstH || secondH) && <NotationH />}
-                </div>
-                <div className="minutes">
-                  <FirstM value={firstM} />
-                  <SecondM value={secondM} />
-                  {(firstM || secondM) && <NotationM />}
-                </div>
-                <div className="seconds">
-                  <FirstS value={firstS} />
-                  <SecondS value={secondS} />
-                  {(firstS || secondS) && <NotationS />}
+          {timerState !== TIMER_STATES["EDIT"] && (
+            <div id="display-timer-container">
+              <div className="absolute-timer" onClick={editTimerState}>
+                <div className="notation-display">
+                  {(firstH || secondH) && (
+                    <div className="hours">
+                      <FirstH value={firstH} />
+                      <SecondH value={secondH} />
+                      <NotationH />
+                    </div>
+                  )}
+
+                  {(firstM || secondM) && (
+                    <div className="minutes">
+                      <FirstM value={firstM} />
+                      <SecondM value={secondM} />
+                      <NotationM />
+                    </div>
+                  )}
+
+                  {(firstS || secondS) && (
+                    <div className="seconds">
+                      <FirstS value={firstS} />
+                      <SecondS value={secondS} />
+                      <NotationS />
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
           <div id="button-container">
             {(timerState === TIMER_STATES["INITIAL"] ||
               timerState === TIMER_STATES["STOPPED"] ||
