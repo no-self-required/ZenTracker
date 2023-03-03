@@ -147,10 +147,10 @@
       position: static;
 
       .up {
-        height: 10em;
+        height: 70%;
         width: 2em !important;
-        margin-left: 0em;
         flex-direction: column;
+        margin-top: 3.5em;
         padding-top: 0 !important;
         order: 1;
 
@@ -168,10 +168,12 @@
       }
 
       .down{
-        height: 10em;
+        height: 70%;
         width: 2em !important;
         flex-direction: column;
         padding-top: 0 !important;
+        margin-top: 3.5em;
+
 
         .button-down-H {
           margin-left: 0 !important;
