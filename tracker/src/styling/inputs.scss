@@ -2,6 +2,7 @@
   height: 10.84375em;
   display: flex;
   justify-content: center;
+
   .buttons {
     position: absolute;
     // z-index: 1;
@@ -30,6 +31,7 @@
       justify-content: space-between;
       width: 40em;
       padding-top: 0.6em;
+
       .button-up-H {
         margin-left: 4.2em;
       }
@@ -48,6 +50,7 @@
       justify-content: space-between;
       width: 40em;
       padding-top: 8.5em;
+
       .button-down-H {
         margin-left: 4.2em;
       }
@@ -60,11 +63,13 @@
         margin-right: 7.2em;
       }
     }
+
     // .button-up-H, .button-down-H, .button-up-M, .button-down-M, .button-up-S, .button-down-S:hover{
     //   border: 1px solid grey;
     // }
 
   }
+
   .boxes {
     .boxH {
       height: 11em;
@@ -139,10 +144,10 @@
 
 @media only screen and (max-width: 600px) {
 
-  .inputs-boxes{
+  .inputs-boxes {
     height: 25em !important;
 
-    .buttons{
+    .buttons {
       display: flex;
       position: static;
 
@@ -165,17 +170,17 @@
         .button-up-H {
           margin-left: 0 !important;
         }
-  
+
         .button-up-M {
           margin-right: 0 !important;
         }
-  
+
         .button-up-S {
           margin-right: 0 !important;
         }
       }
 
-      .down{
+      .down {
         height: 70%;
         width: 2em !important;
         flex-direction: column;
@@ -186,32 +191,57 @@
         .button-down-H {
           margin-left: 0 !important;
         }
-  
+
         .button-down-M {
           margin-right: 0 !important;
         }
-  
+
         .button-down-S {
           margin-right: 0 !important;
         }
 
       }
 
-      .button-down-H, .button-down-M, .button-down-S{
+      .button-down-H,
+      .button-down-M,
+      .button-down-S {
         transform: rotate(90deg);
       }
 
-      .button-up-H, .button-up-M, .button-up-S{
+      .button-up-H,
+      .button-up-M,
+      .button-up-S {
         transform: rotate(90deg);
+      }
+    }
+
+    .boxes {
+
+      .boxH {
+        margin-right: 15em !important;
+        height: 8em;
+      }
+
+      .boxM {
+        margin-right: 15em !important;
+        margin-top: 8em !important;
+        height: 8em;
+      }
+
+      .boxS {
+        margin-right: 15em !important;
+        margin-top: 16em !important;
+        height: 8em;
       }
     }
   }
 
-  .inputs{
+  .inputs {
     flex-direction: column;
     width: 11em !important;
     height: 24.6em !important;
     padding: 0em !important;
+
     .hoursInput {
       margin-left: 0em !important;
     }
