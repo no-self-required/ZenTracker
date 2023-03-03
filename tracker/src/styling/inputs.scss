@@ -146,6 +146,14 @@
       display: flex;
       position: static;
 
+      #down-buttons {
+        margin-right: 2em;
+      }
+
+      #up-buttons {
+        margin-left: 2em;
+      }
+
       .up {
         height: 70%;
         width: 2em !important;
