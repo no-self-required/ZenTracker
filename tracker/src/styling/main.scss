@@ -55,7 +55,7 @@
       }
 
       .absolute-timer {
-        .notationDisplay {
+        .notation-display {
           display: flex;
           justify-content: center;
 
@@ -180,64 +180,55 @@
       justify-content: space-evenly;
       margin: 0 !important;
 
-      .timer-button-container {
-
+      #timer-button-container {
         margin-bottom: 2em;
+
+        #display-timer-container {
+          .absolute-timer {
+            .notation-display {
+              display: flex !important;
+              flex-direction: column !important;
+
+              .hours {
+                display: grid;
+                grid-template-columns: 1fr 1fr 0.5fr;
+                height: 0.9em;
+
+                .notationH {
+                  font-size: 50px;
+                  height: 1.1em;
+                  // margin-top: 1.85em;
+                }
+              }
+
+              .minutes {
+                display: grid;
+                grid-template-columns: 1fr 1fr 0.5fr;
+                height: 0.9em;
+
+                .notationM {
+                  font-size: 50px;
+                  height: 1.1em;
+                  // margin-top: 1.85em;
+                }
+              }
+
+              .seconds {
+                display: grid;
+                grid-template-columns: 1fr 1fr 0.5fr;
+                // height: 0.9em;
+
+                .notationS {
+                  font-size: 50px;
+                  // height: 1.1em;
+                  // margin-top: 1.85em;
+                }
+              }
+            }
+          }
+        }
       }
     }
-
-  }
-
-  .notation-display{
-    width: 20em;
-  }
-  .absolute-timer{
-    font-size: 144px;
-    display: flex;
-    justify-content: center;
-    margin-left: .3em;
-
-
-
-    .hours {
-      display: grid;
-      grid-template-columns: 1fr 1fr 0.5fr;
-      height: .9em;
-      .notationH {
-        font-size: 50px;
-        height: 1.1em;
-        margin-top: 1.85em;
-      }
-    }
-
-    .minutes {
-      display: grid;
-      grid-template-columns: 1fr 1fr 0.5fr;
-      height: .9em;
-
-      .notationM {
-        font-size: 50px;
-        height: 1.1em;
-        margin-top: 1.85em;
-
-      }
-    }
-
-    .seconds {
-      display: grid;
-      grid-template-columns: 1fr 1fr 0.5fr;
-      height: .9em;
-
-
-      .notationS {
-        font-size: 50px;
-        height: 1.1em;
-        margin-top: 1.85em;
-
-
-      }
-    }
-
   }
 
   #notation-timer {
@@ -252,26 +243,24 @@
       justify-content: space-between;
       margin-left: 4.1em;
       margin-top: 1.3em;
-  
+
       .notation-hours {
         position: static !important;
         margin-top: 0 !important;
         margin-left: 0 !important;
       }
-  
+
       .notation-minutes {
         position: static !important;
         margin-top: 0 !important;
         margin-left: 0 !important;
       }
-  
+
       .notation-seconds {
         position: static !important;
         margin-top: 0 !important;
         margin-left: 0 !important;
       }
     }
-  
   }
-
 }
