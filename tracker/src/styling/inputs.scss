@@ -141,6 +141,60 @@
 
   .inputs-boxes{
     height: 25em !important;
+
+    .buttons{
+      display: flex;
+      position: static;
+
+      .up {
+        height: 10em;
+        width: 2em !important;
+        margin-left: 0em;
+        flex-direction: column;
+        padding-top: 0 !important;
+        order: 1;
+
+        .button-up-H {
+          margin-left: 0 !important;
+        }
+  
+        .button-up-M {
+          margin-right: 0 !important;
+        }
+  
+        .button-up-S {
+          margin-right: 0 !important;
+        }
+      }
+
+      .down{
+        height: 10em;
+        width: 2em !important;
+        flex-direction: column;
+        padding-top: 0 !important;
+
+        .button-down-H {
+          margin-left: 0 !important;
+        }
+  
+        .button-down-M {
+          margin-right: 0 !important;
+        }
+  
+        .button-down-S {
+          margin-right: 0 !important;
+        }
+
+      }
+
+      .button-down-H, .button-down-M, .button-down-S{
+        transform: rotate(90deg);
+      }
+
+      .button-up-H, .button-up-M, .button-up-S{
+        transform: rotate(90deg);
+      }
+    }
   }
 
   .inputs{

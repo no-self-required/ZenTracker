@@ -278,29 +278,6 @@ function TimerHMS(props) {
   return (
     <div className="inputs-boxes">
       <div className="buttons">
-        <div className="up">
-          <button
-            className="button-up-H"
-            onClick={handleButtonClickUpH}
-            {...longPressUpH}
-          >
-            <span class="material-icons" >arrow_drop_up</span>
-          </button>
-          <button
-            className="button-up-M"
-            onClick={handleButtonClickUpM}
-            {...longPressUpM}
-          >
-            <span class="material-icons" >arrow_drop_up</span>
-          </button>
-          <button
-            className="button-up-S"
-            onClick={handleButtonClickUpS}
-            {...longPressUpS}
-          >
-            <span class="material-icons">arrow_drop_up</span>
-          </button>
-        </div>
         <div className="down">
           <button
             className="button-down-H"
@@ -366,6 +343,31 @@ function TimerHMS(props) {
           maxLength={3}
           autoFocus
         ></input>
+      </div>
+      <div className="buttons">
+        <div className="up">
+          <button
+            className="button-up-H"
+            onClick={handleButtonClickUpH}
+            {...longPressUpH}
+          >
+            <span class="material-icons">arrow_drop_up</span>
+          </button>
+          <button
+            className="button-up-M"
+            onClick={handleButtonClickUpM}
+            {...longPressUpM}
+          >
+            <span class="material-icons">arrow_drop_up</span>
+          </button>
+          <button
+            className="button-up-S"
+            onClick={handleButtonClickUpS}
+            {...longPressUpS}
+          >
+            <span class="material-icons">arrow_drop_up</span>
+          </button>
+        </div>
       </div>
     </div>
   );
