@@ -177,32 +177,33 @@
     width: 100%;
   }
 
-  .notation-hours {
-    position: static !important;
-    margin-top: 0 !important;
-    margin-left: 0 !important;
-  }
-
-  .notation-minutes {
-    position: static !important;
-    margin-top: 0 !important;
-    margin-left: 0 !important;
-  }
-
-  .notation-seconds {
-    position: static !important;
-    margin-top: 0 !important;
-    margin-left: 0 !important;
-  }
-
-  #notation-timer {
-    flex-direction: row !important;
-    justify-content: center;
-  }
-
   .notation{
     order: 1;
     flex-direction: column;
+    position: absolute;
+
+    .notation-hours {
+      position: static !important;
+      margin-top: 0 !important;
+      margin-left: 0 !important;
+    }
+  
+    .notation-minutes {
+      position: static !important;
+      margin-top: 0 !important;
+      margin-left: 0 !important;
+    }
+  
+    .notation-seconds {
+      position: static !important;
+      margin-top: 0 !important;
+      margin-left: 0 !important;
+    }
+  
+    #notation-timer {
+      flex-direction: row !important;
+      justify-content: center;
+    }
   }
   .timer-container {
     margin: 0 !important;
