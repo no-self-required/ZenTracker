@@ -278,7 +278,7 @@ function TimerHMS(props) {
   return (
     <div className="inputs-boxes">
       <div className="buttons">
-        <div className="down">
+        <div className="down" id="down-buttons">
           <button
             className="button-down-H"
             onClick={handleButtonClickDownH}
@@ -344,8 +344,8 @@ function TimerHMS(props) {
           autoFocus
         ></input>
       </div>
-      <div className="buttons">
-        <div className="up">
+      <div className="buttons" >
+        <div className="up" id="up-buttons">
           <button
             className="button-up-H"
             onClick={handleButtonClickUpH}
