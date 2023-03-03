@@ -177,11 +177,64 @@
     width: 100%;
 
     .timer-container {
-      justify-content: space-around;
+      justify-content: space-evenly;
       margin: 0 !important;
 
       .timer-button-container {
+
         margin-bottom: 2em;
+      }
+    }
+
+  }
+
+  .notation-display{
+    width: 20em;
+  }
+  .absolute-timer{
+    font-size: 144px;
+    display: flex;
+    justify-content: center;
+    margin-left: .3em;
+
+
+
+    .hours {
+      display: grid;
+      grid-template-columns: 1fr 1fr 0.5fr;
+      height: .9em;
+      .notationH {
+        font-size: 50px;
+        height: 1.1em;
+        margin-top: 1.85em;
+      }
+    }
+
+    .minutes {
+      display: grid;
+      grid-template-columns: 1fr 1fr 0.5fr;
+      height: .9em;
+
+      .notationM {
+        font-size: 50px;
+        height: 1.1em;
+        margin-top: 1.85em;
+
+      }
+    }
+
+    .seconds {
+      display: grid;
+      grid-template-columns: 1fr 1fr 0.5fr;
+      height: .9em;
+
+
+      .notationS {
+        font-size: 50px;
+        height: 1.1em;
+        margin-top: 1.85em;
+
+
       }
     }
 
