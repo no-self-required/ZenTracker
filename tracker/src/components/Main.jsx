@@ -701,7 +701,6 @@ function Main() {
                       <NotationH />
                     </div>
                   )}
-
                   {(firstM || secondM) && (
                     <div className="minutes">
                       <FirstM value={firstM} />
@@ -709,7 +708,6 @@ function Main() {
                       <NotationM />
                     </div>
                   )}
-
                   {(firstS || secondS) && (
                     <div className="seconds">
                       <FirstS value={firstS} />
