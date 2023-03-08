@@ -654,41 +654,6 @@ function Main() {
     // <FullScreen handle={fsHandle}>
     <div className="container">
       <div className="timer-container">
-        {timerState === TIMER_STATES["EDIT"] && (
-          <div id="notation-timer">
-            <div className="notation">
-              <div className="notation-hours">
-                <NotationH />
-              </div>
-              <div className="notation-minutes">
-                <NotationM />
-              </div>
-              <div className="notation-seconds">
-                <NotationS />
-              </div>
-            </div>
-            <TimerHMS
-              // ref={timerH}
-              valueH={inputTimerHour}
-              valueM={inputTimerMinute}
-              valueS={inputTimerSecond}
-              onChangeH={handleChangeHour}
-              onChangeM={handleChangeMinute}
-              onChangeS={handleChangeSecond}
-              onKeyPress={numOnly}
-              selection3={selection3}
-              setSelection3={setSelection3}
-              inputEle2={inputEle2}
-              setInputEle2={setInputEle2}
-              InputTimerHour={inputTimerHour}
-              setInputTimerHour={setInputTimerHour}
-              InputTimerMinute={inputTimerMinute}
-              setInputTimerMinute={setInputTimerMinute}
-              InputTimerSecond={inputTimerSecond}
-              setInputTimerSecond={setInputTimerSecond}
-            ></TimerHMS>
-          </div>
-        )}
         <div id="timer-button-container">
           {timerState !== TIMER_STATES["EDIT"] && (
             <div id="display-timer-container">
@@ -717,6 +682,41 @@ function Main() {
                   )}
                 </div>
               </div>
+            </div>
+          )}
+          {timerState === TIMER_STATES["EDIT"] && (
+            <div id="notation-timer">
+              <div className="notation">
+                <div className="notation-hours">
+                  <NotationH />
+                </div>
+                <div className="notation-minutes">
+                  <NotationM />
+                </div>
+                <div className="notation-seconds">
+                  <NotationS />
+                </div>
+              </div>
+              <TimerHMS
+                // ref={timerH}
+                valueH={inputTimerHour}
+                valueM={inputTimerMinute}
+                valueS={inputTimerSecond}
+                onChangeH={handleChangeHour}
+                onChangeM={handleChangeMinute}
+                onChangeS={handleChangeSecond}
+                onKeyPress={numOnly}
+                selection3={selection3}
+                setSelection3={setSelection3}
+                inputEle2={inputEle2}
+                setInputEle2={setInputEle2}
+                InputTimerHour={inputTimerHour}
+                setInputTimerHour={setInputTimerHour}
+                InputTimerMinute={inputTimerMinute}
+                setInputTimerMinute={setInputTimerMinute}
+                InputTimerSecond={inputTimerSecond}
+                setInputTimerSecond={setInputTimerSecond}
+              ></TimerHMS>
             </div>
           )}
           <div id="button-container">
