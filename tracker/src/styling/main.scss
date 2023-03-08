@@ -187,12 +187,48 @@
         flex-direction: column;
         justify-content: space-between;
         height: 100%;
-        
+
+        #notation-timer {
+          flex-direction: row !important;
+          justify-content: center;
+          // margin-top: 2em;
+      
+          .notation {
+            order: 1;
+            flex-direction: column;
+            position: absolute;
+            height: 6.4em;
+            justify-content: space-between;
+            margin-left: 4.1em;
+            margin-top: 1.1em;
+      
+            .notation-hours {
+              position: static !important;
+              margin-top: 0 !important;
+              margin-left: 0 !important;
+            }
+      
+            .notation-minutes {
+              position: static !important;
+              margin-top: 0 !important;
+              margin-left: 0 !important;
+            }
+      
+            .notation-seconds {
+              position: static !important;
+              margin-top: 0 !important;
+              margin-left: 0 !important;
+            }
+          }
+        }
+
         #display-timer-container {
           align-content: center;
           flex-wrap: wrap;
+
           .absolute-timer {
             height: 100%;
+            margin-bottom: 3em;
             .notation-display {
               display: flex !important;
               flex-direction: column !important;
@@ -236,40 +272,6 @@
             }
           }
         }
-      }
-    }
-  }
-
-  #notation-timer {
-    flex-direction: row !important;
-    justify-content: center;
-    // margin-top: 2em;
-
-    .notation {
-      order: 1;
-      flex-direction: column;
-      position: absolute;
-      height: 6.4em;
-      justify-content: space-between;
-      margin-left: 4.1em;
-      margin-top: 1.1em;
-
-      .notation-hours {
-        position: static !important;
-        margin-top: 0 !important;
-        margin-left: 0 !important;
-      }
-
-      .notation-minutes {
-        position: static !important;
-        margin-top: 0 !important;
-        margin-left: 0 !important;
-      }
-
-      .notation-seconds {
-        position: static !important;
-        margin-top: 0 !important;
-        margin-left: 0 !important;
       }
     }
   }
