@@ -183,8 +183,11 @@
       margin: 0 !important;
 
       #timer-button-container {
-        // margin-bottom: 2em;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
         height: 100%;
+        
         #display-timer-container {
           align-content: center;
           flex-wrap: wrap;
@@ -194,7 +197,6 @@
               display: flex !important;
               flex-direction: column !important;
               margin-left: .55em;
-              margin-bottom: .325em;
 
               .hours {
                 display: grid;
@@ -241,7 +243,7 @@
   #notation-timer {
     flex-direction: row !important;
     justify-content: center;
-    margin-top: 2em;
+    // margin-top: 2em;
 
     .notation {
       order: 1;
