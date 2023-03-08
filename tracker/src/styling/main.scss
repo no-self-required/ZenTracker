@@ -176,7 +176,7 @@
   .container {
     height: 95%;
     width: 100%;
-
+    margin-top: 1em;
     .timer-container {
       // margin: 1em 0em 0em 0em;
       // height: 95%;
@@ -186,11 +186,15 @@
         // margin-bottom: 2em;
         height: 100%;
         #display-timer-container {
+          align-content: center;
+          flex-wrap: wrap;
           .absolute-timer {
+            height: 100%;
             .notation-display {
               display: flex !important;
               flex-direction: column !important;
-              margin-left: .5em;
+              margin-left: .55em;
+              margin-bottom: .325em;
 
               .hours {
                 display: grid;
@@ -237,6 +241,7 @@
   #notation-timer {
     flex-direction: row !important;
     justify-content: center;
+    margin-top: 2em;
 
     .notation {
       order: 1;
