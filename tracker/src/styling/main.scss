@@ -61,7 +61,6 @@
 
           width: fit-content;
           font-size: 144px;
-          // border-bottom: solid rgba(128, 128, 128, 0.596) 1px;
 
           .hours {
             display: grid;
@@ -105,8 +104,6 @@
 
         .fullscreen-mute {
           width: fit-content;
-          // margin-bottom: 1.5em;
-          // margin-left: 11em;
         }
       }
     }
@@ -187,11 +184,11 @@
         flex-direction: column;
         justify-content: space-between;
         height: 100%;
-
+        margin-top: 10vh;
         #notation-timer {
           flex-direction: row !important;
           justify-content: center;
-          // margin-top: 2em;
+
       
           .notation {
             order: 1;
@@ -242,7 +239,6 @@
                 .notationH {
                   font-size: 50px;
                   height: 1.1em;
-                  // margin-top: 1.85em;
                 }
               }
 
@@ -254,19 +250,15 @@
                 .notationM {
                   font-size: 50px;
                   height: 1.1em;
-                  // margin-top: 1.85em;
                 }
               }
 
               .seconds {
                 display: grid;
                 grid-template-columns: 1fr 1fr 1fr;
-                // height: 0.9em;
 
                 .notationS {
                   font-size: 50px;
-                  // height: 1.1em;
-                  // margin-top: 1.85em;
                 }
               }
             }
