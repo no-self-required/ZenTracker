@@ -175,8 +175,6 @@
     width: 100%;
     margin-top: 1em;
     .timer-container {
-      // margin: 1em 0em 0em 0em;
-      // height: 95%;
       margin: 0 !important;
 
       #timer-button-container {
@@ -185,6 +183,8 @@
         justify-content: space-between;
         height: 100%;
         margin-top: 10vh;
+        //this right here
+
         #notation-timer {
           flex-direction: row !important;
           justify-content: center;
