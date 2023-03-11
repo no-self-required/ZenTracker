@@ -38,6 +38,12 @@
       .button-group {
         display: flex;
         margin-top: 1em;
+
+        .buttons-year{
+          padding: .5em;
+          background-color: white;
+          border-radius: .5em;
+        }
       }
 
       .year {

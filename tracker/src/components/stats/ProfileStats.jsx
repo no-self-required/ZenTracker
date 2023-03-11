@@ -550,7 +550,7 @@ function ProfileStats() {
     const allYearButtons = listAllYears().map((year) => {
       return (
         <>
-          <button onClick={(e) => setSelectedYear(year)}>{year}</button>
+          <button className="buttons-year"onClick={(e) => setSelectedYear(year)}>{year}</button>
         </>
       );
     });
