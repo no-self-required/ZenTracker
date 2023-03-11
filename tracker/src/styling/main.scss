@@ -271,8 +271,9 @@
   }
 }
 
-// @media only screen and (max-height: 667) {
-//   #timer-button-container {
-//     margin-top: 9em;
-//   }
-// }
+@media only screen and (max-height: 667px) {
+  .absolute-timer{
+    margin-top: -3em !important;
+    margin-bottom: 0em !important;
+  }
+}
