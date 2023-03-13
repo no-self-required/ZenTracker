@@ -650,6 +650,12 @@ function Main() {
     },
   };
 
+  const handleKeyPress = (event) => {
+    if(event.key === 'Enter'){
+      setTimerState(TIMER_STATES["STARTED"]);
+    }
+  }
+
   return (
     // <FullScreen handle={fsHandle}>
     <div className="container">
@@ -685,7 +691,7 @@ function Main() {
             </div>
           )}
           {timerState === TIMER_STATES["EDIT"] && (
-            <div id="notation-timer">
+            <div id="notation-timer" onKeyDown={handleKeyPress}>
               <div className="notation">
                 <div className="notation-hours">
                   <NotationH />
