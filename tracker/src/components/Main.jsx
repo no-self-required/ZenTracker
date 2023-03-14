@@ -686,13 +686,21 @@ function Main() {
                       <NotationM />
                     </div>
                   )}
-                  {(firstS || secondS) && (
+                  {/* {(firstS || secondS) && (
                     <div className="seconds">
                       <FirstS value={firstS} />
                       <SecondS value={secondS} />
                       <NotationS />
                     </div>
-                  )}
+                  )} */}
+                  {firstS ?                     <div className="seconds">
+                      <FirstS value={firstS} />
+                      <SecondS value={secondS} />
+                      <NotationS />
+                    </div> :                     <div className="seconds" id="solo-seconds">
+                      <SecondS value={secondS} />
+                      <NotationS />
+                    </div>}
                 </div>
               </div>
             </div>
