@@ -343,12 +343,13 @@ function ProfileStats() {
       }
 
       const formatedLength = displayInputValue(totalTimeInSeconds);
-      const lengthString = formatDuration({
-        hours: formatedLength[0],
-        minutes: formatedLength[1],
-        seconds: formatedLength[2],
-      });
-      return lengthString;
+      // const lengthString = formatDuration({
+      //   hours: formatedLength[0],
+      //   minutes: formatedLength[1],
+      //   seconds: formatedLength[2],
+      // });
+      const displayString = Math.round(formatedLength[0]) + "h " + Math.round(formatedLength[1]) + "m " + Math.round(formatedLength[2]) + "s ";
+      return displayString;
     }
 
     //Calculate average time of all sessions
@@ -369,12 +370,15 @@ function ProfileStats() {
 
       const averageSeconds = totalTimeInSeconds / count;
       const formatedLength = displayInputValue(averageSeconds);
-      const lengthString = formatDuration({
-        hours: formatedLength[0],
-        minutes: formatedLength[1],
-        seconds: Math.floor(formatedLength[2]),
-      });
-      return lengthString;
+      // const lengthString = formatDuration({
+      //   hours: formatedLength[0],
+      //   minutes: formatedLength[1],
+      //   seconds: Math.floor(formatedLength[2]),
+      // });
+
+      const displayString = Math.round(formatedLength[0]) + "h " + Math.round(formatedLength[1]) + "m " + Math.round(formatedLength[2]) + "s ";
+
+      return displayString;
     }
 
     //Caluculate longest session length
@@ -391,12 +395,8 @@ function ProfileStats() {
         }
       }
       const formatedLength = displayInputValue(longestLength);
-      const lengthString = formatDuration({
-        hours: formatedLength[0],
-        minutes: formatedLength[1],
-        seconds: formatedLength[2],
-      });
-      return lengthString;
+      const displayString = Math.round(formatedLength[0]) + "h " + Math.round(formatedLength[1]) + "m " + Math.round(formatedLength[2]) + "s ";
+      return displayString;
     }
 
     //sort sessions to show latest session at the top
@@ -540,13 +540,6 @@ function ProfileStats() {
         );
     });
 
-    // const sqsWrapper = (
-    //   <>
-    //     <div id="month-row">Jan</div>
-    //     {printSqs}
-    //   </>
-    // );
-
     const allYearButtons = listAllYears().map((year) => {
       return (
         <>
@@ -561,30 +554,30 @@ function ProfileStats() {
           <div className="stats-header">Sessions</div>
           <hr className="line" />
           <div className="stat-container">
-            Total <div>{totalSessions()}</div>
+            Total <div className="bold-stats">{totalSessions()}</div>
           </div>
           <hr className="line" />
           <div className="stat-container">
-            Most in a single day <div>{mostSingleDaySessions()}</div>
+            Most in a single day <div className="bold-stats">{mostSingleDaySessions()}</div>
           </div>
           <hr className="line" />
           <div className="stat-container">
-            Days with at least one session <div>{singleDaySessions()}</div>
+            Days with at least one session <div className="bold-stats">{singleDaySessions()}</div>
           </div>
         </div>
         <div className="time-stats">
           <div className="stats-header">Time</div>
           <hr className="line" />
           <div className="stat-container">
-            Total <div>{totalTime()}</div>
+            Total <div className="bold-stats">{totalTime()}</div>
           </div>
           <hr className="line" />
           <div className="stat-container">
-            Average session length <div>{averageLength()}</div>
+            Average session <div className="bold-stats">{averageLength()}</div>
           </div>
           <hr className="line" />
           <div className="stat-container">
-            Longest session length <div>{longestLength()}</div>
+            Longest session <div className="bold-stats">{longestLength()}</div>
           </div>
         </div>
         <div className="calendar-container">
