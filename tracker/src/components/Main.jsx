@@ -650,11 +650,18 @@ function Main() {
     },
   };
 
-  const handleKeyPress = (event) => {
-    if(event.key === 'Enter'){
-      setTimerState(TIMER_STATES["STARTED"]);
-    }
-  }
+  //This function needs to reset initial time rather than only start the timer
+  // const startTimerOnEnter = (event) => {
+  //   if (event.key === "Enter") {
+  //     setTimerState(TIMER_STATES["STARTED"]);
+  //   }
+  // };
+
+  // const stopTimerOnEnter = (event) => {
+  //   if (event.key === "Enter") {
+  //     console.log("test on enter")
+  //   }
+  // };
 
   return (
     // <FullScreen handle={fsHandle}>
@@ -662,7 +669,7 @@ function Main() {
       <div className="timer-container">
         <div id="timer-button-container">
           {timerState !== TIMER_STATES["EDIT"] && (
-            <div id="display-timer-container">
+            <div id="display-timer-container" >
               <div className="absolute-timer" onClick={editTimerState}>
                 <div className="notation-display">
                   {(firstH || secondH) && (
@@ -691,7 +698,7 @@ function Main() {
             </div>
           )}
           {timerState === TIMER_STATES["EDIT"] && (
-            <div id="notation-timer" onKeyDown={handleKeyPress}>
+            <div id="notation-timer">
               <div className="notation">
                 <div className="notation-hours">
                   <NotationH />
