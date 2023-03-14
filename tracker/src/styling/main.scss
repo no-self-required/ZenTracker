@@ -84,6 +84,10 @@
             }
           }
 
+          #solo-seconds {
+            display: flex;
+          }
+
           .seconds {
             display: grid;
             grid-template-columns: 0.5fr 0.5fr 0.5fr;
@@ -253,6 +257,11 @@
                   font-size: 50px;
                   height: 1.1em;
                 }
+              }
+
+              #solo-seconds {
+                display: flex;
+                margin-right: .2em;
               }
 
               .seconds {
