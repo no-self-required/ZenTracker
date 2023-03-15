@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import Modal from "react-modal";
 import { Link } from "react-router-dom";
 import { UserContext } from "../App";
@@ -24,6 +24,8 @@ function Nav() {
 
   const [modalIsOpen, setIsOpen] = React.useState(false);
   const [loginOrSignup, setLoginOrSignup] = useState(null);
+  const [showNavbar, setShowNavbar] = useState(false)
+
   const navigate = useNavigate();
   
   function openModalLogin() {
@@ -40,10 +42,35 @@ function Nav() {
     setIsOpen(false);
   }
 
+  const handleShowNavbar = () => {
+    setShowNavbar(!showNavbar)
+  }
+
+  // const [windowDimension, setWindowDimension] = useState(null);
+
+  // useEffect(() => {
+  //   setWindowDimension(window.innerWidth);
+  // }, []);
+
+  // useEffect(() => {
+  //   function handleResize() {
+  //     setWindowDimension(window.innerWidth);
+  //   }
+
+  //   window.addEventListener("resize", handleResize);
+
+
+  //   return () => window.removeEventListener("resize", handleResize);
+  // }, []);
+
+  // const isMobile = windowDimension <= 640;
+  // console.log("windowD", windowDimension);
+
+
   return (
     <div className="navbar">
       <div id="navbar-dot-logo">
-        <span id="navbar-dot"></span>
+        {/* <span id="navbar-dot"></span> */}
         <div
           id="navbar-logo"
           onClick={() => {
