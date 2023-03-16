@@ -25,8 +25,25 @@ function Nav() {
   const [modalIsOpen, setIsOpen] = React.useState(false);
   const [loginOrSignup, setLoginOrSignup] = useState(null);
   const [showNavbar, setShowNavbar] = useState(false);
+  const [windowDimension, setWindowDimension] = useState(null);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setWindowDimension(window.innerWidth);
+  }, []);
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowDimension(window.innerWidth);
+    }
+
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const isMobile = windowDimension <= 600;
 
   function openModalLogin() {
     setIsOpen(true);
@@ -46,25 +63,6 @@ function Nav() {
     setShowNavbar(!showNavbar);
   };
 
-  const [windowDimension, setWindowDimension] = useState(null);
-
-  useEffect(() => {
-    setWindowDimension(window.innerWidth);
-  }, []);
-
-  useEffect(() => {
-    function handleResize() {
-      setWindowDimension(window.innerWidth);
-    }
-
-    window.addEventListener("resize", handleResize);
-
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  const isMobile = windowDimension <= 640;
-  // console.log("windowD", windowDimension);
-
   return (
     <div className="navbar">
       <div id="navbar-dot-logo">
@@ -80,49 +78,6 @@ function Nav() {
       {isMobile ? (
         <>
           <div id="ham" onClick={handleShowNavbar} />
-          {showNavbar && (
-            <div>
-                        <nav id="navbar-links">
-            {userData.user !== undefined && (
-              <div className="logged-in">
-                <div>Hello, {userData.user.username}</div>
-                <Logout className="logout"></Logout>
-                <Link to="/profile" className="profile">
-                  Profile
-                </Link>
-              </div>
-            )}
-            {userData.user === undefined && (
-              <div id="login-signup">
-                <div className="login-signup-links">
-                  <p className="login" onClick={openModalLogin}>
-                    Log In
-                  </p>
-                  <p className="signup" onClick={openModalSignup}>
-                    Sign Up
-                  </p>
-                </div>
-                <Modal
-                  isOpen={modalIsOpen}
-                  onRequestClose={closeModal}
-                  style={customStyles}
-                  shouldCloseOnOverlayClick={false}
-                >
-                  <div>
-                    <p to="/" className="closeModal" onClick={closeModal}>
-                      close
-                    </p>
-                    <LogInsignUp
-                      loginOrSignup={loginOrSignup}
-                      setLoginOrSignup={setLoginOrSignup}
-                    />
-                  </div>
-                </Modal>
-              </div>
-            )}
-          </nav>
-            </div>
-          )}
         </>
       ) : (
         <>
@@ -167,6 +122,8 @@ function Nav() {
           </nav>
         </>
       )}
+      {showNavbar && <div id="ham-drop"></div>}
+
     </div>
   );
 }
