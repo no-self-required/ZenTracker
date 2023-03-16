@@ -24,10 +24,10 @@ function Nav() {
 
   const [modalIsOpen, setIsOpen] = React.useState(false);
   const [loginOrSignup, setLoginOrSignup] = useState(null);
-  const [showNavbar, setShowNavbar] = useState(false)
+  const [showNavbar, setShowNavbar] = useState(false);
 
   const navigate = useNavigate();
-  
+
   function openModalLogin() {
     setIsOpen(true);
     setLoginOrSignup("login");
@@ -43,34 +43,31 @@ function Nav() {
   }
 
   const handleShowNavbar = () => {
-    setShowNavbar(!showNavbar)
-  }
+    setShowNavbar(!showNavbar);
+  };
 
-  // const [windowDimension, setWindowDimension] = useState(null);
+  const [windowDimension, setWindowDimension] = useState(null);
 
-  // useEffect(() => {
-  //   setWindowDimension(window.innerWidth);
-  // }, []);
+  useEffect(() => {
+    setWindowDimension(window.innerWidth);
+  }, []);
 
-  // useEffect(() => {
-  //   function handleResize() {
-  //     setWindowDimension(window.innerWidth);
-  //   }
+  useEffect(() => {
+    function handleResize() {
+      setWindowDimension(window.innerWidth);
+    }
 
-  //   window.addEventListener("resize", handleResize);
+    window.addEventListener("resize", handleResize);
 
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
-  //   return () => window.removeEventListener("resize", handleResize);
-  // }, []);
-
-  // const isMobile = windowDimension <= 640;
+  const isMobile = windowDimension <= 640;
   // console.log("windowD", windowDimension);
-
 
   return (
     <div className="navbar">
       <div id="navbar-dot-logo">
-        {/* <span id="navbar-dot"></span> */}
         <div
           id="navbar-logo"
           onClick={() => {
@@ -80,45 +77,96 @@ function Nav() {
           ZenTracker
         </div>
       </div>
-      <nav id="navbar-links">
-        {userData.user !== undefined && (
-          <div className="logged-in">
-            <div>Hello, {userData.user.username}</div>
-            <Logout className="logout"></Logout>
-            <Link to="/profile" className="profile">
-              Profile
-            </Link>
-          </div>
-        )}
-        {userData.user === undefined && (
-          <div id="login-signup">
-            <div className="login-signup-links">
-              <p className="login" onClick={openModalLogin}>
-                Log In
-              </p>
-              <p className="signup" onClick={openModalSignup}>
-                Sign Up
-              </p>
-            </div>
-            <Modal
-              isOpen={modalIsOpen}
-              onRequestClose={closeModal}
-              style={customStyles}
-              shouldCloseOnOverlayClick={false}
-            >
-              <div>
-                <p to="/" className="closeModal" onClick={closeModal}>
-                  close
-                </p>
-                <LogInsignUp
-                  loginOrSignup={loginOrSignup}
-                  setLoginOrSignup={setLoginOrSignup}
-                />
+      {isMobile ? (
+        <>
+          <div id="ham" onClick={handleShowNavbar} />
+          {showNavbar && (
+            <div>
+                        <nav id="navbar-links">
+            {userData.user !== undefined && (
+              <div className="logged-in">
+                <div>Hello, {userData.user.username}</div>
+                <Logout className="logout"></Logout>
+                <Link to="/profile" className="profile">
+                  Profile
+                </Link>
               </div>
-            </Modal>
-          </div>
-        )}
-      </nav>
+            )}
+            {userData.user === undefined && (
+              <div id="login-signup">
+                <div className="login-signup-links">
+                  <p className="login" onClick={openModalLogin}>
+                    Log In
+                  </p>
+                  <p className="signup" onClick={openModalSignup}>
+                    Sign Up
+                  </p>
+                </div>
+                <Modal
+                  isOpen={modalIsOpen}
+                  onRequestClose={closeModal}
+                  style={customStyles}
+                  shouldCloseOnOverlayClick={false}
+                >
+                  <div>
+                    <p to="/" className="closeModal" onClick={closeModal}>
+                      close
+                    </p>
+                    <LogInsignUp
+                      loginOrSignup={loginOrSignup}
+                      setLoginOrSignup={setLoginOrSignup}
+                    />
+                  </div>
+                </Modal>
+              </div>
+            )}
+          </nav>
+            </div>
+          )}
+        </>
+      ) : (
+        <>
+          <nav id="navbar-links">
+            {userData.user !== undefined && (
+              <div className="logged-in">
+                <div>Hello, {userData.user.username}</div>
+                <Logout className="logout"></Logout>
+                <Link to="/profile" className="profile">
+                  Profile
+                </Link>
+              </div>
+            )}
+            {userData.user === undefined && (
+              <div id="login-signup">
+                <div className="login-signup-links">
+                  <p className="login" onClick={openModalLogin}>
+                    Log In
+                  </p>
+                  <p className="signup" onClick={openModalSignup}>
+                    Sign Up
+                  </p>
+                </div>
+                <Modal
+                  isOpen={modalIsOpen}
+                  onRequestClose={closeModal}
+                  style={customStyles}
+                  shouldCloseOnOverlayClick={false}
+                >
+                  <div>
+                    <p to="/" className="closeModal" onClick={closeModal}>
+                      close
+                    </p>
+                    <LogInsignUp
+                      loginOrSignup={loginOrSignup}
+                      setLoginOrSignup={setLoginOrSignup}
+                    />
+                  </div>
+                </Modal>
+              </div>
+            )}
+          </nav>
+        </>
+      )}
     </div>
   );
 }
