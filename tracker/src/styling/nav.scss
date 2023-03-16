@@ -1,14 +1,26 @@
 .navbar {
   display: flex;
   justify-content: space-between;
-  // margin-top: 1em;
-  // margin-left: 150px;
+  // overflow: hidden;
+  position: relative;
+  max-height: 2em;
+  background-color: azure;
 
   #ham {
     height: 20px;
     width: 20px;
-    background-color: rgb(92, 92, 92);
-    border-radius: 50%;
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 0;
+    background-color: aqua;
+  }
+
+  #ham-drop {
+    height: 10em;
+    width: 10em;
+    background-color: azure;
+    margin-top: 2em;
   }
 
   #navbar-dot-logo {
@@ -23,8 +35,7 @@
     }
   
     #navbar-logo {
-      font-size: 20px;
-      font-weight: bold;
+      font-size: 2em;
     }
   }
 
