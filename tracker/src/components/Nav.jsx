@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import "../styling/nav.scss";
 import LogInsignUp from "./LogInSignUp";
 import Logout from "./Logout";
-
+import 'animate.css';
 const customStyles = {
   content: {
     top: "50%",
@@ -122,7 +122,7 @@ function Nav() {
           </nav>
         </>
       )}
-      {showNavbar && <div id="ham-drop"></div>}
+      {showNavbar && <div id="ham-drop" class="animate__animated animate__fadeInDown"></div>}
 
     </div>
   );
