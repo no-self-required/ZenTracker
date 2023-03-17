@@ -6,7 +6,8 @@ import { useNavigate } from "react-router-dom";
 import "../styling/nav.scss";
 import LogInsignUp from "./LogInSignUp";
 import Logout from "./Logout";
-import 'animate.css';
+// import 'animate.css';
+
 const customStyles = {
   content: {
     top: "50%",
@@ -65,22 +66,34 @@ function Nav() {
 
   return (
     <div className="navbar">
-      <div id="navbar-dot-logo">
-        <div
-          id="navbar-logo"
-          onClick={() => {
-            navigate("/");
-          }}
-        >
-          ZenTracker
-        </div>
-      </div>
       {isMobile ? (
         <>
-          <div id="ham" onClick={handleShowNavbar} />
+          <div id="logo-ham">
+            <div id="navbar-dot-logo">
+              <div
+                id="navbar-logo"
+                onClick={() => {
+                  navigate("/");
+                }}
+              >
+                ZenTracker
+              </div>
+            </div>
+            <div id="ham" onClick={handleShowNavbar} />
+          </div>
         </>
       ) : (
         <>
+          <div id="navbar-dot-logo">
+            <div
+              id="navbar-logo"
+              onClick={() => {
+                navigate("/");
+              }}
+            >
+              ZenTracker
+            </div>
+          </div>
           <nav id="navbar-links">
             {userData.user !== undefined && (
               <div className="logged-in">
@@ -122,8 +135,7 @@ function Nav() {
           </nav>
         </>
       )}
-      {showNavbar && <div id="ham-drop" class="animate__animated animate__fadeInDown"></div>}
-
+      {(showNavbar && isMobile) && <div id="ham-drop"></div>}
     </div>
   );
 }
