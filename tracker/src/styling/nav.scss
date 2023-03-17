@@ -1,31 +1,13 @@
 .navbar {
   display: flex;
   justify-content: space-between;
-  // overflow: hidden;
   position: relative;
   max-height: 2em;
-  background-color: azure;
-
-  #ham {
-    height: 20px;
-    width: 20px;
-    display: block;
-    position: absolute;
-    right: 0;
-    top: 0;
-    background-color: aqua;
-  }
-
-  #ham-drop {
-    height: 10em;
-    width: 10em;
-    background-color: azure;
-    margin-top: 2em;
-  }
+  background-color: rgb(0, 144, 146);
 
   #navbar-dot-logo {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 
     #navbar-dot {
       height: 20px;
@@ -33,7 +15,7 @@
       background-color: rgb(92, 92, 92);
       border-radius: 50%;
     }
-  
+
     #navbar-logo {
       font-size: 2em;
     }
@@ -47,14 +29,16 @@
     width: 10em;
     font-size: 10px;
 
-    .login, .signup{
+    .login,
+    .signup {
       text-decoration: none;
     }
+
     .login {
       margin-right: 1em;
     }
 
-    .logged-in{
+    .logged-in {
       width: 9em;
       display: flex;
       justify-content: space-between;
@@ -64,5 +48,35 @@
       display: flex;
     }
 
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .navbar {
+    justify-content: center;
+
+    #logo-ham {
+      display: flex;
+      justify-content: center;
+    }
+
+    #ham {
+      height: 20px;
+      width: 20px;
+      display: block;
+      position: absolute;
+      right: 0;
+      top: 0;
+      background-color: rgb(0, 178, 181);
+    }
+
+    #ham-drop {
+      height: 10em;
+      width: 10em;
+      background-color: rgb(0, 144, 146);
+      margin-top: 2em;
+      position: absolute;
+      right: 0;
+    }
   }
 }
