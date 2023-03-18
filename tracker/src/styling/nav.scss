@@ -1,7 +1,6 @@
 .navbar {
   display: flex;
   justify-content: space-between;
-  position: relative;
   max-height: 2em;
   background-color: rgb(0, 144, 146);
 
@@ -65,14 +64,14 @@
       width: 20px;
       display: block;
       position: absolute;
-      right: 0;
+      left: 0;
       top: 0;
       background-color: rgb(0, 178, 181);
     }
 
     #ham-drop {
-      height: 10em;
-      width: 10em;
+      height: 5em;
+      width: 100vw;
       background-color: rgb(0, 144, 146);
       margin-top: 2em;
       position: absolute;

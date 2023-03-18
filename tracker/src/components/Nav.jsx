@@ -135,7 +135,48 @@ function Nav() {
           </nav>
         </>
       )}
-      {(showNavbar && isMobile) && <div id="ham-drop"></div>}
+      {showNavbar && isMobile && (
+        <div id="ham-drop">
+          <nav id="navbar-links">
+            {userData.user !== undefined && (
+              <div className="logged-in">
+                <Logout className="logout"></Logout>
+                <Link to="/profile" className="profile">
+                <div>{userData.user.username}</div>
+                </Link>
+              </div>
+            )}
+            {userData.user === undefined && (
+              <div id="login-signup">
+                <div className="login-signup-links">
+                  <p className="login" onClick={openModalLogin}>
+                    Log In
+                  </p>
+                  <p className="signup" onClick={openModalSignup}>
+                    Sign Up
+                  </p>
+                </div>
+                <Modal
+                  isOpen={modalIsOpen}
+                  onRequestClose={closeModal}
+                  style={customStyles}
+                  shouldCloseOnOverlayClick={false}
+                >
+                  <div>
+                    <p to="/" className="closeModal" onClick={closeModal}>
+                      close
+                    </p>
+                    <LogInsignUp
+                      loginOrSignup={loginOrSignup}
+                      setLoginOrSignup={setLoginOrSignup}
+                    />
+                  </div>
+                </Modal>
+              </div>
+            )}
+          </nav>
+        </div>
+      )}
     </div>
   );
 }
