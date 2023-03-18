@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../../styling/inputs.scss";
 import useLongPress from "../../hooks/longPress";
-
+import NotationH from "../notations/NotationH";
+import NotationM from "../notations/NotationM";
+import NotationS from "../notations/NotationS";
 function TimerHMS(props) {
   //Store inputs to traverse between them
   //traverse left
@@ -344,7 +346,18 @@ function TimerHMS(props) {
           autoFocus
         ></input>
       </div>
-      <div className="buttons" >
+      <div className="notation">
+        <div className="notation-hours">
+          <NotationH />
+        </div>
+        <div className="notation-minutes">
+          <NotationM />
+        </div>
+        <div className="notation-seconds">
+          <NotationS />
+        </div>
+      </div>
+      <div className="buttons">
         <div className="up" id="up-buttons">
           <button
             className="button-up-H"

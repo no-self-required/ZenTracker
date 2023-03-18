@@ -196,12 +196,13 @@
 
       
           .notation {
-            order: 1;
+            // order: 1;
             flex-direction: column;
-            position: absolute;
+            // position: absolute;
+            // need to remove this
             height: 6.4em;
             justify-content: space-between;
-            margin-left: 4.1em;
+            // margin-left: 4.1em;
             margin-top: 1.1em;
       
             .notation-hours {
