@@ -3,7 +3,7 @@
   .profile-stats-container{
     display: flex;
     flex-direction: column;
-
+    overflow-y: hidden;
     .session-stats, .time-stats {
       width: 23.3em;
       padding: 1.5em 1.3em 0 1.1em;

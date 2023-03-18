@@ -51,6 +51,10 @@ function Nav() {
     setLoginOrSignup("login");
   }
 
+  function handleLogin() {
+    handleShowNavbar();
+    openModalLogin();
+  }
   function openModalSignup() {
     setIsOpen(true);
     setLoginOrSignup("signup");
@@ -140,8 +144,8 @@ function Nav() {
           <nav id="navbar-links">
             {userData.user !== undefined && (
               <div className="logged-in">
-                <Logout className="logout"></Logout>
-                <Link to="/profile" className="profile">
+                <Logout className="logout" onClick={handleShowNavbar}></Logout>
+                <Link to="/profile" className="profile" onClick={handleShowNavbar}>
                 <div>{userData.user.username}</div>
                 </Link>
               </div>
@@ -149,7 +153,7 @@ function Nav() {
             {userData.user === undefined && (
               <div id="login-signup">
                 <div className="login-signup-links">
-                  <p className="login" onClick={openModalLogin}>
+                  <p className="login" onClick={handleLogin}>
                     Log In
                   </p>
                   <p className="signup" onClick={openModalSignup}>
