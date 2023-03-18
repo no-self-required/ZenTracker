@@ -55,6 +55,12 @@ function Nav() {
     handleShowNavbar();
     openModalLogin();
   }
+
+  function handleSignup() {
+    handleShowNavbar();
+    openModalSignup();
+  }
+
   function openModalSignup() {
     setIsOpen(true);
     setLoginOrSignup("signup");
@@ -145,8 +151,12 @@ function Nav() {
             {userData.user !== undefined && (
               <div className="logged-in">
                 <Logout className="logout" onClick={handleShowNavbar}></Logout>
-                <Link to="/profile" className="profile" onClick={handleShowNavbar}>
-                <div>{userData.user.username}</div>
+                <Link
+                  to="/profile"
+                  className="profile"
+                  onClick={handleShowNavbar}
+                >
+                  <div>{userData.user.username}</div>
                 </Link>
               </div>
             )}
@@ -156,31 +166,31 @@ function Nav() {
                   <p className="login" onClick={handleLogin}>
                     Log In
                   </p>
-                  <p className="signup" onClick={openModalSignup}>
+                  <p className="signup" onClick={handleSignup}>
                     Sign Up
                   </p>
                 </div>
-                <Modal
-                  isOpen={modalIsOpen}
-                  onRequestClose={closeModal}
-                  style={customStyles}
-                  shouldCloseOnOverlayClick={false}
-                >
-                  <div>
-                    <p to="/" className="closeModal" onClick={closeModal}>
-                      close
-                    </p>
-                    <LogInsignUp
-                      loginOrSignup={loginOrSignup}
-                      setLoginOrSignup={setLoginOrSignup}
-                    />
-                  </div>
-                </Modal>
               </div>
             )}
           </nav>
         </div>
       )}
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        style={customStyles}
+        shouldCloseOnOverlayClick={false}
+      >
+        <div>
+          <p to="/" className="closeModal" onClick={closeModal}>
+            close
+          </p>
+          <LogInsignUp
+            loginOrSignup={loginOrSignup}
+            setLoginOrSignup={setLoginOrSignup}
+          />
+        </div>
+      </Modal>
     </div>
   );
 }
