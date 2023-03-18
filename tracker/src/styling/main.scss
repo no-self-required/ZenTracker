@@ -87,7 +87,7 @@
           #solo-seconds {
             display: flex;
           }
-
+          
           .seconds {
             display: grid;
             grid-template-columns: 0.5fr 0.5fr 0.5fr;
@@ -177,7 +177,8 @@
   .container {
     height: 95%;
     width: 100%;
-    margin-top: 1em;
+    // margin-top: 1em;
+
     .timer-container {
       margin: 0 !important;
 
