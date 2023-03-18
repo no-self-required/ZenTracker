@@ -23,7 +23,6 @@
 
       .notation {
         display: flex;
-        z-index: 2;
         font-size: 50px;
 
         .notation-hours {
@@ -177,7 +176,6 @@
   .container {
     height: 95%;
     width: 100%;
-    // margin-top: 1em;
 
     .timer-container {
       margin: 0 !important;
@@ -196,14 +194,10 @@
 
       
           .notation {
-            // order: 1;
             flex-direction: column;
-            // position: absolute;
-            // need to remove this
             height: 6.4em;
             justify-content: space-between;
-            // margin-left: 4.1em;
-            margin-top: 1.1em;
+            margin-top: 1.3em;
       
             .notation-hours {
               position: static !important;
