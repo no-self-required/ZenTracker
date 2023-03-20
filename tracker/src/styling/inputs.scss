@@ -144,6 +144,7 @@
     .buttons {
       display: flex;
       position: static;
+      width: 2em;
 
       #down-buttons {
         margin-right: 2em;
@@ -180,7 +181,6 @@
         flex-direction: column;
         padding-top: 0 !important;
         margin-top: 3.5em;
-
 
         .button-down-H {
           margin-left: 0 !important;
@@ -232,9 +232,10 @@
 
   .inputs {
     flex-direction: column;
-    width: 11em !important;
+    width: 10em !important;
     height: 24.6em !important;
     padding: 0em !important;
+    margin-left: 2.1em;
 
     .hoursInput {
       margin-left: 0em !important;
