@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import "../styling/nav.scss";
 import LogInsignUp from "./LogInSignUp";
 import Logout from "./Logout";
-// import 'animate.css';
+import { Twirl as Hamburger } from 'hamburger-react';
 
 const customStyles = {
   content: {
@@ -74,6 +74,12 @@ function Nav() {
     setShowNavbar(!showNavbar);
   };
 
+  const [isOpen, setOpen] = useState(false)
+
+  function handleHam() {
+    setOpen(!isOpen)
+  }
+
   return (
     <div className="navbar">
       {isMobile ? (
@@ -89,7 +95,9 @@ function Nav() {
                 ZenTracker
               </div>
             </div>
-            <div id="ham" onClick={handleShowNavbar} />
+            <div id="ham" onClick={handleShowNavbar}>
+            <Hamburger toggled={isOpen} toggle={setOpen}/>
+            </div>
           </div>
         </>
       ) : (
@@ -99,6 +107,7 @@ function Nav() {
               id="navbar-logo"
               onClick={() => {
                 navigate("/");
+                handleHam();
               }}
             >
               ZenTracker
@@ -109,7 +118,7 @@ function Nav() {
               <div className="logged-in">
                 <div>Hello, {userData.user.username}</div>
                 <Logout className="logout"></Logout>
-                <Link to="/profile" className="profile">
+                <Link to="/profile" className="profile" onClick={handleShowNavbar}>
                   Profile
                 </Link>
               </div>
@@ -150,23 +159,25 @@ function Nav() {
           <nav id="navbar-links">
             {userData.user !== undefined && (
               <div className="logged-in">
-                <Logout className="logout" onClick={handleShowNavbar}></Logout>
                 <Link
                   to="/profile"
                   className="profile"
-                  onClick={handleShowNavbar}
+                  onClick={() => {handleShowNavbar(); handleHam();}}
                 >
                   <div>{userData.user.username}</div>
                 </Link>
+                <Logout className="logout"
+                handleHam = {handleHam}
+                handleShowNavbar = {handleShowNavbar}></Logout>
               </div>
             )}
             {userData.user === undefined && (
               <div id="login-signup">
                 <div className="login-signup-links">
-                  <p className="login" onClick={handleLogin}>
+                  <p className="login" onClick={() => {handleLogin(); handleHam();}}>
                     Log In
                   </p>
-                  <p className="signup" onClick={handleSignup}>
+                  <p className="signup" onClick={() => {handleSignup(); handleHam();}}>
                     Sign Up
                   </p>
                 </div>
