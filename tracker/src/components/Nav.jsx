@@ -8,6 +8,11 @@ import LogInsignUp from "./LogInSignUp";
 import Logout from "./Logout";
 import { Twirl as Hamburger } from "hamburger-react";
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faXmark } from '@fortawesome/free-solid-svg-icons'
+
+const element = <FontAwesomeIcon icon={faXmark} />
+
 const customStyles = {
   content: {
     top: "50%",
@@ -201,10 +206,10 @@ function Nav() {
         style={customStyles}
         shouldCloseOnOverlayClick={false}
       >
-        <div>
-          <p to="/" className="closeModal" onClick={closeModal}>
-            close
-          </p>
+        <div className="modal">
+          <div to="/" className="closeModal" onClick={closeModal}>
+          {element}
+          </div>
           <LogInsignUp
             loginOrSignup={loginOrSignup}
             setLoginOrSignup={setLoginOrSignup}
