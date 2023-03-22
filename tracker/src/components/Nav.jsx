@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import "../styling/nav.scss";
 import LogInsignUp from "./LogInSignUp";
 import Logout from "./Logout";
-import { Twirl as Hamburger } from 'hamburger-react';
+import { Twirl as Hamburger } from "hamburger-react";
 
 const customStyles = {
   content: {
@@ -20,6 +20,7 @@ const customStyles = {
 };
 
 Modal.setAppElement("#root");
+
 function Nav() {
   const { userData } = useContext(UserContext);
 
@@ -74,10 +75,10 @@ function Nav() {
     setShowNavbar(!showNavbar);
   };
 
-  const [isOpen, setOpen] = useState(false)
+  const [isOpen, setOpen] = useState(false);
 
   function handleHam() {
-    setOpen(!isOpen)
+    setOpen(!isOpen);
   }
 
   return (
@@ -96,7 +97,7 @@ function Nav() {
               </div>
             </div>
             <div id="ham" onClick={handleShowNavbar}>
-            <Hamburger toggled={isOpen} toggle={setOpen}/>
+              <Hamburger toggled={isOpen} toggle={setOpen} size={20} />
             </div>
           </div>
         </>
@@ -117,8 +118,16 @@ function Nav() {
             {userData.user !== undefined && (
               <div className="logged-in">
                 <div>Hello, {userData.user.username}</div>
-                <Logout className="logout"></Logout>
-                <Link to="/profile" className="profile" onClick={handleShowNavbar}>
+                <Logout
+                  className="logout"
+                  handleHam={handleHam}
+                  handleShowNavbar={handleShowNavbar}
+                ></Logout>
+                <Link
+                  to="/profile"
+                  className="profile"
+                  onClick={handleShowNavbar}
+                >
                   Profile
                 </Link>
               </div>
@@ -133,22 +142,6 @@ function Nav() {
                     Sign Up
                   </p>
                 </div>
-                <Modal
-                  isOpen={modalIsOpen}
-                  onRequestClose={closeModal}
-                  style={customStyles}
-                  shouldCloseOnOverlayClick={false}
-                >
-                  <div>
-                    <p to="/" className="closeModal" onClick={closeModal}>
-                      close
-                    </p>
-                    <LogInsignUp
-                      loginOrSignup={loginOrSignup}
-                      setLoginOrSignup={setLoginOrSignup}
-                    />
-                  </div>
-                </Modal>
               </div>
             )}
           </nav>
@@ -162,22 +155,39 @@ function Nav() {
                 <Link
                   to="/profile"
                   className="profile"
-                  onClick={() => {handleShowNavbar(); handleHam();}}
+                  onClick={() => {
+                    handleShowNavbar();
+                    handleHam();
+                  }}
                 >
                   <div>{userData.user.username}</div>
                 </Link>
-                <Logout className="logout"
-                handleHam = {handleHam}
-                handleShowNavbar = {handleShowNavbar}></Logout>
+                <Logout
+                  className="logout"
+                  handleHam={handleHam}
+                  handleShowNavbar={handleShowNavbar}
+                ></Logout>
               </div>
             )}
             {userData.user === undefined && (
               <div id="login-signup">
                 <div className="login-signup-links">
-                  <p className="login" onClick={() => {handleLogin(); handleHam();}}>
+                  <p
+                    className="login"
+                    onClick={() => {
+                      handleLogin();
+                      handleHam();
+                    }}
+                  >
                     Log In
                   </p>
-                  <p className="signup" onClick={() => {handleSignup(); handleHam();}}>
+                  <p
+                    className="signup"
+                    onClick={() => {
+                      handleSignup();
+                      handleHam();
+                    }}
+                  >
                     Sign Up
                   </p>
                 </div>
