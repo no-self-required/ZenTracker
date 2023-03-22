@@ -5,7 +5,7 @@
     flex-direction: column;
     overflow-y: hidden;
     .session-stats, .time-stats {
-      width: 23.3em;
+      // width: 23.3em;
       padding: 1.5em 1.3em 0 1.1em;
       display: flex;
       flex-direction: column;
@@ -13,7 +13,7 @@
     }
 
     .line {
-      width: 23em;
+      width: 100%;
     }
 
     .stat-container{
@@ -36,7 +36,7 @@
     .calendar-container {
       display: flex;
       flex-direction: column;
-      width: 23.2em;
+      // width: 23.2em;
       padding: 1.5em 1.3em 0 1.2em;
 
       .button-group {
@@ -139,7 +139,7 @@
           }
 
           .line-single{
-            width: 21.2em;
+            width: 100%;
           }
       }
     }
@@ -223,7 +223,7 @@
 
   .all-sessions-container{
     padding: 1.5em 1.3em 0 1.1em;
-    width: 23.3em;
+    // width: 23.3em;
     display: flex;
     flex-direction: column;
 

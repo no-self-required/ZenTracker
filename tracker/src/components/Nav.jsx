@@ -117,19 +117,18 @@ function Nav() {
           <nav id="navbar-links">
             {userData.user !== undefined && (
               <div className="logged-in">
-                <div>Hello, {userData.user.username}</div>
-                <Logout
-                  className="logout"
-                  handleHam={handleHam}
-                  handleShowNavbar={handleShowNavbar}
-                ></Logout>
                 <Link
                   to="/profile"
                   className="profile"
                   onClick={handleShowNavbar}
                 >
-                  Profile
+                  <div>{userData.user.username}</div>
                 </Link>
+                <Logout
+                  className="logout"
+                  handleHam={handleHam}
+                  handleShowNavbar={handleShowNavbar}
+                ></Logout>
               </div>
             )}
             {userData.user === undefined && (
