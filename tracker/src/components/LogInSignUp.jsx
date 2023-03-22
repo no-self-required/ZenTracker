@@ -17,8 +17,8 @@ function LogInSignUp(props) {
   return (
     <div>
       <div>
-        <p onClick={loginClick}>Log In</p>
-        <p onClick={signupClick}>Sign Up</p>
+        <div onClick={loginClick}>Log In</div>
+        <div onClick={signupClick}>Sign Up</div>
       </div>
       {props.loginOrSignup === 'login' && <Login></Login>}
       {props.loginOrSignup === 'signup' && <Signup></Signup>}
