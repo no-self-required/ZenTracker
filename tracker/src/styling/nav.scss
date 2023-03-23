@@ -54,9 +54,12 @@
 }
 
 .modal {
+  display: flex;
+  flex-direction: column;
 
   .closeModal {
-    float: right;
+    display: flex;
+    justify-content: flex-end;
   }
 }
 

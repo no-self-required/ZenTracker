@@ -4,24 +4,31 @@ import Login from "./Login";
 import Signup from "./Signup";
 
 function LogInSignUp(props) {
-
-
   function loginClick() {
-    props.setLoginOrSignup('login');
+    props.setLoginOrSignup("login");
   }
 
   function signupClick() {
-    props.setLoginOrSignup('signup');
+    props.setLoginOrSignup("signup");
   }
 
   return (
     <div>
-      <div>
-        <div onClick={loginClick}>Log In</div>
-        <div onClick={signupClick}>Sign Up</div>
-      </div>
-      {props.loginOrSignup === 'login' && <Login></Login>}
-      {props.loginOrSignup === 'signup' && <Signup></Signup>}
+      <div>{/* <div onClick={signupClick}>Sign Up</div> */}</div>
+      {props.loginOrSignup === "login" && (
+        <>
+          <div onClick={loginClick}>Login</div>
+          <Login></Login>
+          <div onClick={signupClick}>Sign Up</div>
+        </>
+      )}
+      {props.loginOrSignup === "signup" && (
+        <>
+          <div onClick={signupClick}>Sign Up</div>
+          <Signup></Signup>
+          <div onClick={loginClick}>Login</div>
+        </>
+      )}
     </div>
   );
 }
