@@ -13,18 +13,17 @@ function LogInSignUp(props) {
   }
 
   return (
-    <div>
-      <div>{/* <div onClick={signupClick}>Sign Up</div> */}</div>
+    <div className="account-container">
       {props.loginOrSignup === "login" && (
         <>
-          <div onClick={loginClick}>Login</div>
+          <div class="account-header">Login</div>
           <Login></Login>
           <div onClick={signupClick}>Sign Up</div>
         </>
       )}
       {props.loginOrSignup === "signup" && (
         <>
-          <div onClick={signupClick}>Sign Up</div>
+          <div className="account-header">Sign Up</div>
           <Signup></Signup>
           <div onClick={loginClick}>Login</div>
         </>
