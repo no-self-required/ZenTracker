@@ -104,7 +104,7 @@
       #button-container {
         display: flex;
         justify-content: center;
-        align-items: flex-end;
+
 
         .fullscreen-mute {
           width: fit-content;
@@ -175,7 +175,7 @@
 
 @media only screen and (max-width: 600px) {
   .container {
-    height: 95%;
+    height: 90%;
     width: 100%;
 
     .timer-container {
