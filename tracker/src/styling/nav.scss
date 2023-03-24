@@ -62,15 +62,49 @@
     justify-content: flex-end;
   }
 
-  .account-container{
+  .account-container {
 
-    .account-header{
+    .account-header {
       display: flex;
-      justify-content: center;
+      font-weight: bolder;
+      // justify-content: center;
     }
 
-    .final-button{
-      width: 100%;
+    .account-switch {
+      text-decoration: solid underline;
+    }
+
+
+
+    .final-button-container {
+      display: flex;
+      justify-content: center;
+
+      .final-button{
+        width: 50%;
+  
+        border-radius: .7em;
+    }
+  }
+
+
+    #register1 {
+
+      #email-register,
+      #username-register,
+      #password-register {
+        width: 100%;
+        border-radius: .5em;
+      }
+    }
+
+    #login1 {
+
+      #username-login,
+      #password-login {
+        width: 100%;
+        border-radius: .5em;
+      }
     }
   }
 }

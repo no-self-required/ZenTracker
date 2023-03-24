@@ -22,6 +22,9 @@ const customStyles = {
     // marginRight: "-50%",
     transform: "translate(-50%, -50%)",
     borderRadius: "20px",
+    height: "16em",
+    width: "13em",
+    padding: "1em",
   },
 };
 
