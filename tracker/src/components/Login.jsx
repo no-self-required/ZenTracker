@@ -50,7 +50,7 @@ function Login() {
         />
         <br />
       </form>
-      <button type="submit" form="login1" value="Login">
+      <button type="submit" form="login1" value="Login" class="final-button">
         Login
       </button>
     </div>
