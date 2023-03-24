@@ -63,10 +63,14 @@
   }
 
   .account-container{
-    
+
     .account-header{
       display: flex;
       justify-content: center;
+    }
+
+    .final-button{
+      width: 100%;
     }
   }
 }

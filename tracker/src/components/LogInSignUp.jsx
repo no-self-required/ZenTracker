@@ -18,14 +18,15 @@ function LogInSignUp(props) {
         <>
           <div class="account-header">Login</div>
           <Login></Login>
-          <div onClick={signupClick}>Sign Up</div>
+          Don't have an account? 
+          <div onClick={signupClick}>Sign up</div>
         </>
       )}
       {props.loginOrSignup === "signup" && (
         <>
           <div className="account-header">Sign Up</div>
           <Signup></Signup>
-          <div onClick={loginClick}>Login</div>
+          Have an account already?<div onClick={loginClick}>Log in</div>
         </>
       )}
     </div>
