@@ -38,6 +38,7 @@ function Signup() {
           id="email-register"
           name="email-register"
           type="text"
+          className="input"
           onChange={(e) => setEmail(e.target.value)}
         />
         <br />
@@ -47,6 +48,7 @@ function Signup() {
           id="username-register"
           name="username-register"
           type="text"
+          className="input"
           onChange={(e) => setUsername(e.target.value)}
         />
         <br />
@@ -56,12 +58,12 @@ function Signup() {
           id="password-register"
           name="password-register"
           type="password"
+          className="input"
           onChange={(e) => setPassword(e.target.value)}
         />
         <br />
         <div class="final-button-container">
         <input type="submit" value="Register" class="final-button"/>
-
         </div>
       </form>
     </div>
