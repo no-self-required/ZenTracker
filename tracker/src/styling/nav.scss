@@ -90,6 +90,11 @@
 
     #register1 {
 
+      .input:focus{
+        border-width: .3em;
+        outline-width: 0
+      }
+
       #email-register,
       #username-register,
       #password-register {
@@ -100,12 +105,19 @@
 
     #login1 {
 
-      #username-login,
+      .input:focus{
+        border-width: .3em;
+        outline-width: 0
+      }
+
+      #username-login,  
       #password-login {
         width: 100%;
         border-radius: .5em;
       }
     }
+
+
   }
 }
 
