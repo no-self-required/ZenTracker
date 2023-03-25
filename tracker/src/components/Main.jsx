@@ -745,13 +745,16 @@ function Main() {
                   style={customStyles}
                   shouldCloseOnOverlayClick={false}
                 >
-                  <div>{message}</div>
-                  <label for="logInput">Log:</label>
+                  <div className="log-message">{message}</div>
+                  <label for="logInput">Enter a log</label>
+                  <br />
                   <input
+                    type="text"
                     className="logInput"
                     onChange={(e) => setLog(e.target.value)}
                   ></input>
-                  <button onClick={closeModal}>submit</button>
+                  <br />
+                  <button class="submit-log"onClick={closeModal}>submit</button>
                 </Modal>
               </div>
             )}
