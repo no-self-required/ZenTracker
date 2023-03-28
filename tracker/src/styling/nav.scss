@@ -73,6 +73,7 @@
     .account-switch-message{
       position: absolute;
       bottom: 20px;
+      color: #656565;
     }
 
     .account-switch {
@@ -87,13 +88,16 @@
       .final-button {
         width: 100%;
         border-radius: .3em;
-        border: .9px solid #656565;
-        // background-color: #dfdfdf00;
+        border: .2rem solid #dfdfdf;
+        background-color: #ffffff;
         margin-bottom: 1em;
+        color: #656565;
+        -webkit-transition: .3s ease-in-out;
       }
 
       .final-button:hover{
-        opacity: 10%;
+        border-color: #656565;
+        transition: .3s ease-in-out;
       }
     }
 
@@ -106,18 +110,19 @@
       border: 0;
       border-bottom: .2em solid #dfdfdf;
       outline: none;
+      -webkit-transition: .3s ease-in-out;
     }
 
     label {
       position: absolute;
-      left: 0;
+      left: 5px;
       top: 0px;
       font-size: 1em;
       color: #656565;
       display: flex;
       align-items: center;
       cursor: text;
-      transition: .3s ease-in-out;
+      transition: .4s ease-in-out;
     }
 
     input,
@@ -127,17 +132,21 @@
       height: 2em;
     }
 
+    input:hover+label,
     input:focus+label,
     input:valid+label {
-      color: #777777;
+      color: #656565;
       font-size: .75em;
       top: -20px;
+      left: 0px;
       pointer-events: none;
     }
 
+    input:hover,
     input:focus,
     input:valid {
       border-bottom: 3px solid #636363;
+      transition: .4s ease-in-out;
     }
 
   }
