@@ -18,7 +18,7 @@ function LogInSignUp(props) {
         <>
           <div class="account-header">Login</div>
           <Login></Login>
-          <div>
+          <div className="account-switch-message">
             New user?
             <div class="account-switch" onClick={signupClick}>Sign up</div>
           </div>
@@ -28,7 +28,7 @@ function LogInSignUp(props) {
         <>
           <div className="account-header">Sign Up</div>
           <Signup></Signup>
-          Have an account already?<div class="account-switch" onClick={loginClick}>Log in</div>
+          <div className="account-switch-message">Have an account already?<div className="account-switch" onClick={loginClick}>Log in</div></div>
         </>
       )}
     </div>

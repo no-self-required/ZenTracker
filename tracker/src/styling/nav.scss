@@ -65,10 +65,14 @@
   .account-container {
 
     .account-header {
-      display: flex;
-      justify-content: center;
       margin-bottom: 2em;
+      font-weight: bold;
       color: #656565;
+    }
+
+    .account-switch-message{
+      position: absolute;
+      bottom: 20px;
     }
 
     .account-switch {
@@ -79,12 +83,17 @@
     .final-button-container {
       display: flex;
       justify-content: center;
-
+      // margin-top: -1em;
       .final-button {
         width: 100%;
         border-radius: .3em;
-        border: 1px solid #656565;
-        background-color: #dfdfdf00;
+        border: .9px solid #656565;
+        // background-color: #dfdfdf00;
+        margin-bottom: 1em;
+      }
+
+      .final-button:hover{
+        opacity: 10%;
       }
     }
 
