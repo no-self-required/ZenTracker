@@ -66,9 +66,14 @@ function Signup() {
           <label for="password-register">Password</label>
         </div>
         <div class="final-button-container">
-        <button type="submit" form="register1" value="Register" class="final-button">
-          Register
-        </button>
+          <button
+            type="submit"
+            form="register1"
+            value="Register"
+            class="final-button"
+          >
+            Register
+          </button>
           {/* <input type="submit" value="Register" class="final-button" /> */}
         </div>
       </form>

@@ -21,7 +21,7 @@ const customStyles = {
     bottom: "auto",
     transform: "translate(-50%, -50%)",
     borderRadius: "20px",
-    height: "21em",
+    height: "22em",
     width: "13em",
     padding: "1em",
   },
