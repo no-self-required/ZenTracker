@@ -67,7 +67,7 @@
     .account-header {
       margin-bottom: 2em;
       font-weight: bold;
-      color: #656565;
+      color: black;
       pointer-events: none;
     }
 
@@ -75,7 +75,7 @@
       position: absolute;
       bottom: 20px;
       font-size: .7em;
-      color: #656565;
+      color: black;
     }
 
     .account-switch {
@@ -85,8 +85,8 @@
     }
 
     .account-switch:hover{
-      // transition: .3s ease-in-out;
-      color: #222222;
+      transition: .3s ease-in-out;
+      background-color: #dadada;
     }
     .final-button-container {
       display: flex;
@@ -95,7 +95,7 @@
       .final-button{
         width: 100%;
         border-radius: .3em;
-        border: .1rem solid #dfdfdf;
+        border: .2rem solid #dfdfdf;
         background-color: #ffffff;
         // margin-bottom: 1em;
         color: #656565;
@@ -103,14 +103,14 @@
       }
 
       .final-button:hover{
-        border-color: #656565;
+        border-color: black;
         transition: .3s ease-in-out;
       }
       
       .final-button-enabled{
         width: 100%;
         border-radius: .3em;
-        border: .1rem solid #dfdfdf;
+        border: .2rem solid #dfdfdf;
         border-color: #656565;
         // margin-bottom: 1em;
         color: #656565;
@@ -125,7 +125,7 @@
 
     input {
       border: 0;
-      border-bottom: .1em solid #dfdfdf;
+      border-bottom: .2em solid #dfdfdf;
       outline: none;
       -webkit-transition: .3s ease-in-out;
     }
@@ -135,7 +135,7 @@
       left: 5px;
       top: 0px;
       font-size: 1em;
-      color: #656565;
+      color: black;
       display: flex;
       align-items: center;
       cursor: text;
@@ -162,7 +162,7 @@
     input:hover,
     input:focus,
     input:valid {
-      border-bottom: .1em solid #636363;
+      border-bottom: .2em solid #636363;
       transition: .4s ease-in-out;
     }
 
