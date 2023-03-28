@@ -55,7 +55,7 @@ function Login() {
         </div>
       </form>
       <div className="final-button-container">
-        <button type="submit" form="login1" value="Login" class="final-button">
+        <button type="submit" form="login1" value="Login" className={`final-button${(username && password !== "") ? "-enabled" : ""}`}>
           Login
         </button>
       </div>

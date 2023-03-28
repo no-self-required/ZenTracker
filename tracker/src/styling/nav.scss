@@ -68,29 +68,36 @@
       margin-bottom: 2em;
       font-weight: bold;
       color: #656565;
+      pointer-events: none;
     }
 
     .account-switch-message{
       position: absolute;
       bottom: 20px;
+      font-size: .7em;
       color: #656565;
     }
 
     .account-switch {
       text-decoration: solid underline;
       width: fit-content;
+      cursor: pointer
     }
 
+    .account-switch:hover{
+      // transition: .3s ease-in-out;
+      color: #222222;
+    }
     .final-button-container {
       display: flex;
       justify-content: center;
-      // margin-top: -1em;
-      .final-button {
+
+      .final-button{
         width: 100%;
         border-radius: .3em;
-        border: .2rem solid #dfdfdf;
+        border: .1rem solid #dfdfdf;
         background-color: #ffffff;
-        margin-bottom: 1em;
+        // margin-bottom: 1em;
         color: #656565;
         -webkit-transition: .3s ease-in-out;
       }
@@ -98,6 +105,16 @@
       .final-button:hover{
         border-color: #656565;
         transition: .3s ease-in-out;
+      }
+      
+      .final-button-enabled{
+        width: 100%;
+        border-radius: .3em;
+        border: .1rem solid #dfdfdf;
+        border-color: #656565;
+        // margin-bottom: 1em;
+        color: #656565;
+        -webkit-transition: .3s ease-in-out;
       }
     }
 
@@ -108,7 +125,7 @@
 
     input {
       border: 0;
-      border-bottom: .2em solid #dfdfdf;
+      border-bottom: .1em solid #dfdfdf;
       outline: none;
       -webkit-transition: .3s ease-in-out;
     }
@@ -145,7 +162,7 @@
     input:hover,
     input:focus,
     input:valid {
-      border-bottom: 3px solid #636363;
+      border-bottom: .1em solid #636363;
       transition: .4s ease-in-out;
     }
 

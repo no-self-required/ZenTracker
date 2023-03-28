@@ -70,7 +70,7 @@ function Signup() {
             type="submit"
             form="register1"
             value="Register"
-            class="final-button"
+            className={`final-button${(email && username && password !== "") ? "-enabled" : ""}`}
           >
             Register
           </button>
