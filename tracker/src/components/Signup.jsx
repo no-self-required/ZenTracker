@@ -15,7 +15,7 @@ function Signup() {
         "http://localhost:3000/api/register",
         JSON.stringify({ email, username, password }),
         {
-          headers: { "Content-Type": "application/json" }
+          headers: { "Content-Type": "application/json" },
         }
       );
 
@@ -30,43 +30,49 @@ function Signup() {
   }
 
   return (
-    <div>
+    <>
       <form id="register1" onSubmit={registerUser}>
-        <label for="email-register">Email</label>
-        <br />
-        <input
-          id="email-register"
-          name="email-register"
-          type="text"
-          className="input"
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <br />
-        <label for="username-register">Username</label>
-        <br />
-        <input
-          id="username-register"
-          name="username-register"
-          type="text"
-          className="input"
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <br />
-        <label for="password-register">Password</label>
-        <br />
-        <input
-          id="password-register"
-          name="password-register"
-          type="password"
-          className="input"
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <br />
+        <div className="field-holder">
+          <input
+            id="email-register"
+            name="email-register"
+            type="text"
+            required
+            className="input"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <label for="email-register">Email</label>
+        </div>
+        <div className="field-holder">
+          <input
+            id="username-register"
+            name="username-register"
+            type="text"
+            className="input"
+            required
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <label for="username-register">Username</label>
+        </div>
+        <div className="field-holder">
+          <input
+            id="password-register"
+            name="password-register"
+            type="password"
+            className="input"
+            required
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <label for="password-register">Password</label>
+        </div>
         <div class="final-button-container">
-        <input type="submit" value="Register" class="final-button"/>
+        <button type="submit" form="register1" value="Register" class="final-button">
+          Register
+        </button>
+          {/* <input type="submit" value="Register" class="final-button" /> */}
         </div>
       </form>
-    </div>
+    </>
   );
 }
 

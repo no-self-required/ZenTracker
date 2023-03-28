@@ -29,38 +29,37 @@ function Login() {
   }
 
   return (
-    <div>
+      <>
       <form id="login1" onSubmit={loginUser}>
-        <label for="username-login">Username</label>
-        <br />
-        <input
-          id="username-login"
-          name="username-login"
-          type="text"
-          // placeholder="username"
-          className="input"
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <br />
-        <label for="password-login">Password</label>
-        <br />
-        <input
-          id="password-login"
-          name="password-login"
-          type="password"
-          className="input"
-          // placeholder="password"
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <br />
+        <div className="field-holder">
+          <input
+            id="username-login"
+            name="username-login"
+            type="text"
+            required
+            className="input"
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <label for="username-login">Username</label>
+        </div>
+        <div className="field-holder">
+          <input
+            id="password-login"
+            name="password-login"
+            type="password"
+            className="input"
+            required
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <label for="password-login">Password</label>
+        </div>
       </form>
       <div className="final-button-container">
-      <button type="submit" form="login1" value="Login" class="final-button">
-        Login
-      </button>
+        <button type="submit" form="login1" value="Login" class="final-button">
+          Login
+        </button>
       </div>
-
-    </div>
+    </>
   );
 }
 
