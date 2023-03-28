@@ -53,7 +53,7 @@ function Nav() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const isMobile = windowDimension <= 600;
+  const isMobile = windowDimension <= 713;
 
   function openModalLogin() {
     setIsOpen(true);

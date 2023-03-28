@@ -13,7 +13,7 @@
       display: flex;
       align-items: center;
       flex-direction: column;
-
+      // margin-left: 3em;
       #timer {
         text-align: right;
         height: 65%;
@@ -48,7 +48,6 @@
 
     #timer-button-container {
       display: grid;
-
       #display-timer-container {
         display: flex;
         justify-content: center;
@@ -60,7 +59,7 @@
           justify-content: center;
           width: fit-content;
           font-size: 144px;
-          margin-left: .33em;
+          // margin-left: .33em;
 
           .hours {
             display: grid;
@@ -104,8 +103,6 @@
       #button-container {
         display: flex;
         justify-content: center;
-
-
 
         .fullscreen-mute {
           width: fit-content;
@@ -183,7 +180,7 @@
   background: rgb(255, 255, 255);
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 713px) {
   .container {
     height: 90%;
     width: 100%;
@@ -207,7 +204,7 @@
             height: 6.4em;
             justify-content: space-between;
             margin-top: 1.36em;
-            // margin-left: .2em;
+            margin-left: .2em;
             position: static !important;
 
             .notation-hours {
