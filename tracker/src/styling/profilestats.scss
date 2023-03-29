@@ -1,5 +1,5 @@
-@media only screen and (max-width: 713px) {
 
+@media only screen and (max-width: 713px) {
   .profile-stats-container{
     display: flex;
     flex-direction: column;
@@ -36,7 +36,6 @@
     .calendar-container {
       display: flex;
       flex-direction: column;
-      // width: 23.2em;
       padding: 1.5em 1.3em 0 1.2em;
 
       .button-group {
@@ -44,7 +43,6 @@
         margin-top: 1em;
 
         .buttons-year{
-          padding: .5em;
           background-color: white;
           border-radius: .5em;
         }
@@ -121,7 +119,7 @@
     }
     
     #single-session-container{
-      background-color: rgba(183, 185, 252, 0.84);
+      background-color: #c1d3fe;
       margin-top: 1em;
       margin-bottom: 1em;
       padding: 1em;
