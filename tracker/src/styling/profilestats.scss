@@ -9,7 +9,8 @@
       padding: 1.5em 1.3em 0 1.1em;
       display: flex;
       flex-direction: column;
-    
+      
+      
     }
 
     .line {
@@ -27,34 +28,43 @@
 
     .stats-header{
       font-weight: bolder;
+      // margin-bottom: 1em;
+    }
+
+    #calendar-header{
+      position: absolute;
     }
 
     .delete-button{
       margin: 1em 1em 0 1em;
     }
     
+    .button-group {
+      display: flex;
+      margin-top: 1em;
+      margin-left: 1em;
+      
+      .buttons-year{
+        background-color: white;
+        border-radius: .5em;
+      }
+    }
+
     .calendar-container {
       display: flex;
       flex-direction: column;
       padding: 1.5em 1.3em 0 1.2em;
+      overflow-x: scroll;
 
-      .button-group {
-        display: flex;
-        margin-top: 1em;
 
-        .buttons-year{
-          background-color: white;
-          border-radius: .5em;
-        }
-      }
 
       .year {
         display: flex;
         flex-direction: column;
-        overflow-x: scroll;
-        overflow-y: hidden;
+        margin-top: 2em;
+        // overflow-x: scroll;
+        // overflow-y: visible;
         border-radius: 1em;
-        padding: .5em;
 
         #week-wrapper{
           display: flex;
@@ -147,18 +157,22 @@
     }
     
     /* Tooltip text */
-    .single-day .tooltiptext {
-      visibility: hidden;
-      background-color: black;
-      color: #fff;
-      text-align: center;
-      padding: 5px 0;
-      border-radius: 6px;
+    // .single-day .tooltiptext {
+    //   visibility: hidden;
+    //   background-color: black;
+    //   color: #fff;
+    //   text-align: center;
+    //   padding: 5px 0;
+    //   border-radius: 6px;
      
       /* Position the tooltip text */
-      // position: fixed;
-    }
+      // position: static;
+    // }
     
+    // .tooltiptext {
+    //   position: static;
+    // }
+
     #square-light {
       width: 15px;
       height: 15px;

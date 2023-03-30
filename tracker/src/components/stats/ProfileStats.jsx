@@ -348,7 +348,13 @@ function ProfileStats() {
       //   minutes: formatedLength[1],
       //   seconds: formatedLength[2],
       // });
-      const displayString = Math.round(formatedLength[0]) + "h " + Math.round(formatedLength[1]) + "m " + Math.round(formatedLength[2]) + "s ";
+      const displayString =
+        Math.round(formatedLength[0]) +
+        "h " +
+        Math.round(formatedLength[1]) +
+        "m " +
+        Math.round(formatedLength[2]) +
+        "s ";
       return displayString;
     }
 
@@ -376,7 +382,13 @@ function ProfileStats() {
       //   seconds: Math.floor(formatedLength[2]),
       // });
 
-      const displayString = Math.round(formatedLength[0]) + "h " + Math.round(formatedLength[1]) + "m " + Math.round(formatedLength[2]) + "s ";
+      const displayString =
+        Math.round(formatedLength[0]) +
+        "h " +
+        Math.round(formatedLength[1]) +
+        "m " +
+        Math.round(formatedLength[2]) +
+        "s ";
 
       return displayString;
     }
@@ -395,7 +407,13 @@ function ProfileStats() {
         }
       }
       const formatedLength = displayInputValue(longestLength);
-      const displayString = Math.round(formatedLength[0]) + "h " + Math.round(formatedLength[1]) + "m " + Math.round(formatedLength[2]) + "s ";
+      const displayString =
+        Math.round(formatedLength[0]) +
+        "h " +
+        Math.round(formatedLength[1]) +
+        "m " +
+        Math.round(formatedLength[2]) +
+        "s ";
       return displayString;
     }
 
@@ -486,11 +504,24 @@ function ProfileStats() {
       return allYears.reverse();
     };
 
+    // const header = allYearSessions.map((year, yearIndex, array1) => {
+    //   if (selectedYear === year.year){
+    //     return (
+    //       <>
+    //         <div className="stats-header">
+    //           {totalSessionYear(year.calendar)} sessions in {selectedYear}
+    //         </div>
+    //         </>
+    //     )
+    //   }
+
+    // })
+
     const printSqs = allYearSessions.map((year, yearIndex, array1) => {
       if (selectedYear === year.year)
         return (
           <>
-            <div className="stats-header">
+            <div className="stats-header" id="calendar-header">
               {totalSessionYear(year.calendar)} sessions in {selectedYear}
             </div>
             <div className={`year-${yearIndex + 1} year`}>
@@ -543,7 +574,12 @@ function ProfileStats() {
     const allYearButtons = listAllYears().map((year) => {
       return (
         <>
-          <button className="buttons-year"onClick={(e) => setSelectedYear(year)}>{year}</button>
+          <button
+            className="buttons-year"
+            onClick={(e) => setSelectedYear(year)}
+          >
+            {year}
+          </button>
         </>
       );
     });
@@ -558,11 +594,13 @@ function ProfileStats() {
           </div>
           <hr className="line" />
           <div className="stat-container">
-            Most in a single day <div className="bold-stats">{mostSingleDaySessions()}</div>
+            Most in a single day{" "}
+            <div className="bold-stats">{mostSingleDaySessions()}</div>
           </div>
           <hr className="line" />
           <div className="stat-container">
-            Days with at least one session <div className="bold-stats">{singleDaySessions()}</div>
+            Days with at least one session{" "}
+            <div className="bold-stats">{singleDaySessions()}</div>
           </div>
         </div>
         <div className="time-stats">
@@ -580,10 +618,11 @@ function ProfileStats() {
             Longest session <div className="bold-stats">{longestLength()}</div>
           </div>
         </div>
+        {/* <div>{header}</div> */}
         <div className="calendar-container">
           {printSqs}
-          <div className="button-group">{allYearButtons}</div>
         </div>
+        <div className="button-group">{allYearButtons}</div>
         <div>
           <Modal
             isOpen={modalIsOpen}
