@@ -23,6 +23,7 @@ function SingleDay(props) {
   let newDateProperYear = setYear(startYearDate, props.year);
   let formatted = format(new Date(newDateProperYear), "PPP");
 
+  
   return (
     <div
       className={`day-${props.daysIndex + 1} single-day`}
