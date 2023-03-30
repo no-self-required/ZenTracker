@@ -586,42 +586,44 @@ function ProfileStats() {
 
     return (
       <div className="profile-stats-container">
-        <div className="session-stats">
-          <div className="stats-header">Sessions</div>
-          <hr className="line" />
-          <div className="stat-container">
-            Total <div className="bold-stats">{totalSessions()}</div>
+        <div className="wrapper-stats">
+          <div className="session-stats">
+            <div className="stats-header">Sessions</div>
+            <hr className="line" />
+            <div className="stat-container">
+              Total <div className="bold-stats">{totalSessions()}</div>
+            </div>
+            <hr className="line" />
+            <div className="stat-container">
+              Most in a single day{" "}
+              <div className="bold-stats">{mostSingleDaySessions()}</div>
+            </div>
+            <hr className="line" />
+            <div className="stat-container">
+              Days with at least one session{" "}
+              <div className="bold-stats">{singleDaySessions()}</div>
+            </div>
           </div>
-          <hr className="line" />
-          <div className="stat-container">
-            Most in a single day{" "}
-            <div className="bold-stats">{mostSingleDaySessions()}</div>
-          </div>
-          <hr className="line" />
-          <div className="stat-container">
-            Days with at least one session{" "}
-            <div className="bold-stats">{singleDaySessions()}</div>
-          </div>
-        </div>
-        <div className="time-stats">
-          <div className="stats-header">Time</div>
-          <hr className="line" />
-          <div className="stat-container">
-            Total <div className="bold-stats">{totalTime()}</div>
-          </div>
-          <hr className="line" />
-          <div className="stat-container">
-            Average session <div className="bold-stats">{averageLength()}</div>
-          </div>
-          <hr className="line" />
-          <div className="stat-container">
-            Longest session <div className="bold-stats">{longestLength()}</div>
+          <div className="time-stats">
+            <div className="stats-header">Time</div>
+            <hr className="line" />
+            <div className="stat-container">
+              Total <div className="bold-stats">{totalTime()}</div>
+            </div>
+            <hr className="line" />
+            <div className="stat-container">
+              Average session{" "}
+              <div className="bold-stats">{averageLength()}</div>
+            </div>
+            <hr className="line" />
+            <div className="stat-container">
+              Longest session{" "}
+              <div className="bold-stats">{longestLength()}</div>
+            </div>
           </div>
         </div>
         {/* <div>{header}</div> */}
-        <div className="calendar-container">
-          {printSqs}
-        </div>
+        <div className="calendar-container">{printSqs}</div>
         <div className="button-group">{allYearButtons}</div>
         <div>
           <Modal
