@@ -1,50 +1,40 @@
-
-@media only screen and (max-width: 713px) {
-  .profile-stats-container{
+@media only screen and (min-width: 713px) {
+  .profile-stats-container {
     display: flex;
     flex-direction: column;
-    overflow-y: hidden;
-    .session-stats, .time-stats {
-      // width: 23.3em;
-      padding: 1.5em 1.3em 0 1.1em;
-      display: flex;
-      flex-direction: column;
-      
-      
-    }
+    // overflow-y: hidden;
 
-    .line {
+    .wrapper-stats {
+      display: flex;
+      justify-content: space-around;
       width: 100%;
-    }
+      // padding: 1em;
 
-    .stat-container{
-      display: flex;
-      justify-content: space-between;
+      .stat-container {
+        display: flex;
+        justify-content: space-between;
+        width: 20em;
 
-      .bold-stats{
-        font-weight: bold;
+        .bold-stats {
+          font-weight: bold;
+        }
       }
     }
 
-    .stats-header{
-      font-weight: bolder;
-      // margin-bottom: 1em;
-    }
-
-    #calendar-header{
+    #calendar-header {
       position: absolute;
     }
 
-    .delete-button{
+    .delete-button {
       margin: 1em 1em 0 1em;
     }
-    
+
     .button-group {
       display: flex;
       margin-top: 1em;
       margin-left: 1em;
-      
-      .buttons-year{
+
+      .buttons-year {
         background-color: white;
         border-radius: .5em;
       }
@@ -66,44 +56,49 @@
         // overflow-y: visible;
         border-radius: 1em;
 
-        #week-wrapper{
+        #week-wrapper {
           display: flex;
         }
       }
 
-      #month-row{
-        display: flex; 
+      #month-row {
+        display: flex;
         width: 50em;
         font-size: 1rem;
         margin-left: 2.2em;
 
-        #feb{
+        #feb {
           margin-left: 4.7em;
         }
 
-        #mar, #jul, #nov{
+        #mar,
+        #jul,
+        #nov {
           margin-left: 4.6em;
         }
 
-        #apr, #jun, #sep, #dec{
+        #apr,
+        #jun,
+        #sep,
+        #dec {
           margin-left: 4.4em;
         }
 
-        #may{
+        #may {
           margin-left: 6em;
         }
 
-        #aug{
+        #aug {
           margin-left: 6.4em;
         }
 
-        #oct{
+        #oct {
           margin-left: 6.1em;
         }
-        
+
       }
 
-      #day-column{
+      #day-column {
         margin-top: 2em;
         font-size: 1rem;
         height: 8.2em;
@@ -113,143 +108,310 @@
         justify-content: space-between;
       }
     }
-    
-    #square {
-      width: 15px;
-      height: 15px;
-      outline: 1.4px solid rgb(0, 0, 0);
-      border-radius: 3px;
-      background-color: rgb(152, 152, 152);
-      margin: .3em;
-    }
-    
-    .single-day {
-      position: relative;
-      display: inline-block;
-    }
-    
-    #single-session-container{
-      background-color: #c1d3fe;
-      margin-top: 1em;
-      margin-bottom: 1em;
-      padding: 1em;
-      border-radius: .5em;
-      border: .5px solid black;
 
-      .session-info-container{
-        display: flex;
-        flex-direction: column;
-
-          #log-container{
-            word-break: break-word;
-            text-align: right;
-            width: 10em;
-          }
-
-          .line-single{
-            width: 100%;
-          }
-      }
-    }
     
-    .single-day:hover .tooltiptext{
-      visibility: visible;
-    }
-    
-    /* Tooltip text */
-    // .single-day .tooltiptext {
-    //   visibility: hidden;
-    //   background-color: black;
-    //   color: #fff;
-    //   text-align: center;
-    //   padding: 5px 0;
-    //   border-radius: 6px;
-     
-      /* Position the tooltip text */
-      // position: static;
-    // }
-    
-    // .tooltiptext {
-    //   position: static;
-    // }
-
-    #square-light {
-      width: 15px;
-      height: 15px;
-      outline: 1.4px solid rgb(53, 53, 53);
-      border-radius: 3px;
-      background-color: rgba(3, 158, 3, 0.582);
-      margin: .3em;
-    }
-    
-    #square-medium {
-      width: 15px;
-      height: 15px;
-      outline: 1.4px solid rgb(53, 53, 53);
-      border-radius: 3px;
-      background-color: rgb(0, 167, 0);
-      margin: .3em;
-    }
-    
-    #square-dark {
-      width: 15px;
-      height: 15px;
-      outline: 1.4px solid rgb(53, 53, 53);
-      border-radius: 3px;
-      background-color: rgb(0, 218, 0);
-      margin: .3em;
-    }
-  }
-  
-  .line {
-    width: 23em;
   }
 
-  #modal-wrapper{
-    display: flex;
-    flex-direction: column;
-
-    #length-wrapper, .log-input, .date-input{
-      margin-bottom: 1em;
-    }
-
-    .date-input{
-      margin-top: .5em;
-    }
-
-    #input-wrapper{
-      display: flex;
-      justify-content: space-around;
-      margin-top: .5em;
-    }
-
-    #submit-button{
-      width: 4em;
-      margin-top: .5em;
-    }
-
-    .log-input{
-      margin-top: .5em;
-    }
-  }
-
-  .all-sessions-container{
+  .all-sessions-container {
     padding: 1.5em 1.3em 0 1.1em;
-    // width: 23.3em;
     display: flex;
     flex-direction: column;
-
-    .add-session{
+    height: 25em;
+    
+    .add-session {
       width: 7em;
       margin-bottom: 1em;
       background-color: white;
       border-radius: .3em;
-      padding: .5em;
+      padding: .2em;
+    }
+  
+    #all-sessions-wrapper {
+      display: flex;
+      #single-session-container {
+        background-color: #c1d3fe;
+
+        border-radius: .5em !important;
+        border: .5px solid black;
+        margin-right: 1em;
+        height: 15em;
+        min-width: 20em;
+
+        .session-info-container {
+          display: flex;
+          flex-direction: column;
+          // height: 10em;
+          #log-container {
+            word-break: break-word;
+            text-align: right;
+            // width: 10em;
+
+          }
+    
+          .line-single {
+            width: 100%;
+          }
+        }
+      }
     }
 
-    #all-sessions-wrapper{
-      height: 25em;
-      overflow-y: scroll;
-    }
+
   }
 }
+
+// @media only screen and (max-width: 713px) {
+.profile-stats-container {
+  display: flex;
+  flex-direction: column;
+  overflow-y: hidden;
+
+  .session-stats,
+  .time-stats {
+    // width: 23.3em;
+    padding: 1.5em 1.3em 0 1.1em;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .line {
+    width: 100%;
+  }
+
+  .wrapper-stats {
+    // display: none !important;
+    // justify-content: space-around;
+    // width: 0!important;
+    // padding: 0!important;
+
+    .stat-container {
+      display: flex;
+      justify-content: space-between;
+
+      .bold-stats {
+        font-weight: bold;
+      }
+    }
+
+  }
+
+
+  .stats-header {
+    font-weight: bolder;
+    // margin-bottom: 1em;
+  }
+
+  #calendar-header {
+    position: absolute;
+  }
+
+  .delete-button {
+    margin: 1em 1em 0 1em;
+  }
+
+  .button-group {
+    display: flex;
+    margin-top: 1em;
+    margin-left: 1em;
+
+    .buttons-year {
+      background-color: white;
+      border-radius: .5em;
+    }
+  }
+
+  .calendar-container {
+    display: flex;
+    flex-direction: column;
+    padding: 1.5em 1.3em 0 1.2em;
+    overflow-x: scroll;
+
+
+
+    .year {
+      display: flex;
+      flex-direction: column;
+      margin-top: 2em;
+      border-radius: 1em;
+
+      #week-wrapper {
+        display: flex;
+      }
+    }
+
+    #month-row {
+      display: flex;
+      width: 50em;
+      font-size: 1rem;
+      margin-left: 2.2em;
+
+      #feb {
+        margin-left: 4.7em;
+      }
+
+      #mar,
+      #jul,
+      #nov {
+        margin-left: 4.6em;
+      }
+
+      #apr,
+      #jun,
+      #sep,
+      #dec {
+        margin-left: 4.4em;
+      }
+
+      #may {
+        margin-left: 6em;
+      }
+
+      #aug {
+        margin-left: 6.4em;
+      }
+
+      #oct {
+        margin-left: 6.1em;
+      }
+
+    }
+
+    #day-column {
+      margin-top: 2em;
+      font-size: 1rem;
+      height: 8.2em;
+      // padding-right: em;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+  }
+
+  #square {
+    width: 15px;
+    height: 15px;
+    outline: 1.4px solid rgb(0, 0, 0);
+    border-radius: 3px;
+    background-color: rgb(152, 152, 152);
+    margin: .3em;
+  }
+
+  .single-day {
+    position: relative;
+    display: inline-block;
+  }
+
+  #single-session-container {
+    background-color: #c1d3fe;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    padding: 1em;
+    border-radius: .5em;
+    border: .5px solid black;
+
+    .session-info-container {
+      display: flex;
+      justify-content: space-between;
+      flex-direction: column;
+
+      .stat-container{
+        display: flex;
+        justify-content: space-between;
+      }
+      #log-container {
+        word-break: break-word;
+        text-align: right;
+        width: 10em;
+      }
+
+      .line-single {
+        width: 100%;
+      }
+    }
+  }
+
+  .single-day:hover .tooltiptext {
+    visibility: visible;
+  }
+
+  #square-light {
+    width: 15px;
+    height: 15px;
+    outline: 1.4px solid rgb(53, 53, 53);
+    border-radius: 3px;
+    background-color: rgba(3, 158, 3, 0.582);
+    margin: .3em;
+  }
+
+  #square-medium {
+    width: 15px;
+    height: 15px;
+    outline: 1.4px solid rgb(53, 53, 53);
+    border-radius: 3px;
+    background-color: rgb(0, 167, 0);
+    margin: .3em;
+  }
+
+  #square-dark {
+    width: 15px;
+    height: 15px;
+    outline: 1.4px solid rgb(53, 53, 53);
+    border-radius: 3px;
+    background-color: rgb(0, 218, 0);
+    margin: .3em;
+  }
+}
+
+.line {
+  width: 23em;
+}
+
+#modal-wrapper {
+  display: flex;
+  flex-direction: column;
+
+  #length-wrapper,
+  .log-input,
+  .date-input {
+    margin-bottom: 1em;
+  }
+
+  .date-input {
+    margin-top: .5em;
+  }
+
+  #input-wrapper {
+    display: flex;
+    justify-content: space-around;
+    margin-top: .5em;
+  }
+
+  #submit-button {
+    width: 4em;
+    margin-top: .5em;
+  }
+
+  .log-input {
+    margin-top: .5em;
+  }
+}
+
+.all-sessions-container {
+  padding: 1.5em 1.3em 0 1.1em;
+  display: flex;
+  flex-direction: column;
+
+  .add-session {
+    width: 7em;
+    margin-bottom: 1em;
+    background-color: white;
+    border-radius: .3em;
+    padding: .5em;
+  }
+
+  #all-sessions-wrapper {
+    height: 25em;
+    overflow-y: scroll;
+  }
+}
+
+// }
