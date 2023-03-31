@@ -167,7 +167,7 @@ function Nav() {
                     handleHam();
                   }}
                 >
-                  <div>{userData.user.username}</div>
+                  <p>{userData.user.username}</p>
                 </Link>
                 <Logout
                   className="logout"
