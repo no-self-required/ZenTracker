@@ -18,6 +18,7 @@
       font-size: 2em;
       margin-left: .5em;
       margin-top: .2em;
+      cursor: pointer;
     }
   }
 
@@ -26,18 +27,25 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-evenly;
-    width: 7em;
+    width: 8em;
     font-size: 1em;
     margin-right: 1em;
 
     .login,
-    .signup {
+    .signup,
+    .profile,
+    .logout {
       text-decoration: none;
+      border: 1px solid transparent;
     }
 
     .login:hover,
-    .signup:hover{
+    .signup:hover,
+    .profile:hover,
+    .logout:hover{
       border-bottom: 1px solid black;
+      transition: .2s ease-in;
+      cursor: pointer;
     }
 
     .login {
@@ -45,9 +53,13 @@
     }
 
     .logged-in {
-      width: 9em;
+      width: 7em;
       display: flex;
       justify-content: space-between;
+
+      .profile{
+        // width: 1em;
+      }
     }
 
     .login-signup-links {
@@ -258,11 +270,14 @@
             .login,
             .signup {
               margin: 0 !important;
+              border: 1px solid transparent;
+              cursor: pointer;
             }
 
             .login:hover,
             .signup:hover{
               border-bottom: 1px solid black;
+              transition: .2s ease-in;
             }
           }
 
