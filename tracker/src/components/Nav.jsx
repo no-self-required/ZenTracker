@@ -130,7 +130,7 @@ function Nav() {
                   className="profile"
                   onClick={handleShowNavbar}
                 >
-                  <div>{userData.user.username}</div>
+                  <p>{userData.user.username}</p>
                 </Link>
                 <Logout
                   className="logout"

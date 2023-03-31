@@ -21,7 +21,7 @@ function Logout(props) {
     props.handleHam();
     navigate("/");
   }
-  return <div className="logout" onClick={logOut}>Log out</div>;
+  return <p className="logout" onClick={logOut}>Log out</p>;
 }
 
 export default Logout
