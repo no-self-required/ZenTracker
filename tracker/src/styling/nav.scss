@@ -58,7 +58,7 @@
       justify-content: space-between;
 
       .profile{
-        // width: 1em;
+        height: 2.2em;
       }
     }
 
@@ -268,12 +268,18 @@
             align-items: center;
 
             .login,
-            .signup {
+            .signup,
+            .profile,
+            .logout {
               margin: 0 !important;
               border: 1px solid transparent;
               cursor: pointer;
             }
 
+            .profile{
+              // height: 2em;
+            }
+            
             .login:hover,
             .signup:hover{
               border-bottom: 1px solid black;
