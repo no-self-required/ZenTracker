@@ -11,7 +11,7 @@ import { Twirl as Hamburger } from "hamburger-react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 
-const element = <FontAwesomeIcon icon={faXmark} />
+const closeIcon = <FontAwesomeIcon icon={faXmark} />
 
 const customStyles = {
   content: {
@@ -211,7 +211,7 @@ function Nav() {
       >
         <div className="modal">
           <div to="/" className="closeModal" onClick={closeModal}>
-          {element}
+          {closeIcon}
           </div>
           <LogInsignUp
             loginOrSignup={loginOrSignup}
