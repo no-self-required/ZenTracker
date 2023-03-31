@@ -35,6 +35,11 @@
       text-decoration: none;
     }
 
+    .login:hover,
+    .signup:hover{
+      border-bottom: 1px solid black;
+    }
+
     .login {
       margin-right: 1em;
     }
@@ -60,6 +65,7 @@
   .closeModal {
     display: flex;
     justify-content: flex-end;
+    // background-color: yellow;
   }
 
   .account-container {
@@ -252,6 +258,11 @@
             .login,
             .signup {
               margin: 0 !important;
+            }
+
+            .login:hover,
+            .signup:hover{
+              border-bottom: 1px solid black;
             }
           }
 
