@@ -10,6 +10,7 @@
     padding: 1.5em 1.3em 0 1.1em;
     display: flex;
     flex-direction: column;
+    border: 1px solid black;
   }
 
   .line {
@@ -71,6 +72,8 @@
       flex-direction: column;
       margin-top: 2em;
       border-radius: 1em;
+      border: 1px solid black;
+      overflow-x: scroll;
 
       #week-wrapper {
         display: flex;
@@ -301,16 +304,12 @@
       display: flex;
       flex-direction: column;
       padding: 1.5em 1.3em 0 1.2em;
-      overflow-x: scroll;
-
-
+      // overflow-x: scroll;
 
       .year {
         display: flex;
         flex-direction: column;
         margin-top: 2em;
-        // overflow-x: scroll;
-        // overflow-y: visible;
         border-radius: 1em;
 
         #week-wrapper {
