@@ -1,8 +1,5 @@
-// @media only screen and (max-width: 713px) {
+//desktop
 .profile-stats-container {
-  display: flex;
-  flex-direction: column;
-  overflow-y: hidden;
 
   .session-stats,
   .time-stats {
@@ -10,7 +7,6 @@
     padding: 1.5em 1.3em 0 1.1em;
     display: flex;
     flex-direction: column;
-    border: 1px solid black;
   }
 
   .line {
@@ -40,10 +36,6 @@
     // margin-bottom: 1em;
   }
 
-  #calendar-header {
-    position: absolute;
-  }
-
   .delete-button {
     margin: 1em 1em 0 1em;
   }
@@ -63,21 +55,25 @@
     display: flex;
     flex-direction: column;
     padding: 1.5em 1.3em 0 1.2em;
-    overflow-x: scroll;
-
-
-
+    
     .year {
       display: flex;
       flex-direction: column;
-      margin-top: 2em;
+      // margin-top: 10em;
+      height: 15em;
       border-radius: 1em;
-      border: 1px solid black;
+      // border: 1px solid black;
       overflow-x: scroll;
+      padding-top: 5em;
 
-      #week-wrapper {
-        display: flex;
+      .year-wrapper{
+        border: 1px solid black;
+        
+        #week-wrapper {
+          display: flex;
+        }
       }
+
     }
 
     #month-row {
@@ -155,10 +151,11 @@
       justify-content: space-between;
       flex-direction: column;
 
-      .stat-container{
+      .stat-container {
         display: flex;
         justify-content: space-between;
       }
+
       #log-container {
         word-break: break-word;
         text-align: right;
@@ -365,7 +362,7 @@
       }
     }
 
-    
+
   }
 
   .all-sessions-container {
@@ -373,7 +370,7 @@
     display: flex;
     flex-direction: column;
     height: 25em;
-    
+
     .add-session {
       width: 7em;
       margin-bottom: 1em;
@@ -381,9 +378,10 @@
       border-radius: .3em;
       padding: .2em;
     }
-  
+
     #all-sessions-wrapper {
       display: flex;
+
       #single-session-container {
         background-color: #c1d3fe;
 
@@ -396,6 +394,7 @@
         .session-info-container {
           display: flex;
           flex-direction: column;
+
           // height: 10em;
           #log-container {
             word-break: break-word;
@@ -403,7 +402,7 @@
             // width: 10em;
 
           }
-    
+
           .line-single {
             width: 100%;
           }
