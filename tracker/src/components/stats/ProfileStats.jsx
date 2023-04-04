@@ -526,7 +526,7 @@ function ProfileStats() {
             </div>
               <div className={`year-${yearIndex + 1} year`}>
                 <div className="year-wrapper">
-                <div id="month-row">
+                  <div id="month-row">
                   <div>Jan</div>
                   <div id="feb">Feb</div>
                   <div id="mar">Mar</div>
