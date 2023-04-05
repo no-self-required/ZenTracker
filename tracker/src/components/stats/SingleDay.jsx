@@ -40,12 +40,14 @@ function SingleDay(props) {
   const { x, y, strategy, refs, context } = useFloating({
     placement: "top",
     middleware: [
-      offset(ARROW_HEIGHT + GAP),
+      offset({
+        alignmentAxis: -20,
+      }),
       flip(),
       shift(),
-      arrow({
-        element: arrowRef,
-      }),
+      // arrow({
+      //   element: arrowRef,
+      // }),
     ],
     whileElementsMounted(...args) {
       const cleanup = autoUpdate(...args, { animationFrame: true });
@@ -82,7 +84,7 @@ function SingleDay(props) {
               props.array2[props.weekIndex][props.daysIndex]
             )}{" "}
             sessions on {formatted}
-          <FloatingArrow ref={arrowRef} context={context}/>
+          {/* <FloatingArrow ref={arrowRef} context={context}/> */}
 
           </span>
         </>
@@ -105,7 +107,7 @@ function SingleDay(props) {
               props.array2[props.weekIndex][props.daysIndex]
             )}{" "}
             session on {formatted}
-            <FloatingArrow ref={arrowRef} context={context}/>
+            {/* <FloatingArrow ref={arrowRef} context={context}/> */}
 
           </span>
 

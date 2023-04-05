@@ -524,8 +524,9 @@ function ProfileStats() {
             <div className="stats-header" id="calendar-header">
               {totalSessionYear(year.calendar)} sessions in {selectedYear}
             </div>
+            <div className="year-wrapper">
+            </div>
               <div className={`year-${yearIndex + 1} year`}>
-                <div className="year-wrapper">
                   <div id="month-row">
                   <div>Jan</div>
                   <div id="feb">Feb</div>
@@ -568,8 +569,6 @@ function ProfileStats() {
                   })}
                 </div>
                 </div>
-                
-              </div>
           </>
         );
     });
