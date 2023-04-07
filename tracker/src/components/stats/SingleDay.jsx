@@ -1,5 +1,7 @@
-import {React, useRef} from "react";
+import { React, useLayoutEffect } from "react";
 import "../../styling/singleday.scss";
+
+// import ToolTip from "./ToolTip";
 
 import startOfYear from "date-fns/startOfYear";
 import setYear from "date-fns/setYear";
@@ -11,18 +13,10 @@ import {
   flip,
   shift,
   autoUpdate,
-  arrow,
-  FloatingArrow,
 } from "@floating-ui/react";
+import ToolTip from "./ToolTip";
 
 function SingleDay(props) {
-  //new Date() applies current year to every calendar
-
-  //create date given: year
-
-  //Find monthIndex, days
-  //display proper year here
-  //Get date from database and calculate year from that
   const date = new Date();
   const startYearDate = startOfYear(new Date(date));
 
@@ -33,31 +27,25 @@ function SingleDay(props) {
   let newDateProperYear = setYear(startYearDate, props.year);
   let formatted = format(new Date(newDateProperYear), "PPP");
 
-  const arrowRef = useRef(null);
-  const ARROW_HEIGHT = 5;
-  const GAP = 5;
-  
-  const { x, y, strategy, refs, context } = useFloating({
-    placement: "top",
-    middleware: [
-      offset({
-        alignmentAxis: -20,
-      }),
-      flip(),
-      shift(),
-      // arrow({
-      //   element: arrowRef,
-      // }),
-    ],
-    whileElementsMounted(...args) {
-      const cleanup = autoUpdate(...args, { animationFrame: true });
-      return cleanup;
-    },
-  });
+  // const { x, y, strategy, refs, context } = useFloating({
+  //   placement: "top",
+  //   middleware: [
+  //     offset({
+  //       alignmentAxis: -20,
+  //     }),
+  //     flip(),
+  //     shift(),
+  //   ],
+  //   whileElementsMounted(...args) {
+  //     const cleanup = autoUpdate(...args, { animationFrame: true });
+  //     return cleanup;
+  //   },
+  // });
+
 
   return (
     <div
-      ref={refs.setReference}
+      // ref={refs.setReference}
       className={`day-${props.daysIndex + 1} single-day`}
       id={props.calcColor(
         props.totalSessionsUser(props.array2[props.weekIndex][props.daysIndex])
@@ -70,7 +58,7 @@ function SingleDay(props) {
           props.array2[props.weekIndex][props.daysIndex]
         ) > 1) && (
         <>
-          <span
+          {/* <span
             ref={refs.setFloating}
             style={{
               position: strategy,
@@ -84,16 +72,22 @@ function SingleDay(props) {
               props.array2[props.weekIndex][props.daysIndex]
             )}{" "}
             sessions on {formatted}
-          {/* <FloatingArrow ref={arrowRef} context={context}/> */}
-
-          </span>
+          </span> */}
+          <ToolTip
+          // ref={refs.setFloating}
+          totalSessionsUser={props.totalSessionsUser}
+          array2={props.array2}
+          weekIndex={props.weekIndex}
+          daysIndex={props.daysIndex}
+          formatted={formatted}
+          />
         </>
       )}
       {props.totalSessionsUser(
         props.array2[props.weekIndex][props.daysIndex]
       ) === 1 && (
         <>
-          <span
+          {/* <span
             ref={refs.setFloating}
             style={{
               position: strategy,
@@ -107,10 +101,7 @@ function SingleDay(props) {
               props.array2[props.weekIndex][props.daysIndex]
             )}{" "}
             session on {formatted}
-            {/* <FloatingArrow ref={arrowRef} context={context}/> */}
-
-          </span>
-
+          </span> */}
         </>
       )}
     </div>
