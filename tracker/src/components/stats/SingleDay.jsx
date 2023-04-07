@@ -1,7 +1,5 @@
-import { React, useLayoutEffect } from "react";
+import { React, useState, useLayoutEffect, useRef, useEffect } from "react";
 import "../../styling/singleday.scss";
-
-// import ToolTip from "./ToolTip";
 
 import startOfYear from "date-fns/startOfYear";
 import setYear from "date-fns/setYear";
@@ -13,8 +11,11 @@ import {
   flip,
   shift,
   autoUpdate,
+  computePosition,
 } from "@floating-ui/react";
+
 import ToolTip from "./ToolTip";
+import ToolTipSingle from "./ToolTipSingle";
 
 function SingleDay(props) {
   const date = new Date();
@@ -27,67 +28,66 @@ function SingleDay(props) {
   let newDateProperYear = setYear(startYearDate, props.year);
   let formatted = format(new Date(newDateProperYear), "PPP");
 
-  // const { x, y, strategy, refs, context } = useFloating({
-  //   placement: "top",
-  //   middleware: [
-  //     offset({
-  //       alignmentAxis: -20,
-  //     }),
-  //     flip(),
-  //     shift(),
-  //   ],
-  //   whileElementsMounted(...args) {
-  //     const cleanup = autoUpdate(...args, { animationFrame: true });
-  //     return cleanup;
-  //   },
-  // });
+  const { x, y, strategy, refs, update } = useFloating({
+    placement: "top",
+    middleware: [
+      offset({
+        alignmentAxis: -20,
+      }),
+      flip(),
+      shift(),
+    ],
+    whileElementsMounted: autoUpdate,
+  });
 
+  // useLayoutEffect(() => {
+  //   const cleanup = autoUpdate();
+  //   // Important! Always return the cleanup function.
+  //   return cleanup;
+  // }, [autoUpdate])
+
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div
-      // ref={refs.setReference}
+      ref={refs.setReference}
       className={`day-${props.daysIndex + 1} single-day`}
       id={props.calcColor(
         props.totalSessionsUser(props.array2[props.weekIndex][props.daysIndex])
       )}
+      onMouseEnter={e => setIsOpen(true)}
+      onMouseLeave={e => setIsOpen(false)}
     >
-      {(props.totalSessionsUser(
-        props.array2[props.weekIndex][props.daysIndex]
-      ) === 0 ||
-        props.totalSessionsUser(
+      {isOpen &&
+        (props.totalSessionsUser(
           props.array2[props.weekIndex][props.daysIndex]
-        ) > 1) && (
-        <>
-          {/* <span
-            ref={refs.setFloating}
-            style={{
-              position: strategy,
-              top: y ?? 0,
-              left: x ?? 0,
-              width: "max-content",
-            }}
-            className="tooltiptext"
-          >
-            {props.totalSessionsUser(
-              props.array2[props.weekIndex][props.daysIndex]
-            )}{" "}
-            sessions on {formatted}
-          </span> */}
-          <ToolTip
-          // ref={refs.setFloating}
-          totalSessionsUser={props.totalSessionsUser}
-          array2={props.array2}
-          weekIndex={props.weekIndex}
-          daysIndex={props.daysIndex}
-          formatted={formatted}
-          />
-        </>
-      )}
-      {props.totalSessionsUser(
+        ) === 0 ||
+          props.totalSessionsUser(
+            props.array2[props.weekIndex][props.daysIndex]
+          ) > 1) && (
+          <>
+            <span
+              ref={refs.setFloating}
+              style={{
+                position: strategy,
+                top: y ?? 0,
+                left: x ?? 0,
+                width: "max-content",
+              }}
+              className="tooltiptext"
+            >
+              {props.totalSessionsUser(
+                props.array2[props.weekIndex][props.daysIndex]
+              )}{" "}
+              sessions on {formatted}
+            </span>
+          </>
+        )}
+      {isOpen && props.totalSessionsUser(
         props.array2[props.weekIndex][props.daysIndex]
       ) === 1 && (
         <>
-          {/* <span
+          <span
             ref={refs.setFloating}
             style={{
               position: strategy,
@@ -101,7 +101,7 @@ function SingleDay(props) {
               props.array2[props.weekIndex][props.daysIndex]
             )}{" "}
             session on {formatted}
-          </span> */}
+          </span>
         </>
       )}
     </div>
