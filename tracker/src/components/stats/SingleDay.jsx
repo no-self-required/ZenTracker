@@ -1,4 +1,4 @@
-import { React, useState, useLayoutEffect, useRef, useEffect } from "react";
+import { React, useState} from "react";
 import "../../styling/singleday.scss";
 
 import startOfYear from "date-fns/startOfYear";
@@ -11,11 +11,7 @@ import {
   flip,
   shift,
   autoUpdate,
-  computePosition,
 } from "@floating-ui/react";
-
-import ToolTip from "./ToolTip";
-import ToolTipSingle from "./ToolTipSingle";
 
 function SingleDay(props) {
   const date = new Date();
@@ -39,12 +35,6 @@ function SingleDay(props) {
     ],
     whileElementsMounted: autoUpdate,
   });
-
-  // useLayoutEffect(() => {
-  //   const cleanup = autoUpdate();
-  //   // Important! Always return the cleanup function.
-  //   return cleanup;
-  // }, [autoUpdate])
 
   const [isOpen, setIsOpen] = useState(false);
 
