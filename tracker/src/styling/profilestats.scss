@@ -1,4 +1,4 @@
-//desktop
+//mobile
 .profile-stats-container {
 
   .session-stats,
@@ -73,39 +73,18 @@
 
     #month-row {
       display: flex;
-      width: 50em;
+      // width: 50em;
       font-size: 1rem;
       margin-left: 2.2em;
 
-      #feb {
-        margin-left: 4.7em;
+      #feb,
+      #mar{
+        margin-left: 3.8em;
       }
 
-      #mar,
-      #jul,
-      #nov {
-        margin-left: 4.6em;
+      #apr{
+        margin-left: 3.7em;
       }
-
-      #apr,
-      #jun,
-      #sep,
-      #dec {
-        margin-left: 4.4em;
-      }
-
-      #may {
-        margin-left: 6em;
-      }
-
-      #aug {
-        margin-left: 6.4em;
-      }
-
-      #oct {
-        margin-left: 6.1em;
-      }
-
     }
 
     #day-column {
@@ -125,7 +104,7 @@
     margin: .2em;
   }
 
-  .single-day {}
+  // .single-day {}
 
   #single-session-container {
     background-color: #c1d3fe;
@@ -311,34 +290,7 @@
         font-size: 1rem;
         margin-left: 2.2em;
 
-        #feb {
-          margin-left: 4.7em;
-        }
 
-        #mar,
-        #jul,
-        #nov {
-          margin-left: 4.6em;
-        }
-
-        #apr,
-        #jun,
-        #sep,
-        #dec {
-          margin-left: 4.4em;
-        }
-
-        #may {
-          margin-left: 6em;
-        }
-
-        #aug {
-          margin-left: 6.4em;
-        }
-
-        #oct {
-          margin-left: 6.1em;
-        }
 
       }
 
