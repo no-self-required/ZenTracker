@@ -1,6 +1,7 @@
 //mobile
 .profile-stats-container {
 
+
   .session-stats,
   .time-stats {
     // width: 23.3em;
@@ -38,7 +39,10 @@
   }
 
   .delete-button {
-    margin: 1em 1em 0 1em;
+    background-color: transparent;
+    border: 1px solid black;
+    border-radius: 4px;
+    font-size: 1em;
   }
 
   .button-group {
@@ -52,6 +56,10 @@
     }
   }
 
+  #calendar-header {
+    margin-bottom: 1em;
+  }
+
   .calendar-container {
     display: flex;
     flex-direction: column;
@@ -60,10 +68,10 @@
     .year {
       display: flex;
       flex-direction: column;
-      border-radius: 1em;
+      border-radius: 5px;
       overflow-x: scroll;
-      padding-top: 2em;
-      padding-bottom: 2em;
+      border: 1px solid black;
+      padding: 1em;
 
       #week-wrapper {
         display: flex;
@@ -79,33 +87,33 @@
 
       #feb,
       #mar,
-      #jul{
+      #jul {
         margin-left: 3.8em;
       }
 
       #apr,
-      #nov{
+      #nov {
         margin-left: 3.7em;
       }
 
-      #may{
+      #may {
         margin-left: 5em;
       }
 
-      #jun{
+      #jun {
         margin-left: 3.5em;
       }
 
-      #aug{
+      #aug {
         margin-left: 5.5em;
       }
 
       #sep,
-      #dec{
+      #dec {
         margin-left: 3.6em;
       }
 
-      #oct{
+      #oct {
         margin-left: 5.1em;
       }
     }
@@ -130,12 +138,12 @@
   // .single-day {}
 
   #single-session-container {
-    background-color: #c1d3fe;
+    // background-color: #c1d3fe;
     margin-top: 1em;
     margin-bottom: 1em;
     padding: 1em;
     border-radius: .5em;
-    border: .5px solid black;
+    // border: .5px solid black;
 
     .session-info-container {
       display: flex;
@@ -245,112 +253,108 @@
   }
 }
 
-// }
 
+//desktop
 @media only screen and (min-width: 713px) {
   .profile-stats-container {
     display: flex;
+    justify-content: center;
     flex-direction: column;
-    // overflow-y: hidden;
+    // .profile-wrapper {
+    //   display: flex;
+    //   flex-direction: column;
+    //   // min-width: 75em;
 
-    .wrapper-stats {
-      display: flex;
-      justify-content: space-around;
-      width: 100%;
-      // padding: 1em;
-
-      .stat-container {
+      .wrapper-stats {
         display: flex;
-        justify-content: space-between;
-        width: 20em;
+        justify-content: space-evenly;
+        width: 100%;
 
-        .bold-stats {
-          font-weight: bold;
-        }
-      }
-    }
-
-    #calendar-header {
-      position: absolute;
-      margin-top: 2em;
-    }
-
-    .delete-button {
-      margin: 1em 1em 0 1em;
-    }
-
-    .button-group {
-      display: flex;
-      margin-top: 1em;
-      margin-left: 1em;
-
-      .buttons-year {
-        background-color: white;
-        border-radius: .5em;
-      }
-    }
-
-    .calendar-container {
-      display: flex;
-      flex-direction: column;
-      padding: 1.5em 1.3em 0 1.2em;
-      // overflow-x: scroll;
-
-      .year {
-        display: flex;
-        flex-direction: column;
-        margin-top: 2em;
-        border-radius: 1em;
-
-        #week-wrapper {
+        .stat-container {
           display: flex;
+          justify-content: space-between;
+          width: 20em;
+
+          .bold-stats {
+            font-weight: bold;
+          }
         }
       }
 
-      #month-row {
-        display: flex;
-        width: 50em;
-        font-size: 1rem;
-        margin-left: 2.2em;
-
-
-
+      .delete-button {
+        margin: 1em 1em 0 1em;
       }
 
-      #day-column {
-        font-size: 1rem;
-        height: 8em;
+      .button-group {
         display: flex;
-        flex-direction: column;
-        justify-content: space-between;
+        margin-top: 1em;
+        margin-left: 1em;
+
+        .buttons-year {
+          background-color: white;
+          border-radius: .5em;
+        }
       }
-    }
 
+      .calendar-wrapper{
+        display: flex;
+        justify-content: center;
 
+        .calendar-container {
+          display: flex;
+  
+          .year {
+
+  
+            #week-wrapper {
+              display: flex;
+            }
+          }
+  
+          #month-row {
+            display: flex;
+            width: 50em;
+            font-size: 1rem;
+            margin-left: 2.2em;
+          }
+  
+          #day-column {
+            font-size: 1rem;
+            height: 8em;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+          }
+        }
+      } 
+
+    // }
   }
 
   .all-sessions-container {
-    padding: 1.5em 1.3em 0 1.1em;
+    margin-top: 1em;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     height: 25em;
+    border: 1px solid black;
+    border-radius: 5px;
 
     .add-session {
       width: 7em;
-      margin-bottom: 1em;
-      background-color: white;
       border-radius: .3em;
       padding: .2em;
     }
 
     #all-sessions-wrapper {
       display: flex;
+      flex-direction: column;
 
       #single-session-container {
-        background-color: #c1d3fe;
+        // background-color: #c1d3fe;
 
         border-radius: .5em !important;
-        border: .5px solid black;
+        // border: .5px solid black;
         margin-right: 1em;
         height: 15em;
         min-width: 20em;
