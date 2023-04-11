@@ -72,16 +72,17 @@
       overflow-x: scroll;
       border: 1px solid black;
       padding: 1em;
-
+      max-width: fit-content;
       #week-wrapper {
         display: flex;
+        width: fit-content;
       }
 
     }
 
     #month-row {
       display: flex;
-      // width: 50em;
+      width: fit-content;
       font-size: 1rem;
       margin-left: 2.2em;
 
@@ -256,128 +257,5 @@
 
 //desktop
 @media only screen and (min-width: 713px) {
-  .profile-stats-container {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    // .profile-wrapper {
-    //   display: flex;
-    //   flex-direction: column;
-    //   // min-width: 75em;
-
-      .wrapper-stats {
-        display: flex;
-        justify-content: space-evenly;
-        width: 100%;
-
-        .stat-container {
-          display: flex;
-          justify-content: space-between;
-          width: 20em;
-
-          .bold-stats {
-            font-weight: bold;
-          }
-        }
-      }
-
-      .delete-button {
-        margin: 1em 1em 0 1em;
-      }
-
-      .button-group {
-        display: flex;
-        margin-top: 1em;
-        margin-left: 1em;
-
-        .buttons-year {
-          background-color: white;
-          border-radius: .5em;
-        }
-      }
-
-      .calendar-wrapper{
-        display: flex;
-        justify-content: center;
-
-        .calendar-container {
-          display: flex;
   
-          .year {
-
-  
-            #week-wrapper {
-              display: flex;
-            }
-          }
-  
-          #month-row {
-            display: flex;
-            width: 50em;
-            font-size: 1rem;
-            margin-left: 2.2em;
-          }
-  
-          #day-column {
-            font-size: 1rem;
-            height: 8em;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-          }
-        }
-      } 
-
-    // }
-  }
-
-  .all-sessions-container {
-    margin-top: 1em;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 25em;
-    border: 1px solid black;
-    border-radius: 5px;
-
-    .add-session {
-      width: 7em;
-      border-radius: .3em;
-      padding: .2em;
-    }
-
-    #all-sessions-wrapper {
-      display: flex;
-      flex-direction: column;
-
-      #single-session-container {
-        // background-color: #c1d3fe;
-
-        border-radius: .5em !important;
-        // border: .5px solid black;
-        margin-right: 1em;
-        height: 15em;
-        min-width: 20em;
-
-        .session-info-container {
-          display: flex;
-          flex-direction: column;
-
-          // height: 10em;
-          #log-container {
-            word-break: break-word;
-            text-align: right;
-            // width: 10em;
-
-          }
-
-          .line-single {
-            width: 100%;
-          }
-        }
-      }
-    }
-
-
-  }
 }
