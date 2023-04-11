@@ -524,53 +524,52 @@ function ProfileStats() {
             <div className="stats-header" id="calendar-header">
               {totalSessionYear(year.calendar)} sessions in {selectedYear}
             </div>
-              <div className={`year-${yearIndex + 1} year`}>
-                  <div id="month-row">
-                  <div>Jan</div>
-                  <div id="feb">Feb</div>
-                  <div id="mar">Mar</div>
-                  <div id="apr">Apr</div>
-                  <div id="may">May</div>
-                  <div id="jun">Jun</div>
-                  <div id="jul">Jul</div>
-                  <div id="aug">Aug</div>
-                  <div id="sep">Sep</div>
-                  <div id="oct">Oct</div>
-                  <div id="nov">Nov</div>
-                  <div id="dec">Dec</div>
+            <div className={`year-${yearIndex + 1} year`}>
+              <div id="month-row">
+                <div>Jan</div>
+                <div id="feb">Feb</div>
+                <div id="mar">Mar</div>
+                <div id="apr">Apr</div>
+                <div id="may">May</div>
+                <div id="jun">Jun</div>
+                <div id="jul">Jul</div>
+                <div id="aug">Aug</div>
+                <div id="sep">Sep</div>
+                <div id="oct">Oct</div>
+                <div id="nov">Nov</div>
+                <div id="dec">Dec</div>
+              </div>
+              <div id="week-wrapper">
+                <div id="day-column">
+                  <div>Mon</div>
+                  <div>Wed</div>
+                  <div>Fri</div>
                 </div>
-                <div id="week-wrapper">
-                  <div id="day-column">
-                    <div>Mon</div>
-                    <div>Wed</div>
-                    <div>Fri</div>
-                  </div>
-                  {year.calendar.map((week, weekIndex, array2) => {
-                    return (
-                      <div className={`week-${weekIndex + 1}`}>
-                        {week.map((days, daysIndex, array3) => {
-                          return (
-                            <SingleDay
-                              year={year.year}
-                              allYearSessions={allYearSessions}
-                              array2={array2}
-                              array3={array3}
-                              daysIndex={daysIndex}
-                              weekIndex={weekIndex}
-                              calcColor={calcColor}
-                              totalSessionsUser={totalSessionsUser}
-                            ></SingleDay>
-                          );
-                        })}
-                      </div>
-                    );
-                  })}
-                </div>
-                </div>
+                {year.calendar.map((week, weekIndex, array2) => {
+                  return (
+                    <div className={`week-${weekIndex + 1}`}>
+                      {week.map((days, daysIndex, array3) => {
+                        return (
+                          <SingleDay
+                            year={year.year}
+                            allYearSessions={allYearSessions}
+                            array2={array2}
+                            array3={array3}
+                            daysIndex={daysIndex}
+                            weekIndex={weekIndex}
+                            calcColor={calcColor}
+                            totalSessionsUser={totalSessionsUser}
+                          ></SingleDay>
+                        );
+                      })}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
           </>
         );
     });
-
 
     const allYearButtons = listAllYears().map((year) => {
       return (
@@ -587,108 +586,111 @@ function ProfileStats() {
 
     return (
       <div className="profile-stats-container">
-        <div className="wrapper-stats">
-          <div className="session-stats">
-            <div className="stats-header">Sessions</div>
-            <hr className="line" />
-            <div className="stat-container">
-              Total <div className="bold-stats">{totalSessions()}</div>
-            </div>
-            <hr className="line" />
-            <div className="stat-container">
-              Most in a single day{" "}
-              <div className="bold-stats">{mostSingleDaySessions()}</div>
-            </div>
-            <hr className="line" />
-            <div className="stat-container">
-              Days with at least one session{" "}
-              <div className="bold-stats">{singleDaySessions()}</div>
-            </div>
-          </div>
-          <div className="time-stats">
-            <div className="stats-header">Time</div>
-            <hr className="line" />
-            <div className="stat-container">
-              Total <div className="bold-stats">{totalTime()}</div>
-            </div>
-            <hr className="line" />
-            <div className="stat-container">
-              Average session{" "}
-              <div className="bold-stats">{averageLength()}</div>
-            </div>
-            <hr className="line" />
-            <div className="stat-container">
-              Longest session{" "}
-              <div className="bold-stats">{longestLength()}</div>
-            </div>
-          </div>
-        </div>
-        {/* <div>{header}</div> */}
-        <div className="calendar-container">{printSqs}</div>
-        <div className="button-group">{allYearButtons}</div>
-        <div>
-          <Modal
-            isOpen={modalIsOpen}
-            onRequestClose={closeModalEsc}
-            style={customStyles}
-            shouldCloseOnOverlayClick={false}
-          >
-            <div id="modal-wrapper">
-              <label for="date-input">Date of session</label>
-              <input
-                className="date-input"
-                type="date"
-                onChange={(e) => setNewDate(e.target.value)}
-              ></input>
-              <div id="length-wrapper">
-                <div>Length of session</div>
-                <div id="input-wrapper">
-                  <label for="length-input-hour">h</label>
-                  <input
-                    className="length-input-hour"
-                    type="number"
-                    min="0"
-                    max="24"
-                    onChange={(e) => setInputTimerHour(e.target.value)}
-                  ></input>
-                  <label for="length-input-minute">m</label>
-                  <input
-                    className="length-input-minute"
-                    type="number"
-                    min="0"
-                    max="59"
-                    onChange={(e) => setInputTimerMinute(e.target.value)}
-                  ></input>
-                  <label for="length-input-second">s</label>
-                  <input
-                    className="length-input-second"
-                    type="number"
-                    min="0"
-                    max="59"
-                    onChange={(e) => setInputTimerSecond(e.target.value)}
-                  ></input>
-                </div>
+        {/* <div className="profile-wrapper"> */}
+          <div className="wrapper-stats">
+            <div className="session-stats">
+              <div className="stats-header">Sessions</div>
+              <hr className="line" />
+              <div className="stat-container">
+                Total <div className="bold-stats">{totalSessions()}</div>
               </div>
-              <label for="log-input">Log</label>
-              <input
-                className="log-input"
-                onChange={(e) => setLog(e.target.value)}
-              ></input>
-              <button onClick={closeModalSubmit} id="submit-button">
-                submit
-              </button>
+              <hr className="line" />
+              <div className="stat-container">
+                Most in a single day{" "}
+                <div className="bold-stats">{mostSingleDaySessions()}</div>
+              </div>
+              <hr className="line" />
+              <div className="stat-container">
+                Days with at least one session{" "}
+                <div className="bold-stats">{singleDaySessions()}</div>
+              </div>
             </div>
-          </Modal>
+            <div className="time-stats">
+              <div className="stats-header">Time</div>
+              <hr className="line" />
+              <div className="stat-container">
+                Total <div className="bold-stats">{totalTime()}</div>
+              </div>
+              <hr className="line" />
+              <div className="stat-container">
+                Average session{" "}
+                <div className="bold-stats">{averageLength()}</div>
+              </div>
+              <hr className="line" />
+              <div className="stat-container">
+                Longest session{" "}
+                <div className="bold-stats">{longestLength()}</div>
+              </div>
+            </div>
+          </div>
+          <div className="calendar-wrapper">
+            <div className="calendar-container">{printSqs}</div>
+          </div>
+          <div className="button-group">{allYearButtons}</div>
+          <div>
+            <Modal
+              isOpen={modalIsOpen}
+              onRequestClose={closeModalEsc}
+              style={customStyles}
+              shouldCloseOnOverlayClick={false}
+            >
+              <div id="modal-wrapper">
+                <label for="date-input">Date of session</label>
+                <input
+                  className="date-input"
+                  type="date"
+                  onChange={(e) => setNewDate(e.target.value)}
+                ></input>
+                <div id="length-wrapper">
+                  <div>Length of session</div>
+                  <div id="input-wrapper">
+                    <label for="length-input-hour">h</label>
+                    <input
+                      className="length-input-hour"
+                      type="number"
+                      min="0"
+                      max="24"
+                      onChange={(e) => setInputTimerHour(e.target.value)}
+                    ></input>
+                    <label for="length-input-minute">m</label>
+                    <input
+                      className="length-input-minute"
+                      type="number"
+                      min="0"
+                      max="59"
+                      onChange={(e) => setInputTimerMinute(e.target.value)}
+                    ></input>
+                    <label for="length-input-second">s</label>
+                    <input
+                      className="length-input-second"
+                      type="number"
+                      min="0"
+                      max="59"
+                      onChange={(e) => setInputTimerSecond(e.target.value)}
+                    ></input>
+                  </div>
+                </div>
+                <label for="log-input">Log</label>
+                <input
+                  className="log-input"
+                  onChange={(e) => setLog(e.target.value)}
+                ></input>
+                <button onClick={closeModalSubmit} id="submit-button">
+                  submit
+                </button>
+              </div>
+            </Modal>
+          </div>
+          <div className="all-sessions-container">
+            <button className="add-session" onClick={openModal}>
+              Add session
+            </button>
+            <div className="stats-header">All Sessions</div>
+            <hr className="line" />
+            <div id="all-sessions-wrapper">{allSessions}</div>
+          </div>
         </div>
-        <div className="all-sessions-container">
-          <button className="add-session" onClick={openModal}>
-            Add session
-          </button>
-          <div className="stats-header">All Sessions</div>
-          <hr className="line" />
-          <div id="all-sessions-wrapper">{allSessions}</div>
-        </div>
-      </div>
+      // </div>
     );
   }
   return <></>;

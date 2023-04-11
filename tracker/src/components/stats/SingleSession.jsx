@@ -1,8 +1,13 @@
 import React from "react";
-// import { UserContext } from "../../App";
 import axios from "axios";
 
 import "../../styling/profilestats.scss";
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
+
+const trashIcon = <FontAwesomeIcon icon={faTrash} />
+
 
 function SingleSession(props) {
   // const { userData, setUserData } = useContext(UserContext);
@@ -41,7 +46,7 @@ function SingleSession(props) {
         )}
       </div>
       <button className="delete-button" onClick={deleteRefresh}>
-        Delete
+        {trashIcon}
       </button>
     </>
   );
