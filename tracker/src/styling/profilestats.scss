@@ -254,8 +254,14 @@
   }
 }
 
-
 //desktop
 @media only screen and (min-width: 713px) {
-  
+  .profile-stats-container{
+
+    .calendar-wrapper{
+      display: flex;
+      justify-content: center;
+    }
+
+  }
 }
