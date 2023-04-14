@@ -626,18 +626,18 @@ function Main() {
     setInputTimerHour(input);
   }
 
-  const fsHandle = useFullScreenHandle();
-  const [isFullScreen, setIsFullScreen] = useState(false);
+  // const fsHandle = useFullScreenHandle();
+  // const [isFullScreen, setIsFullScreen] = useState(false);
 
-  function onClickFsExit() {
-    fsHandle.exit();
-    setIsFullScreen(false);
-  }
+  // function onClickFsExit() {
+  //   fsHandle.exit();
+  //   setIsFullScreen(false);
+  // }
 
-  function onClickFsEnter() {
-    fsHandle.enter();
-    setIsFullScreen(true);
-  }
+  // function onClickFsEnter() {
+  //   fsHandle.enter();
+  //   setIsFullScreen(true);
+  // }
 
   const customStyles = {
     content: {
@@ -666,7 +666,6 @@ function Main() {
   return (
     // <FullScreen handle={fsHandle}>
     <div className="container">
-      <div>test</div>
       <div className="timer-container">
         <div id="timer-button-container">
           {timerState !== TIMER_STATES["EDIT"] && (
