@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { FullScreen, useFullScreenHandle } from "react-full-screen";
+// import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import Modal from "react-modal";
 import jwt from "jsonwebtoken";
 import { useNavigate } from "react-router-dom";
@@ -664,7 +664,6 @@ function Main() {
   // };
 
   return (
-    // <FullScreen handle={fsHandle}>
     <div className="container">
       <div className="timer-container">
         <div id="timer-button-container">
@@ -762,19 +761,10 @@ function Main() {
               <Reset onClick={resetTimer} />
             )}
             {timerState === TIMER_STATES["INITIAL"] && <ResetDisabled />}
-            {/* <div className="fullscreen-mute">
-                {!isFullScreen && (
-                  <button onClick={onClickFsEnter}>enFS</button>
-                )}
-                {isFullScreen && (
-                  <button onClick={onClickFsExit}>exitFS</button>
-                )}
-              </div> */}
           </div>
         </div>
       </div>
     </div>
-    /* </FullScreen> */
   );
 }
 
