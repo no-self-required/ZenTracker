@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
+
 import "../../styling/inputs.scss";
+
 import useLongPress from "../../hooks/longPress";
 import NotationH from "../notations/NotationH";
 import NotationM from "../notations/NotationM";
 import NotationS from "../notations/NotationS";
+
 function TimerHMS(props) {
   //Store inputs to traverse between them
   //traverse left
@@ -204,9 +207,6 @@ function TimerHMS(props) {
     if (x.length === 1) {
       newValue = "0" + x;
     }
-
-    console.log("newvalue", newValue);
-
     props.setInputTimerHour(newValue);
   }
 
