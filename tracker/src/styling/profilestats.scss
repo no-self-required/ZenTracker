@@ -266,7 +266,15 @@
     }
 
     .all-sessions-container{
-      width: 40em;
+      // width: 40em;
+      display: flex;
+      align-items: center;
+      .line{
+        width: 50em;
+      }
+      #all-sessions-wrapper{
+        width: 50em;
+      }
     }
   }
 
