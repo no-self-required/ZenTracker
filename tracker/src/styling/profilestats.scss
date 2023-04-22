@@ -262,7 +262,18 @@
     .calendar-wrapper{
       //need to figure out responsive issue. Left side of calendar going off viewport
       display: flex;
+      flex-direction: column;
       justify-content: center;
+
+      .button-group {
+        display: flex;
+        // flex-direction: column;
+        width: 4em;
+        .buttons-year {
+    
+        }
+
+      }
     }
 
     .all-sessions-container{
@@ -278,12 +289,6 @@
     }
   }
 
-  .button-group {
-    // margin-left: 7em !important;
 
-    .buttons-year {
-
-    }
-  }
 
 }
