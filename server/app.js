@@ -50,8 +50,10 @@ app.post("/api/login", async (req, res) => {
   }
 });
 
-app.get('/', (req, res) => { res.send('Hello from Express!')});
+
+// app.listen(PORT, () => {
+//   console.log(`Listening on Port: ${PORT}`);
+// });
 
 app.listen(process.env.PORT || 3000);
-
 
