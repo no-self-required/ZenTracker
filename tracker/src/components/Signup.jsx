@@ -12,7 +12,7 @@ function Signup() {
     event.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/register",
+        "https://zentracker.herokuapp.com/register",
         JSON.stringify({ email, username, password }),
         {
           headers: { "Content-Type": "application/json" },
