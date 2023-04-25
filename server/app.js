@@ -11,7 +11,7 @@ app.use(express.json());
 
 const usersRouter = require("./routes/users");
 
-mongoose.connect("mongodb://localhost:27017/zentracker-db");
+mongoose.connect(process.env.MONGODB_URI);
 
 const PORT = process.env.PORT || 5000;
 
