@@ -175,7 +175,15 @@
 
 .log-message{
   margin-bottom: 1em;
+  font-weight: bold;
 }
+
+.submit-log{
+  width: 104%;
+  border-radius: 5px;
+  border: 1px solid black;
+}
+
 .fullscreen-enabled .container {
   background: rgb(255, 255, 255);
 }

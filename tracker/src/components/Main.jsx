@@ -745,7 +745,7 @@ function Main() {
                   shouldCloseOnOverlayClick={false}
                 >
                   <div className="log-message">{message}</div>
-                  <label for="logInput">Enter a log</label>
+                  <label for="logInput">Enter a log:</label>
                   <br />
                   <input
                     type="text"
@@ -753,7 +753,7 @@ function Main() {
                     onChange={(e) => setLog(e.target.value)}
                   ></input>
                   <br />
-                  <button class="submit-log"onClick={closeModal}>submit</button>
+                  <button class="submit-log"onClick={closeModal}>Submit Session</button>
                 </Modal>
               </div>
             )}
