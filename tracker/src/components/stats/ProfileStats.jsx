@@ -104,14 +104,14 @@ function ProfileStats() {
   useEffect(() => {
     const getSessions = async () => {
       if (!currentData) {
-        const userResponse = await axios.get("/api/users/profile", {
+        const userResponse = await axios.get("https://zentracker.herokuapp.com/api/users/profile", {
           headers: { token: token },
         });
         setCurrentData({
           user: userResponse.data,
         });
       } else if (currentData && isUpdated) {
-        const userResponse = await axios.get("/api/users/profile", {
+        const userResponse = await axios.get("https://zentracker.herokuapp.com/api/users/profile", {
           headers: { token: token },
         });
 
