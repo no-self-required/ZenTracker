@@ -134,19 +134,14 @@
     height: 15px;
     border-radius: 3px;
     background-color: rgb(108, 194, 208);
-    // border: 1px solid black;
     margin: .2em;
   }
 
-  // .single-day {}
-
   #single-session-container {
-    // background-color: #c1d3fe;
     margin-top: 1em;
     margin-bottom: 1em;
     padding: 1em;
     border-radius: .5em;
-    // border: .5px solid black;
 
     .session-info-container {
       display: flex;
@@ -177,7 +172,6 @@
   #square-light {
     width: 15px;
     height: 15px;
-    // outline: 1.4px solid rgb(53, 53, 53);
     border-radius: 3px;
     background-color: rgba(3, 158, 3, 0.582);
     margin: .2em;
@@ -187,7 +181,6 @@
   #square-medium {
     width: 15px;
     height: 15px;
-    // outline: 1.4px solid rgb(53, 53, 53);
     border-radius: 3px;
     background-color: rgb(0, 167, 0);
     margin: .2em;
@@ -196,7 +189,6 @@
   #square-dark {
     width: 15px;
     height: 15px;
-    // outline: 1.4px solid rgb(53, 53, 53);
     border-radius: 3px;
     background-color: rgb(0, 218, 0);
     margin: .2em;

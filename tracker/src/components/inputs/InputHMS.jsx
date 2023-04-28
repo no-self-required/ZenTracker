@@ -7,6 +7,12 @@ import NotationH from "../notations/NotationH";
 import NotationM from "../notations/NotationM";
 import NotationS from "../notations/NotationS";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCaretUp, faCaretDown } from "@fortawesome/free-solid-svg-icons";
+
+const caretUp = <FontAwesomeIcon icon={faCaretUp} size="lg" />;
+const caretDown = <FontAwesomeIcon icon={faCaretDown} size="lg" />;
+
 function TimerHMS(props) {
   //Store inputs to traverse between them
   //traverse left
@@ -286,7 +292,7 @@ function TimerHMS(props) {
             onClick={handleButtonClickDownH}
             {...longPressDownH}
           >
-            <span class="material-icons">arrow_drop_down</span>
+            {caretDown}
           </button>
 
           <button
@@ -294,14 +300,14 @@ function TimerHMS(props) {
             onClick={handleButtonClickDownM}
             {...longPressDownM}
           >
-            <span class="material-icons">arrow_drop_down</span>
+            {caretDown}
           </button>
           <button
             className="button-down-S"
             onClick={handleButtonClickDownS}
             {...longPressDownS}
           >
-            <span class="material-icons">arrow_drop_down</span>
+            {caretDown}
           </button>
         </div>
       </div>
@@ -364,21 +370,21 @@ function TimerHMS(props) {
             onClick={handleButtonClickUpH}
             {...longPressUpH}
           >
-            <span class="material-icons">arrow_drop_up</span>
+            {caretUp}
           </button>
           <button
             className="button-up-M"
             onClick={handleButtonClickUpM}
             {...longPressUpM}
           >
-            <span class="material-icons">arrow_drop_up</span>
+            {caretUp}
           </button>
           <button
             className="button-up-S"
             onClick={handleButtonClickUpS}
             {...longPressUpS}
           >
-            <span class="material-icons">arrow_drop_up</span>
+            {caretUp}
           </button>
         </div>
       </div>
