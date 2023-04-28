@@ -199,7 +199,7 @@ function ProfileStats() {
     //include when submitting on timer session
     const testFormat = new Date(yearSlice, monthSlice - 1, daySlice);
 
-    await axios.put(`/api/users/${id}`, {
+    await axios.put(`https://zentracker.herokuapp.com/api/users/${id}`, {
       $push: {
         sessions: {
           id: constantId,

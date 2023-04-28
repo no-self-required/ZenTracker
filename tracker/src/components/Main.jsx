@@ -357,7 +357,7 @@ function Main() {
       seconds: formattedTime[2],
     });
 
-    await axios.put(`/api/users/${id}`, {
+    await axios.put(`https://zentracker.herokuapp.com/api/users/${id}`, {
       $push: {
         sessions: {
           id: constantId,

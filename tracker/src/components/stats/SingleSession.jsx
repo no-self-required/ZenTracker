@@ -8,7 +8,6 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons'
 
 const trashIcon = <FontAwesomeIcon icon={faTrash} />
 
-
 function SingleSession(props) {
   // const { userData, setUserData } = useContext(UserContext);
 
@@ -17,7 +16,7 @@ function SingleSession(props) {
   //stays as pending? actually gets deleted
   async function deleteSession() {
     const userid = props.currentData.user.id;
-    await axios.put(`/api/users/${userid}`, {
+    await axios.put(`https://zentracker.herokuapp.com/api/users/${userid}`, {
       $pull: { sessions: { id: id } },
     });
   }
