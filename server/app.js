@@ -40,7 +40,6 @@ app.post("/api/login", async (req, res) => {
     username: req.body.username,
     password: req.body.password,
   });
-
   if (user) {
     const token = jwt.sign(
       {

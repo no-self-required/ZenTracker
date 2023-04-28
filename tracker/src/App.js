@@ -24,12 +24,12 @@ function App() {
         token = "";
       }
 
-      const tokenResponse = await axios.post("/api/users/tokenIsValid", null, {
+      const tokenResponse = await axios.post("https://zentracker.herokuapp.com/api/users/tokenIsValid", null, {
         headers: { token: token },
       });
 
       if (tokenResponse.data === true) {
-        const userResponse = await axios.get("/api/users/profile", {
+        const userResponse = await axios.get("https://zentracker.herokuapp.com/api/users/profile", {
           headers: { token: token },
         });
         setUserData({
