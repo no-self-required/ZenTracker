@@ -11,11 +11,11 @@ app.use(express.json());
 
 const usersRouter = require("./routes/users");
 
-// mongoose.connect(process.env.MONGODB_URI);
+mongoose.connect(process.env.MONGODB_URI);
 
-mongoose.connect(process.env.MONGODB_URI,{ useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false})
-    .then(() => console.log("Database Connected Successfully"))
-    .catch(err => console.log(err));
+// mongoose.connect(process.env.MONGODB_URI,{ useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false})
+//     .then(() => console.log("Database Connected Successfully"))
+//     .catch(err => console.log(err));
 
 const PORT = process.env.PORT || 5000;
 
