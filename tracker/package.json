@@ -2,7 +2,7 @@
   "name": "tracker",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:5000",
+  "proxy": "http://localhost:3000",
   "dependencies": {
     "@floating-ui/react": "^0.22.3",
     "@fortawesome/fontawesome-svg-core": "^6.3.0",
@@ -53,5 +53,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "proxy": "http://localhost:5000"
 }
