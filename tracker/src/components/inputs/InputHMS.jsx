@@ -10,8 +10,8 @@ import NotationS from "../notations/NotationS";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCaretUp, faCaretDown } from '@fortawesome/free-solid-svg-icons'
 
-const caretUp = <FontAwesomeIcon icon={faCaretUp} />
-const caretDown = <FontAwesomeIcon icon={faCaretDown} />
+const caretUp = <FontAwesomeIcon icon={faCaretUp} size="lg"/>
+const caretDown = <FontAwesomeIcon icon={faCaretDown} size="lg"/>
 
 function TimerHMS(props) {
   //Store inputs to traverse between them
