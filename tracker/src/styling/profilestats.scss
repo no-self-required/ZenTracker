@@ -252,6 +252,18 @@
 @media only screen and (min-width: 1243px) {
   .profile-stats-container{
 
+    .wrapper-stats{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .session-stats,
+      .time-stats {
+        width: 40em;
+      }
+
+    }
+
+
     .calendar-wrapper{
       //need to figure out responsive issue. Left side of calendar going off viewport
       display: flex;
