@@ -11,11 +11,10 @@ import formatDuration from "date-fns/formatDuration";
 import format from "date-fns/format";
 import getYear from "date-fns/getYear";
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
-const plusIcon = <FontAwesomeIcon icon={faPlus} />
-
+const plusIcon = <FontAwesomeIcon icon={faPlus} />;
 function splitInput(initialTime) {
   const parsedTimer = parseInt(initialTime);
   const arr = Array.from(parsedTimer.toString()).map(Number);
@@ -109,16 +108,22 @@ function ProfileStats() {
   useEffect(() => {
     const getSessions = async () => {
       if (!currentData) {
-        const userResponse = await axios.get("/api/users/profile", {
-          headers: { token: token },
-        });
+        const userResponse = await axios.get(
+          "https://zentracker.herokuapp.com/api/users/profile",
+          {
+            headers: { token: token },
+          }
+        );
         setCurrentData({
           user: userResponse.data,
         });
       } else if (currentData && isUpdated) {
-        const userResponse = await axios.get("/api/users/profile", {
-          headers: { token: token },
-        });
+        const userResponse = await axios.get(
+          "https://zentracker.herokuapp.com/api/users/profile",
+          {
+            headers: { token: token },
+          }
+        );
 
         // if (!compareProfiles(currentData.user, userResponse.data)) {
         if (currentData.user !== userResponse.data) {
@@ -204,7 +209,7 @@ function ProfileStats() {
     //include when submitting on timer session
     const testFormat = new Date(yearSlice, monthSlice - 1, daySlice);
 
-    await axios.put(`/api/users/${id}`, {
+    await axios.put(`https://zentracker.herokuapp.com/api/users/${id}`, {
       $push: {
         sessions: {
           id: constantId,
@@ -688,10 +693,10 @@ function ProfileStats() {
         </div>
         <div className="all-sessions-container">
           <div className="sessions-header">
-            <div className="stats-header">All Sessions</div>
             <button className="add-session" onClick={openModal}>
-              {plusIcon}
+              Add session
             </button>
+            <div className="stats-header">{plusIcon}</div>
           </div>
           <hr className="line" />
           <div id="all-sessions-wrapper">{allSessions}</div>
