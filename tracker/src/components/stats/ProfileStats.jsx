@@ -694,9 +694,9 @@ function ProfileStats() {
         <div className="all-sessions-container">
           <div className="sessions-header">
             <button className="add-session" onClick={openModal}>
-              Add session
+              {plusIcon}
             </button>
-            <div className="stats-header">{plusIcon}</div>
+            <div className="stats-header">All Sessions</div>
           </div>
           <hr className="line" />
           <div id="all-sessions-wrapper">{allSessions}</div>
