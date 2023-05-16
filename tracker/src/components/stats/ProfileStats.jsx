@@ -11,6 +11,11 @@ import formatDuration from "date-fns/formatDuration";
 import format from "date-fns/format";
 import getYear from "date-fns/getYear";
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
+
+const plusIcon = <FontAwesomeIcon icon={faPlus} />
+
 function splitInput(initialTime) {
   const parsedTimer = parseInt(initialTime);
   const arr = Array.from(parsedTimer.toString()).map(Number);
@@ -682,10 +687,12 @@ function ProfileStats() {
           </Modal>
         </div>
         <div className="all-sessions-container">
-          <button className="add-session" onClick={openModal}>
-            Add session
-          </button>
-          <div className="stats-header">All Sessions</div>
+          <div className="sessions-header">
+            <div className="stats-header">All Sessions</div>
+            <button className="add-session" onClick={openModal}>
+              {plusIcon}
+            </button>
+          </div>
           <hr className="line" />
           <div id="all-sessions-wrapper">{allSessions}</div>
         </div>

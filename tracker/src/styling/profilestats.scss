@@ -4,7 +4,6 @@
 
   .session-stats,
   .time-stats {
-    // width: 23.3em;
     padding: 1.5em 1.3em 0 1.1em;
     display: flex;
     flex-direction: column;
@@ -16,10 +15,6 @@
 
 
   .wrapper-stats {
-    // display: none !important;
-    // justify-content: space-around;
-    // width: 0!important;
-    // padding: 0!important;
 
     .stat-container {
       display: flex;
@@ -35,7 +30,6 @@
 
   .stats-header {
     font-weight: bolder;
-    // margin-bottom: 1em;
   }
 
   .delete-button {
@@ -234,12 +228,14 @@
   display: flex;
   flex-direction: column;
   
-  .add-session {
-    width: 7em;
-    margin-bottom: 1em;
-    background-color: white;
-    border-radius: .3em;
-    padding: .5em;
+  .sessions-header{
+    display: flex;
+    justify-content: space-between;
+    .add-session {
+      height: 2em;
+      background-color: white;
+      border-radius: .3em;
+    }  
   }
 
   #all-sessions-wrapper {
@@ -260,41 +256,43 @@
       .time-stats {
         width: 40em;
       }
-
     }
 
-
     .calendar-wrapper{
-      //need to figure out responsive issue. Left side of calendar going off viewport
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       .button-group {
         display: flex;
-        // flex-direction: column;
         width: 76em;
         align-items: flex-start;
-        .buttons-year {
-    
-        }
-
       }
     }
 
     .all-sessions-container{
-      // width: 40em;
       display: flex;
       align-items: center;
+
+      .sessions-header{
+        display: flex;
+        justify-content: space-between;
+        width: 50em;
+
+        .add-session {
+          height: 2em;
+          background-color: white;
+          border-radius: .3em;
+        }  
+      }
+
       .line{
         width: 50em;
       }
+
       #all-sessions-wrapper{
         width: 50em;
       }
     }
   }
-
-
-
 }
