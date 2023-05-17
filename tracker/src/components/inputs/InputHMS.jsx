@@ -327,6 +327,7 @@ function TimerHMS(props) {
           onKeyDown={handleKeyDown}
           onKeyPress={numOnly}
           maxLength={3}
+          inputmode="numeric"
         ></input>
         <input
           ref={timerM}
@@ -338,6 +339,7 @@ function TimerHMS(props) {
           onKeyDown={handleKeyDown}
           onKeyPress={numOnly}
           maxLength={3}
+          inputmode="numeric"
         ></input>
         <input
           ref={timerS}
@@ -349,6 +351,7 @@ function TimerHMS(props) {
           onKeyDown={handleKeyDown}
           onKeyPress={numOnly}
           maxLength={3}
+          inputmode="numeric"
           autoFocus
         ></input>
       </div>
