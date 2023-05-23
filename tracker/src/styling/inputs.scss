@@ -5,7 +5,7 @@
 
   .buttons {
     position: absolute;
-
+    z-index: -1;
     .button-up-H,
     .button-down-H,
     .button-up-M,
