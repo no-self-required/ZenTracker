@@ -43,6 +43,7 @@ router.post("/tokenIsValid", async (req, res) => {
 //add session to current user
 router.put('/:id', async (req, res) => {
   await User.updateOne({_id: req.params.id}, req.body)
+  res.sendStatus(200)
 })
 
 module.exports = router;
