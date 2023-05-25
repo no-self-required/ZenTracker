@@ -72,8 +72,6 @@
       opacity: 0%;
       position: absolute;
       z-index: 2;
-      margin-left: 1em;
-
     }
 
     .boxM {
@@ -83,7 +81,7 @@
       opacity: 0%;
       position: absolute;
       z-index: 2;
-      margin-left: 1em;
+      margin-left: 13em;
     }
 
     .boxS {
@@ -93,7 +91,7 @@
       opacity: 0%;
       position: absolute;
       z-index: 2;
-      margin-left: 1em;
+      margin-left: 27em;
     }
   }
 
@@ -134,6 +132,7 @@
   }
 }
 
+//mobile
 @media only screen and (max-width: 713px) {
 
   .inputs-boxes {
@@ -217,19 +216,18 @@
     .boxes {
 
       .boxH {
-        margin-right: 15em !important;
         height: 8em;
       }
 
       .boxM {
-        margin-right: 15em !important;
         margin-top: 8em !important;
+        margin-left: 0em !important;
         height: 8em;
       }
 
       .boxS {
-        margin-right: 15em !important;
         margin-top: 16em !important;
+        margin-left: 0em !important;
         height: 8em;
       }
     }
