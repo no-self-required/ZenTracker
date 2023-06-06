@@ -7,11 +7,11 @@ import NotationH from "../notations/NotationH";
 import NotationM from "../notations/NotationM";
 import NotationS from "../notations/NotationS";
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCaretUp, faCaretDown } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCaretUp, faCaretDown } from "@fortawesome/free-solid-svg-icons";
 
-const caretUp = <FontAwesomeIcon icon={faCaretUp} size="lg"/>
-const caretDown = <FontAwesomeIcon icon={faCaretDown} size="lg"/>
+const caretUp = <FontAwesomeIcon icon={faCaretUp} size="lg" />;
+const caretDown = <FontAwesomeIcon icon={faCaretDown} size="lg" />;
 
 function TimerHMS(props) {
   //Store inputs to traverse between them
@@ -286,6 +286,87 @@ function TimerHMS(props) {
   return (
     <div className="inputs-boxes">
       <div className="buttons">
+        <div className="up" id="up-buttons">
+          <button
+            className="button-up-H"
+            onClick={handleButtonClickUpH}
+            {...longPressUpH}
+          >
+            {caretUp}
+          </button>
+          <button
+            className="button-up-M"
+            onClick={handleButtonClickUpM}
+            {...longPressUpM}
+          >
+            {caretUp}
+          </button>
+          <button
+            className="button-up-S"
+            onClick={handleButtonClickUpS}
+            {...longPressUpS}
+          >
+            {caretUp}
+          </button>
+        </div>
+      </div>
+      <div className="input-wrapper">
+        <div className="boxes">
+          <div className="boxH" onClick={handleClickH}></div>
+          <div className="boxM" onClick={handleClickM}></div>
+          <div className="boxS" onClick={handleClickS}></div>
+        </div>
+        <div className="inputs">
+          <input
+            ref={timerH}
+            className="hoursInput"
+            type="text"
+            id="timerHour"
+            value={props.valueH}
+            onChange={props.onChangeH}
+            onKeyDown={handleKeyDown}
+            onKeyPress={numOnly}
+            maxLength={3}
+          ></input>
+
+          <input
+            ref={timerM}
+            className="minutesInput"
+            type="text"
+            id="timerMinute"
+            value={props.valueM}
+            onChange={props.onChangeM}
+            onKeyDown={handleKeyDown}
+            onKeyPress={numOnly}
+            maxLength={3}
+          ></input>
+
+          <input
+            ref={timerS}
+            className="secondsInput"
+            type="text"
+            id="timerSecond"
+            value={props.valueS}
+            onChange={props.onChangeS}
+            onKeyDown={handleKeyDown}
+            onKeyPress={numOnly}
+            maxLength={3}
+            autoFocus
+          ></input>
+        </div>
+        <div className="notation">
+          <div className="notation" id="notation-h">
+            <NotationH />
+          </div>
+          <div className="notation" id="notation-m">
+            <NotationM />
+          </div>
+          <div className="notation" id="notation-s">
+            <NotationS />
+          </div>
+        </div>
+      </div>
+      <div className="buttons">
         <div className="down" id="down-buttons">
           <button
             className="button-down-H"
@@ -308,89 +389,6 @@ function TimerHMS(props) {
             {...longPressDownS}
           >
             {caretDown}
-          </button>
-        </div>
-      </div>
-      <div className="boxes">
-        <div className="boxH" onClick={handleClickH}></div>
-        <div className="boxM" onClick={handleClickM}></div>
-        <div className="boxS" onClick={handleClickS}></div>
-      </div>
-      <div className="inputs">
-        <input
-          ref={timerH}
-          className="hoursInput"
-          type="text"
-          id="timerHour"
-          value={props.valueH}
-          onChange={props.onChangeH}
-          onKeyDown={handleKeyDown}
-          onKeyPress={numOnly}
-          maxLength={3}
-          // inputmode="numeric"
-          // pattern="[0-9]*"
-        ></input>
-        <input
-          ref={timerM}
-          className="minutesInput"
-          type="text"
-          id="timerMinute"
-          value={props.valueM}
-          onChange={props.onChangeM}
-          onKeyDown={handleKeyDown}
-          onKeyPress={numOnly}
-          maxLength={3}
-          // inputmode="numeric"
-          // pattern="[0-9]*"
-        ></input>
-        <input
-          ref={timerS}
-          className="secondsInput"
-          type="text"
-          id="timerSecond"
-          value={props.valueS}
-          onChange={props.onChangeS}
-          onKeyDown={handleKeyDown}
-          onKeyPress={numOnly}
-          maxLength={3}
-          // inputmode="numeric"
-          // pattern="[0-9]*"
-          autoFocus
-        ></input>
-      </div>
-      <div className="notation">
-        <div className="notation-hours">
-          <NotationH />
-        </div>
-        <div className="notation-minutes">
-          <NotationM />
-        </div>
-        <div className="notation-seconds">
-          <NotationS />
-        </div>
-      </div>
-      <div className="buttons">
-        <div className="up" id="up-buttons">
-          <button
-            className="button-up-H"
-            onClick={handleButtonClickUpH}
-            {...longPressUpH}
-          >
-            {caretUp}
-          </button>
-          <button
-            className="button-up-M"
-            onClick={handleButtonClickUpM}
-            {...longPressUpM}
-          >
-            {caretUp}
-          </button>
-          <button
-            className="button-up-S"
-            onClick={handleButtonClickUpS}
-            {...longPressUpS}
-          >
-            {caretUp}
           </button>
         </div>
       </div>
