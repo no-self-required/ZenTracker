@@ -21,29 +21,42 @@
         border: none;
       }
 
-      .notation {
-        display: flex;
+      .notation{
         font-size: 50px;
         position: absolute;
 
-        .notation-hours {
-          position: absolute;
-          margin-top: 1.86em;
-          margin-left: -3.156em;
+        #notation-h{
+          margin-left: 3.42em;
+          margin-top: -1.47em;
+        }
+        #notation-m{
+          margin-left: 7.7em;
+          margin-top: -1.47em;
         }
 
-        .notation-minutes {
-          position: absolute;
-          margin-top: 1.86em;
-          margin-left: 1.128em;
-        }
-
-        .notation-seconds {
-          position: absolute;
-          margin-top: 1.86em;
-          margin-left: 5.66em;
+        #notation-s{
+          margin-left: 12.25em;
+          margin-top: -1.47em;
         }
       }
+      #notation-h{
+        // position: absolute;
+        // margin-right: 1em;
+      }
+      // .notation {
+
+        // .notation-hours {
+
+        // }
+
+        // .notation-minutes {
+
+        // }
+
+        // .notation-seconds {
+
+        // }
+      // }
     }
 
     #timer-button-container {
@@ -184,10 +197,6 @@
   border: 1px solid black;
 }
 
-.fullscreen-enabled .container {
-  background: rgb(255, 255, 255);
-}
-
 @media only screen and (max-width: 713px) {
   .container {
     height: 90%;
@@ -203,37 +212,80 @@
         height: 100%;
         margin-top: 10vh;
 
-        #notation-timer {
-          flex-direction: row !important;
-          justify-content: center;
-      
-          .notation {
-            flex-direction: column;
-            height: 6.4em;
-            justify-content: space-between;
-            margin-top: 1.36em;
-            margin-left: .2em;
-            position: static !important;
+        #notation-timer{
+          
+          .inputs-boxes{
 
-            .notation-hours {
-              position: static !important;
-              margin-top: 0 !important;
-              margin-left: 0 !important;
+            .buttons{
+              .up{
+
+              }
+              .down{
+                
+              }
             }
-      
-            .notation-minutes {
-              position: static !important;
-              margin-top: 0 !important;
-              margin-left: 0 !important;
+
+            .input-wrapper{
+              .boxes{
+
+              }
+
+              .notation{
+                position: absolute;
+                #notation-h{
+                  margin-top: -6.6em;
+                  margin-left: 3.39em !important;
+                }
+
+                #notation-m{
+                  margin-top: -4em;
+                  margin-left: 3.39em !important;
+                }
+
+                #notation-s{
+                  margin-top: -1.4em;
+                  margin-left: 3.39em !important;
+                }
+              }
             }
-      
-            .notation-seconds {
-              position: static !important;
-              margin-top: 0 !important;
-              margin-left: 0 !important;
-            }
+
           }
         }
+
+        #button-container{
+
+        }
+        // #notation-timer {
+        //   flex-direction: row !important;
+        //   justify-content: center;
+      
+          // .notation {
+          //   flex-direction: column;
+          //   height: 6.4em;
+          //   justify-content: space-between;
+          //   margin-top: 1.36em;
+          //   margin-left: .2em;
+          //   position: static !important;
+
+          //   #notation-h {
+          //     position: static !important;
+          //     margin-top: 0 !important;
+          //     margin-left: 0 !important;
+          //   }
+      
+          //   #notation-m {
+          //     position: static !important;
+          //     margin-top: 0 !important;
+          //     margin-left: 0 !important;
+          //   }
+      
+          //   #notation-s {
+          //     position: static !important;
+          //     margin-top: 0 !important;
+          //     margin-left: 0 !important;
+          //   }
+          // }
+        // }
 
         #display-timer-container {
           align-content: center;
