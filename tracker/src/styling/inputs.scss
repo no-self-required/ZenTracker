@@ -3,7 +3,8 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-bottom: 1em;
+  // margin-bottom: 1em;
+
 
   .buttons {
 
@@ -31,10 +32,10 @@
       justify-content: space-between;
       width: 40em;
       padding-top: 0.6em;
-      margin-left: .5em;
+      margin-left: .55em;
 
       .button-up-H {
-        margin-left: 5em;
+        margin-left: 5.1em;
       }
 
       .button-up-M {
@@ -42,7 +43,7 @@
       }
 
       .button-up-S {
-        margin-right: 8em;
+        margin-right: 8.2em;
       }
     }
 
@@ -50,11 +51,11 @@
       display: flex;
       justify-content: space-between;
       width: 40em;
-      margin-left: .5em;
+      margin-left: .55em;
       // padding-top: 10em;
 
       .button-down-H {
-        margin-left: 5em;
+        margin-left: 5.1em;
       }
 
       .button-down-M {
@@ -62,7 +63,7 @@
       }
 
       .button-down-S {
-        margin-right: 8em;
+        margin-right: 8.2em;
       }
     }
   }
@@ -104,7 +105,7 @@
     justify-content: space-between;
     width: 40.60625em;
     height: 8.84375em;
-    padding-top: 1.61em;
+    padding-top: .79em;
     padding-right: 0.5em;
 
     .hoursInput,
@@ -160,7 +161,7 @@
 
       #up-buttons {
         position: absolute;
-        margin-left: 13.5em;
+        margin-left: 14em;
         margin-top: -9em;
         z-index: 1;
       }
