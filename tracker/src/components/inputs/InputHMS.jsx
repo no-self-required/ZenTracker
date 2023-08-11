@@ -114,8 +114,10 @@ function TimerHMS(props) {
 
   //redirect focus to setSelectionRange(1, 1) if div is clicked. Prevent cursor access past final digit when clicking
   function handleKeyDown(e) {
+    //input = target element input
     const input = e.target;
     setInputEle1(input);
+
     //moving left
     //prevent cursor access past final digit inside all inputs when traversing with left and right arrows
     //ex: [11] > [|11] : cannot reach "|"
@@ -154,6 +156,11 @@ function TimerHMS(props) {
       setSelection2({ start: 1, end: 1 });
     }
   }
+
+  // const onKeyDownFunctions = () => {
+  //   handleKeyDown();
+  //   props.handleInput();
+  // }
 
   function numOnly(event) {
     if (!/[0-9]/.test(event.key)) {
@@ -324,11 +331,13 @@ function TimerHMS(props) {
             id="timerHour"
             value={props.valueH}
             onChange={props.onChangeH}
-            onKeyDown={handleKeyDown}
+            onKeyDown={(event) => {
+              handleKeyDown(event);
+              props.handleInput(event);
+            }}
             onKeyPress={numOnly}
             maxLength={3}
           ></input>
-
           <input
             ref={timerM}
             className="minutesInput"
@@ -336,7 +345,10 @@ function TimerHMS(props) {
             id="timerMinute"
             value={props.valueM}
             onChange={props.onChangeM}
-            onKeyDown={handleKeyDown}
+            onKeyDown={(event) => {
+              handleKeyDown(event);
+              props.handleInput(event);
+            }}
             onKeyPress={numOnly}
             maxLength={3}
           ></input>
@@ -348,7 +360,10 @@ function TimerHMS(props) {
             id="timerSecond"
             value={props.valueS}
             onChange={props.onChangeS}
-            onKeyDown={handleKeyDown}
+            onKeyDown={(event) => {
+              handleKeyDown(event);
+              props.handleInput(event);
+            }}
             onKeyPress={numOnly}
             maxLength={3}
             autoFocus
