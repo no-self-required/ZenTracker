@@ -422,11 +422,11 @@ function Main() {
   }
 
   //only accept numbers for timer input
-  function numOnly(event) {
-    if (!/[0-9]/.test(event.key)) {
-      event.preventDefault();
-    }
-  }
+  // function numOnly(event) {
+  //   if (!/[0-9]/.test(event.key)) {
+  //     event.preventDefault();
+  //   }
+  // }
 
   //sets triple input values based off total seconds
   function fillZeros() {
@@ -544,8 +544,7 @@ function Main() {
     return omitZero;
   }
 
-  // function handleChangeSecond(event) {
-  //   let input = event.target.value;
+  // function handleChange(event) {
   //   const target = event.target;
   //   setInputEle2(target);
   //   const initialPosition = target.selectionStart;
@@ -557,45 +556,6 @@ function Main() {
   //   } else if (target.selectionEnd === initialPosition) {
   //     setSelection3({ start: initialPosition + 1, end: initialPosition + 1 });
   //   }
-
-  //   while (input.length > 2) {
-  //     input = input.substring(1);
-  //   }
-
-  //   if (!input) {
-  //     input = "00";
-  //   } else if (input.length === 1) {
-  //     input = "0" + input.substring(0);
-  //   }
-
-  //   setInputTimerSecond(input);
-  // }
-
-  // function handleChangeMinute(event) {
-  //   let input = event.target.value;
-  //   const target = event.target;
-  //   setInputEle2(target);
-  //   const initialPosition = target.selectionStart;
-
-  //   //keep caret position if you change 2nd digit
-  //   if (target.selectionStart === 2) {
-  //     setSelection3({ start: initialPosition, end: initialPosition - 1 });
-  //     //if u delete
-  //   } else if (target.selectionEnd === initialPosition) {
-  //     setSelection3({ start: initialPosition + 1, end: initialPosition + 1 });
-  //   }
-
-  //   while (input.length > 2) {
-  //     input = input.substring(1);
-  //   }
-
-  //   if (!input) {
-  //     input = "00";
-  //   } else if (input.length === 1) {
-  //     input = "0" + input.substring(0);
-  //   }
-
-  //   setInputTimerMinute(input);
   // }
 
   //Controls caret position, and sets H M S states
@@ -640,6 +600,12 @@ function Main() {
     },
   };
 
+  const setValues = (arr) => {
+    setInputTimerHour(arr[0]);
+    setInputTimerMinute(arr[1]);
+    setInputTimerSecond(arr[2]);
+  };
+  
   //move all elements -1 index
   let move = (arr, offset = 0) => {
     const pivot = (offset < 0 ? 0 : arr.length) - (offset % arr.length);
@@ -654,28 +620,11 @@ function Main() {
       movedArr[2] + movedArr[3],
       movedArr[4] + movedArr[5],
     ];
-    setInputTimerHour(newArr[0]);
-    setInputTimerMinute(newArr[1]);
-    setInputTimerSecond(newArr[2]);
-  };
-
-  let checkElements = (array, index, char) => {
-    for (let i = 0; i <= index; i++) {
-      if (array[i].includes(char)) {
-        continue;
-      } else {
-        return false;
-      }
-    }
-    return true;
+    setValues(newArr);
   };
 
   let handleInput = (event) => {
-    console.log("event target value", event.target.value);
-
     let keyConversion = String.fromCharCode(event.keyCode);
-
-    console.log("keyconversion", keyConversion);
 
     let splitHr = inputTimerHour.split("");
     let splitMn = inputTimerMinute.split("");
@@ -688,9 +637,8 @@ function Main() {
     const caretPosition = event.target.selectionStart;
     const focusedInputId = document.activeElement.id;
 
-    console.log("focused Input Id", focusedInputId)
     if (event.keyCode >= 48 && event.keyCode <= 57) {
-      console.log("number key code entered");
+      // console.log("number key code entered");
       if (focusedInputId === "timerSecond") {
         if (caretPosition === 1) {
           flatNewArr.splice(5, 0, keyConversion);
@@ -717,106 +665,65 @@ function Main() {
         }
       }
     } else if (event.keyCode === 8) {
-      console.log("delete key pressed (mac os)");
       if (focusedInputId === "timerSecond") {
         if (caretPosition === 1) {
+          flatNewArr.splice(4, 1);
+          flatNewArr.unshift("0");
+          newArr = [
+            flatNewArr[0] + flatNewArr[1],
+            flatNewArr[2] + flatNewArr[3],
+            flatNewArr[4] + flatNewArr[5],
+          ];
+          setValues(newArr);
+        } else if (caretPosition === 2) {
           flatNewArr.splice(5, 1);
           flatNewArr.unshift("0");
-          if (checkElements(flatNewArr, 5, "0")) {
-            console.log("check elements");
-            return;
-          } else {
-            newArr = [
-              flatNewArr[0] + flatNewArr[1],
-              flatNewArr[2] + flatNewArr[3],
-              flatNewArr[4] + flatNewArr[5],
-            ];
-            console.log("x");
-
-            console.log("newArr", newArr);
-            setInputTimerHour(newArr[0]);
-            setInputTimerMinute(newArr[1]);
-            setInputTimerSecond(newArr[2]);
-          }
-        } else if (caretPosition === 2) {
-          flatNewArr.splice(6, 1);
-          flatNewArr.unshift("0");
-          if (checkElements(flatNewArr, 6, "0")) {
-            return;
-          } else {
-            newArr = [
-              flatNewArr[0] + flatNewArr[1],
-              flatNewArr[2] + flatNewArr[3],
-              flatNewArr[4] + flatNewArr[5],
-            ];
-            setInputTimerHour(newArr[0]);
-            setInputTimerMinute(newArr[1]);
-            setInputTimerSecond(newArr[2]);
-          }
+          newArr = [
+            flatNewArr[0] + flatNewArr[1],
+            flatNewArr[2] + flatNewArr[3],
+            flatNewArr[4] + flatNewArr[5],
+          ];
+          setValues(newArr);
         }
       } else if (focusedInputId === "timerMinute") {
         if (caretPosition === 1) {
+          flatNewArr.splice(2, 1);
+          flatNewArr.unshift("0");
+          newArr = [
+            flatNewArr[0] + flatNewArr[1],
+            flatNewArr[2] + flatNewArr[3],
+            flatNewArr[4] + flatNewArr[5],
+          ];
+          setValues(newArr);
+        } else if (caretPosition === 2) {
           flatNewArr.splice(3, 1);
           flatNewArr.unshift("0");
-          if (checkElements(flatNewArr, 3, "0")) {
-            return;
-          } else {
-            newArr = [
-              flatNewArr[0] + flatNewArr[1],
-              flatNewArr[2] + flatNewArr[3],
-              flatNewArr[4] + flatNewArr[5],
-            ];
-            setInputTimerHour(newArr[0]);
-            setInputTimerMinute(newArr[1]);
-            setInputTimerSecond(newArr[2]);
-          }
-        } else if (caretPosition === 2) {
-          flatNewArr.splice(4, 1);
-          flatNewArr.unshift("0");
-          if (checkElements(flatNewArr, 4, "0")) {
-            return;
-          } else {
-            newArr = [
-              flatNewArr[0] + flatNewArr[1],
-              flatNewArr[2] + flatNewArr[3],
-              flatNewArr[4] + flatNewArr[5],
-            ];
-            setInputTimerHour(newArr[0]);
-            setInputTimerMinute(newArr[1]);
-            setInputTimerSecond(newArr[2]);
-          }
+          newArr = [
+            flatNewArr[0] + flatNewArr[1],
+            flatNewArr[2] + flatNewArr[3],
+            flatNewArr[4] + flatNewArr[5],
+          ];
+          setValues(newArr);
         }
       } else if (focusedInputId === "timerHour") {
         if (caretPosition === 1) {
+          flatNewArr.splice(0, 1);
+          flatNewArr.unshift("0");
+          newArr = [
+            flatNewArr[0] + flatNewArr[1],
+            flatNewArr[2] + flatNewArr[3],
+            flatNewArr[4] + flatNewArr[5],
+          ];
+          setValues(newArr);
+        } else if (caretPosition === 2) {
           flatNewArr.splice(1, 1);
           flatNewArr.unshift("0");
-          if (checkElements(flatNewArr, 1, "0")) {
-            return;
-          } else {
-            newArr = [
-              flatNewArr[0] + flatNewArr[1],
-              flatNewArr[2] + flatNewArr[3],
-              flatNewArr[4] + flatNewArr[5],
-            ];
-            setInputTimerHour(newArr[0]);
-            setInputTimerMinute(newArr[1]);
-            setInputTimerSecond(newArr[2]);
-          }
-        } else if (caretPosition === 2) {
-          flatNewArr.splice(2, 1);
-          flatNewArr.unshift("0");
-          if (checkElements(flatNewArr, 2, "0")) {
-            return;
-          } else {
-            newArr = [
-              flatNewArr[0] + flatNewArr[1],
-              flatNewArr[2] + flatNewArr[3],
-              flatNewArr[4] + flatNewArr[5],
-            ];
-            setInputTimerHour(newArr[0]);
-            setInputTimerMinute(newArr[1]);
-            setInputTimerSecond(newArr[2]);
-          }
+          newArr = [
+            flatNewArr[0] + flatNewArr[1],
+            flatNewArr[2] + flatNewArr[3],
+            flatNewArr[4] + flatNewArr[5],
+          ];
+          setValues(newArr);
         }
       }
     }

@@ -58,7 +58,7 @@ function TimerHMS(props) {
   const [selectionS, setSelectionS] = useState();
 
   //use ref for hours input. Will need useRef for minutes and seconds input. Used to block cursor click on left side on input.
-  const timerH = useRef();
+  const timerH = useRef(null);
   const timerM = useRef();
   const timerS = useRef();
 
@@ -156,11 +156,6 @@ function TimerHMS(props) {
       setSelection2({ start: 1, end: 1 });
     }
   }
-
-  // const onKeyDownFunctions = () => {
-  //   handleKeyDown();
-  //   props.handleInput();
-  // }
 
   function numOnly(event) {
     if (!/[0-9]/.test(event.key)) {
@@ -290,6 +285,44 @@ function TimerHMS(props) {
 
   const longPressUpS = useLongPress(handleButtonClickUpS, 135);
   const longPressDownS = useLongPress(handleButtonClickDownS, 135);
+
+//   const [cursor, setCursor] = useState();
+  
+//   useEffect(() => {
+//     const input = timerH.current;
+//     if (input) input.setSelectionRange(cursor, cursor);
+//  }, [timerH, cursor, props.valueH]);
+
+//  const handleChange = (e) => {
+//     setCursor(e.target.selectionStart);
+//  };
+
+  // //replace/delete
+  // const [selection, setSelection] = useState();
+  // //replacing/deleting digit
+  // const [targetEle, setTargetEle] = useState();
+
+  // //replace/delete digit
+  // useEffect(() => {
+  //   if (!selection) return;
+  //   const { start, end } = selection;
+  //   targetEle.setSelectionRange(start, end);
+  // }, [selection, targetEle]);
+
+  // const handleChange = (e) => {
+  //   const target = e.target;
+  //   setTargetEle(target);
+  //   const initialPosition = target.selectionStart;
+  //   console.log("init pos", initialPosition)
+  //   //keep caret position if u change 2nd digit
+  //   if (target.selectionStart === 2) {
+  //     setSelection({ start: initialPosition, end: initialPosition - 1 });
+  //     //if u delete
+  //   } else if (target.selectionEnd === initialPosition) {
+  //     setSelection({ start: initialPosition + 1, end: initialPosition + 1 });
+  //   }
+  // }
+
   return (
     <div className="inputs-boxes">
       <div className="buttons">
@@ -330,7 +363,7 @@ function TimerHMS(props) {
             type="text"
             id="timerHour"
             value={props.valueH}
-            onChange={props.onChangeH}
+            // onChange={handleChange}
             onKeyDown={(event) => {
               handleKeyDown(event);
               props.handleInput(event);
