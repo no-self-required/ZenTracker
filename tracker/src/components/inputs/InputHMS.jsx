@@ -154,14 +154,7 @@ function TimerHMS(props) {
       e.keyCode === 39
     ) {
       setSelection2({ start: 1, end: 1 });
-    } else if (
-      !input.previousElementSibling &&
-      input.value.length === 2 &&
-      input.selectionEnd === 1 &&
-      e.keyCode === 37
-    ) {
-      e.preventDefault();
-    }  
+    } 
   }
 
   function numOnly(event) {
