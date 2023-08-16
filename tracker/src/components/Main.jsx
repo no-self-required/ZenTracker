@@ -182,20 +182,21 @@ function Main() {
   const [inputTimerMinute, setInputTimerMinute] = useState("00");
   const [inputTimerHour, setInputTimerHour] = useState("00");
 
-  //replace/delete
-  const [selection3, setSelection3] = useState();
-  //replacing/deleting digit
-  const [inputEle2, setInputEle2] = useState();
-
   //context for logged in user
   const { userData } = useContext(UserContext);
 
-  //replace/delete digit
+  //Store cursor position to restore after input
+  const [cursor, setCursor] = useState();
+  //Store target input 
+  const [targetInput, setTargetInput] = useState();
+
+  //Restore cursor position on input change
   useEffect(() => {
-    if (!selection3) return;
-    const { start, end } = selection3;
-    inputEle2.setSelectionRange(start, end);
-  }, [selection3, inputEle2]);
+    if (!cursor) return;
+    const { start, end } = cursor;
+    targetInput.setSelectionRange(start, end);
+    console.log("x");
+  }, [cursor, targetInput]);
 
   const [loggedin, setLoggedIn] = useState(false);
   const navigate = useNavigate();
@@ -421,13 +422,6 @@ function Main() {
     setTimerState(TIMER_STATES["INITIAL"]);
   }
 
-  //only accept numbers for timer input
-  // function numOnly(event) {
-  //   if (!/[0-9]/.test(event.key)) {
-  //     event.preventDefault();
-  //   }
-  // }
-
   //sets triple input values based off total seconds
   function fillZeros() {
     let input = displayInputValue(totalSeconds);
@@ -544,51 +538,6 @@ function Main() {
     return omitZero;
   }
 
-  // function handleChange(event) {
-  //   const target = event.target;
-  //   setInputEle2(target);
-  //   const initialPosition = target.selectionStart;
-
-  //   //keep caret position if u change 2nd digit
-  //   if (target.selectionStart === 2) {
-  //     setSelection3({ start: initialPosition, end: initialPosition - 1 });
-  //     //if u delete
-  //   } else if (target.selectionEnd === initialPosition) {
-  //     setSelection3({ start: initialPosition + 1, end: initialPosition + 1 });
-  //   }
-  // }
-
-  //Controls caret position, and sets H M S states
-
-  //idea: Remove setStates, keep caret position control
-  // function handleChangeHour(event) {
-  //   let input = event.target.value;
-
-  //   const target = event.target;
-  //   setInputEle2(target);
-  //   const initialPosition = target.selectionStart;
-
-  //   //keep caret position if u change 2nd digit
-  //   if (target.selectionStart === 2) {
-  //     setSelection3({ start: initialPosition, end: initialPosition - 1 });
-  //     //if u delete
-  //   } else if (target.selectionEnd === initialPosition) {
-  //     setSelection3({ start: initialPosition + 1, end: initialPosition + 1 });
-  //   }
-
-  //   while (input.length > 2) {
-  //     input = input.substring(1);
-  //   }
-
-  //   if (!input) {
-  //     input = "00";
-  //   } else if (input.length === 1) {
-  //     input = "0" + input.substring(0);
-  //   }
-
-  //   setInputTimerHour(input);
-  // }
-
   const customStyles = {
     content: {
       top: "50%",
@@ -605,7 +554,7 @@ function Main() {
     setInputTimerMinute(arr[1]);
     setInputTimerSecond(arr[2]);
   };
-  
+
   //move all elements -1 index
   let move = (arr, offset = 0) => {
     const pivot = (offset < 0 ? 0 : arr.length) - (offset % arr.length);
@@ -636,9 +585,14 @@ function Main() {
 
     const caretPosition = event.target.selectionStart;
     const focusedInputId = document.activeElement.id;
+    const targetInput = event.target;
+    setTargetInput(targetInput);
 
     if (event.keyCode >= 48 && event.keyCode <= 57) {
       // console.log("number key code entered");
+      setTimeout(() => {
+        setCursor({ start: caretPosition, end: caretPosition });
+      });
       if (focusedInputId === "timerSecond") {
         if (caretPosition === 1) {
           flatNewArr.splice(5, 0, keyConversion);
@@ -665,6 +619,9 @@ function Main() {
         }
       }
     } else if (event.keyCode === 8) {
+      setTimeout(() => {
+        setCursor({ start: caretPosition, end: caretPosition });
+      });
       if (focusedInputId === "timerSecond") {
         if (caretPosition === 1) {
           flatNewArr.splice(4, 1);
@@ -779,10 +736,6 @@ function Main() {
                 // onChangeS={handleChangeSecond}
                 handleInput={handleInput}
                 // onKeyPress={numOnly}
-                selection3={selection3}
-                setSelection3={setSelection3}
-                inputEle2={inputEle2}
-                setInputEle2={setInputEle2}
                 InputTimerHour={inputTimerHour}
                 setInputTimerHour={setInputTimerHour}
                 InputTimerMinute={inputTimerMinute}
