@@ -182,20 +182,20 @@ function Main() {
   const [inputTimerMinute, setInputTimerMinute] = useState("00");
   const [inputTimerHour, setInputTimerHour] = useState("00");
 
-  //replace/delete
-  const [selection3, setSelection3] = useState();
-  //replacing/deleting digit
-  const [inputEle2, setInputEle2] = useState();
-
   //context for logged in user
   const { userData } = useContext(UserContext);
 
-  //replace/delete digit
+  //Store cursor position to restore after input
+  const [cursor, setCursor] = useState();
+  //Store target input 
+  const [targetInput, setTargetInput] = useState();
+
+  //Restore cursor position on input change
   useEffect(() => {
-    if (!selection3) return;
-    const { start, end } = selection3;
-    inputEle2.setSelectionRange(start, end);
-  }, [selection3, inputEle2]);
+    if (!cursor) return;
+    const { start, end } = cursor;
+    targetInput.setSelectionRange(start, end);
+  }, [cursor]);
 
   const [loggedin, setLoggedIn] = useState(false);
   const navigate = useNavigate();
@@ -344,7 +344,6 @@ function Main() {
     const id = userData.user.id;
     let generateId = uuidv4();
     const constantId = generateId;
-    // const length = calculateSeconds(initialTime);
     const totalSeconds = calculateSeconds(initialTime);
     const formattedTime = displayInputValue(calculateSeconds(initialTime));
     const sessionLog = log;
@@ -419,13 +418,6 @@ function Main() {
     console.log("initialTimeInSeconds", initialTimeInSeconds);
     setTotalSeconds(initialTimeInSeconds);
     setTimerState(TIMER_STATES["INITIAL"]);
-  }
-
-  //only accept numbers for timer input
-  function numOnly(event) {
-    if (!/[0-9]/.test(event.key)) {
-      event.preventDefault();
-    }
   }
 
   //sets triple input values based off total seconds
@@ -544,101 +536,6 @@ function Main() {
     return omitZero;
   }
 
-  function handleChangeSecond(event) {
-    let input = event.target.value;
-    const target = event.target;
-    setInputEle2(target);
-    const initialPosition = target.selectionStart;
-
-    //keep caret position if u change 2nd digit
-    if (target.selectionStart === 2) {
-      setSelection3({ start: initialPosition, end: initialPosition - 1 });
-      //if u delete
-    } else if (target.selectionEnd === initialPosition) {
-      setSelection3({ start: initialPosition + 1, end: initialPosition + 1 });
-    }
-
-    while (input.length > 2) {
-      input = input.substring(1);
-    }
-
-    if (!input) {
-      input = "00";
-    } else if (input.length === 1) {
-      input = "0" + input.substring(0);
-    }
-
-    setInputTimerSecond(input);
-  }
-
-  function handleChangeMinute(event) {
-    let input = event.target.value;
-    const target = event.target;
-    setInputEle2(target);
-    const initialPosition = target.selectionStart;
-
-    //keep caret position if you change 2nd digit
-    if (target.selectionStart === 2) {
-      setSelection3({ start: initialPosition, end: initialPosition - 1 });
-      //if u delete
-    } else if (target.selectionEnd === initialPosition) {
-      setSelection3({ start: initialPosition + 1, end: initialPosition + 1 });
-    }
-
-    while (input.length > 2) {
-      input = input.substring(1);
-    }
-
-    if (!input) {
-      input = "00";
-    } else if (input.length === 1) {
-      input = "0" + input.substring(0);
-    }
-
-    setInputTimerMinute(input);
-  }
-
-  function handleChangeHour(event) {
-    let input = event.target.value;
-
-    const target = event.target;
-    setInputEle2(target);
-    const initialPosition = target.selectionStart;
-
-    //keep caret position if u change 2nd digit
-    if (target.selectionStart === 2) {
-      setSelection3({ start: initialPosition, end: initialPosition - 1 });
-      //if u delete
-    } else if (target.selectionEnd === initialPosition) {
-      setSelection3({ start: initialPosition + 1, end: initialPosition + 1 });
-    }
-
-    while (input.length > 2) {
-      input = input.substring(1);
-    }
-
-    if (!input) {
-      input = "00";
-    } else if (input.length === 1) {
-      input = "0" + input.substring(0);
-    }
-
-    setInputTimerHour(input);
-  }
-
-  // const fsHandle = useFullScreenHandle();
-  // const [isFullScreen, setIsFullScreen] = useState(false);
-
-  // function onClickFsExit() {
-  //   fsHandle.exit();
-  //   setIsFullScreen(false);
-  // }
-
-  // function onClickFsEnter() {
-  //   fsHandle.enter();
-  //   setIsFullScreen(true);
-  // }
-
   const customStyles = {
     content: {
       top: "50%",
@@ -650,18 +547,142 @@ function Main() {
     },
   };
 
-  //This function needs to reset initial time rather than only start the timer
-  // const startTimerOnEnter = (event) => {
-  //   if (event.key === "Enter") {
-  //     setTimerState(TIMER_STATES["STARTED"]);
-  //   }
-  // };
+  const setValues = (arr) => {
+    setInputTimerHour(arr[0]);
+    setInputTimerMinute(arr[1]);
+    setInputTimerSecond(arr[2]);
+  };
 
-  // const stopTimerOnEnter = (event) => {
-  //   if (event.key === "Enter") {
-  //     console.log("test on enter")
-  //   }
-  // };
+  //move all elements -1 index
+  let move = (arr, offset = 0) => {
+    const pivot = (offset < 0 ? 0 : arr.length) - (offset % arr.length);
+    return arr.slice(pivot).concat(arr.slice(0, pivot));
+  };
+
+  let manipulate = (arr, newArr) => {
+    let movedArr = move(arr, -1);
+    movedArr.pop();
+    newArr = [
+      movedArr[0] + movedArr[1],
+      movedArr[2] + movedArr[3],
+      movedArr[4] + movedArr[5],
+    ];
+    setValues(newArr);
+  };
+
+  let handleInput = (event) => {
+    let keyConversion = String.fromCharCode(event.keyCode);
+
+    let splitHr = inputTimerHour.split("");
+    let splitMn = inputTimerMinute.split("");
+    let splitSc = inputTimerSecond.split("");
+
+    let newArr = [splitHr, splitMn, splitSc];
+
+    let flatNewArr = newArr.flat();
+
+    const caretPosition = event.target.selectionStart;
+    const focusedInputId = document.activeElement.id;
+    const targetInput = event.target;
+    setTargetInput(targetInput);
+
+    if (event.keyCode >= 48 && event.keyCode <= 57) {
+      // console.log("number key code entered");
+      setTimeout(() => {
+        setCursor({ start: caretPosition, end: caretPosition });
+      });
+      if (focusedInputId === "timerSecond") {
+        if (caretPosition === 1) {
+          flatNewArr.splice(5, 0, keyConversion);
+          manipulate(flatNewArr, newArr);
+        } else if (caretPosition === 2) {
+          flatNewArr.splice(6, 0, keyConversion);
+          manipulate(flatNewArr, newArr);
+        }
+      } else if (focusedInputId === "timerMinute") {
+        if (caretPosition === 1) {
+          flatNewArr.splice(3, 0, keyConversion);
+          manipulate(flatNewArr, newArr);
+        } else if (caretPosition === 2) {
+          flatNewArr.splice(4, 0, keyConversion);
+          manipulate(flatNewArr, newArr);
+        }
+      } else if (focusedInputId === "timerHour") {
+        if (caretPosition === 1) {
+          flatNewArr.splice(1, 0, keyConversion);
+          manipulate(flatNewArr, newArr);
+        } else if (caretPosition === 2) {
+          flatNewArr.splice(2, 0, keyConversion);
+          manipulate(flatNewArr, newArr);
+        }
+      }
+    } else if (event.keyCode === 8) {
+      setTimeout(() => {
+        setCursor({ start: caretPosition, end: caretPosition });
+      });
+      if (focusedInputId === "timerSecond") {
+        if (caretPosition === 1) {
+          flatNewArr.splice(4, 1);
+          flatNewArr.unshift("0");
+          newArr = [
+            flatNewArr[0] + flatNewArr[1],
+            flatNewArr[2] + flatNewArr[3],
+            flatNewArr[4] + flatNewArr[5],
+          ];
+          setValues(newArr);
+        } else if (caretPosition === 2) {
+          flatNewArr.splice(5, 1);
+          flatNewArr.unshift("0");
+          newArr = [
+            flatNewArr[0] + flatNewArr[1],
+            flatNewArr[2] + flatNewArr[3],
+            flatNewArr[4] + flatNewArr[5],
+          ];
+          setValues(newArr);
+        }
+      } else if (focusedInputId === "timerMinute") {
+        if (caretPosition === 1) {
+          flatNewArr.splice(2, 1);
+          flatNewArr.unshift("0");
+          newArr = [
+            flatNewArr[0] + flatNewArr[1],
+            flatNewArr[2] + flatNewArr[3],
+            flatNewArr[4] + flatNewArr[5],
+          ];
+          setValues(newArr);
+        } else if (caretPosition === 2) {
+          flatNewArr.splice(3, 1);
+          flatNewArr.unshift("0");
+          newArr = [
+            flatNewArr[0] + flatNewArr[1],
+            flatNewArr[2] + flatNewArr[3],
+            flatNewArr[4] + flatNewArr[5],
+          ];
+          setValues(newArr);
+        }
+      } else if (focusedInputId === "timerHour") {
+        if (caretPosition === 1) {
+          flatNewArr.splice(0, 1);
+          flatNewArr.unshift("0");
+          newArr = [
+            flatNewArr[0] + flatNewArr[1],
+            flatNewArr[2] + flatNewArr[3],
+            flatNewArr[4] + flatNewArr[5],
+          ];
+          setValues(newArr);
+        } else if (caretPosition === 2) {
+          flatNewArr.splice(1, 1);
+          flatNewArr.unshift("0");
+          newArr = [
+            flatNewArr[0] + flatNewArr[1],
+            flatNewArr[2] + flatNewArr[3],
+            flatNewArr[4] + flatNewArr[5],
+          ];
+          setValues(newArr);
+        }
+      }
+    }
+  };
 
   return (
     <div className="container">
@@ -704,18 +725,10 @@ function Main() {
           {timerState === TIMER_STATES["EDIT"] && (
             <div id="notation-timer">
               <TimerHMS
-                // ref={timerH}
                 valueH={inputTimerHour}
                 valueM={inputTimerMinute}
                 valueS={inputTimerSecond}
-                onChangeH={handleChangeHour}
-                onChangeM={handleChangeMinute}
-                onChangeS={handleChangeSecond}
-                onKeyPress={numOnly}
-                selection3={selection3}
-                setSelection3={setSelection3}
-                inputEle2={inputEle2}
-                setInputEle2={setInputEle2}
+                handleInput={handleInput}
                 InputTimerHour={inputTimerHour}
                 setInputTimerHour={setInputTimerHour}
                 InputTimerMinute={inputTimerMinute}
@@ -745,7 +758,7 @@ function Main() {
                   shouldCloseOnOverlayClick={false}
                 >
                   <div className="log-message">{message}</div>
-                  <label for="logInput">Enter a log</label>
+                  <label for="logInput">Enter a log:</label>
                   <br />
                   <input
                     type="text"
@@ -753,7 +766,9 @@ function Main() {
                     onChange={(e) => setLog(e.target.value)}
                   ></input>
                   <br />
-                  <button class="submit-log"onClick={closeModal}>submit</button>
+                  <button class="submit-log" onClick={closeModal}>
+                    Submit Session
+                  </button>
                 </Modal>
               </div>
             )}
