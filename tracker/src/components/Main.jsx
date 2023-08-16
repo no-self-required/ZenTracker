@@ -195,8 +195,7 @@ function Main() {
     if (!cursor) return;
     const { start, end } = cursor;
     targetInput.setSelectionRange(start, end);
-    console.log("x");
-  }, [cursor, targetInput]);
+  }, [cursor]);
 
   const [loggedin, setLoggedIn] = useState(false);
   const navigate = useNavigate();
@@ -727,15 +726,10 @@ function Main() {
           {timerState === TIMER_STATES["EDIT"] && (
             <div id="notation-timer">
               <TimerHMS
-                // ref={timerH}
                 valueH={inputTimerHour}
                 valueM={inputTimerMinute}
                 valueS={inputTimerSecond}
-                // onChangeH={handleChangeHour}
-                // onChangeM={handleChangeMinute}
-                // onChangeS={handleChangeSecond}
                 handleInput={handleInput}
-                // onKeyPress={numOnly}
                 InputTimerHour={inputTimerHour}
                 setInputTimerHour={setInputTimerHour}
                 InputTimerMinute={inputTimerMinute}
