@@ -344,7 +344,6 @@ function Main() {
     const id = userData.user.id;
     let generateId = uuidv4();
     const constantId = generateId;
-    // const length = calculateSeconds(initialTime);
     const totalSeconds = calculateSeconds(initialTime);
     const formattedTime = displayInputValue(calculateSeconds(initialTime));
     const sessionLog = log;
