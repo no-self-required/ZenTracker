@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect } from "react";
 import Nav from "./components/Nav";
-import Main from "./components/Main";
+// import Main from "./components/Main";
+import InputMainParent from "./components/InputMainParent";
 import axios from "axios";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -52,7 +53,7 @@ function App() {
           <Nav />
           <Routes>
             <Route path="/profile" exact element={<ProfileStats />} />
-            <Route path="/" exact element={<Main />} />
+            <Route path="/" exact element={<InputMainParent />} />
           </Routes>
         </div>
       </BrowserRouter>
