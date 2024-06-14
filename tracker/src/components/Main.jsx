@@ -16,7 +16,7 @@ import format from "date-fns/format";
 import "../styling/main.scss";
 
 //H:M:S inputs
-import TimerHMS from "./inputs/InputHMS";
+import InputHMS from "./inputs/InputHMS";
 
 import NotationH from "./notations/NotationH";
 import NotationM from "./notations/NotationM";
@@ -185,7 +185,6 @@ function Main() {
   const { userData } = useContext(UserContext);
 
   const [caret, setCaret] = useState();
-  // console.log('caret', caret)
   //caret: 1
 
   //Store cursor position to restore after input
@@ -200,7 +199,7 @@ function Main() {
   useEffect(() => {
     if (!cursor) return
     targetInput.setSelectionRange(caret, caret);
-  }, [cursor, targetInput]);
+  }, [cursor]);
 
   const [loggedin, setLoggedIn] = useState(false);
   const navigate = useNavigate();
@@ -575,6 +574,23 @@ function Main() {
     setValues(newArr);
   };
 
+  const [selection1, setSelection1] = useState();
+  const [selection2, setSelection2] = useState();
+
+  useEffect(() => {
+    if (!selection1) return; // prevent running on start
+    const { start, end } = selection1;
+    targetInput.previousElementSibling.focus();
+    targetInput.previousElementSibling.setSelectionRange(start, end);
+  }, [selection1]);
+
+  useEffect(() => {
+    if (!selection2) return;
+    const { start, end } = selection2;
+    targetInput.nextElementSibling.focus();
+    targetInput.nextElementSibling.setSelectionRange(start, end);
+  }, [selection2]);
+
   let handleInput = (event) => {
     // console.log('handleInput function fired')
     let keyConversion = String.fromCharCode(event.keyCode);
@@ -586,10 +602,10 @@ function Main() {
     let newArr = [splitHr, splitMn, splitSc];
 
     let flatNewArr = newArr.flat();
-
+    
     const caretPosition = event.target.selectionStart;
-    console.log('caretPosition inside handleInput:', caretPosition)
     setCaret(caretPosition);
+    console.log('caretPosition inside handleInput:', caretPosition)
 
     // setCursor({ start: caretPosition, end: caretPosition });
 
@@ -624,10 +640,6 @@ function Main() {
         }
       }
     } else if (event.keyCode === 8) {
-      // setTimeout(() => {
-
-        // setCursor(caretPosition);
-      // });
       if (focusedInputId === "timerSecond") {
         if (caretPosition === 1) {
           flatNewArr.splice(4, 1);
@@ -690,7 +702,35 @@ function Main() {
         }
       }
     }
+
+    if (
+      targetInput.previousElementSibling &&
+      targetInput.value.length === 2 &&
+      targetInput.selectionEnd === 1 &&
+      event.keyCode === 37
+    ) {
+      setSelection1({ start: 2, end: 2 });
+    } else if (
+      !targetInput.previousElementSibling &&
+      targetInput.value.length === 2 &&
+      targetInput.selectionEnd === 1 &&
+      event.keyCode === 37
+    ) {
+      event.preventDefault();
+    } 
+
+    if (
+      targetInput.nextElementSibling &&
+      (targetInput.selectionEnd === 2 || targetInput.selectionEnd === 0) &&
+      event.keyCode === 39
+    ) {
+      setSelection2({ start: 1, end: 1 });
+    } 
+
+    
   };
+
+
 
   return (
     <div className="container">
@@ -732,7 +772,7 @@ function Main() {
           )}
           {timerState === TIMER_STATES["EDIT"] && (
             <div id="notation-timer">
-              <TimerHMS
+              <InputHMS
                 valueH={inputTimerHour}
                 valueM={inputTimerMinute}
                 valueS={inputTimerSecond}
@@ -748,7 +788,7 @@ function Main() {
                 setInputTimerMinute={setInputTimerMinute}
                 InputTimerSecond={inputTimerSecond}
                 setInputTimerSecond={setInputTimerSecond}
-              ></TimerHMS>
+              ></InputHMS>
             </div>
           )}
           <div id="button-container">

@@ -13,7 +13,7 @@ import { faCaretUp, faCaretDown } from "@fortawesome/free-solid-svg-icons";
 const caretUp = <FontAwesomeIcon icon={faCaretUp} size="lg" />;
 const caretDown = <FontAwesomeIcon icon={faCaretDown} size="lg" />;
 
-function TimerHMS(props) {
+function InputHMS(props) {
   //Store inputs to traverse between them
 
   //***** */
@@ -31,21 +31,20 @@ function TimerHMS(props) {
 
   //run focus and setSelectionRange for target inputs
 
-  //***************  */
-  //travese input left
+  // travese input left
   useEffect(() => {
     if (!selection1) return; // prevent running on start
     const { start, end } = selection1;
-    inputEle1.previousElementSibling.focus();
-    inputEle1.previousElementSibling.setSelectionRange(start, end);
+    props.targetInput.previousElementSibling.focus();
+    props.targetInput.previousElementSibling.setSelectionRange(start, end);
   }, [selection1]);
 
   //traverse input right
   useEffect(() => {
     if (!selection2) return;
     const { start, end } = selection2;
-    inputEle1.nextElementSibling.focus();
-    inputEle1.nextElementSibling.setSelectionRange(start, end);
+    props.targetInput.nextElementSibling.focus();
+    props.targetInput.nextElementSibling.setSelectionRange(start, end);
   }, [selection2]);
   //************ */
 
@@ -56,6 +55,7 @@ function TimerHMS(props) {
   const [selection5, setSelection5] = useState();
   const [selection6, setSelection6] = useState();
 
+  //selection for up and down arrow keys
   const [selectionH, setSelectionH] = useState();
   const [selectionS, setSelectionS] = useState();
 
@@ -118,8 +118,7 @@ function TimerHMS(props) {
   function handleKeyDown(e) {
     //input = target element input
     const input = e.target;
-    setInputEle1(input);
-    // props.setTargetInput(input);
+    props.setTargetInput(input);
 
     // console.log("input selectionend:", input.selectionEnd)
     //moving left
@@ -139,17 +138,18 @@ function TimerHMS(props) {
       e.keyCode === 37
     ) {
       e.preventDefault();
-    } else if (e.keyCode === 38) {
-      //key up sets focus to Hours input with SelectionRange 1,1
-      setInputEleH(timerH);
-      timerH.current.focus();
-      setSelectionH({ start: 1, end: 1 });
-    } else if (e.keyCode === 40) {
-      //key down sets focus to Seconds input with SelectionRange 2,2
-      setInputEleS(timerS);
-      timerS.current.focus();
-      setSelectionS({ start: 2, end: 2 });
-    }
+    } 
+    // else if (e.keyCode === 38) {
+    //   //key up sets focus to Hours input with SelectionRange 1,1
+    //   setInputEleH(timerH);
+    //   timerH.current.focus();
+    //   setSelectionH({ start: 1, end: 1 });
+    // } else if (e.keyCode === 40) {
+    //   //key down sets focus to Seconds input with SelectionRange 2,2
+    //   setInputEleS(timerS);
+    //   timerS.current.focus();
+    //   setSelectionS({ start: 2, end: 2 });
+    // }
 
     //moving right
     if (
@@ -158,7 +158,6 @@ function TimerHMS(props) {
       e.keyCode === 39
     ) {
       setSelection2({ start: 1, end: 1 });
-
     } 
   }
 
@@ -333,11 +332,11 @@ function TimerHMS(props) {
             value={props.valueH}
             onInput={(e) => {
               props.setCursor({ start: props.caret, end: props.caret });
-              // props.setCaret()
+              // props.setCaret({ start: props.caret, end: props.caret });
             }}
             onKeyDown={(event) => {
               props.handleInput(event);
-              handleKeyDown(event);
+              // handleKeyDown(event);
 
             }}
             onKeyPress={numOnly}
@@ -350,12 +349,13 @@ function TimerHMS(props) {
             id="timerMinute"
             value={props.valueM}
             onInput={(e) => {
-              props.setCursor({ start: props.caret, end: props.caret });
+              props.setCursor({ start: props.caret, end: props.caret }); //keeps cursor position on input
+              // props.setCaret({ start: props.caret, end: props.caret });
             }}
             onKeyDown={(event) => {
 
               props.handleInput(event);
-              handleKeyDown(event);
+              // handleKeyDown(event);
 
             }}
             onKeyPress={numOnly}
@@ -369,11 +369,12 @@ function TimerHMS(props) {
             value={props.valueS}
             onInput={(e) => {
               props.setCursor({ start: props.caret, end: props.caret });
+              // props.setCaret({ start: props.caret, end: props.caret });
             }}
             onKeyDown={(event) => {
 
               props.handleInput(event);
-              handleKeyDown(event);
+              // handleKeyDown(event);
 
             }}
             onKeyPress={numOnly}
@@ -423,4 +424,4 @@ function TimerHMS(props) {
   );
 }
 
-export default TimerHMS;
+export default InputHMS;
