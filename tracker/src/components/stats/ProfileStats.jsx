@@ -168,6 +168,7 @@ function ProfileStats() {
     setInputTimerHour("00");
     setInputTimerMinute("00");
     setInputTimerSecond("00");
+    setLog("");
     setModalIsOpen(false);
   }
 

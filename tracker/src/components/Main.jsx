@@ -16,7 +16,7 @@ import format from "date-fns/format";
 import "../styling/main.scss";
 
 //H:M:S inputs
-import TimerHMS from "./inputs/InputHMS";
+import InputHMS from "./inputs/InputHMS";
 
 import NotationH from "./notations/NotationH";
 import NotationM from "./notations/NotationM";
@@ -48,10 +48,9 @@ function splitInput(initialTime) {
   return arr;
 }
 
-//calculated time becomes new split Arr???
 function calculateSeconds(initialTime) {
   const splitArr = splitInput(initialTime);
-  console.log("splitArray inside calc seconds", splitArr);
+  // console.log("splitArray inside calc seconds", splitArr);
   const seconds = [];
   const minutes = [];
   const hours = [];
@@ -63,7 +62,7 @@ function calculateSeconds(initialTime) {
   const totHours = hours[0] * 36000 + hours[1] * 3600;
   let calculatedTotalSeconds = totSec + totMin + totHours;
 
-  console.log("calculatedTotalSeconds", calculatedTotalSeconds);
+  // console.log("calculatedTotalSeconds", calculatedTotalSeconds);
 
   //if time entered is more than 99hours, set to 99h/59m/59s
   if (calculatedTotalSeconds > 360000) {
@@ -185,16 +184,41 @@ function Main() {
   //context for logged in user
   const { userData } = useContext(UserContext);
 
+  const [caret, setCaret] = useState();
+  //caret: 1
+
   //Store cursor position to restore after input
   const [cursor, setCursor] = useState();
+  // console.log('cursor', cursor)
+  //cursor: obj : {1, 1}
+
   //Store target input 
   const [targetInput, setTargetInput] = useState();
 
+  //Store selection range for input traversal
+  const [selection1, setSelection1] = useState();
+  const [selection2, setSelection2] = useState();
+
+  //Input traversal left
+  useEffect(() => {
+    if (!selection1) return; // prevent running on start
+    const { start, end } = selection1;
+    targetInput.previousElementSibling.focus();
+    targetInput.previousElementSibling.setSelectionRange(start, end);
+  }, [selection1]);
+
+  //Input traversal right
+  useEffect(() => {
+    if (!selection2) return;
+    const { start, end } = selection2;
+    targetInput.nextElementSibling.focus();
+    targetInput.nextElementSibling.setSelectionRange(start, end);
+  }, [selection2]);
+
   //Restore cursor position on input change
   useEffect(() => {
-    if (!cursor) return;
-    const { start, end } = cursor;
-    targetInput.setSelectionRange(start, end);
+    if (!cursor) return
+    targetInput.setSelectionRange(caret, caret);
   }, [cursor]);
 
   const [loggedin, setLoggedIn] = useState(false);
@@ -244,7 +268,7 @@ function Main() {
   function startTimer() {
     //if initial time has already started
     if (timerState === TIMER_STATES["EDIT"]) {
-      console.log("START FROM EDIT STATE");
+      // console.log("START FROM EDIT STATE");
       setTimerState(TIMER_STATES["STARTED"]);
       let tripleInputs = inputTimerHour + inputTimerMinute + inputTimerSecond;
       const newInputTimer = calculateSeconds(tripleInputs);
@@ -255,19 +279,16 @@ function Main() {
 
       return;
     } else if (timerState === TIMER_STATES["STOPPED"]) {
-      console.log("START FROM STOPPED STATE");
       setTimerState(TIMER_STATES["STARTED"]);
       return;
     } else if (timerState === TIMER_STATES["INITIAL"]) {
       const calculated = calculateSeconds(initialTime);
-      console.log("START FROM INITIAL STATE");
       setTimerState(TIMER_STATES["STARTED"]);
       setTotalSeconds(calculated);
       return;
     }
   }
 
-  //1sec = 000001
   //remove zeros then calculate message
   function removeZeros(string) {
     // console.log("string", string);
@@ -356,7 +377,7 @@ function Main() {
       seconds: formattedTime[2],
     });
 
-    await axios.put(`https://zentracker.herokuapp.com/api/users/${id}`, {
+    await axios.put(`/api/users/${id}`, {
       $push: {
         sessions: {
           id: constantId,
@@ -376,7 +397,7 @@ function Main() {
   }
 
   function stopTimer() {
-    console.log("ENTER STOP STATE");
+    // console.log("ENTER STOP STATE");
     setTimerState(TIMER_STATES["STOPPED"]);
     clearInterval(intervalID);
     setIntervalID(undefined);
@@ -385,7 +406,7 @@ function Main() {
   function startAlarm() {
     // alarm1.loop = false;
     // alarm1.play();
-    console.log("startalarm check");
+    // console.log("startalarm check");
   }
 
   function stopAlarm() {
@@ -393,7 +414,6 @@ function Main() {
   }
 
   function editTimerState() {
-    console.log("ENTER EDIT STATE");
     setTimerState(TIMER_STATES["EDIT"]);
     clearInterval(intervalID);
     setIntervalID(undefined);
@@ -411,11 +431,9 @@ function Main() {
   }
 
   function resetTimer() {
-    console.log("ENTER INITIAL STATE");
     clearInterval(intervalID);
     setIntervalID(undefined);
     const initialTimeInSeconds = calculateSeconds(initialTime);
-    console.log("initialTimeInSeconds", initialTimeInSeconds);
     setTotalSeconds(initialTimeInSeconds);
     setTimerState(TIMER_STATES["INITIAL"]);
   }
@@ -572,7 +590,7 @@ function Main() {
 
   let handleInput = (event) => {
     let keyConversion = String.fromCharCode(event.keyCode);
-
+    
     let splitHr = inputTimerHour.split("");
     let splitMn = inputTimerMinute.split("");
     let splitSc = inputTimerSecond.split("");
@@ -580,17 +598,16 @@ function Main() {
     let newArr = [splitHr, splitMn, splitSc];
 
     let flatNewArr = newArr.flat();
-
+    
     const caretPosition = event.target.selectionStart;
+    setCaret(caretPosition);
+    console.log('caretPosition inside handleInput:', caretPosition)
+
     const focusedInputId = document.activeElement.id;
     const targetInput = event.target;
     setTargetInput(targetInput);
 
     if (event.keyCode >= 48 && event.keyCode <= 57) {
-      // console.log("number key code entered");
-      setTimeout(() => {
-        setCursor({ start: caretPosition, end: caretPosition });
-      });
       if (focusedInputId === "timerSecond") {
         if (caretPosition === 1) {
           flatNewArr.splice(5, 0, keyConversion);
@@ -617,9 +634,6 @@ function Main() {
         }
       }
     } else if (event.keyCode === 8) {
-      setTimeout(() => {
-        setCursor({ start: caretPosition, end: caretPosition });
-      });
       if (focusedInputId === "timerSecond") {
         if (caretPosition === 1) {
           flatNewArr.splice(4, 1);
@@ -682,6 +696,32 @@ function Main() {
         }
       }
     }
+
+    //handle input traversal left
+    if (
+      targetInput.previousElementSibling &&
+      targetInput.value.length === 2 &&
+      targetInput.selectionEnd === 1 &&
+      event.keyCode === 37
+    ) {
+      setSelection1({ start: 2, end: 2 });
+    } else if (
+      !targetInput.previousElementSibling &&
+      targetInput.value.length === 2 &&
+      targetInput.selectionEnd === 1 &&
+      event.keyCode === 37
+    ) {
+      event.preventDefault();
+    } 
+
+    //handle input traversal right
+    if (
+      targetInput.nextElementSibling &&
+      (targetInput.selectionEnd === 2 || targetInput.selectionEnd === 0) &&
+      event.keyCode === 39
+    ) {
+      setSelection2({ start: 1, end: 1 });
+    } 
   };
 
   return (
@@ -724,18 +764,23 @@ function Main() {
           )}
           {timerState === TIMER_STATES["EDIT"] && (
             <div id="notation-timer">
-              <TimerHMS
+              <InputHMS
                 valueH={inputTimerHour}
                 valueM={inputTimerMinute}
                 valueS={inputTimerSecond}
                 handleInput={handleInput}
+                setCursor={setCursor}
+                caret={caret}
+                setCaret={setCaret}
+                targetInput={targetInput}
+                setTargetInput={setTargetInput}
                 InputTimerHour={inputTimerHour}
                 setInputTimerHour={setInputTimerHour}
                 InputTimerMinute={inputTimerMinute}
                 setInputTimerMinute={setInputTimerMinute}
                 InputTimerSecond={inputTimerSecond}
                 setInputTimerSecond={setInputTimerSecond}
-              ></TimerHMS>
+              ></InputHMS>
             </div>
           )}
           <div id="button-container">
