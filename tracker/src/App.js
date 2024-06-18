@@ -1,7 +1,7 @@
 import React, { createContext, useState, useEffect } from "react";
 import Nav from "./components/Nav";
-// import Main from "./components/Main";
-import InputMainParent from "./components/InputMainParent";
+import Main from "./components/Main";
+// import InputMainParent from "./components/InputMainParent";
 import axios from "axios";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -37,7 +37,6 @@ function App() {
           token: token,
           user: userResponse.data,
         });
-        // window.localStorage.setItem("udata", JSON.stringify(userResponse.data));
       } else {
         return;
       }
@@ -53,7 +52,7 @@ function App() {
           <Nav />
           <Routes>
             <Route path="/profile" exact element={<ProfileStats />} />
-            <Route path="/" exact element={<InputMainParent />} />
+            <Route path="/" exact element={<Main />} />
           </Routes>
         </div>
       </BrowserRouter>

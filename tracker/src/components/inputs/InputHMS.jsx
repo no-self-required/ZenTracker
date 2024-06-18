@@ -15,40 +15,12 @@ const caretDown = <FontAwesomeIcon icon={faCaretDown} size="lg" />;
 
 function InputHMS(props) {
   //Store inputs to traverse between them
-
-  //***** */
-  //traverse left
-  const [selection1, setSelection1] = useState();
-  //traverse right
-  const [selection2, setSelection2] = useState();
-  //***** */
   
   //traverse input
-  //settargetinput
-  const [inputEle1, setInputEle1] = useState();
   const [inputEleH, setInputEleH] = useState();
   const [inputEleS, setInputEleS] = useState();
 
   //run focus and setSelectionRange for target inputs
-
-  // travese input left
-  useEffect(() => {
-    if (!selection1) return; // prevent running on start
-    const { start, end } = selection1;
-    props.targetInput.previousElementSibling.focus();
-    props.targetInput.previousElementSibling.setSelectionRange(start, end);
-  }, [selection1]);
-
-  //traverse input right
-  useEffect(() => {
-    if (!selection2) return;
-    const { start, end } = selection2;
-    props.targetInput.nextElementSibling.focus();
-    props.targetInput.nextElementSibling.setSelectionRange(start, end);
-  }, [selection2]);
-  //************ */
-
-
 
   //prevent access to 0
   const [selection4, setSelection4] = useState();
@@ -108,58 +80,12 @@ function InputHMS(props) {
     inputEleH.current.setSelectionRange(start, end);
   }, [selectionH]);
 
-  //up arrow sets focus to seconds and SR: 2,2
+  //down arrow sets focus to seconds and SR: 2,2
   useEffect(() => {
     if (!selectionS) return;
     const { start, end } = selectionS;
     inputEleS.current.setSelectionRange(start, end);
   }, [selectionS]);
-
-  function handleKeyDown(e) {
-    //input = target element input
-    const input = e.target;
-    props.setTargetInput(input);
-
-    // console.log("input selectionend:", input.selectionEnd)
-    //moving left
-    //prevent cursor access past final digit inside all inputs when traversing with left and right arrows
-    //ex: [11] > [|11] : cannot reach "|"
-    if (
-      input.previousElementSibling &&
-      input.value.length === 2 &&
-      input.selectionEnd === 1 &&
-      e.keyCode === 37
-    ) {
-      setSelection1({ start: 2, end: 2 });
-    } else if (
-      !input.previousElementSibling &&
-      input.value.length === 2 &&
-      input.selectionEnd === 1 &&
-      e.keyCode === 37
-    ) {
-      e.preventDefault();
-    } 
-    // else if (e.keyCode === 38) {
-    //   //key up sets focus to Hours input with SelectionRange 1,1
-    //   setInputEleH(timerH);
-    //   timerH.current.focus();
-    //   setSelectionH({ start: 1, end: 1 });
-    // } else if (e.keyCode === 40) {
-    //   //key down sets focus to Seconds input with SelectionRange 2,2
-    //   setInputEleS(timerS);
-    //   timerS.current.focus();
-    //   setSelectionS({ start: 2, end: 2 });
-    // }
-
-    //moving right
-    if (
-      input.nextElementSibling &&
-      (input.selectionEnd === 2 || input.selectionEnd === 0) &&
-      e.keyCode === 39
-    ) {
-      setSelection2({ start: 1, end: 1 });
-    } 
-  }
 
   function numOnly(event) {
     if (!/[0-9]/.test(event.key)) {
@@ -276,8 +202,6 @@ function InputHMS(props) {
       newValue = "0" + x;
     }
 
-    // console.log("newvalue", newValue);
-
     props.setInputTimerSecond(newValue);
   }
 
@@ -332,12 +256,9 @@ function InputHMS(props) {
             value={props.valueH}
             onInput={(e) => {
               props.setCursor({ start: props.caret, end: props.caret });
-              // props.setCaret({ start: props.caret, end: props.caret });
             }}
             onKeyDown={(event) => {
               props.handleInput(event);
-              // handleKeyDown(event);
-
             }}
             onKeyPress={numOnly}
             maxLength={3}
@@ -350,13 +271,9 @@ function InputHMS(props) {
             value={props.valueM}
             onInput={(e) => {
               props.setCursor({ start: props.caret, end: props.caret }); //keeps cursor position on input
-              // props.setCaret({ start: props.caret, end: props.caret });
             }}
             onKeyDown={(event) => {
-
               props.handleInput(event);
-              // handleKeyDown(event);
-
             }}
             onKeyPress={numOnly}
             maxLength={3}
@@ -369,13 +286,9 @@ function InputHMS(props) {
             value={props.valueS}
             onInput={(e) => {
               props.setCursor({ start: props.caret, end: props.caret });
-              // props.setCaret({ start: props.caret, end: props.caret });
             }}
             onKeyDown={(event) => {
-
               props.handleInput(event);
-              // handleKeyDown(event);
-
             }}
             onKeyPress={numOnly}
             maxLength={3}

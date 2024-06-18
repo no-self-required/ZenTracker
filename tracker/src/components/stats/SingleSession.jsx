@@ -10,11 +10,8 @@ const trashIcon = <FontAwesomeIcon icon={faTrash} />
 
 
 function SingleSession(props) {
-  // const { userData, setUserData } = useContext(UserContext);
-
   const id = props.sessionId;
 
-  //stays as pending? actually gets deleted
   async function deleteSession() {
     const userid = props.currentData.user.id;
     await axios.put(`/api/users/${userid}`, {

@@ -195,6 +195,26 @@ function Main() {
   //Store target input 
   const [targetInput, setTargetInput] = useState();
 
+  //Store selection range for input traversal
+  const [selection1, setSelection1] = useState();
+  const [selection2, setSelection2] = useState();
+
+  //Input traversal left
+  useEffect(() => {
+    if (!selection1) return; // prevent running on start
+    const { start, end } = selection1;
+    targetInput.previousElementSibling.focus();
+    targetInput.previousElementSibling.setSelectionRange(start, end);
+  }, [selection1]);
+
+  //Input traversal right
+  useEffect(() => {
+    if (!selection2) return;
+    const { start, end } = selection2;
+    targetInput.nextElementSibling.focus();
+    targetInput.nextElementSibling.setSelectionRange(start, end);
+  }, [selection2]);
+
   //Restore cursor position on input change
   useEffect(() => {
     if (!cursor) return
@@ -259,19 +279,16 @@ function Main() {
 
       return;
     } else if (timerState === TIMER_STATES["STOPPED"]) {
-      // console.log("START FROM STOPPED STATE");
       setTimerState(TIMER_STATES["STARTED"]);
       return;
     } else if (timerState === TIMER_STATES["INITIAL"]) {
       const calculated = calculateSeconds(initialTime);
-      // console.log("START FROM INITIAL STATE");
       setTimerState(TIMER_STATES["STARTED"]);
       setTotalSeconds(calculated);
       return;
     }
   }
 
-  //1sec = 000001
   //remove zeros then calculate message
   function removeZeros(string) {
     // console.log("string", string);
@@ -397,7 +414,6 @@ function Main() {
   }
 
   function editTimerState() {
-    // console.log("ENTER EDIT STATE");
     setTimerState(TIMER_STATES["EDIT"]);
     clearInterval(intervalID);
     setIntervalID(undefined);
@@ -415,11 +431,9 @@ function Main() {
   }
 
   function resetTimer() {
-    // console.log("ENTER INITIAL STATE");
     clearInterval(intervalID);
     setIntervalID(undefined);
     const initialTimeInSeconds = calculateSeconds(initialTime);
-    // console.log("initialTimeInSeconds", initialTimeInSeconds);
     setTotalSeconds(initialTimeInSeconds);
     setTimerState(TIMER_STATES["INITIAL"]);
   }
@@ -574,25 +588,7 @@ function Main() {
     setValues(newArr);
   };
 
-  const [selection1, setSelection1] = useState();
-  const [selection2, setSelection2] = useState();
-
-  useEffect(() => {
-    if (!selection1) return; // prevent running on start
-    const { start, end } = selection1;
-    targetInput.previousElementSibling.focus();
-    targetInput.previousElementSibling.setSelectionRange(start, end);
-  }, [selection1]);
-
-  useEffect(() => {
-    if (!selection2) return;
-    const { start, end } = selection2;
-    targetInput.nextElementSibling.focus();
-    targetInput.nextElementSibling.setSelectionRange(start, end);
-  }, [selection2]);
-
   let handleInput = (event) => {
-    // console.log('handleInput function fired')
     let keyConversion = String.fromCharCode(event.keyCode);
     
     let splitHr = inputTimerHour.split("");
@@ -606,8 +602,6 @@ function Main() {
     const caretPosition = event.target.selectionStart;
     setCaret(caretPosition);
     console.log('caretPosition inside handleInput:', caretPosition)
-
-    // setCursor({ start: caretPosition, end: caretPosition });
 
     const focusedInputId = document.activeElement.id;
     const targetInput = event.target;
@@ -703,6 +697,7 @@ function Main() {
       }
     }
 
+    //handle input traversal left
     if (
       targetInput.previousElementSibling &&
       targetInput.value.length === 2 &&
@@ -719,6 +714,7 @@ function Main() {
       event.preventDefault();
     } 
 
+    //handle input traversal right
     if (
       targetInput.nextElementSibling &&
       (targetInput.selectionEnd === 2 || targetInput.selectionEnd === 0) &&
@@ -726,11 +722,7 @@ function Main() {
     ) {
       setSelection2({ start: 1, end: 1 });
     } 
-
-    
   };
-
-
 
   return (
     <div className="container">
