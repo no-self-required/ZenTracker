@@ -13,51 +13,25 @@ import { faCaretUp, faCaretDown } from "@fortawesome/free-solid-svg-icons";
 const caretUp = <FontAwesomeIcon icon={faCaretUp} size="lg" />;
 const caretDown = <FontAwesomeIcon icon={faCaretDown} size="lg" />;
 
-function TimerHMS(props) {
+function InputHMS(props) {
   //Store inputs to traverse between them
-  //traverse left
-  const [selection1, setSelection1] = useState();
-  //traverse right
-  const [selection2, setSelection2] = useState();
+  
   //traverse input
-  const [inputEle1, setInputEle1] = useState();
-
   const [inputEleH, setInputEleH] = useState();
   const [inputEleS, setInputEleS] = useState();
 
   //run focus and setSelectionRange for target inputs
-  //travese input left
-  useEffect(() => {
-    if (!selection1) return; // prevent running on start
-    const { start, end } = selection1;
-    inputEle1.previousElementSibling.focus();
-    inputEle1.previousElementSibling.setSelectionRange(start, end);
-  }, [selection1]);
-
-  //traverse input right
-  useEffect(() => {
-    if (!selection2) return;
-    const { start, end } = selection2;
-    inputEle1.nextElementSibling.focus();
-    inputEle1.nextElementSibling.setSelectionRange(start, end);
-  }, [selection2]);
-
-  //replace/delete digit
-  useEffect(() => {
-    if (!props.selection3) return;
-    const { start, end } = props.selection3;
-    props.inputEle2.setSelectionRange(start, end);
-  }, [props.selection3]);
 
   //prevent access to 0
   const [selection4, setSelection4] = useState();
   const [selection5, setSelection5] = useState();
   const [selection6, setSelection6] = useState();
 
+  //selection for up and down arrow keys
   const [selectionH, setSelectionH] = useState();
   const [selectionS, setSelectionS] = useState();
 
-  //use ref for hours input. Will need useRef for minutes and seconds input. Used to block cursor click on left side on input.
+  //use ref for hours input. Will need useRef for minutes and seconds input. Used to block cursor click on left side of input.
   const timerH = useRef();
   const timerM = useRef();
   const timerS = useRef();
@@ -69,22 +43,28 @@ function TimerHMS(props) {
     timerH.current.setSelectionRange(start, end);
   }, [selection4]);
 
+  //redirect focus to setSelectionRange(1, 1) if div is clicked. Prevent cursor access past final digit when clicking
   function handleClickH() {
     timerH.current.focus();
     setSelection4({ start: 1, end: 1 });
   }
 
+  function handleClickM() {
+    timerM.current.focus();
+    setSelection5({ start: 1, end: 1 });
+  }
+
+  function handleClickS() {
+    timerS.current.focus();
+    setSelection6({ start: 1, end: 1 });
+  }
+  
   //Minutes
   useEffect(() => {
     if (!selection5) return;
     const { start, end } = selection5;
     timerM.current.setSelectionRange(start, end);
   }, [selection5]);
-
-  function handleClickM() {
-    timerM.current.focus();
-    setSelection5({ start: 1, end: 1 });
-  }
 
   //Seconds
   useEffect(() => {
@@ -100,62 +80,12 @@ function TimerHMS(props) {
     inputEleH.current.setSelectionRange(start, end);
   }, [selectionH]);
 
-  //up arrow sets focus to seconds and SR: 2,2
+  //down arrow sets focus to seconds and SR: 2,2
   useEffect(() => {
     if (!selectionS) return;
     const { start, end } = selectionS;
     inputEleS.current.setSelectionRange(start, end);
   }, [selectionS]);
-
-  function handleClickS() {
-    timerS.current.focus();
-    setSelection6({ start: 1, end: 1 });
-  }
-
-  //redirect focus to setSelectionRange(1, 1) if div is clicked. Prevent cursor access past final digit when clicking
-  function handleKeyDown(e) {
-    //input = target element input
-    const input = e.target;
-    setInputEle1(input);
-
-    //moving left
-    //prevent cursor access past final digit inside all inputs when traversing with left and right arrows
-    //ex: [11] > [|11] : cannot reach "|"
-    if (
-      input.previousElementSibling &&
-      input.value.length === 2 &&
-      input.selectionEnd === 1 &&
-      e.keyCode === 37
-    ) {
-      setSelection1({ start: 2, end: 2 });
-    } else if (
-      !input.previousElementSibling &&
-      input.value.length === 2 &&
-      input.selectionEnd === 1 &&
-      e.keyCode === 37
-    ) {
-      e.preventDefault();
-    } else if (e.keyCode === 38) {
-      //key up sets focus to Hours input with SelectionRange 1,1
-      setInputEleH(timerH);
-      timerH.current.focus();
-      setSelectionH({ start: 1, end: 1 });
-    } else if (e.keyCode === 40) {
-      //key down sets focus to Seconds input with SelectionRange 2,2
-      setInputEleS(timerS);
-      timerS.current.focus();
-      setSelectionS({ start: 2, end: 2 });
-    }
-
-    //moving right
-    if (
-      input.nextElementSibling &&
-      (input.selectionEnd === 2 || input.selectionEnd === 0) &&
-      e.keyCode === 39
-    ) {
-      setSelection2({ start: 1, end: 1 });
-    } 
-  }
 
   function numOnly(event) {
     if (!/[0-9]/.test(event.key)) {
@@ -233,7 +163,7 @@ function TimerHMS(props) {
       newValue = "0" + x;
     }
 
-    console.log("newvalue", newValue);
+    // console.log("newvalue", newValue);
 
     props.setInputTimerMinute(newValue);
   }
@@ -271,8 +201,6 @@ function TimerHMS(props) {
     if (x.length === 1) {
       newValue = "0" + x;
     }
-
-    console.log("newvalue", newValue);
 
     props.setInputTimerSecond(newValue);
   }
@@ -326,8 +254,10 @@ function TimerHMS(props) {
             type="text"
             id="timerHour"
             value={props.valueH}
+            onInput={(e) => {
+              props.setCursor({ start: props.caret, end: props.caret });
+            }}
             onKeyDown={(event) => {
-              handleKeyDown(event);
               props.handleInput(event);
             }}
             onKeyPress={numOnly}
@@ -339,24 +269,25 @@ function TimerHMS(props) {
             type="text"
             id="timerMinute"
             value={props.valueM}
-            onChange={props.onChangeM}
+            onInput={(e) => {
+              props.setCursor({ start: props.caret, end: props.caret }); //keeps cursor position on input
+            }}
             onKeyDown={(event) => {
-              handleKeyDown(event);
               props.handleInput(event);
             }}
             onKeyPress={numOnly}
             maxLength={3}
           ></input>
-
           <input
             ref={timerS}
             className="secondsInput"
             type="text"
             id="timerSecond"
             value={props.valueS}
-            onChange={props.onChangeS}
+            onInput={(e) => {
+              props.setCursor({ start: props.caret, end: props.caret });
+            }}
             onKeyDown={(event) => {
-              handleKeyDown(event);
               props.handleInput(event);
             }}
             onKeyPress={numOnly}
@@ -406,4 +337,4 @@ function TimerHMS(props) {
   );
 }
 
-export default TimerHMS;
+export default InputHMS;
