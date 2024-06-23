@@ -75,7 +75,9 @@
     }
 
     #timer-button-container {
-      display: grid;
+      display: flex;
+      flex-direction: column;
+      gap: 1em;
       #display-timer-container {
         display: flex;
         justify-content: center;
