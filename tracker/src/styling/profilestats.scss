@@ -274,12 +274,11 @@
     .all-sessions-container{
       display: flex;
       align-items: center;
-
+      
       .sessions-header{
         display: flex;
         justify-content: space-between;
         width: 50em;
-
         .add-session {
           height: 2em;
           background-color: white;
