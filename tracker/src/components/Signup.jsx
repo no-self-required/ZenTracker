@@ -19,7 +19,7 @@ function Signup() {
         }
       );
 
-      if (response.statusText === "ok") {
+      if (response.status === 200) {
         //register should log in automatically
         window.location.href = "/";
       }
