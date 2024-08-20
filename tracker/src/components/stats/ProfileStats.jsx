@@ -109,7 +109,7 @@ function ProfileStats() {
     const getSessions = async () => {
       if (!currentData) {
         const userResponse = await axios.get(
-          "https://zentracker.adaptable.app/users/profile",
+          "https://zentracker.adaptable.app/api/users/profile",
           {
             headers: { token: token },
           }
@@ -119,7 +119,7 @@ function ProfileStats() {
         });
       } else if (currentData && isUpdated) {
         const userResponse = await axios.get(
-          "https://zentracker.adaptable.app/users/profile",
+          "https://zentracker.adaptable.app/api/users/profile",
           {
             headers: { token: token },
           }
@@ -210,7 +210,7 @@ function ProfileStats() {
     //include when submitting on timer session
     const testFormat = new Date(yearSlice, monthSlice - 1, daySlice);
 
-    await axios.put(`https://zentracker.adaptable.app/users/${id}`, {
+    await axios.put(`https://zentracker.adaptable.app/api/users/${id}`, {
       $push: {
         sessions: {
           id: constantId,

@@ -25,12 +25,12 @@ function App() {
         token = "";
       }
 
-      const tokenResponse = await axios.post("https://zentracker.adaptable.app/users/tokenIsValid", null, {
+      const tokenResponse = await axios.post("https://zentracker.adaptable.app/api/users/tokenIsValid", null, {
         headers: { token: token },
       });
 
       if (tokenResponse.data === true) {
-        const userResponse = await axios.get("https://zentracker.adaptable.app/users/profile", {
+        const userResponse = await axios.get("https://zentracker.adaptable.app/api/users/profile", {
           headers: { token: token },
         });
         setUserData({
