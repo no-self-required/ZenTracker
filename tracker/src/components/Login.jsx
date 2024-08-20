@@ -9,7 +9,7 @@ function Login() {
     event.preventDefault();
     try {
       const response = await axios.post(
-        "https://zentracker.herokuapp.com/api/login/",
+        "hhttps://zentracker.adaptable.app/api/login/",
         JSON.stringify({ username, password }),
         {
           headers: { "Content-Type": "application/json" },
