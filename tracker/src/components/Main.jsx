@@ -377,7 +377,7 @@ function Main() {
       seconds: formattedTime[2],
     });
 
-    await axios.put(`/users/${id}`, {
+    await axios.put(`https://zentracker.adaptable.app/users/${id}`, {
       $push: {
         sessions: {
           id: constantId,
