@@ -16,7 +16,7 @@ function SingleSession(props) {
   //stays as pending? actually gets deleted
   async function deleteSession() {
     const userid = props.currentData.user.id;
-    await axios.put(`https://zentracker.adaptable.app/api/users/${userid}`, {
+    await axios.put(`https://zentracker.adaptable.app/users/${userid}`, {
       $pull: { sessions: { id: id } },
     });
   }

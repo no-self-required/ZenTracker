@@ -12,7 +12,7 @@ function Signup() {
     event.preventDefault();
     try {
       const response = await axios.post(
-        "https://zentracker.adaptable.app/api/register/",
+        "https://zentracker.adaptable.app/register/",
         JSON.stringify({ email, username, password }),
         {
           headers: { "Content-Type": "application/json" },

@@ -377,7 +377,7 @@ function Main() {
       seconds: formattedTime[2],
     });
 
-    await axios.put(`/api/users/${id}`, {
+    await axios.put(`/users/${id}`, {
       $push: {
         sessions: {
           id: constantId,
