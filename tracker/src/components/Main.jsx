@@ -609,6 +609,11 @@ function Main() {
     const targetInput = event.target;
     setTargetInput(targetInput);
 
+    //Disable up and down arrow keys on timer input
+    if (event.keyCode === 38 || event.keyCode === 40) {
+      event.preventDefault();
+    }
+
     if (event.keyCode >= 48 && event.keyCode <= 57) {
       if (focusedInputId === "timerSecond") {
         if (caretPosition === 1) {
