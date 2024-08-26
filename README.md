@@ -1,7 +1,8 @@
 # ZenTracker
 Desktop Deployment Link: https://famous-cuchufli-02826f.netlify.app/
 
-Note: Mobile Timer Interface still in development
+**UI/UX still in development**
+**Mobile Timer Interface still in development**
 
 🚧WIP🚧
 - Mobile Timer styling
