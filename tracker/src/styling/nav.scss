@@ -48,14 +48,15 @@
       cursor: pointer;
     }
 
-    .login {
-      margin-right: 1em;
+    .logout{
+      min-width: 4em;
     }
-
+    
     .logged-in {
       width: 7em;
       display: flex;
       justify-content: space-between;
+      column-gap: 1em;
 
       .profile{
         height: 2.2em;
@@ -64,6 +65,7 @@
 
     .login-signup-links {
       display: flex;
+      column-gap: 1em;
     }
 
   }
