@@ -2,6 +2,7 @@
   display: flex;
   justify-content: space-between;
   max-height: 4em;
+  max-width: 100vw;
 
   #navbar-dot-logo {
     display: flex;
@@ -10,7 +11,6 @@
     #navbar-dot {
       height: 20px;
       width: 20px;
-      // background-color: rgb(92, 92, 92);
       border-radius: 50%;
     }
 
@@ -27,7 +27,6 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-evenly;
-    width: 8em;
     font-size: 1em;
     margin-right: 1em;
 
@@ -48,14 +47,15 @@
       cursor: pointer;
     }
 
-    .login {
-      margin-right: 1em;
+    .logout{
+      min-width: fit-content;
     }
-
+    
     .logged-in {
-      width: 7em;
+      width: fit-content;
       display: flex;
       justify-content: space-between;
+      column-gap: 1em;
 
       .profile{
         height: 2.2em;
@@ -64,6 +64,7 @@
 
     .login-signup-links {
       display: flex;
+      column-gap: 1em;
     }
 
   }
@@ -250,6 +251,7 @@
         margin-right: 0em !important;
 
         .logged-in {
+          height: 75%;
           display: flex;
           flex-direction: column;
           justify-content: space-around;
