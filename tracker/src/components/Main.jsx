@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from "react";
-// import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import Modal from "react-modal";
 import jwt from "jsonwebtoken";
 import { useNavigate } from "react-router-dom";
@@ -14,6 +13,8 @@ import formatDuration from "date-fns/formatDuration";
 import format from "date-fns/format";
 
 import "../styling/main.scss";
+
+import { useGlobalKeyListener } from "../hooks/globalKeyListener";
 
 //H:M:S inputs
 import InputHMS from "./inputs/InputHMS";
@@ -192,7 +193,7 @@ function Main() {
   // console.log('cursor', cursor)
   //cursor: obj : {1, 1}
 
-  //Store target input 
+  //Store target input
   const [targetInput, setTargetInput] = useState();
 
   //Store selection range for input traversal
@@ -217,7 +218,7 @@ function Main() {
 
   //Restore cursor position on input change
   useEffect(() => {
-    if (!cursor) return
+    if (!cursor) return;
     targetInput.setSelectionRange(caret, caret);
   }, [cursor]);
 
@@ -590,7 +591,7 @@ function Main() {
 
   let handleInput = (event) => {
     let keyConversion = String.fromCharCode(event.keyCode);
-    
+
     let splitHr = inputTimerHour.split("");
     let splitMn = inputTimerMinute.split("");
     let splitSc = inputTimerSecond.split("");
@@ -598,10 +599,10 @@ function Main() {
     let newArr = [splitHr, splitMn, splitSc];
 
     let flatNewArr = newArr.flat();
-    
+
     const caretPosition = event.target.selectionStart;
     setCaret(caretPosition);
-    console.log('caretPosition inside handleInput:', caretPosition)
+    console.log("caretPosition inside handleInput:", caretPosition);
 
     const focusedInputId = document.activeElement.id;
     const targetInput = event.target;
@@ -610,7 +611,13 @@ function Main() {
     if (event.keyCode === 38 || event.keyCode === 40) {
       event.preventDefault();
     }
-    
+
+    if (event.keyCode === 13 || event.keyCode === 32) {
+      if (timerState === TIMER_STATES["EDIT"]) {
+        startTimer();
+      }
+    }
+
     if (event.keyCode >= 48 && event.keyCode <= 57) {
       if (focusedInputId === "timerSecond") {
         if (caretPosition === 1) {
@@ -716,7 +723,7 @@ function Main() {
       event.keyCode === 37
     ) {
       event.preventDefault();
-    } 
+    }
 
     //handle input traversal right
     if (
@@ -725,8 +732,37 @@ function Main() {
       event.keyCode === 39
     ) {
       setSelection2({ start: 1, end: 1 });
-    } 
+    }
   };
+
+  const handleGlobalKeyDown = (event) => {
+    switch (event.key) {
+      case "Enter":
+        if (timerState === TIMER_STATES["STARTED"]) {
+          stopTimer();
+        }
+        if (
+          timerState === TIMER_STATES["STOPPED"] ||
+          timerState === TIMER_STATES["INITIAL"]
+        ) {
+          startTimer();
+        }
+      case " ":
+        if (timerState === TIMER_STATES["STARTED"]) {
+          stopTimer();
+        }
+        if (
+          timerState === TIMER_STATES["STOPPED"] ||
+          timerState === TIMER_STATES["INITIAL"]
+        ) {
+          startTimer();
+        }
+      default:
+        console.log(`Other key pressed: ${event.key}`);
+    }
+  };
+
+  useGlobalKeyListener(handleGlobalKeyDown);
 
   return (
     <div className="container">
