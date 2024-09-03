@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import config from "../config";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -9,7 +10,7 @@ function Login() {
     event.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/login",
+        `${config.baseUrl}/api/login`,
         JSON.stringify({ username, password }),
         {
           headers: { "Content-Type": "application/json" },
@@ -20,6 +21,7 @@ function Login() {
       if (response.data.user) {
         localStorage.setItem("token", response.data.user);
         window.location.href = "/";
+        alert("Log in successful");
       } else {
         alert("Please check your username and password");
       }
