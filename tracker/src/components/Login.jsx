@@ -20,6 +20,7 @@ function Login() {
       if (response.data.user) {
         localStorage.setItem("token", response.data.user);
         window.location.href = "/";
+        alert("Log in successful");
       } else {
         alert("Please check your username and password");
       }
