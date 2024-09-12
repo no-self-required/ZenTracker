@@ -16,7 +16,6 @@ function Login() {
           headers: { "Content-Type": "application/json" },
         }
       );
-
       console.log("res: ", response);
       if (response.data.user) {
         localStorage.setItem("token", response.data.user);

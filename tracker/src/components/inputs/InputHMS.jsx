@@ -251,7 +251,7 @@ function InputHMS(props) {
           <input
             ref={timerH}
             className="hoursInput"
-            type="text"
+            type="tel"
             id="timerHour"
             value={props.valueH}
             onInput={(e) => {
@@ -266,7 +266,7 @@ function InputHMS(props) {
           <input
             ref={timerM}
             className="minutesInput"
-            type="text"
+            type="tel"
             id="timerMinute"
             value={props.valueM}
             onInput={(e) => {
@@ -281,7 +281,7 @@ function InputHMS(props) {
           <input
             ref={timerS}
             className="secondsInput"
-            type="text"
+            type="tel"
             id="timerSecond"
             value={props.valueS}
             onInput={(e) => {
