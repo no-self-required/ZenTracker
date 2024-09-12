@@ -176,11 +176,16 @@
 }
 
 .submit-log{
-  width: 104%;
+  width: 100%;
   border-radius: 5px;
   border: 1px solid black;
 }
 
+@supports (-webkit-touch-callout: none) {
+  .logInput{
+    width: 93%;
+  }
+}
 
 @media only screen and (max-width: 713px) {
   .container {
