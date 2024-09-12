@@ -78,7 +78,6 @@
   .closeModal {
     display: flex;
     justify-content: flex-end;
-    // background-color: yellow;
   }
 
   .account-container {
@@ -164,7 +163,7 @@
     input,
     label {
       font-size: 1em;
-      width: 100%;
+      width: 97%;
       height: 2em;
     }
 
@@ -188,37 +187,14 @@
   }
 }
 
-// #register1 {
+@supports (-webkit-touch-callout: none) {
 
-//   .input:focus{
-//     border-width: .2em;
-//     outline-width: 0;
-//   }
+  #username-login, #password-login, #email-register, #username-register, #password-register{
+    width: 92%;
+  }
 
-//   #email-register,
-//   #username-register,
-//   #password-register {
-//     width: 100%;
-//     border-radius: .5em;
-//     height: 2em;
-//   }
-// }
+}
 
-// #login1 {
-
-//   .input:focus{
-//     border-width: .25em;
-//     outline-width: 0;
-//   }
-
-//   #username-login,  
-//   #password-login {
-//     width: 100%;
-//     border-radius: .25em;
-//     height: 2em;
-
-//   }
-// }
 @media only screen and (max-width: 713px) {
   .navbar {
     justify-content: center;
@@ -275,10 +251,6 @@
               margin: 0 !important;
               border: 1px solid transparent;
               cursor: pointer;
-            }
-
-            .profile{
-              // height: 2em;
             }
             
             .login:hover,
