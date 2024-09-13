@@ -1,10 +1,16 @@
 //mobile
 .profile-stats-container {
 
-
+  .profile-name{
+    display: flex;
+    margin-bottom: 0;
+    margin-top: 0;
+    font-weight: bolder;
+    padding-left: 1em;
+  }
   .session-stats,
   .time-stats {
-    padding: 1.5em 1.3em 0 1.1em;
+    padding: 0.5em 1.3em 0 1.1em;
     display: flex;
     flex-direction: column;
   }
@@ -245,55 +251,66 @@
   }
 }
 
+@media only screen and (max-width: 713px) {
+  .profile-name{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0;
+    margin-top: 0.5em;
+    font-weight: bolder;
+  }
+}  
 //desktop
 @media only screen and (min-width: 1243px) {
-  .profile-stats-container{
+  // .profile-stats-container{
+  //   .profile-name{
+      
+  //   }
+  //   .wrapper-stats{
+  //     display: flex;
+  //     flex-direction: column;
+  //     align-items: center;
+  //     .session-stats,
+  //     .time-stats {
+  //       width: 40em;
+  //     }
+  //   }
 
-    .wrapper-stats{
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      .session-stats,
-      .time-stats {
-        width: 40em;
-      }
-    }
+  //   .calendar-wrapper{
+  //     display: flex;
+  //     flex-direction: column;
+  //     justify-content: center;
+  //     align-items: center;
+  //     .button-group {
+  //       display: flex;
+  //       width: 76em;
+  //       align-items: flex-start;
+  //     }
+  //   }
 
-    .calendar-wrapper{
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      .button-group {
-        display: flex;
-        width: 76em;
-        align-items: flex-start;
-      }
-    }
+  //   .all-sessions-container{
+  //     display: flex;
+  //     align-items: center;
 
-    .all-sessions-container{
-      display: flex;
-      align-items: center;
+  //     .sessions-header{
+  //       display: flex;
+  //       justify-content: space-between;
+  //       width: 50em;
 
-      .sessions-header{
-        display: flex;
-        justify-content: space-between;
-        width: 50em;
+  //       .add-session {
+  //         height: 2em;
+  //         background-color: white;
+  //         border-radius: .3em;
+  //       }  
+  //     }
 
-        .add-session {
-          height: 2em;
-          background-color: white;
-          border-radius: .3em;
-        }  
-      }
+  //     .line{
+  //       width: 50em;
+  //     }
 
-      .line{
-        width: 50em;
-      }
-
-      #all-sessions-wrapper{
-        width: 50em;
-      }
-    }
-  }
+  //     #all-sessions-wrapper{
+  //       width: 50em;
+  //     }
+  //   }
+  // }
 }

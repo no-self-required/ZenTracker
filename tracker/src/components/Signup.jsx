@@ -50,6 +50,7 @@ function Signup() {
             name="username-register"
             type="text"
             className="input"
+            maxlength="15"
             required
             onChange={(e) => setUsername(e.target.value)}
           />

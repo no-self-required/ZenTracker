@@ -39,6 +39,7 @@ function Login() {
             type="text"
             required
             className="input"
+            maxlength="15"
             onChange={(e) => setUsername(e.target.value)}
           />
           <label for="username-login">Username</label>

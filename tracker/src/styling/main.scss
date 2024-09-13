@@ -181,6 +181,8 @@
   border: 1px solid black;
 }
 
+//Mobile Queries
+//CSS specific for Safari on iOS
 @supports (-webkit-touch-callout: none) {
   .logInput{
     width: 93%;

@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import SingleSession from "./SingleSession";
 import SingleDay from "./SingleDay";
 import Modal from "react-modal";
+import { UserContext } from "../../App";
 
 import { v4 as uuidv4 } from "uuid";
 
@@ -78,6 +79,7 @@ function displayInputValue(totalSeconds) {
 }
 
 function ProfileStats() {
+  const { userData } = useContext(UserContext);
   const [currentData, setCurrentData] = useState();
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [log, setLog] = useState("");
@@ -136,22 +138,6 @@ function ProfileStats() {
     };
     getSessions();
   });
-
-  //suspect that delete session changes something about the comparisons of profiles
-  // function compareProfiles(profileA, profileB) {
-  //   let sessionsEqual = profileA.sessions.length && profileB.sessions.length
-  //   if (sessionsEqual) {
-  //     profileA.sessions.forEach((_element, index) => { sessionsEqual = sessionsEqual && compareSessions(profileA.sessions[index], profileB.sessions[index])})
-  //   }
-  //   return profileA.id === profileB.id && profileA.username === profileB.username && profileA.email === profileB.email && sessionsEqual
-  // }
-
-  // function compareSessions(sessionsA, sessionsB) {
-  //   console.log("sessionsA, sessionsB", sessionsA, sessionsB)
-  //   //userResponse.data becomes undefined after delete session
-
-  //   return sessionsA.id === sessionsB.id && sessionsA.date === sessionsB.date && sessionsA.dayOfYear === sessionsB.dayOfYear && sessionsA.length === sessionsB.length && sessionsA.lengthSeconds === sessionsB.lengthSeconds && sessionsA.year === sessionsB.year && sessionsA.log === sessionsB.log
-  // }
 
   function openModal() {
     setModalIsOpen(true);
@@ -349,11 +335,6 @@ function ProfileStats() {
       }
 
       const formatedLength = displayInputValue(totalTimeInSeconds);
-      // const lengthString = formatDuration({
-      //   hours: formatedLength[0],
-      //   minutes: formatedLength[1],
-      //   seconds: formatedLength[2],
-      // });
       const displayString =
         Math.round(formatedLength[0]) +
         "h " +
@@ -382,11 +363,6 @@ function ProfileStats() {
 
       const averageSeconds = totalTimeInSeconds / count;
       const formatedLength = displayInputValue(averageSeconds);
-      // const lengthString = formatDuration({
-      //   hours: formatedLength[0],
-      //   minutes: formatedLength[1],
-      //   seconds: Math.floor(formatedLength[2]),
-      // });
 
       const displayString =
         Math.round(formatedLength[0]) +
@@ -510,19 +486,6 @@ function ProfileStats() {
       return allYears.reverse();
     };
 
-    // const header = allYearSessions.map((year, yearIndex, array1) => {
-    //   if (selectedYear === year.year){
-    //     return (
-    //       <>
-    //         <div className="stats-header">
-    //           {totalSessionYear(year.calendar)} sessions in {selectedYear}
-    //         </div>
-    //         </>
-    //     )
-    //   }
-
-    // })
-
     const printSqs = allYearSessions.map((year, yearIndex, array1) => {
       if (selectedYear === year.year)
         return (
@@ -592,7 +555,7 @@ function ProfileStats() {
 
     return (
       <div className="profile-stats-container">
-        {/* <div className="profile-wrapper"> */}
+        <p className="profile-name">Username : {userData.user.username}</p>
         <div className="wrapper-stats">
           <div className="session-stats">
             <div className="stats-header">Sessions</div>

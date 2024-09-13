@@ -15,7 +15,7 @@ const caretDown = <FontAwesomeIcon icon={faCaretDown} size="lg" />;
 
 function InputHMS(props) {
   //Store inputs to traverse between them
-  
+
   //traverse input
   const [inputEleH, setInputEleH] = useState();
   const [inputEleS, setInputEleS] = useState();
@@ -31,7 +31,7 @@ function InputHMS(props) {
   const [selectionH, setSelectionH] = useState();
   const [selectionS, setSelectionS] = useState();
 
-  //use ref for hours input. Will need useRef for minutes and seconds input. Used to block cursor click on left side of input.
+  //use ref for hours input. Used to block cursor click on left side of input. On click redirects focus to caret: 1,1 of designated input.
   const timerH = useRef();
   const timerM = useRef();
   const timerS = useRef();
@@ -162,8 +162,6 @@ function InputHMS(props) {
     if (x.length === 1) {
       newValue = "0" + x;
     }
-
-    // console.log("newvalue", newValue);
 
     props.setInputTimerMinute(newValue);
   }

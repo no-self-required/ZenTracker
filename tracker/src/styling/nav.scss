@@ -187,6 +187,8 @@
   }
 }
 
+//Mobile Queries
+//CSS specific for Safari on iOS
 @supports (-webkit-touch-callout: none) {
 
   #username-login, #password-login, #email-register, #username-register, #password-register{
@@ -219,10 +221,12 @@
     }
 
     #ham-drop {
-      height: 5em;
+      height: 4em;
+      width: 6em;
       border-radius: .5em;
       background-color: rgb(202, 202, 202);
       margin-top: 3em;
+      margin-right: 1em;
       z-index: 2;
       position: absolute;
       right: 0;
@@ -232,11 +236,23 @@
         margin-right: 0em !important;
 
         .logged-in {
-          height: 75%;
+          height: 100%;
           display: flex;
           flex-direction: column;
           justify-content: space-around;
           align-items: center;
+
+          #nav-profile{
+            margin: 0;
+          }
+
+          .profile{
+            height: auto;
+          }
+
+          .logout{
+            margin: 0;
+          }
         }
 
         #login-signup {
