@@ -1,10 +1,16 @@
 //mobile
 .profile-stats-container {
 
-
+  .profile-name{
+    display: flex;
+    margin-bottom: 0;
+    margin-top: 0;
+    font-weight: bolder;
+    padding-left: 1em;
+  }
   .session-stats,
   .time-stats {
-    padding: 1.5em 1.3em 0 1.1em;
+    padding: 0.5em 1.3em 0 1.1em;
     display: flex;
     flex-direction: column;
   }
@@ -245,10 +251,21 @@
   }
 }
 
+@media only screen and (max-width: 713px) {
+  .profile-name{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0;
+    margin-top: 0.5em;
+    font-weight: bolder;
+  }
+}  
 //desktop
 @media only screen and (min-width: 1243px) {
   .profile-stats-container{
-
+    .profile-name{
+      
+    }
     .wrapper-stats{
       display: flex;
       flex-direction: column;

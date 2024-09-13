@@ -135,123 +135,12 @@
   }
 }
 
-//mobile
 
+//Mobile Queries
+//CSS specific for Safari on iOS
 @supports (-webkit-touch-callout: none) {
 
-  .inputs-boxes {
-    height: 25em !important;
-
-    .buttons {
-      // display: flex;
-      // position: static;
-      // width: 2em;
-      position: absolute;
-      #down-buttons, 
-      #up-buttons {
-        -webkit-tap-highlight-color: transparent;
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-      }
-
-      #up-buttons {
-        position: absolute;
-        margin-left: 14em;
-        margin-top: -9em;
-        z-index: 1;
-      }
-
-      #down-buttons {
-        margin-left: -3em;
-        margin-bottom: 3.5em;
-        z-index: -1;
-      }
-      .up {
-        height: 18em;
-        width: 1em !important;
-        flex-direction: column;
-        margin-top: 3.5em;
-        padding-top: 0 !important;
-
-        .button-up-H {
-          margin-left: 0 !important;
-        }
-
-        .button-up-M {
-          margin-right: 0 !important;
-        }
-
-        .button-up-S {
-          margin-right: 0 !important;
-        }
-      }
-
-      .down {
-        height: 18em;
-        width: 2em !important;
-        flex-direction: column;
-        padding-top: 0 !important;
-        margin-top: 3.5em;
-
-        .button-down-H {
-          margin-left: 0 !important;
-        }
-
-        .button-down-M {
-          margin-right: 0 !important;
-        }
-
-        .button-down-S {
-          margin-right: 0 !important;
-        }
-
-      }
-
-      .button-down-H,
-      .button-down-M,
-      .button-down-S {
-        transform: rotate(90deg);
-      }
-
-      .button-up-H,
-      .button-up-M,
-      .button-up-S {
-        transform: rotate(90deg);
-      }
-    }
-
-    .boxes {
-
-      .boxH {
-        height: 8em;
-      }
-
-      .boxM {
-        margin-top: 8em !important;
-        margin-left: 0em !important;
-        height: 8em;
-      }
-
-      .boxS {
-        margin-top: 16em !important;
-        margin-left: 0em !important;
-        height: 8em;
-      }
-    }
-  }
-
   .inputs {
-    flex-direction: column;
-    width: 10em !important;
-    height: 24.6em !important;
-    padding: 0em !important;
-    margin-right: 1em;
-    margin-bottom: .3em;
-    padding: 0em !important;
     .hoursInput {
       margin-left: 0em !important;
       padding-left: 0;
@@ -269,16 +158,12 @@
   }
 }
 
-
 @media only screen and (max-width: 713px) {
 
   .inputs-boxes {
     height: 25em !important;
 
     .buttons {
-      // display: flex;
-      // position: static;
-      // width: 2em;
       position: absolute;
       #down-buttons, 
       #up-buttons {

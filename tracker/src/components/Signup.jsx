@@ -19,8 +19,7 @@ function Signup() {
         }
       );
 
-      if (response.status === 200) {
-        //register should log in automatically
+      if (response.statusText === "OK") {
         window.location.href = "/";
         alert("Sign up successful. Please log in");
       }
@@ -50,6 +49,7 @@ function Signup() {
             name="username-register"
             type="text"
             className="input"
+            maxlength="15"
             required
             onChange={(e) => setUsername(e.target.value)}
           />
@@ -75,7 +75,6 @@ function Signup() {
           >
             Register
           </button>
-          {/* <input type="submit" value="Register" class="final-button" /> */}
         </div>
       </form>
     </>

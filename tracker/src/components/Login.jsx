@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import config from "../config";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -15,7 +16,6 @@ function Login() {
           headers: { "Content-Type": "application/json" },
         }
       );
-
       console.log("res: ", response);
       if (response.data.user) {
         localStorage.setItem("token", response.data.user);
@@ -39,6 +39,7 @@ function Login() {
             type="text"
             required
             className="input"
+            maxlength="15"
             onChange={(e) => setUsername(e.target.value)}
           />
           <label for="username-login">Username</label>
