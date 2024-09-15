@@ -18,9 +18,7 @@ function Signup() {
           headers: { "Content-Type": "application/json" },
         }
       );
-
       if (response.statusText === "OK") {
-        //register should log in automatically
         window.location.href = "/";
         alert("Sign up successful. Please log in");
       }

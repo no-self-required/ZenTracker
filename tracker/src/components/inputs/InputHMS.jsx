@@ -10,8 +10,8 @@ import NotationS from "../notations/NotationS";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretUp, faCaretDown } from "@fortawesome/free-solid-svg-icons";
 
-const caretUp = <FontAwesomeIcon icon={faCaretUp} size="lg" />;
-const caretDown = <FontAwesomeIcon icon={faCaretDown} size="lg" />;
+const caretUp = <FontAwesomeIcon icon={faCaretUp} size="2xl" />;
+const caretDown = <FontAwesomeIcon icon={faCaretDown} size="2xl" />;
 
 function InputHMS(props) {
   //Store inputs to traverse between them

@@ -9,14 +9,13 @@ function Logout(props) {
   const navigate = useNavigate();
 
   function logOut(event) {
-    
     event.preventDefault();
     setUserData({    
       token: undefined,
       user: undefined,
     })
     localStorage.setItem("token", '');
-    localStorage.setItem("udata", '');
+    localStorage.setItem("user", '');
     props.handleShowNavbar();
     props.handleHam();
     navigate("/");
