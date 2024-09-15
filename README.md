@@ -1,11 +1,8 @@
 # ZenTracker
 
-**UI/UX and Mobile Timer Interface still in development**
-
-Desktop Deployment Link: https://famous-cuchufli-02826f.netlify.app/
+Deployment Link: https://famous-cuchufli-02826f.netlify.app/
 
 🚧WIP🚧
-- Mobile Timer styling
 - Timer completion sound
 
 - Styling in progress:
@@ -17,4 +14,3 @@ Desktop Deployment Link: https://famous-cuchufli-02826f.netlify.app/
 Future updates:
 - Filter all sessions by tags
 - Dark mode
-
