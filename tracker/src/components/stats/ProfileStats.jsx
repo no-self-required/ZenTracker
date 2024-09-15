@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, Fragment } from "react";
 import axios from "axios";
 import SingleSession from "./SingleSession";
 import SingleDay from "./SingleDay";
@@ -12,10 +12,10 @@ import formatDuration from "date-fns/formatDuration";
 import format from "date-fns/format";
 import getYear from "date-fns/getYear";
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
-const plusIcon = <FontAwesomeIcon icon={faPlus} />
+const plusIcon = <FontAwesomeIcon icon={faPlus} />;
 
 function splitInput(initialTime) {
   const parsedTimer = parseInt(initialTime);
@@ -410,7 +410,7 @@ function ProfileStats() {
     //display all sessions with the sorted data
     const allSessions = Object.keys(sortedSessionsByDay).map(function (key) {
       return (
-        <div id="single-session-container">
+        <div id="single-session-container" key={key}>
           <SingleSession
             currentData={currentData}
             sessionId={sessionsData[key].id}
@@ -489,7 +489,7 @@ function ProfileStats() {
     const printSqs = allYearSessions.map((year, yearIndex, array1) => {
       if (selectedYear === year.year)
         return (
-          <>
+          <Fragment key={year}>
             <div className="stats-header" id="calendar-header">
               {totalSessionYear(year.calendar)} sessions in {selectedYear}
             </div>
@@ -514,42 +514,42 @@ function ProfileStats() {
                   <div>Wed</div>
                   <div>Fri</div>
                 </div>
-                {year.calendar.map((week, weekIndex, array2) => {
-                  return (
-                    <div className={`week-${weekIndex + 1}`}>
-                      {week.map((days, daysIndex, array3) => {
-                        return (
-                          <SingleDay
-                            year={year.year}
-                            allYearSessions={allYearSessions}
-                            array2={array2}
-                            array3={array3}
-                            daysIndex={daysIndex}
-                            weekIndex={weekIndex}
-                            calcColor={calcColor}
-                            totalSessionsUser={totalSessionsUser}
-                          ></SingleDay>
-                        );
-                      })}
-                    </div>
-                  );
-                })}
+                {year.calendar.map((week, weekIndex, array2) => (
+                  <div
+                    key={`week-${weekIndex}`}
+                    className={`week-${weekIndex + 1}`}
+                  >
+                    {week.map((days, daysIndex, array3) => (
+                      <SingleDay
+                        key={`${weekIndex}-${daysIndex}`}
+                        year={year.year}
+                        allYearSessions={allYearSessions}
+                        array2={array2}
+                        array3={array3}
+                        daysIndex={daysIndex}
+                        weekIndex={weekIndex}
+                        calcColor={calcColor}
+                        totalSessionsUser={totalSessionsUser}
+                      />
+                    ))}
+                  </div>
+                ))}
               </div>
             </div>
-          </>
+          </Fragment>
         );
     });
 
     const allYearButtons = listAllYears().map((year) => {
       return (
-        <>
+        <Fragment key={year}>
           <button
             className="buttons-year"
             onClick={(e) => setSelectedYear(year)}
           >
             {year}
           </button>
-        </>
+        </Fragment>
       );
     });
 
