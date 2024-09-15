@@ -851,7 +851,7 @@ function Main() {
                     onChange={(e) => setLog(e.target.value)}
                   ></input>
                   <br />
-                  <button class="submit-log" onClick={closeModal}>
+                  <button className="submit-log" onClick={closeModal}>
                     Submit Session
                   </button>
                 </Modal>

@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import "../styling/logout.scss";
 //clear jwt, usercontext logged in: set user data: false
 function Logout(props) {
-  const { userData, setUserData } = useContext(UserContext);
+  const { setUserData } = useContext(UserContext);
   const navigate = useNavigate();
 
   function logOut(event) {

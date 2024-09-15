@@ -16,11 +16,11 @@ function LogInSignUp(props) {
     <div className="account-container">
       {props.loginOrSignup === "login" && (
         <>
-          <div class="account-header">Login</div>
+          <div className="account-header">Login</div>
           <Login></Login>
           <div className="account-switch-message">
             New user?
-            <div class="account-switch" onClick={signupClick}>Sign up</div>
+            <div className="account-switch" onClick={signupClick}>Sign up</div>
           </div>
         </>
       )}

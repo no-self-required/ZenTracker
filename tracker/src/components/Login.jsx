@@ -39,10 +39,11 @@ function Login() {
             type="text"
             required
             className="input"
-            maxlength="15"
+            maxLength="15"
+            autoComplete="on"
             onChange={(e) => setUsername(e.target.value)}
           />
-          <label for="username-login">Username</label>
+          <label htmlFor="username-login">Username</label>
         </div>
         <div className="field-holder">
           <input
@@ -50,10 +51,11 @@ function Login() {
             name="password-login"
             type="password"
             className="input"
+            autoComplete="on"
             required
             onChange={(e) => setPassword(e.target.value)}
           />
-          <label for="password-login">Password</label>
+          <label htmlFor="password-login">Password</label>
         </div>
       </form>
       <div className="final-button-container">
