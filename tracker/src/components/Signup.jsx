@@ -18,7 +18,6 @@ function Signup() {
           headers: { "Content-Type": "application/json" },
         }
       );
-
       if (response.statusText === "OK") {
         window.location.href = "/";
         alert("Sign up successful. Please log in");
@@ -41,7 +40,7 @@ function Signup() {
             className="input"
             onChange={(e) => setEmail(e.target.value)}
           />
-          <label for="email-register">Email</label>
+          <label htmlFor="email-register">Email</label>
         </div>
         <div className="field-holder">
           <input
@@ -49,11 +48,12 @@ function Signup() {
             name="username-register"
             type="text"
             className="input"
-            maxlength="15"
+            maxLength="15"
+            autoComplete="username"
             required
             onChange={(e) => setUsername(e.target.value)}
           />
-          <label for="username-register">Username</label>
+          <label htmlFor="username-register">Username</label>
         </div>
         <div className="field-holder">
           <input
@@ -61,12 +61,13 @@ function Signup() {
             name="password-register"
             type="password"
             className="input"
+            autoComplete="new-password"
             required
             onChange={(e) => setPassword(e.target.value)}
           />
-          <label for="password-register">Password</label>
+          <label htmlFor="password-register">Password</label>
         </div>
-        <div class="final-button-container">
+        <div className="final-button-container">
           <button
             type="submit"
             form="register1"

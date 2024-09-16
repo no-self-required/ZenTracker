@@ -14,7 +14,7 @@ export const UserContext = createContext();
 function App() {
   const [userData, setUserData] = useState({
     token: undefined,
-    user: undefined,
+    user: localStorage.getItem('user') ? localStorage.getItem('user') : undefined,
   });
 
   useEffect(() => {
@@ -33,6 +33,7 @@ function App() {
         const userResponse = await axios.get("https://zentracker.adaptable.app/api/users/profile", {
           headers: { token: token },
         });
+        localStorage.setItem("user", userResponse.data.username);
         setUserData({
           token: token,
           user: userResponse.data,
@@ -41,7 +42,6 @@ function App() {
         return;
       }
     };
-
     isLoggedIn();
   }, []);
 

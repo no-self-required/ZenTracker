@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, {useState, useEffect, useContext} from "react";
 import Modal from "react-modal";
 import jwt from "jsonwebtoken";
 import { useNavigate } from "react-router-dom";
@@ -51,7 +51,6 @@ function splitInput(initialTime) {
 
 function calculateSeconds(initialTime) {
   const splitArr = splitInput(initialTime);
-  // console.log("splitArray inside calc seconds", splitArr);
   const seconds = [];
   const minutes = [];
   const hours = [];
@@ -62,8 +61,6 @@ function calculateSeconds(initialTime) {
   const totMin = minutes[0] * 600 + minutes[1] * 60;
   const totHours = hours[0] * 36000 + hours[1] * 3600;
   let calculatedTotalSeconds = totSec + totMin + totHours;
-
-  // console.log("calculatedTotalSeconds", calculatedTotalSeconds);
 
   //if time entered is more than 99hours, set to 99h/59m/59s
   if (calculatedTotalSeconds > 360000) {
@@ -148,16 +145,15 @@ function displayInputValue(totalSeconds) {
 
   return formatted;
 }
+const TIMER_STATES = {
+  INITIAL: 0,
+  STARTED: 1,
+  STOPPED: 2,
+  EDIT: 3,
+  FINISHED: 4,
+};
 
 function Main() {
-  const TIMER_STATES = {
-    INITIAL: 0,
-    STARTED: 1,
-    STOPPED: 2,
-    EDIT: 3,
-    FINISHED: 4,
-  };
-
   //disable alarm due to CORB issue
   // const alarm1 = new Audio(
   //   "https://freesound.org/people/suburban%20grilla/sounds/2166/download/2166__suburban-grilla__bowl-struck.wav"
@@ -190,7 +186,6 @@ function Main() {
 
   //Store cursor position to restore after input
   const [cursor, setCursor] = useState();
-  // console.log('cursor', cursor)
   //cursor: obj : {1, 1}
 
   //Store target input
@@ -240,234 +235,46 @@ function Main() {
 
   //Decrement timer if timer has started, and there is an interval
   useEffect(() => {
+    function decrementTotalSeconds() {
+      setTotalSeconds((prevSeconds) => {
+        if (prevSeconds === 0) {
+          setTimerState(TIMER_STATES["FINISHED"]);
+          return prevSeconds;
+        }
+        return prevSeconds - 1;
+      });
+    }
+
     if (timerState === TIMER_STATES["STARTED"] && !intervalID) {
       if (totalSeconds !== 0) {
         const intervalID = setInterval(decrementTotalSeconds, 1000);
         setIntervalID(intervalID);
       }
     }
+    return () => {
+      clearInterval(intervalID);
+    }
   }, [
     timerState,
-    TIMER_STATES,
-    intervalID,
-    totalSeconds,
-    decrementTotalSeconds,
+    intervalID
   ]);
 
+
+
+
+
   useEffect(() => {
+    function onCompletion() {
+      openModal();
+    }
     if (timerState === TIMER_STATES["FINISHED"]) {
       startAlarm();
       onCompletion();
     }
-  }, [timerState, TIMER_STATES, onCompletion]);
+  }, [timerState]);
 
   //update display spans on every tick
   useEffect(() => {
-    omitZero();
-  }, [totalSeconds, omitZero]);
-
-  function startTimer() {
-    //if initial time has already started
-    if (timerState === TIMER_STATES["EDIT"]) {
-      // console.log("START FROM EDIT STATE");
-      setTimerState(TIMER_STATES["STARTED"]);
-      let tripleInputs = inputTimerHour + inputTimerMinute + inputTimerSecond;
-      const newInputTimer = calculateSeconds(tripleInputs);
-      //logic to start from new initial input
-      setTotalSeconds(newInputTimer);
-      //set new initial time to concatenated inputs
-      setInitialTime(tripleInputs);
-
-      return;
-    } else if (timerState === TIMER_STATES["STOPPED"]) {
-      setTimerState(TIMER_STATES["STARTED"]);
-      return;
-    } else if (timerState === TIMER_STATES["INITIAL"]) {
-      const calculated = calculateSeconds(initialTime);
-      setTimerState(TIMER_STATES["STARTED"]);
-      setTotalSeconds(calculated);
-      return;
-    }
-  }
-
-  //remove zeros then calculate message
-  function removeZeros(string) {
-    // console.log("string", string);
-    let splitString = string.split("");
-
-    for (let i = 0; i < splitString.length; i++) {
-      if (splitString[i] !== "0") {
-        splitString = splitString.slice(i);
-        break;
-      }
-    }
-    return splitString;
-  }
-
-  function completedTime() {
-    let array = removeZeros(initialTime.toString());
-    let message = "You completed ";
-    switch (array.length) {
-      case 0:
-        break;
-      case 1:
-        message += formatDuration({ seconds: parseInt(array[0]) });
-        break;
-      case 2:
-        message += formatDuration({ seconds: parseInt(array[0] + array[1]) });
-        break;
-      case 3:
-        message += formatDuration({
-          minutes: parseInt(array[0]),
-          seconds: parseInt(array[1] + array[2]),
-        });
-        break;
-      case 4:
-        message += formatDuration({
-          minutes: parseInt(array[0] + array[1]),
-          seconds: parseInt(array[2] + array[3]),
-        });
-        break;
-      case 5:
-        message += formatDuration({
-          hours: parseInt(array[0]),
-          minutes: parseInt(array[1] + array[2]),
-          seconds: parseInt(array[3] + array[4]),
-        });
-        break;
-      case 6:
-        message += formatDuration({
-          hours: parseInt(array[0] + array[1]),
-          minutes: parseInt(array[2] + array[3]),
-          seconds: parseInt(array[4] + array[5]),
-        });
-        break;
-    }
-    return message;
-  }
-
-  const message = completedTime();
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-
-  function openModal() {
-    setModalIsOpen(true);
-  }
-
-  function closeModal() {
-    submitSession();
-    setModalIsOpen(false);
-    resetTimer();
-  }
-
-  //adding log must be done through a handler
-  const [log, setLog] = useState("");
-
-  async function submitSession() {
-    const id = userData.user.id;
-    let generateId = uuidv4();
-    const constantId = generateId;
-    const totalSeconds = calculateSeconds(initialTime);
-    const formattedTime = displayInputValue(calculateSeconds(initialTime));
-    const sessionLog = log;
-    const formattedDate = format(new Date(), "PPP");
-    const dayOfYear = getDayOfYear(new Date());
-    const year = getYear(new Date());
-    const lengthString = formatDuration({
-      hours: formattedTime[0],
-      minutes: formattedTime[1],
-      seconds: formattedTime[2],
-    });
-
-    await axios.put(`https://zentracker.adaptable.app/api/users/${id}`, {
-      $push: {
-        sessions: {
-          id: constantId,
-          date: formattedDate,
-          dayOfYear: dayOfYear,
-          length: lengthString,
-          lengthSeconds: totalSeconds,
-          year: year,
-          log: sessionLog,
-        },
-      },
-    });
-  }
-
-  function onCompletion() {
-    openModal();
-  }
-
-  function stopTimer() {
-    // console.log("ENTER STOP STATE");
-    setTimerState(TIMER_STATES["STOPPED"]);
-    clearInterval(intervalID);
-    setIntervalID(undefined);
-  }
-
-  function startAlarm() {
-    // alarm1.loop = false;
-    // alarm1.play();
-    // console.log("startalarm check");
-  }
-
-  function stopAlarm() {
-    // alarm1.pause();
-  }
-
-  function editTimerState() {
-    setTimerState(TIMER_STATES["EDIT"]);
-    clearInterval(intervalID);
-    setIntervalID(undefined);
-    fillZeros();
-  }
-
-  function decrementTotalSeconds() {
-    setTotalSeconds((prevSeconds) => {
-      if (prevSeconds === 0) {
-        setTimerState(TIMER_STATES["FINISHED"]);
-        return prevSeconds;
-      }
-      return prevSeconds - 1;
-    });
-  }
-
-  function resetTimer() {
-    clearInterval(intervalID);
-    setIntervalID(undefined);
-    const initialTimeInSeconds = calculateSeconds(initialTime);
-    setTotalSeconds(initialTimeInSeconds);
-    setTimerState(TIMER_STATES["INITIAL"]);
-  }
-
-  //sets triple input values based off total seconds
-  function fillZeros() {
-    let input = displayInputValue(totalSeconds);
-    for (let i = 0; i < input.length; i++) {
-      if (input[0] === 0) {
-        input[0] = "00";
-      } else if (input[0] !== 0 && input[0].toString().length === 1) {
-        input[0] = "0" + input[0];
-      }
-
-      if (input[1] === 0) {
-        input[1] = "00";
-      } else if (input[1] !== 0 && input[1].toString().length === 1) {
-        input[1] = "0" + input[1];
-      }
-
-      if (input[2] === 0) {
-        input[2] = "00";
-      } else if (input[2] !== 0 && input[2].toString().length === 1) {
-        input[2] = "0" + input[2];
-      }
-    }
-
-    //convert to strings for input values
-    setInputTimerHour(input[0].toString());
-    setInputTimerMinute(input[1].toString());
-    setInputTimerSecond(input[2].toString());
-  }
-
   //remove zeros and set update display timer spans
   function omitZero() {
     const splitTime = splitTimer(totalSeconds);
@@ -555,6 +362,196 @@ function Main() {
     return omitZero;
   }
 
+    omitZero();
+  }, [totalSeconds]);
+
+  function startTimer() {
+    //if initial time has already started
+    if (timerState === TIMER_STATES["EDIT"]) {
+      setTimerState(TIMER_STATES["STARTED"]);
+      let tripleInputs = inputTimerHour + inputTimerMinute + inputTimerSecond;
+      const newInputTimer = calculateSeconds(tripleInputs);
+      //logic to start from new initial input
+      setTotalSeconds(newInputTimer);
+      //set new initial time to concatenated inputs
+      setInitialTime(tripleInputs);
+
+      return;
+    } else if (timerState === TIMER_STATES["STOPPED"]) {
+      setTimerState(TIMER_STATES["STARTED"]);
+      return;
+    } else if (timerState === TIMER_STATES["INITIAL"]) {
+      const calculated = calculateSeconds(initialTime);
+      setTimerState(TIMER_STATES["STARTED"]);
+      setTotalSeconds(calculated);
+      return;
+    }
+  }
+
+  //remove zeros then calculate message
+  function removeZeros(string) {
+    let splitString = string.split("");
+
+    for (let i = 0; i < splitString.length; i++) {
+      if (splitString[i] !== "0") {
+        splitString = splitString.slice(i);
+        break;
+      }
+    }
+    return splitString;
+  }
+
+  function completedTime() {
+    let array = removeZeros(initialTime.toString());
+    let message = "You completed ";
+    switch (array.length) {
+      case 0:
+        break;
+      case 1:
+        message += formatDuration({ seconds: parseInt(array[0]) });
+        break;
+      case 2:
+        message += formatDuration({ seconds: parseInt(array[0] + array[1]) });
+        break;
+      case 3:
+        message += formatDuration({
+          minutes: parseInt(array[0]),
+          seconds: parseInt(array[1] + array[2]),
+        });
+        break;
+      case 4:
+        message += formatDuration({
+          minutes: parseInt(array[0] + array[1]),
+          seconds: parseInt(array[2] + array[3]),
+        });
+        break;
+      case 5:
+        message += formatDuration({
+          hours: parseInt(array[0]),
+          minutes: parseInt(array[1] + array[2]),
+          seconds: parseInt(array[3] + array[4]),
+        });
+        break;
+      case 6:
+        message += formatDuration({
+          hours: parseInt(array[0] + array[1]),
+          minutes: parseInt(array[2] + array[3]),
+          seconds: parseInt(array[4] + array[5]),
+        });
+        break;
+      default: 
+        break;
+    }
+    return message;
+  }
+
+  const message = completedTime();
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  function openModal() {
+    setModalIsOpen(true);
+  }
+
+  function closeModal() {
+    submitSession();
+    setModalIsOpen(false);
+    resetTimer();
+  }
+
+  //adding log must be done through a handler
+  const [log, setLog] = useState("");
+
+  async function submitSession() {
+    const id = userData.user.id;
+    let generateId = uuidv4();
+    const constantId = generateId;
+    const totalSeconds = calculateSeconds(initialTime);
+    const formattedTime = displayInputValue(calculateSeconds(initialTime));
+    const sessionLog = log;
+    const formattedDate = format(new Date(), "PPP");
+    const dayOfYear = getDayOfYear(new Date());
+    const year = getYear(new Date());
+    const lengthString = formatDuration({
+      hours: formattedTime[0],
+      minutes: formattedTime[1],
+      seconds: formattedTime[2],
+    });
+
+    await axios.put(`https://zentracker.adaptable.app/api/users/${id}`, {
+      $push: {
+        sessions: {
+          id: constantId,
+          date: formattedDate,
+          dayOfYear: dayOfYear,
+          length: lengthString,
+          lengthSeconds: totalSeconds,
+          year: year,
+          log: sessionLog,
+        },
+      },
+    });
+  }
+
+  const stopTimer = () => {
+    setTimerState(TIMER_STATES["STOPPED"]);
+    clearInterval(intervalID);
+    setIntervalID(undefined);
+  }
+
+  function startAlarm() {
+    // alarm1.loop = false;
+    // alarm1.play();
+    // console.log("startalarm check");
+  }
+
+  function stopAlarm() {
+    // alarm1.pause();
+  }
+
+  function editTimerState() {
+    setTimerState(TIMER_STATES["EDIT"]);
+    clearInterval(intervalID);
+    setIntervalID(undefined);
+    fillZeros();
+  }
+
+  function resetTimer() {
+    clearInterval(intervalID);
+    setIntervalID(undefined);
+    const initialTimeInSeconds = calculateSeconds(initialTime);
+    setTotalSeconds(initialTimeInSeconds);
+    setTimerState(TIMER_STATES["INITIAL"]);
+  }
+
+  //sets triple input values based off total seconds
+  function fillZeros() {
+    let input = displayInputValue(totalSeconds);
+    for (let i = 0; i < input.length; i++) {
+      if (input[0] === 0) {
+        input[0] = "00";
+      } else if (input[0] !== 0 && input[0].toString().length === 1) {
+        input[0] = "0" + input[0];
+      }
+
+      if (input[1] === 0) {
+        input[1] = "00";
+      } else if (input[1] !== 0 && input[1].toString().length === 1) {
+        input[1] = "0" + input[1];
+      }
+
+      if (input[2] === 0) {
+        input[2] = "00";
+      } else if (input[2] !== 0 && input[2].toString().length === 1) {
+        input[2] = "0" + input[2];
+      }
+    }
+
+    //convert to strings for input values
+    setInputTimerHour(input[0].toString());
+    setInputTimerMinute(input[1].toString());
+    setInputTimerSecond(input[2].toString());
+  }
+
   const customStyles = {
     content: {
       position: "fixed",
@@ -604,13 +601,12 @@ function Main() {
 
     const caretPosition = event.target.selectionStart;
     setCaret(caretPosition);
-    console.log("caretPosition inside handleInput:", caretPosition);
 
     const focusedInputId = document.activeElement.id;
     const targetInput = event.target;
+
     setTargetInput(targetInput);
 
-    //Disable up and down arrow keys on timer input
     if (event.keyCode === 38 || event.keyCode === 40) {
       event.preventDefault();
     }
@@ -750,6 +746,7 @@ function Main() {
         ) {
           startTimer();
         }
+        break;
       case " ":
         if (timerState === TIMER_STATES["STARTED"]) {
           stopTimer();
@@ -760,8 +757,9 @@ function Main() {
         ) {
           startTimer();
         }
+        break;
       default:
-        console.log(`Other key pressed: ${event.key}`);
+        break;
     }
   };
 
@@ -846,7 +844,7 @@ function Main() {
                   shouldCloseOnOverlayClick={false}
                 >
                   <div className="log-message">{message}</div>
-                  <label for="logInput">Enter a log:</label>
+                  <label htmlFor="logInput">Enter a log:</label>
                   <br />
                   <input
                     type="text"
@@ -854,7 +852,7 @@ function Main() {
                     onChange={(e) => setLog(e.target.value)}
                   ></input>
                   <br />
-                  <button class="submit-log" onClick={closeModal}>
+                  <button className="submit-log" onClick={closeModal}>
                     Submit Session
                   </button>
                 </Modal>

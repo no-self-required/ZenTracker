@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, Fragment } from "react";
 import axios from "axios";
 import SingleSession from "./SingleSession";
 import SingleDay from "./SingleDay";
@@ -12,10 +12,10 @@ import formatDuration from "date-fns/formatDuration";
 import format from "date-fns/format";
 import getYear from "date-fns/getYear";
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
-const plusIcon = <FontAwesomeIcon icon={faPlus} />
+const plusIcon = <FontAwesomeIcon icon={faPlus} />;
 
 function splitInput(initialTime) {
   const parsedTimer = parseInt(initialTime);
@@ -242,6 +242,8 @@ function ProfileStats() {
         return "square-medium";
       case numOfSessions > 4:
         return "square-dark";
+      default:
+        break;
     }
   }
 
@@ -315,14 +317,13 @@ function ProfileStats() {
 
     //Calculate number of all sessions
     function totalSessions() {
-      // console.log("sessionsData", sessionsData)
       let count = 0;
-      for (const key in Object.keys(sessionsData)) {
+      for(let i = 0; i < sessionsData.length; i++) {
         count += 1;
       }
       return count;
     }
-
+    
     //Calculate total time of all sessions
     function totalTime() {
       let totalTimeInSeconds = 0;
@@ -357,7 +358,7 @@ function ProfileStats() {
       }
 
       let count = 0;
-      for (const key in Object.keys(sessionsData)) {
+      for(let i = 0; i < sessionsData.length; i++) {
         count += 1;
       }
 
@@ -410,7 +411,7 @@ function ProfileStats() {
     //display all sessions with the sorted data
     const allSessions = Object.keys(sortedSessionsByDay).map(function (key) {
       return (
-        <div id="single-session-container">
+        <div id="single-session-container" key={key}>
           <SingleSession
             currentData={currentData}
             sessionId={sessionsData[key].id}
@@ -487,9 +488,9 @@ function ProfileStats() {
     };
 
     const printSqs = allYearSessions.map((year, yearIndex, array1) => {
-      if (selectedYear === year.year)
+      if (selectedYear === year.year) {
         return (
-          <>
+          <Fragment key={year}>
             <div className="stats-header" id="calendar-header">
               {totalSessionYear(year.calendar)} sessions in {selectedYear}
             </div>
@@ -514,42 +515,45 @@ function ProfileStats() {
                   <div>Wed</div>
                   <div>Fri</div>
                 </div>
-                {year.calendar.map((week, weekIndex, array2) => {
-                  return (
-                    <div className={`week-${weekIndex + 1}`}>
-                      {week.map((days, daysIndex, array3) => {
-                        return (
-                          <SingleDay
-                            year={year.year}
-                            allYearSessions={allYearSessions}
-                            array2={array2}
-                            array3={array3}
-                            daysIndex={daysIndex}
-                            weekIndex={weekIndex}
-                            calcColor={calcColor}
-                            totalSessionsUser={totalSessionsUser}
-                          ></SingleDay>
-                        );
-                      })}
-                    </div>
-                  );
-                })}
+                {year.calendar.map((week, weekIndex, array2) => (
+                  <div
+                    key={`week-${weekIndex}`}
+                    className={`week-${weekIndex + 1}`}
+                  >
+                    {week.map((days, daysIndex, array3) => (
+                      <SingleDay
+                        key={`${weekIndex}-${daysIndex}`}
+                        year={year.year}
+                        allYearSessions={allYearSessions}
+                        array2={array2}
+                        array3={array3}
+                        daysIndex={daysIndex}
+                        weekIndex={weekIndex}
+                        calcColor={calcColor}
+                        totalSessionsUser={totalSessionsUser}
+                      />
+                    ))}
+                  </div>
+                ))}
               </div>
             </div>
-          </>
+          </Fragment>
         );
+      } else {
+        return null;
+      }
     });
 
     const allYearButtons = listAllYears().map((year) => {
       return (
-        <>
+        <Fragment key={year}>
           <button
             className="buttons-year"
             onClick={(e) => setSelectedYear(year)}
           >
             {year}
           </button>
-        </>
+        </Fragment>
       );
     });
 
@@ -604,7 +608,7 @@ function ProfileStats() {
             shouldCloseOnOverlayClick={false}
           >
             <div id="modal-wrapper">
-              <label for="date-input">Date of session</label>
+              <label htmlFor="date-input">Date of session</label>
               <input
                 className="date-input"
                 type="date"
@@ -613,7 +617,7 @@ function ProfileStats() {
               <div id="length-wrapper">
                 <div>Length of session</div>
                 <div id="input-wrapper">
-                  <label for="length-input-hour">h</label>
+                  <label htmlFor="length-input-hour">h</label>
                   <input
                     className="length-input-hour"
                     type="number"
@@ -621,7 +625,7 @@ function ProfileStats() {
                     max="24"
                     onChange={(e) => setInputTimerHour(e.target.value)}
                   ></input>
-                  <label for="length-input-minute">m</label>
+                  <label htmlFor="length-input-minute">m</label>
                   <input
                     className="length-input-minute"
                     type="number"
@@ -629,7 +633,7 @@ function ProfileStats() {
                     max="59"
                     onChange={(e) => setInputTimerMinute(e.target.value)}
                   ></input>
-                  <label for="length-input-second">s</label>
+                  <label htmlFor="length-input-second">s</label>
                   <input
                     className="length-input-second"
                     type="number"
@@ -639,7 +643,7 @@ function ProfileStats() {
                   ></input>
                 </div>
               </div>
-              <label for="log-input">Log</label>
+              <label htmlFor="log-input">Log</label>
               <input
                 className="log-input"
                 onChange={(e) => setLog(e.target.value)}
