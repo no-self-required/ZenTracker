@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext, useCallback } from "react";
+import React, {useState, useEffect, useContext } from "react";
 import Modal from "react-modal";
 import jwt from "jsonwebtoken";
 import { useNavigate } from "react-router-dom";
@@ -744,6 +744,7 @@ function Main() {
         ) {
           startTimer();
         }
+        break;
       case " ":
         if (timerState === TIMER_STATES["STARTED"]) {
           stopTimer();
@@ -754,8 +755,9 @@ function Main() {
         ) {
           startTimer();
         }
+        break;
       default:
-        console.log(`Other key pressed: ${event.key}`);
+        break;
     }
   };
 
