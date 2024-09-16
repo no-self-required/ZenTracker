@@ -242,6 +242,8 @@ function ProfileStats() {
         return "square-medium";
       case numOfSessions > 4:
         return "square-dark";
+      default:
+        break;
     }
   }
 
@@ -315,14 +317,13 @@ function ProfileStats() {
 
     //Calculate number of all sessions
     function totalSessions() {
-      // console.log("sessionsData", sessionsData)
       let count = 0;
-      for (const key in Object.keys(sessionsData)) {
+      for(let i = 0; i < sessionsData.length; i++) {
         count += 1;
       }
       return count;
     }
-
+    
     //Calculate total time of all sessions
     function totalTime() {
       let totalTimeInSeconds = 0;
@@ -357,7 +358,7 @@ function ProfileStats() {
       }
 
       let count = 0;
-      for (const key in Object.keys(sessionsData)) {
+      for(let i = 0; i < sessionsData.length; i++) {
         count += 1;
       }
 

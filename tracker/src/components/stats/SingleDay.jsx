@@ -24,7 +24,7 @@ function SingleDay(props) {
   let newDateProperYear = setYear(startYearDate, props.year);
   let formatted = format(new Date(newDateProperYear), "PPP");
 
-  const { x, y, strategy, refs, update } = useFloating({
+  const { x, y, strategy, refs } = useFloating({
     placement: "top",
     middleware: [
       offset({
