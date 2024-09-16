@@ -51,7 +51,6 @@ function splitInput(initialTime) {
 
 function calculateSeconds(initialTime) {
   const splitArr = splitInput(initialTime);
-  // console.log("splitArray inside calc seconds", splitArr);
   const seconds = [];
   const minutes = [];
   const hours = [];
@@ -62,8 +61,6 @@ function calculateSeconds(initialTime) {
   const totMin = minutes[0] * 600 + minutes[1] * 60;
   const totHours = hours[0] * 36000 + hours[1] * 3600;
   let calculatedTotalSeconds = totSec + totMin + totHours;
-
-  // console.log("calculatedTotalSeconds", calculatedTotalSeconds);
 
   //if time entered is more than 99hours, set to 99h/59m/59s
   if (calculatedTotalSeconds > 360000) {
@@ -219,7 +216,7 @@ function Main() {
   useEffect(() => {
     if (!cursor) return;
     targetInput.setSelectionRange(caret, caret);
-  }, [cursor, targetInput, caret]);
+  }, [cursor]);
 
   const [loggedin, setLoggedIn] = useState(false);
   const navigate = useNavigate();
@@ -365,7 +362,6 @@ function Main() {
   function startTimer() {
     //if initial time has already started
     if (timerState === TIMER_STATES["EDIT"]) {
-      // console.log("START FROM EDIT STATE");
       setTimerState(TIMER_STATES["STARTED"]);
       let tripleInputs = inputTimerHour + inputTimerMinute + inputTimerSecond;
       const newInputTimer = calculateSeconds(tripleInputs);
@@ -388,7 +384,6 @@ function Main() {
 
   //remove zeros then calculate message
   function removeZeros(string) {
-    // console.log("string", string);
     let splitString = string.split("");
 
     for (let i = 0; i < splitString.length; i++) {
@@ -492,7 +487,6 @@ function Main() {
   }
 
   function stopTimer() {
-    // console.log("ENTER STOP STATE");
     setTimerState(TIMER_STATES["STOPPED"]);
     clearInterval(intervalID);
     setIntervalID(undefined);
@@ -599,7 +593,6 @@ function Main() {
 
     const caretPosition = event.target.selectionStart;
     setCaret(caretPosition);
-    console.log("caretPosition inside handleInput:", caretPosition);
 
     const focusedInputId = document.activeElement.id;
     const targetInput = event.target;

@@ -488,7 +488,7 @@ function ProfileStats() {
     };
 
     const printSqs = allYearSessions.map((year, yearIndex, array1) => {
-      if (selectedYear === year.year)
+      if (selectedYear === year.year) {
         return (
           <Fragment key={year}>
             <div className="stats-header" id="calendar-header">
@@ -539,6 +539,9 @@ function ProfileStats() {
             </div>
           </Fragment>
         );
+      } else {
+        return null;
+      }
     });
 
     const allYearButtons = listAllYears().map((year) => {
