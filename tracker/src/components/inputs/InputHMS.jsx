@@ -14,20 +14,10 @@ const caretUp = <FontAwesomeIcon icon={faCaretUp} size="2xl" />;
 const caretDown = <FontAwesomeIcon icon={faCaretDown} size="2xl" />;
 
 function InputHMS(props) {
-  //Store inputs to traverse between them
-
-  //traverse input
-  // const [inputEleH] = useState();
-  // const [inputEleS] = useState();
-
   //prevent access to 0
   const [selection4, setSelection4] = useState();
   const [selection5, setSelection5] = useState();
   const [selection6, setSelection6] = useState();
-
-  //selection for up and down arrow keys
-  // const [selectionH] = useState();
-  // const [selectionS] = useState();
 
   //use ref for hours input. Used to block cursor click on left side of input. On click redirects focus to caret: 1,1 of designated input.
   const timerH = useRef();
@@ -70,20 +60,6 @@ function InputHMS(props) {
     const { start, end } = selection6;
     timerS.current.setSelectionRange(start, end);
   }, [selection6]);
-
-  //up arrow sets focus to hours and SR: 1,1
-  // useEffect(() => {
-  //   if (!selectionH) return;
-  //   const { start, end } = selectionH;
-  //   inputEleH.current.setSelectionRange(start, end);
-  // }, [selectionH]);
-
-  // //down arrow sets focus to seconds and SR: 2,2
-  // useEffect(() => {
-  //   if (!selectionS) return;
-  //   const { start, end } = selectionS;
-  //   inputEleS.current.setSelectionRange(start, end);
-  // }, [selectionS]);
 
   function numOnly(event) {
     if (!/[0-9]/.test(event.key)) {

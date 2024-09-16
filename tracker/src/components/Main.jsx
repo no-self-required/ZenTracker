@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext } from "react";
+import React, {useState, useEffect, useContext, useRef } from "react";
 import Modal from "react-modal";
 import jwt from "jsonwebtoken";
 import { useNavigate } from "react-router-dom";
@@ -186,7 +186,6 @@ function Main() {
 
   //Store cursor position to restore after input
   const [cursor, setCursor] = useState();
-  // console.log('cursor', cursor)
   //cursor: obj : {1, 1}
 
   //Store target input
@@ -234,8 +233,11 @@ function Main() {
     }
   }, [navigate]);
 
+  const isMounted = useRef(true)
+
   //Decrement timer if timer has started, and there is an interval
   useEffect(() => {
+    isMounted.current = true
     function decrementTotalSeconds() {
       setTotalSeconds((prevSeconds) => {
         if (prevSeconds === 0) {
@@ -250,6 +252,9 @@ function Main() {
         const intervalID = setInterval(decrementTotalSeconds, 1000);
         setIntervalID(intervalID);
       }
+    }
+    return () => {
+      isMounted.current = false
     }
   }, [
     timerState,
@@ -596,6 +601,7 @@ function Main() {
 
     const focusedInputId = document.activeElement.id;
     const targetInput = event.target;
+
     setTargetInput(targetInput);
 
     if (event.keyCode === 38 || event.keyCode === 40) {
