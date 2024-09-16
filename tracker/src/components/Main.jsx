@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext } from "react";
+import React, {useState, useEffect, useContext, useCallback } from "react";
 import Modal from "react-modal";
 import jwt from "jsonwebtoken";
 import { useNavigate } from "react-router-dom";
@@ -272,8 +272,95 @@ function Main() {
 
   //update display spans on every tick
   useEffect(() => {
+  //remove zeros and set update display timer spans
+  function omitZero() {
+    const splitTime = splitTimer(totalSeconds);
+
+    let omitZero = [];
+    //remove zeros before start of timer
+
+    if (totalSeconds === 0) {
+      omitZero = ["0"];
+    } else {
+      for (let i = 0; i < splitTime.length; i++) {
+        if (splitTime[i] !== "0") {
+          omitZero = splitTime.slice(i);
+          break;
+        }
+      }
+    }
+
+    if (totalSeconds !== 0) {
+      for (let i = 0; i < splitTime.length; i++) {
+        if (splitTime[i] !== "0") {
+          omitZero = splitTime.slice(i);
+          break;
+        }
+      }
+    } else {
+      omitZero = ["0"];
+    }
+
+    switch (omitZero.length) {
+      case 0:
+        break;
+      case 1:
+        setFirstH(null);
+        setSecondH(null);
+        setFirstM(null);
+        setSecondM(null);
+        setFirstS(null);
+        setSecondS(omitZero[0]);
+        break;
+      case 2:
+        setFirstH(null);
+        setSecondH(null);
+        setFirstM(null);
+        setSecondM(null);
+        setFirstS(omitZero[0]);
+        setSecondS(omitZero[1]);
+        break;
+      case 3:
+        setFirstH(null);
+        setSecondH(null);
+        setFirstM(null);
+        setSecondM(omitZero[0]);
+        setFirstS(omitZero[1]);
+        setSecondS(omitZero[2]);
+        break;
+      case 4:
+        setFirstH(null);
+        setSecondH(null);
+        setFirstM(omitZero[0]);
+        setSecondM(omitZero[1]);
+        setFirstS(omitZero[2]);
+        setSecondS(omitZero[3]);
+        break;
+      case 5:
+        setFirstH(null);
+        setSecondH(omitZero[0]);
+        setFirstM(omitZero[1]);
+        setSecondM(omitZero[2]);
+        setFirstS(omitZero[3]);
+        setSecondS(omitZero[4]);
+        break;
+      case 6:
+        setFirstH(omitZero[0]);
+        setSecondH(omitZero[1]);
+        setFirstM(omitZero[2]);
+        setSecondM(omitZero[3]);
+        setFirstS(omitZero[4]);
+        setSecondS(omitZero[5]);
+        break;
+
+      default:
+        break;
+    }
+    return omitZero;
+  }
+
     omitZero();
-  }, [totalSeconds, omitZero]);
+  }, [totalSeconds]);
 
   function startTimer() {
     //if initial time has already started
@@ -463,93 +550,6 @@ function Main() {
     setInputTimerHour(input[0].toString());
     setInputTimerMinute(input[1].toString());
     setInputTimerSecond(input[2].toString());
-  }
-
-  //remove zeros and set update display timer spans
-  function omitZero() {
-    const splitTime = splitTimer(totalSeconds);
-
-    let omitZero = [];
-    //remove zeros before start of timer
-
-    if (totalSeconds === 0) {
-      omitZero = ["0"];
-    } else {
-      for (let i = 0; i < splitTime.length; i++) {
-        if (splitTime[i] !== "0") {
-          omitZero = splitTime.slice(i);
-          break;
-        }
-      }
-    }
-
-    if (totalSeconds !== 0) {
-      for (let i = 0; i < splitTime.length; i++) {
-        if (splitTime[i] !== "0") {
-          omitZero = splitTime.slice(i);
-          break;
-        }
-      }
-    } else {
-      omitZero = ["0"];
-    }
-
-    switch (omitZero.length) {
-      case 0:
-        break;
-      case 1:
-        setFirstH(null);
-        setSecondH(null);
-        setFirstM(null);
-        setSecondM(null);
-        setFirstS(null);
-        setSecondS(omitZero[0]);
-        break;
-      case 2:
-        setFirstH(null);
-        setSecondH(null);
-        setFirstM(null);
-        setSecondM(null);
-        setFirstS(omitZero[0]);
-        setSecondS(omitZero[1]);
-        break;
-      case 3:
-        setFirstH(null);
-        setSecondH(null);
-        setFirstM(null);
-        setSecondM(omitZero[0]);
-        setFirstS(omitZero[1]);
-        setSecondS(omitZero[2]);
-        break;
-      case 4:
-        setFirstH(null);
-        setSecondH(null);
-        setFirstM(omitZero[0]);
-        setSecondM(omitZero[1]);
-        setFirstS(omitZero[2]);
-        setSecondS(omitZero[3]);
-        break;
-      case 5:
-        setFirstH(null);
-        setSecondH(omitZero[0]);
-        setFirstM(omitZero[1]);
-        setSecondM(omitZero[2]);
-        setFirstS(omitZero[3]);
-        setSecondS(omitZero[4]);
-        break;
-      case 6:
-        setFirstH(omitZero[0]);
-        setSecondH(omitZero[1]);
-        setFirstM(omitZero[2]);
-        setSecondM(omitZero[3]);
-        setFirstS(omitZero[4]);
-        setSecondS(omitZero[5]);
-        break;
-
-      default:
-        break;
-    }
-    return omitZero;
   }
 
   const customStyles = {
