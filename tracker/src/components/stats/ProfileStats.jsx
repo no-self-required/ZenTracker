@@ -604,7 +604,7 @@ function ProfileStats() {
             shouldCloseOnOverlayClick={false}
           >
             <div id="modal-wrapper">
-              <label for="date-input">Date of session</label>
+              <label htmlFor="date-input">Date of session</label>
               <input
                 className="date-input"
                 type="date"
@@ -613,7 +613,7 @@ function ProfileStats() {
               <div id="length-wrapper">
                 <div>Length of session</div>
                 <div id="input-wrapper">
-                  <label for="length-input-hour">h</label>
+                  <label htmlFor="length-input-hour">h</label>
                   <input
                     className="length-input-hour"
                     type="number"
@@ -621,7 +621,7 @@ function ProfileStats() {
                     max="24"
                     onChange={(e) => setInputTimerHour(e.target.value)}
                   ></input>
-                  <label for="length-input-minute">m</label>
+                  <label htmlFor="length-input-minute">m</label>
                   <input
                     className="length-input-minute"
                     type="number"
@@ -629,7 +629,7 @@ function ProfileStats() {
                     max="59"
                     onChange={(e) => setInputTimerMinute(e.target.value)}
                   ></input>
-                  <label for="length-input-second">s</label>
+                  <label htmlFor="length-input-second">s</label>
                   <input
                     className="length-input-second"
                     type="number"
@@ -639,7 +639,7 @@ function ProfileStats() {
                   ></input>
                 </div>
               </div>
-              <label for="log-input">Log</label>
+              <label htmlFor="log-input">Log</label>
               <input
                 className="log-input"
                 onChange={(e) => setLog(e.target.value)}

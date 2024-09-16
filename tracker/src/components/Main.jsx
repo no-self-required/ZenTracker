@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, {useState, useEffect, useContext } from "react";
 import Modal from "react-modal";
 import jwt from "jsonwebtoken";
 import { useNavigate } from "react-router-dom";
@@ -148,16 +148,15 @@ function displayInputValue(totalSeconds) {
 
   return formatted;
 }
+const TIMER_STATES = {
+  INITIAL: 0,
+  STARTED: 1,
+  STOPPED: 2,
+  EDIT: 3,
+  FINISHED: 4,
+};
 
 function Main() {
-  const TIMER_STATES = {
-    INITIAL: 0,
-    STARTED: 1,
-    STOPPED: 2,
-    EDIT: 3,
-    FINISHED: 4,
-  };
-
   //disable alarm due to CORB issue
   // const alarm1 = new Audio(
   //   "https://freesound.org/people/suburban%20grilla/sounds/2166/download/2166__suburban-grilla__bowl-struck.wav"
@@ -220,7 +219,7 @@ function Main() {
   useEffect(() => {
     if (!cursor) return;
     targetInput.setSelectionRange(caret, caret);
-  }, [cursor]);
+  }, [cursor, targetInput, caret]);
 
   const [loggedin, setLoggedIn] = useState(false);
   const navigate = useNavigate();
@@ -248,7 +247,6 @@ function Main() {
     }
   }, [
     timerState,
-    TIMER_STATES,
     intervalID,
     totalSeconds,
     decrementTotalSeconds,
@@ -259,7 +257,7 @@ function Main() {
       startAlarm();
       onCompletion();
     }
-  }, [timerState, TIMER_STATES, onCompletion]);
+  }, [timerState, onCompletion]);
 
   //update display spans on every tick
   useEffect(() => {
@@ -341,6 +339,8 @@ function Main() {
           minutes: parseInt(array[2] + array[3]),
           seconds: parseInt(array[4] + array[5]),
         });
+        break;
+      default: 
         break;
     }
     return message;
