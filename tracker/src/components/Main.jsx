@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext, useRef } from "react";
+import React, {useState, useEffect, useContext} from "react";
 import Modal from "react-modal";
 import jwt from "jsonwebtoken";
 import { useNavigate } from "react-router-dom";
@@ -233,11 +233,8 @@ function Main() {
     }
   }, [navigate]);
 
-  const isMounted = useRef(true)
-
   //Decrement timer if timer has started, and there is an interval
   useEffect(() => {
-    isMounted.current = true
     function decrementTotalSeconds() {
       setTotalSeconds((prevSeconds) => {
         if (prevSeconds === 0) {
@@ -247,6 +244,7 @@ function Main() {
         return prevSeconds - 1;
       });
     }
+
     if (timerState === TIMER_STATES["STARTED"] && !intervalID) {
       if (totalSeconds !== 0) {
         const intervalID = setInterval(decrementTotalSeconds, 1000);
@@ -254,13 +252,16 @@ function Main() {
       }
     }
     return () => {
-      isMounted.current = false
+      clearInterval(intervalID);
     }
   }, [
     timerState,
-    intervalID,
-    totalSeconds
+    intervalID
   ]);
+
+
+
+
 
   useEffect(() => {
     function onCompletion() {
@@ -491,7 +492,7 @@ function Main() {
     });
   }
 
-  function stopTimer() {
+  const stopTimer = () => {
     setTimerState(TIMER_STATES["STOPPED"]);
     clearInterval(intervalID);
     setIntervalID(undefined);
