@@ -239,6 +239,15 @@ function Main() {
 
   //Decrement timer if timer has started, and there is an interval
   useEffect(() => {
+    function decrementTotalSeconds() {
+      setTotalSeconds((prevSeconds) => {
+        if (prevSeconds === 0) {
+          setTimerState(TIMER_STATES["FINISHED"]);
+          return prevSeconds;
+        }
+        return prevSeconds - 1;
+      });
+    }
     if (timerState === TIMER_STATES["STARTED"] && !intervalID) {
       if (totalSeconds !== 0) {
         const intervalID = setInterval(decrementTotalSeconds, 1000);
@@ -248,16 +257,18 @@ function Main() {
   }, [
     timerState,
     intervalID,
-    totalSeconds,
-    decrementTotalSeconds,
+    totalSeconds
   ]);
 
   useEffect(() => {
+    function onCompletion() {
+      openModal();
+    }
     if (timerState === TIMER_STATES["FINISHED"]) {
       startAlarm();
       onCompletion();
     }
-  }, [timerState, onCompletion]);
+  }, [timerState]);
 
   //update display spans on every tick
   useEffect(() => {
@@ -393,10 +404,6 @@ function Main() {
     });
   }
 
-  function onCompletion() {
-    openModal();
-  }
-
   function stopTimer() {
     // console.log("ENTER STOP STATE");
     setTimerState(TIMER_STATES["STOPPED"]);
@@ -419,16 +426,6 @@ function Main() {
     clearInterval(intervalID);
     setIntervalID(undefined);
     fillZeros();
-  }
-
-  function decrementTotalSeconds() {
-    setTotalSeconds((prevSeconds) => {
-      if (prevSeconds === 0) {
-        setTimerState(TIMER_STATES["FINISHED"]);
-        return prevSeconds;
-      }
-      return prevSeconds - 1;
-    });
   }
 
   function resetTimer() {
@@ -843,7 +840,7 @@ function Main() {
                   shouldCloseOnOverlayClick={false}
                 >
                   <div className="log-message">{message}</div>
-                  <label for="logInput">Enter a log:</label>
+                  <label htmlFor="logInput">Enter a log:</label>
                   <br />
                   <input
                     type="text"
