@@ -14,7 +14,10 @@ import format from "date-fns/format";
 
 import "../styling/main.scss";
 
+//hook
 import { useGlobalKeyListener } from "../hooks/globalKeyListener";
+
+import bowlSound from '../public/bowlsound1.mp3'
 
 //H:M:S inputs
 import InputHMS from "./inputs/InputHMS";
@@ -153,11 +156,9 @@ const TIMER_STATES = {
   FINISHED: 4,
 };
 
+
 function Main() {
-  //disable alarm due to CORB issue
-  // const alarm1 = new Audio(
-  //   "https://freesound.org/people/suburban%20grilla/sounds/2166/download/2166__suburban-grilla__bowl-struck.wav"
-  // );
+  const audio = new Audio(bowlSound);
 
   const [totalSeconds, setTotalSeconds] = useState(300);
   //initialTime is running off array converison: 500 => [5, 0, 0] (5 min 0 seconds)
@@ -259,16 +260,13 @@ function Main() {
     intervalID
   ]);
 
-
-
-
-
   useEffect(() => {
     function onCompletion() {
       openModal();
     }
     if (timerState === TIMER_STATES["FINISHED"]) {
-      startAlarm();
+      console.log('test')
+      audio.play();
       onCompletion();
     }
   }, [timerState]);
@@ -496,16 +494,6 @@ function Main() {
     setTimerState(TIMER_STATES["STOPPED"]);
     clearInterval(intervalID);
     setIntervalID(undefined);
-  }
-
-  function startAlarm() {
-    // alarm1.loop = false;
-    // alarm1.play();
-    // console.log("startalarm check");
-  }
-
-  function stopAlarm() {
-    // alarm1.pause();
   }
 
   function editTimerState() {
@@ -832,7 +820,7 @@ function Main() {
               <Stop onClick={stopTimer} />
             )}
             {timerState === TIMER_STATES["FINISHED"] && (
-              <Ok onClick={stopAlarm} />
+              <Ok/>
             )}
             {timerState === TIMER_STATES["FINISHED"] && loggedin && (
               <div>
