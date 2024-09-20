@@ -1,27 +1,32 @@
 //mobile
 .profile-stats-container {
-
+  background-color: #F4F3F2;
   .profile-name{
     display: flex;
+    align-self: flex-start;
+    padding-left: 1em;
     margin-bottom: 0;
     margin-top: 0;
     font-weight: bolder;
-    padding-left: 1em;
   }
   .session-stats,
   .time-stats {
-    padding: 0.5em 1.3em 0 1.1em;
+    padding: 0em 1em 0 1em;
     display: flex;
     flex-direction: column;
   }
 
+  .session-stats{
+    padding-bottom: 1em;
+  }
   .line {
     width: 100%;
   }
 
 
   .wrapper-stats {
-
+    padding: 1em 0 1em 0;
+    padding-top: .5em;
     .stat-container {
       display: flex;
       justify-content: space-between;
@@ -139,8 +144,6 @@
   }
 
   #single-session-container {
-    margin-top: 1em;
-    margin-bottom: 1em;
     padding: 1em;
     border-radius: .5em;
 
@@ -148,7 +151,9 @@
       display: flex;
       justify-content: space-between;
       flex-direction: column;
-
+      padding: 1em;
+      border: 0.1em, solid, rgb(88, 88, 88);
+      border-radius: .5em;
       .stat-container {
         display: flex;
         justify-content: space-between;
@@ -235,7 +240,6 @@
   display: flex;
   flex-direction: column;
   background-color: #F4F3F2;
-  
   .sessions-header{
     display: flex;
     justify-content: space-between;
@@ -264,11 +268,19 @@
 //desktop
 @media only screen and (min-width: 1243px) {
   .profile-stats-container{
-
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .profile-name{
+      
+    }
     .wrapper-stats{
       display: flex;
       flex-direction: column;
       align-items: center;
+      border: 0.1em solid black;
+      border-radius: 0.5em;
+      padding: 1em;
       .session-stats,
       .time-stats {
         width: 40em;
@@ -290,7 +302,9 @@
     .all-sessions-container{
       display: flex;
       align-items: center;
-
+      border: 0.1em solid black;
+      border-radius: 0.5em;
+      margin-bottom: 1em;
       .sessions-header{
         display: flex;
         justify-content: space-between;
