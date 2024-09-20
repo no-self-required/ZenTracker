@@ -25,6 +25,7 @@ function SingleSession(props) {
     deleteSession();
     props.setIsUpdated(true);
   }
+  
   return (
     <>
       <div className="session-info-container">
