@@ -836,6 +836,7 @@ function Main() {
                     type="text"
                     className="logInput"
                     onChange={(e) => setLog(e.target.value)}
+                    maxLength={255}
                   ></input>
                   <br />
                   <button className="submit-log" onClick={closeModal}>

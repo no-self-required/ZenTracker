@@ -121,8 +121,6 @@ function ProfileStats() {
         const userResponse = await axios.get("/api/users/profile", {
           headers: { token: token },
         });
-
-        // if (!compareProfiles(currentData.user, userResponse.data)) {
         if (currentData.user !== userResponse.data) {
           setCurrentData({
             user: userResponse.data,
@@ -257,6 +255,18 @@ function ProfileStats() {
     }
     return count;
   }
+
+  // function totalSessionsUser(object) {
+  //   let x = Object.keys(object);
+  //   let totalSeconds = 0
+  //   if(object[x]) {
+  //     for(let i = 0; i <x.length; i++) {
+  //       totalSeconds += object[x].lengthSeconds
+  //     }
+  //   }
+  //   console.log('totalSeconds', totalSeconds)
+  //   return totalSeconds
+  // }
 
   if (currentData) {
     let sessionsData = currentData.user.sessions;
@@ -486,7 +496,7 @@ function ProfileStats() {
       }
       return allYears.reverse();
     };
-
+    console.log(allYearSessions)
     const printSqs = allYearSessions.map((year, yearIndex, array1) => {
       if (selectedYear === year.year) {
         return (
