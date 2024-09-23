@@ -51,20 +51,39 @@
     margin-top: 1em;
   }
 
-  .button-group {
+  .years-legend{
+    display: flex;
+    justify-content: space-between;
+
+    .button-group {
     display: flex;
     margin-top: 1em;
-    margin-left: 1em;
+    margin-left: 1.1em;
     column-gap: .5em;
     width: 15.6em;
     overflow: scroll;
-    
+
     .buttons-year {
       background-color: white;
       border-radius: .5em;
       border: 1px solid black;
     }
+
+    }
+    .legend-container{
+      display: flex;
+      margin-top: 1em;
+      margin-right: 2.6em;
+
+      #less-text{
+        padding-right: 0.1em;
+      }
+      #more-text{
+        padding-left: 0.1em;
+      }
+    }
   }
+
 
   #calendar-header {
     margin-bottom: 1em;
@@ -288,15 +307,15 @@
     }
 
     .calendar-wrapper{
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      .button-group {
-        display: flex;
-        width: 76em;
-        align-items: flex-start;
+
+      .years-legend{
+        .button-group {
+          display: flex;
+          width: 15.6em;
+          align-items: flex-start;
+        }
       }
+
     }
 
     .all-sessions-container{
@@ -306,6 +325,7 @@
       border-radius: 0.5em;
       margin-bottom: 1em;
       margin-top: 1em;
+
       .sessions-header{
         display: flex;
         justify-content: space-between;

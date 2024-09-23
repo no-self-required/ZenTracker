@@ -229,11 +229,11 @@ function ProfileStats() {
   addLastDay();
 
   function calcColor(lengthSeconds, totalSessions) {
-    console.log('totalsessions', totalSessions)
+    console.log("totalsessions", totalSessions);
     switch (true) {
       case totalSessions === 0:
         return "square";
-      case totalSessions === 1 && lengthSeconds === 0: 
+      case totalSessions === 1 && lengthSeconds === 0:
         return "square-light";
       case lengthSeconds >= 0 && lengthSeconds <= 600:
         return "square-light";
@@ -259,10 +259,10 @@ function ProfileStats() {
 
   function totalLength(object, key) {
     let sum = 0;
-    for(const obj of object) {
+    for (const obj of object) {
       sum += obj[key] || 0;
     }
-    return sum
+    return sum;
   }
 
   if (currentData) {
@@ -325,12 +325,12 @@ function ProfileStats() {
     //Calculate number of all sessions
     function totalSessions() {
       let count = 0;
-      for(let i = 0; i < sessionsData.length; i++) {
+      for (let i = 0; i < sessionsData.length; i++) {
         count += 1;
       }
       return count;
     }
-    
+
     //Calculate total time of all sessions
     function totalTime() {
       let totalTimeInSeconds = 0;
@@ -365,7 +365,7 @@ function ProfileStats() {
       }
 
       let count = 0;
-      for(let i = 0; i < sessionsData.length; i++) {
+      for (let i = 0; i < sessionsData.length; i++) {
         count += 1;
       }
 
@@ -379,7 +379,6 @@ function ProfileStats() {
         "m " +
         Math.round(formatedLength[2]) +
         "s ";
-
       return displayString;
     }
 
@@ -480,7 +479,7 @@ function ProfileStats() {
       }
       return allYears.reverse();
     };
-    console.log(allYearSessions)
+    console.log(allYearSessions);
     const printSqs = allYearSessions.map((year, yearIndex, array1) => {
       if (selectedYear === year.year) {
         return (
@@ -552,8 +551,19 @@ function ProfileStats() {
       );
     });
 
-    const maxDate = new Date().toISOString().split('T')[0]
+    const maxDate = new Date().toISOString().split("T")[0];
 
+    const legendSquares = (
+      <div className="legend-container">
+        <div id="less-text">Less</div>
+        <span id="square"></span>
+        <span id="square-light"></span>
+        <span id="square-medium"></span>
+        <span id="square-dark"></span>
+        <div id="more-text">More</div>
+      </div>
+    )
+    
     return (
       <div className="profile-stats-container">
         <p className="profile-name">Username : {userData.user.username}</p>
@@ -595,7 +605,10 @@ function ProfileStats() {
         </div>
         <div className="calendar-wrapper">
           <div className="calendar-container">{printSqs}</div>
-          <div className="button-group">{allYearButtons}</div>
+          <div className="years-legend">
+            <div className="button-group">{allYearButtons}</div>
+            {legendSquares}
+          </div>
         </div>
         <div>
           <Modal
