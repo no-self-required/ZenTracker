@@ -654,11 +654,11 @@ function ProfileStats() {
                   ></input>
                 </div>
               </div>
-              <label htmlFor="log-input">Log</label>
-              <input
-                className="log-input"
+              <label htmlFor="log-input">Enter a log: </label>
+              <textarea
+                className="logInput"
                 onChange={(e) => setLog(e.target.value)}
-              ></input>
+              ></textarea>
               <button onClick={closeModalSubmit} id="submit-button">
                 submit
               </button>
