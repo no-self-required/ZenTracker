@@ -228,17 +228,18 @@ function ProfileStats() {
   fillYearArray();
   addLastDay();
 
-  function calcColor(numOfSessions) {
+  function calcColor(lengthSeconds, totalSessions) {
+    console.log('totalsessions', totalSessions)
     switch (true) {
-      case numOfSessions === 0:
+      case totalSessions === 0:
         return "square";
-      case numOfSessions === 1:
-      case numOfSessions === 2:
+      case totalSessions === 1 && lengthSeconds === 0: 
         return "square-light";
-      case numOfSessions === 3:
-      case numOfSessions === 4:
+      case lengthSeconds >= 0 && lengthSeconds <= 600:
+        return "square-light";
+      case lengthSeconds >= 600 && lengthSeconds <= 1800:
         return "square-medium";
-      case numOfSessions > 4:
+      case lengthSeconds > 1800:
         return "square-dark";
       default:
         break;
@@ -256,17 +257,13 @@ function ProfileStats() {
     return count;
   }
 
-  // function totalSessionsUser(object) {
-  //   let x = Object.keys(object);
-  //   let totalSeconds = 0
-  //   if(object[x]) {
-  //     for(let i = 0; i <x.length; i++) {
-  //       totalSeconds += object[x].lengthSeconds
-  //     }
-  //   }
-  //   console.log('totalSeconds', totalSeconds)
-  //   return totalSeconds
-  // }
+  function totalLength(object, key) {
+    let sum = 0;
+    for(const obj of object) {
+      sum += obj[key] || 0;
+    }
+    return sum
+  }
 
   if (currentData) {
     let sessionsData = currentData.user.sessions;
@@ -445,10 +442,6 @@ function ProfileStats() {
       },
     };
 
-    //Assign year to each yearCalendar
-    //ex:
-    //[{year: 2021, calendar: Array(53)}, {year: 2022, calendar: Array(53)}]
-
     //clone fullYearArray, fill it with sessions based on year from yearSessions
     function fillCalendarByYear() {
       for (const yearKey of Object.values(yearSessions)) {
@@ -465,15 +458,6 @@ function ProfileStats() {
         allYearSessions.push({ year: year, calendar: clonedArray });
       }
     }
-
-    /**
-     * n year -> 52 weeks -> 7 days
-     * 2
-     * CalendarArray = [2][52][7]{ sessionData: sessionData | null }
-     * [52]
-     * [{weeks: [52], year: 2018}]
-     *
-     */
 
     //loop through year calendar (nested array)
     //count all days with sessions
@@ -541,6 +525,7 @@ function ProfileStats() {
                         weekIndex={weekIndex}
                         calcColor={calcColor}
                         totalSessionsUser={totalSessionsUser}
+                        totalLength={totalLength}
                       />
                     ))}
                   </div>
@@ -566,6 +551,8 @@ function ProfileStats() {
         </Fragment>
       );
     });
+
+    const maxDate = new Date().toISOString().split('T')[0]
 
     return (
       <div className="profile-stats-container">
@@ -622,6 +609,7 @@ function ProfileStats() {
               <input
                 className="date-input"
                 type="date"
+                max={maxDate}
                 onChange={(e) => setNewDate(e.target.value)}
               ></input>
               <div id="length-wrapper">
@@ -675,7 +663,6 @@ function ProfileStats() {
           <div id="all-sessions-wrapper">{allSessions}</div>
         </div>
       </div>
-      // </div>
     );
   }
   return <></>;

@@ -179,16 +179,15 @@
     width: 15px;
     height: 15px;
     border-radius: 3px;
-    background-color: rgb(108, 191, 108);
+    background-color: rgb(0, 165, 0);
     margin: .2em;
-
   }
 
   #square-medium {
     width: 15px;
     height: 15px;
     border-radius: 3px;
-    background-color: rgb(0, 196, 0);
+    background-color: rgb(0, 212, 0);
     margin: .2em;
   }
 
@@ -303,6 +302,7 @@
       border: 0.1em solid black;
       border-radius: 0.5em;
       margin-bottom: 1em;
+      margin-top: 1em;
       .sessions-header{
         display: flex;
         justify-content: space-between;

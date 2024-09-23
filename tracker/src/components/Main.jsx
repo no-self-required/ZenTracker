@@ -101,6 +101,7 @@ function displayTime(totalSeconds) {
       formatted[i] = "0" + formatted[i];
     }
   }
+
   return formatted;
 }
 
