@@ -238,6 +238,9 @@
 
   .date-input {
     margin-top: .5em;
+    // color: transparent;
+    // border: 1px solid black;
+    
   }
 
   #input-wrapper {
@@ -254,6 +257,12 @@
   .log-input {
     margin-top: .5em;
   }
+}
+
+
+//CSS specific for Safari on iOS
+@supports (-webkit-touch-callout: none) {
+
 }
 
 .all-sessions-container {
@@ -286,6 +295,7 @@
     font-weight: bolder;
   }
 }  
+
 //desktop
 @media only screen and (min-width: 1243px) {
   .profile-stats-container{

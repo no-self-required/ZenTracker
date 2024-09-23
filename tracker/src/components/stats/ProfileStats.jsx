@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, Fragment } from "react";
+import React, { useState, useEffect, useContext, Fragment, useRef } from "react";
 import axios from "axios";
 import SingleSession from "./SingleSession";
 import SingleDay from "./SingleDay";
@@ -79,10 +79,12 @@ function displayInputValue(totalSeconds) {
 }
 
 function ProfileStats() {
+
   const { userData } = useContext(UserContext);
   const [currentData, setCurrentData] = useState();
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [log, setLog] = useState("");
+  const [loglength, setLoglength] = useState(0);
 
   //default state should be latest year
   const [selectedYear, setSelectedYear] = useState(getYear(Date.now()));
@@ -104,6 +106,8 @@ function ProfileStats() {
   const token = localStorage.getItem("token");
 
   const [isUpdated, setIsUpdated] = useState(false);
+
+  const inputRef = useRef(null)
 
   //after 5 add/delete sessions, site freezes => /profile doesnt load
   //use debugger to find freezing
@@ -438,6 +442,9 @@ function ProfileStats() {
         bottom: "auto",
         marginRight: "-50%",
         transform: "translate(-50%, -50%)",
+        border: "1px solid black",
+        borderRadius: ".5em",
+        width: "264.875px",
       },
     };
 
@@ -564,6 +571,16 @@ function ProfileStats() {
       </div>
     )
     
+    const charLimit = (
+      <div className="charlimit">
+        {loglength}/255
+      </div>
+    )
+
+    const handleFocus = () => {
+      inputRef.current.focus();
+    }
+
     return (
       <div className="profile-stats-container">
         <p className="profile-name">Username : {userData.user.username}</p>
@@ -624,7 +641,9 @@ function ProfileStats() {
                 type="date"
                 max={maxDate}
                 onChange={(e) => setNewDate(e.target.value)}
+                ref={inputRef}
               ></input>
+              <div className="date-container"></div>
               <div id="length-wrapper">
                 <div>Length of session</div>
                 <div id="input-wrapper">
@@ -657,10 +676,14 @@ function ProfileStats() {
               <label htmlFor="log-input">Enter a log: </label>
               <textarea
                 className="logInput"
-                onChange={(e) => setLog(e.target.value)}
+                onChange={(e) => {
+                  setLog(e.target.value)
+                  setLoglength(e.target.value.length)
+                }}
               ></textarea>
-              <button onClick={closeModalSubmit} id="submit-button">
-                submit
+              {charLimit}
+              <button onClick={closeModalSubmit} className="submit-log">
+                Submit Session
               </button>
             </div>
           </Modal>

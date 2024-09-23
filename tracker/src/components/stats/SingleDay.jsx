@@ -25,7 +25,7 @@ function SingleDay(props) {
   let formatted = format(new Date(newDateProperYear), "PPP");
 
   const secToMin = (totalSeconds) => {
-    return totalSeconds / 60
+    return Math.round(totalSeconds / 60)
   }
 
   const { x, y, strategy, refs } = useFloating({

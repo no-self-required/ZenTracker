@@ -757,6 +757,7 @@ function Main() {
       {charlength}/255
     </div>
   )
+  
   return (
     <div className="container">
       <div className="timer-container">
