@@ -158,7 +158,7 @@ const TIMER_STATES = {
 };
 
 function Main() {
-  const audio = new Audio(bowlSound);
+  // const audio = new Audio(bowlSound);
 
   const [totalSeconds, setTotalSeconds] = useState(300);
   //initialTime is running off array converison: 500 => [5, 0, 0] (5 min 0 seconds)
@@ -195,6 +195,8 @@ function Main() {
   //Store selection range for input traversal
   const [selection1, setSelection1] = useState();
   const [selection2, setSelection2] = useState();
+
+  const [timerAudio, setTimerAudio] = useState();
 
   //Input traversal left
   useEffect(() => {
@@ -262,8 +264,7 @@ function Main() {
       openModal();
     }
     if (timerState === TIMER_STATES["FINISHED"]) {
-      console.log("test");
-      audio.play();
+      timerAudio.play();
       onCompletion();
     }
   }, [timerState]);
@@ -759,6 +760,11 @@ function Main() {
     </div>
   )
   
+  const createAudio = () => {
+    const bowlTimer = new Audio(bowlSound)
+    setTimerAudio(bowlTimer)
+  }
+
   return (
     <div className="container">
       <div className="timer-container">
@@ -822,7 +828,7 @@ function Main() {
             {(timerState === TIMER_STATES["INITIAL"] ||
               timerState === TIMER_STATES["STOPPED"] ||
               timerState === TIMER_STATES["EDIT"]) && (
-              <Start onClick={startTimer} />
+              <Start onClick={() => {startTimer(); createAudio()}} />
             )}
             {timerState === TIMER_STATES["STARTED"] && (
               <Stop onClick={stopTimer} />
