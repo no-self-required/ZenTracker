@@ -75,13 +75,13 @@ function SingleDay(props) {
               )}{" "}
               sessions on {formatted}
               <br/>
-              {secToMin(props.totalLength(props.array2[props.weekIndex][props.daysIndex], 'lengthSeconds')) <= 1 ? 
+              {secToMin(getLength) <= 1 ? 
                <>
-               Total length: {secToMin(props.totalLength(props.array2[props.weekIndex][props.daysIndex], 'lengthSeconds'))} minute
+               Total length: {secToMin(getLength)} minute
                </> 
                :
                <>
-               Total length: {secToMin(props.totalLength(props.array2[props.weekIndex][props.daysIndex], 'lengthSeconds'))} minutes 
+               Total length: {secToMin(getLength)} minutes 
                </> 
               }              
             </span>
@@ -106,13 +106,13 @@ function SingleDay(props) {
             )}{" "}
             session on {formatted}
             <br/>
-            {secToMin(props.totalLength(props.array2[props.weekIndex][props.daysIndex], 'lengthSeconds')) <= 1 ? 
+            {secToMin(getLength) <= 1 ? 
                <>
-               Total length: {secToMin(props.totalLength(props.array2[props.weekIndex][props.daysIndex], 'lengthSeconds'))} minute
+               Total length: {secToMin(getLength)} minute
                </> 
                :
                <>
-               Total length: {secToMin(props.totalLength(props.array2[props.weekIndex][props.daysIndex], 'lengthSeconds'))} minutes 
+               Total length: {secToMin(getLength)} minutes 
                </> 
               }  
           </span>

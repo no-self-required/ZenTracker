@@ -4,13 +4,15 @@ import SingleSession from "./SingleSession";
 import SingleDay from "./SingleDay";
 import Modal from "react-modal";
 import { UserContext } from "../../App";
-
 import { v4 as uuidv4 } from "uuid";
 
 import getDayOfYear from "date-fns/getDayOfYear";
 import formatDuration from "date-fns/formatDuration";
 import format from "date-fns/format";
 import getYear from "date-fns/getYear";
+
+import Flatpickr from 'react-flatpickr';
+import 'flatpickr/dist/themes/airbnb.css';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -31,7 +33,6 @@ function splitInput(initialTime) {
 //temporarily calculate add new session length to seconds. (array > seconds)
 function calculateSeconds(initialTime) {
   const splitArr = splitInput(initialTime);
-  // console.log("splitArray inside calc seconds", splitArr);
   const seconds = [];
   const minutes = [];
   const hours = [];
@@ -79,7 +80,6 @@ function displayInputValue(totalSeconds) {
 }
 
 function ProfileStats() {
-
   const { userData } = useContext(UserContext);
   const [currentData, setCurrentData] = useState();
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -99,18 +99,14 @@ function ProfileStats() {
   const month = currentDate.getMonth();
   const day = currentDate.getDate();
 
-  // console.log("currentDate check", year, month, day)
 
-  const [newDate, setNewDate] = useState(`${year}, ${month + 1}, ${day}`);
+  const [newDate, setNewDate] = useState(new Date());
 
   const token = localStorage.getItem("token");
 
   const [isUpdated, setIsUpdated] = useState(false);
 
-  const inputRef = useRef(null)
-
-  //after 5 add/delete sessions, site freezes => /profile doesnt load
-  //use debugger to find freezing
+  // const inputRef = useRef(null)
 
   useEffect(() => {
     const getSessions = async () => {
@@ -159,6 +155,17 @@ function ProfileStats() {
     setModalIsOpen(false);
   }
 
+  const formatDateYMD = (date) => {
+    if(Array.isArray(date)){
+      date = date[0]
+    }
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+  
+    return `${year}-${month}-${day}`;
+  }
+
   //YYYY, MM, DD
   async function submitSession() {
     const tripleInputs = inputTimerHour + inputTimerMinute + inputTimerSecond;
@@ -168,7 +175,7 @@ function ProfileStats() {
     const totalSeconds = calculateSeconds(tripleInputs);
     const length = displayInputValue(totalSeconds);
     const sessionLog = log;
-    const date = newDate;
+    const date = formatDateYMD(newDate);
 
     const yearSlice = date.slice(0, 4);
     const monthSlice = date.slice(5, 7);
@@ -233,7 +240,6 @@ function ProfileStats() {
   addLastDay();
 
   function calcColor(lengthSeconds, totalSessions) {
-    console.log("totalsessions", totalSessions);
     switch (true) {
       case totalSessions === 0:
         return "square";
@@ -309,7 +315,6 @@ function ProfileStats() {
       const yearSet = new Set();
 
       //add all possible session years to yearSet
-      // console.log("sessionsData", sessionsData)
       for (const session of sessionsData) {
         if (!yearSet.has(session["year"])) {
           yearSet.add(session["year"]);
@@ -390,7 +395,6 @@ function ProfileStats() {
     function longestLength() {
       let longestLength = 0;
       for (const object of sessionsData) {
-        // console.log('object', object)
         for (const property in object) {
           if (property === "lengthSeconds") {
             if (object[property] > longestLength) {
@@ -486,7 +490,7 @@ function ProfileStats() {
       }
       return allYears.reverse();
     };
-    console.log(allYearSessions);
+
     const printSqs = allYearSessions.map((year, yearIndex, array1) => {
       if (selectedYear === year.year) {
         return (
@@ -558,8 +562,6 @@ function ProfileStats() {
       );
     });
 
-    const maxDate = new Date().toISOString().split("T")[0];
-
     const legendSquares = (
       <div className="legend-container">
         <div id="less-text">Less</div>
@@ -576,10 +578,6 @@ function ProfileStats() {
         {loglength}/255
       </div>
     )
-
-    const handleFocus = () => {
-      inputRef.current.focus();
-    }
 
     return (
       <div className="profile-stats-container">
@@ -636,13 +634,17 @@ function ProfileStats() {
           >
             <div id="modal-wrapper">
               <label htmlFor="date-input">Date of session</label>
-              <input
-                className="date-input"
-                type="date"
-                max={maxDate}
-                onChange={(e) => setNewDate(e.target.value)}
-                ref={inputRef}
-              ></input>
+              <Flatpickr
+                placeholder="Select date.."
+                onChange={(date) => setNewDate(date)}
+                id="date-input"
+                options={{
+                  altInput: true,
+                  altFormat: "F j, Y",
+                  dateFormat: "Y-m-d",
+                  maxDate: "today",
+                }}
+              />
               <div className="date-container"></div>
               <div id="length-wrapper">
                 <div>Length of session</div>
