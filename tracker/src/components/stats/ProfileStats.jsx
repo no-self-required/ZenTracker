@@ -643,6 +643,7 @@ function ProfileStats() {
                   altFormat: "F j, Y",
                   dateFormat: "Y-m-d",
                   maxDate: "today",
+                  disableMobile: true
                 }}
               />
               <div className="date-container"></div>
