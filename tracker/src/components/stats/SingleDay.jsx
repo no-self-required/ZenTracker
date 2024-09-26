@@ -24,6 +24,10 @@ function SingleDay(props) {
   let newDateProperYear = setYear(startYearDate, props.year);
   let formatted = format(new Date(newDateProperYear), "PPP");
 
+  const secToMin = (totalSeconds) => {
+    return Math.round(totalSeconds / 60)
+  }
+
   const { x, y, strategy, refs } = useFloating({
     placement: "top",
     middleware: [
@@ -37,14 +41,14 @@ function SingleDay(props) {
   });
 
   const [isOpen, setIsOpen] = useState(false);
+  const getLength = props.totalLength(props.array2[props.weekIndex][props.daysIndex], 'lengthSeconds')
+  const getTotalSessions = props.totalSessionsUser(props.array2[props.weekIndex][props.daysIndex])
 
   return (
     <div
       ref={refs.setReference}
       className={`day-${props.daysIndex + 1} single-day`}
-      id={props.calcColor(
-        props.totalSessionsUser(props.array2[props.weekIndex][props.daysIndex])
-      )}
+      id={props.calcColor(getLength, getTotalSessions)}
       onMouseEnter={e => setIsOpen(true)}
       onMouseLeave={e => setIsOpen(false)}
     >
@@ -70,6 +74,16 @@ function SingleDay(props) {
                 props.array2[props.weekIndex][props.daysIndex]
               )}{" "}
               sessions on {formatted}
+              <br/>
+              {secToMin(getLength) <= 1 ? 
+               <>
+               Total length: {secToMin(getLength)} minute
+               </> 
+               :
+               <>
+               Total length: {secToMin(getLength)} minutes 
+               </> 
+              }              
             </span>
           </>
         )}
@@ -91,6 +105,16 @@ function SingleDay(props) {
               props.array2[props.weekIndex][props.daysIndex]
             )}{" "}
             session on {formatted}
+            <br/>
+            {secToMin(getLength) <= 1 ? 
+               <>
+               Total length: {secToMin(getLength)} minute
+               </> 
+               :
+               <>
+               Total length: {secToMin(getLength)} minutes 
+               </> 
+              }  
           </span>
         </>
       )}

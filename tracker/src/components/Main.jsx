@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Modal from "react-modal";
 import jwt from "jsonwebtoken";
 import { useNavigate } from "react-router-dom";
@@ -17,7 +17,7 @@ import "../styling/main.scss";
 //hook
 import { useGlobalKeyListener } from "../hooks/globalKeyListener";
 
-import bowlSound from '../public/bowlsound1.mp3'
+import bowlSound from "../public/bowlsound1.mp3";
 
 //H:M:S inputs
 import InputHMS from "./inputs/InputHMS";
@@ -101,6 +101,7 @@ function displayTime(totalSeconds) {
       formatted[i] = "0" + formatted[i];
     }
   }
+
   return formatted;
 }
 
@@ -155,7 +156,6 @@ const TIMER_STATES = {
   EDIT: 3,
   FINISHED: 4,
 };
-
 
 function Main() {
   const audio = new Audio(bowlSound);
@@ -254,18 +254,15 @@ function Main() {
     }
     return () => {
       clearInterval(intervalID);
-    }
-  }, [
-    timerState,
-    intervalID
-  ]);
+    };
+  }, [timerState, intervalID]);
 
   useEffect(() => {
     function onCompletion() {
       openModal();
     }
     if (timerState === TIMER_STATES["FINISHED"]) {
-      console.log('test')
+      console.log("test");
       audio.play();
       onCompletion();
     }
@@ -273,92 +270,92 @@ function Main() {
 
   //update display spans on every tick
   useEffect(() => {
-  //remove zeros and set update display timer spans
-  function omitZero() {
-    const splitTime = splitTimer(totalSeconds);
+    //remove zeros and set update display timer spans
+    function omitZero() {
+      const splitTime = splitTimer(totalSeconds);
 
-    let omitZero = [];
-    //remove zeros before start of timer
+      let omitZero = [];
+      //remove zeros before start of timer
 
-    if (totalSeconds === 0) {
-      omitZero = ["0"];
-    } else {
-      for (let i = 0; i < splitTime.length; i++) {
-        if (splitTime[i] !== "0") {
-          omitZero = splitTime.slice(i);
-          break;
+      if (totalSeconds === 0) {
+        omitZero = ["0"];
+      } else {
+        for (let i = 0; i < splitTime.length; i++) {
+          if (splitTime[i] !== "0") {
+            omitZero = splitTime.slice(i);
+            break;
+          }
         }
       }
-    }
 
-    if (totalSeconds !== 0) {
-      for (let i = 0; i < splitTime.length; i++) {
-        if (splitTime[i] !== "0") {
-          omitZero = splitTime.slice(i);
-          break;
+      if (totalSeconds !== 0) {
+        for (let i = 0; i < splitTime.length; i++) {
+          if (splitTime[i] !== "0") {
+            omitZero = splitTime.slice(i);
+            break;
+          }
         }
+      } else {
+        omitZero = ["0"];
       }
-    } else {
-      omitZero = ["0"];
-    }
 
-    switch (omitZero.length) {
-      case 0:
-        break;
-      case 1:
-        setFirstH(null);
-        setSecondH(null);
-        setFirstM(null);
-        setSecondM(null);
-        setFirstS(null);
-        setSecondS(omitZero[0]);
-        break;
-      case 2:
-        setFirstH(null);
-        setSecondH(null);
-        setFirstM(null);
-        setSecondM(null);
-        setFirstS(omitZero[0]);
-        setSecondS(omitZero[1]);
-        break;
-      case 3:
-        setFirstH(null);
-        setSecondH(null);
-        setFirstM(null);
-        setSecondM(omitZero[0]);
-        setFirstS(omitZero[1]);
-        setSecondS(omitZero[2]);
-        break;
-      case 4:
-        setFirstH(null);
-        setSecondH(null);
-        setFirstM(omitZero[0]);
-        setSecondM(omitZero[1]);
-        setFirstS(omitZero[2]);
-        setSecondS(omitZero[3]);
-        break;
-      case 5:
-        setFirstH(null);
-        setSecondH(omitZero[0]);
-        setFirstM(omitZero[1]);
-        setSecondM(omitZero[2]);
-        setFirstS(omitZero[3]);
-        setSecondS(omitZero[4]);
-        break;
-      case 6:
-        setFirstH(omitZero[0]);
-        setSecondH(omitZero[1]);
-        setFirstM(omitZero[2]);
-        setSecondM(omitZero[3]);
-        setFirstS(omitZero[4]);
-        setSecondS(omitZero[5]);
-        break;
+      switch (omitZero.length) {
+        case 0:
+          break;
+        case 1:
+          setFirstH(null);
+          setSecondH(null);
+          setFirstM(null);
+          setSecondM(null);
+          setFirstS(null);
+          setSecondS(omitZero[0]);
+          break;
+        case 2:
+          setFirstH(null);
+          setSecondH(null);
+          setFirstM(null);
+          setSecondM(null);
+          setFirstS(omitZero[0]);
+          setSecondS(omitZero[1]);
+          break;
+        case 3:
+          setFirstH(null);
+          setSecondH(null);
+          setFirstM(null);
+          setSecondM(omitZero[0]);
+          setFirstS(omitZero[1]);
+          setSecondS(omitZero[2]);
+          break;
+        case 4:
+          setFirstH(null);
+          setSecondH(null);
+          setFirstM(omitZero[0]);
+          setSecondM(omitZero[1]);
+          setFirstS(omitZero[2]);
+          setSecondS(omitZero[3]);
+          break;
+        case 5:
+          setFirstH(null);
+          setSecondH(omitZero[0]);
+          setFirstM(omitZero[1]);
+          setSecondM(omitZero[2]);
+          setFirstS(omitZero[3]);
+          setSecondS(omitZero[4]);
+          break;
+        case 6:
+          setFirstH(omitZero[0]);
+          setSecondH(omitZero[1]);
+          setFirstM(omitZero[2]);
+          setSecondM(omitZero[3]);
+          setFirstS(omitZero[4]);
+          setSecondS(omitZero[5]);
+          break;
 
-      default:
-        break;
+        default:
+          break;
+      }
+      return omitZero;
     }
-    return omitZero;
-  }
 
     omitZero();
   }, [totalSeconds]);
@@ -437,7 +434,7 @@ function Main() {
           seconds: parseInt(array[4] + array[5]),
         });
         break;
-      default: 
+      default:
         break;
     }
     return message;
@@ -494,7 +491,7 @@ function Main() {
     setTimerState(TIMER_STATES["STOPPED"]);
     clearInterval(intervalID);
     setIntervalID(undefined);
-  }
+  };
 
   function editTimerState() {
     setTimerState(TIMER_STATES["EDIT"]);
@@ -549,7 +546,8 @@ function Main() {
       bottom: "auto",
       marginRight: "-50%",
       transform: "translate(-50%, -50%)",
-      zIndex: "10",
+      border: "1px solid black",
+      borderRadius: ".5em"
     },
   };
 
@@ -753,6 +751,14 @@ function Main() {
 
   useGlobalKeyListener(handleGlobalKeyDown);
 
+  const [charlength, setCharlength] = useState(0);
+
+  const charLimit = (
+    <div className="charlimit">
+      {charlength}/255
+    </div>
+  )
+  
   return (
     <div className="container">
       <div className="timer-container">
@@ -821,9 +827,7 @@ function Main() {
             {timerState === TIMER_STATES["STARTED"] && (
               <Stop onClick={stopTimer} />
             )}
-            {timerState === TIMER_STATES["FINISHED"] && (
-              <Ok/>
-            )}
+            {timerState === TIMER_STATES["FINISHED"] && <Ok />}
             {timerState === TIMER_STATES["FINISHED"] && loggedin && (
               <div>
                 <Modal
@@ -831,18 +835,22 @@ function Main() {
                   style={customStyles}
                   shouldCloseOnOverlayClick={false}
                 >
-                  <div className="log-message">{message}</div>
-                  <label htmlFor="logInput">Enter a log:</label>
-                  <br />
-                  <input
-                    type="text"
-                    className="logInput"
-                    onChange={(e) => setLog(e.target.value)}
-                  ></input>
-                  <br />
-                  <button className="submit-log" onClick={closeModal}>
-                    Submit Session
-                  </button>
+                  <div className="post-session-wrapper">
+                    <div className="log-message">{message}</div>
+                    <label htmlFor="logInput">Enter a log:</label>
+                    <textarea
+                      type="text"
+                      className="logInput"
+                      onChange={(e) => {setLog(e.target.value)
+                        setCharlength(e.target.value.length)
+                      }}
+                      maxLength={255}
+                    ></textarea>
+                    {charLimit}
+                    <button className="submit-log" onClick={closeModal}>
+                      Submit Session
+                    </button>
+                  </div>
                 </Modal>
               </div>
             )}

@@ -1,16 +1,18 @@
-import React, { useState, useEffect, useContext, Fragment } from "react";
+import React, { useState, useEffect, useContext, Fragment, useRef } from "react";
 import axios from "axios";
 import SingleSession from "./SingleSession";
 import SingleDay from "./SingleDay";
 import Modal from "react-modal";
 import { UserContext } from "../../App";
-
 import { v4 as uuidv4 } from "uuid";
 
 import getDayOfYear from "date-fns/getDayOfYear";
 import formatDuration from "date-fns/formatDuration";
 import format from "date-fns/format";
 import getYear from "date-fns/getYear";
+
+import Flatpickr from 'react-flatpickr';
+import 'flatpickr/dist/themes/airbnb.css';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -31,7 +33,6 @@ function splitInput(initialTime) {
 //temporarily calculate add new session length to seconds. (array > seconds)
 function calculateSeconds(initialTime) {
   const splitArr = splitInput(initialTime);
-  // console.log("splitArray inside calc seconds", splitArr);
   const seconds = [];
   const minutes = [];
   const hours = [];
@@ -83,6 +84,7 @@ function ProfileStats() {
   const [currentData, setCurrentData] = useState();
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [log, setLog] = useState("");
+  const [loglength, setLoglength] = useState(0);
 
   //default state should be latest year
   const [selectedYear, setSelectedYear] = useState(getYear(Date.now()));
@@ -97,16 +99,14 @@ function ProfileStats() {
   const month = currentDate.getMonth();
   const day = currentDate.getDate();
 
-  // console.log("currentDate check", year, month, day)
 
-  const [newDate, setNewDate] = useState(`${year}, ${month + 1}, ${day}`);
+  const [newDate, setNewDate] = useState(new Date());
 
   const token = localStorage.getItem("token");
 
   const [isUpdated, setIsUpdated] = useState(false);
 
-  //after 5 add/delete sessions, site freezes => /profile doesnt load
-  //use debugger to find freezing
+  // const inputRef = useRef(null)
 
   useEffect(() => {
     const getSessions = async () => {
@@ -121,8 +121,6 @@ function ProfileStats() {
         const userResponse = await axios.get("https://zentracker.adaptable.app/api/users/profile", {
           headers: { token: token },
         });
-
-        // if (!compareProfiles(currentData.user, userResponse.data)) {
         if (currentData.user !== userResponse.data) {
           setCurrentData({
             user: userResponse.data,
@@ -157,6 +155,17 @@ function ProfileStats() {
     setModalIsOpen(false);
   }
 
+  const formatDateYMD = (date) => {
+    if(Array.isArray(date)){
+      date = date[0]
+    }
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+  
+    return `${year}-${month}-${day}`;
+  }
+
   //YYYY, MM, DD
   async function submitSession() {
     const tripleInputs = inputTimerHour + inputTimerMinute + inputTimerSecond;
@@ -166,7 +175,7 @@ function ProfileStats() {
     const totalSeconds = calculateSeconds(tripleInputs);
     const length = displayInputValue(totalSeconds);
     const sessionLog = log;
-    const date = newDate;
+    const date = formatDateYMD(newDate);
 
     const yearSlice = date.slice(0, 4);
     const monthSlice = date.slice(5, 7);
@@ -230,17 +239,17 @@ function ProfileStats() {
   fillYearArray();
   addLastDay();
 
-  function calcColor(numOfSessions) {
+  function calcColor(lengthSeconds, totalSessions) {
     switch (true) {
-      case numOfSessions === 0:
+      case totalSessions === 0:
         return "square";
-      case numOfSessions === 1:
-      case numOfSessions === 2:
+      case totalSessions === 1 && lengthSeconds === 0:
         return "square-light";
-      case numOfSessions === 3:
-      case numOfSessions === 4:
+      case lengthSeconds >= 0 && lengthSeconds <= 600:
+        return "square-light";
+      case lengthSeconds >= 600 && lengthSeconds <= 1800:
         return "square-medium";
-      case numOfSessions > 4:
+      case lengthSeconds > 1800:
         return "square-dark";
       default:
         break;
@@ -256,6 +265,14 @@ function ProfileStats() {
       }
     }
     return count;
+  }
+
+  function totalLength(object, key) {
+    let sum = 0;
+    for (const obj of object) {
+      sum += obj[key] || 0;
+    }
+    return sum;
   }
 
   if (currentData) {
@@ -298,7 +315,6 @@ function ProfileStats() {
       const yearSet = new Set();
 
       //add all possible session years to yearSet
-      // console.log("sessionsData", sessionsData)
       for (const session of sessionsData) {
         if (!yearSet.has(session["year"])) {
           yearSet.add(session["year"]);
@@ -318,12 +334,12 @@ function ProfileStats() {
     //Calculate number of all sessions
     function totalSessions() {
       let count = 0;
-      for(let i = 0; i < sessionsData.length; i++) {
+      for (let i = 0; i < sessionsData.length; i++) {
         count += 1;
       }
       return count;
     }
-    
+
     //Calculate total time of all sessions
     function totalTime() {
       let totalTimeInSeconds = 0;
@@ -358,7 +374,7 @@ function ProfileStats() {
       }
 
       let count = 0;
-      for(let i = 0; i < sessionsData.length; i++) {
+      for (let i = 0; i < sessionsData.length; i++) {
         count += 1;
       }
 
@@ -372,7 +388,6 @@ function ProfileStats() {
         "m " +
         Math.round(formatedLength[2]) +
         "s ";
-
       return displayString;
     }
 
@@ -380,7 +395,6 @@ function ProfileStats() {
     function longestLength() {
       let longestLength = 0;
       for (const object of sessionsData) {
-        // console.log('object', object)
         for (const property in object) {
           if (property === "lengthSeconds") {
             if (object[property] > longestLength) {
@@ -432,12 +446,11 @@ function ProfileStats() {
         bottom: "auto",
         marginRight: "-50%",
         transform: "translate(-50%, -50%)",
+        border: "1px solid black",
+        borderRadius: ".5em",
+        width: "264.875px",
       },
     };
-
-    //Assign year to each yearCalendar
-    //ex:
-    //[{year: 2021, calendar: Array(53)}, {year: 2022, calendar: Array(53)}]
 
     //clone fullYearArray, fill it with sessions based on year from yearSessions
     function fillCalendarByYear() {
@@ -455,15 +468,6 @@ function ProfileStats() {
         allYearSessions.push({ year: year, calendar: clonedArray });
       }
     }
-
-    /**
-     * n year -> 52 weeks -> 7 days
-     * 2
-     * CalendarArray = [2][52][7]{ sessionData: sessionData | null }
-     * [52]
-     * [{weeks: [52], year: 2018}]
-     *
-     */
 
     //loop through year calendar (nested array)
     //count all days with sessions
@@ -531,6 +535,7 @@ function ProfileStats() {
                         weekIndex={weekIndex}
                         calcColor={calcColor}
                         totalSessionsUser={totalSessionsUser}
+                        totalLength={totalLength}
                       />
                     ))}
                   </div>
@@ -556,6 +561,23 @@ function ProfileStats() {
         </Fragment>
       );
     });
+
+    const legendSquares = (
+      <div className="legend-container">
+        <div id="less-text">Less</div>
+        <span id="square"></span>
+        <span id="square-light"></span>
+        <span id="square-medium"></span>
+        <span id="square-dark"></span>
+        <div id="more-text">More</div>
+      </div>
+    )
+    
+    const charLimit = (
+      <div className="charlimit">
+        {loglength}/255
+      </div>
+    )
 
     return (
       <div className="profile-stats-container">
@@ -598,7 +620,10 @@ function ProfileStats() {
         </div>
         <div className="calendar-wrapper">
           <div className="calendar-container">{printSqs}</div>
-          <div className="button-group">{allYearButtons}</div>
+          <div className="years-legend">
+            <div className="button-group">{allYearButtons}</div>
+            {legendSquares}
+          </div>
         </div>
         <div>
           <Modal
@@ -609,11 +634,18 @@ function ProfileStats() {
           >
             <div id="modal-wrapper">
               <label htmlFor="date-input">Date of session</label>
-              <input
-                className="date-input"
-                type="date"
-                onChange={(e) => setNewDate(e.target.value)}
-              ></input>
+              <Flatpickr
+                placeholder="Select date.."
+                onChange={(date) => setNewDate(date)}
+                id="date-input"
+                options={{
+                  altInput: true,
+                  altFormat: "F j, Y",
+                  dateFormat: "Y-m-d",
+                  maxDate: "today",
+                }}
+              />
+              <div className="date-container"></div>
               <div id="length-wrapper">
                 <div>Length of session</div>
                 <div id="input-wrapper">
@@ -643,13 +675,17 @@ function ProfileStats() {
                   ></input>
                 </div>
               </div>
-              <label htmlFor="log-input">Log</label>
-              <input
-                className="log-input"
-                onChange={(e) => setLog(e.target.value)}
-              ></input>
-              <button onClick={closeModalSubmit} id="submit-button">
-                submit
+              <label htmlFor="log-input">Enter a log: </label>
+              <textarea
+                className="logInput"
+                onChange={(e) => {
+                  setLog(e.target.value)
+                  setLoglength(e.target.value.length)
+                }}
+              ></textarea>
+              {charLimit}
+              <button onClick={closeModalSubmit} className="submit-log">
+                Submit Session
               </button>
             </div>
           </Modal>
@@ -665,7 +701,6 @@ function ProfileStats() {
           <div id="all-sessions-wrapper">{allSessions}</div>
         </div>
       </div>
-      // </div>
     );
   }
   return <></>;
