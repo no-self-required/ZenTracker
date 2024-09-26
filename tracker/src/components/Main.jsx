@@ -762,7 +762,6 @@ function Main() {
   return (
     <div className="container">
       <div className="timer-container">
-        <audio controls src={bowlSound}></audio>
         <div id="timer-button-container">
           {timerState !== TIMER_STATES["EDIT"] && (
             <div id="display-timer-container">
