@@ -18,8 +18,7 @@ function Signup() {
           headers: { "Content-Type": "application/json" },
         }
       );
-      if (response.status === 200) {
-        console.log("response: ", response.status);
+      if (response.data.status === "ok") {
         window.location.href = "/";
         alert("Sign up successful. Please log in");
       }
