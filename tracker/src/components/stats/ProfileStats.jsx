@@ -562,6 +562,16 @@ function ProfileStats() {
       );
     });
 
+    // const allYearButtonsMobile = listAllYears().map((year) => {
+    //   return (
+    //     <>
+    //     <options>
+
+    //     </options>
+    //     </>
+    //   );
+    // });
+
     const legendSquares = (
       <div className="legend-container">
         <div id="less-text">Less</div>
@@ -621,7 +631,9 @@ function ProfileStats() {
         <div className="calendar-wrapper">
           <div className="calendar-container">{printSqs}</div>
           <div className="years-legend">
-            <div className="button-group">{allYearButtons}</div>
+            <div className="button-group">
+              {allYearButtons}
+            </div>
             {legendSquares}
           </div>
         </div>

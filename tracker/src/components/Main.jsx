@@ -7,6 +7,8 @@ import { UserContext } from "../App";
 
 import { v4 as uuidv4 } from "uuid";
 
+// import { useWakeLock } from 'react-screen-wake-lock';
+
 import getDayOfYear from "date-fns/getDayOfYear";
 import getYear from "date-fns/getYear";
 import formatDuration from "date-fns/formatDuration";
@@ -158,7 +160,11 @@ const TIMER_STATES = {
 };
 
 function Main() {
-  // const audio = new Audio(bowlSound);
+  // const { isSupported, released, request, release } = useWakeLock({
+  //   onRequest: () => alert('Screen Wake Lock: requested!'),
+  //   onError: () => alert('An error happened 💥'),
+  //   onRelease: () => alert('Screen Wake Lock: released!'),
+  // });
 
   const [totalSeconds, setTotalSeconds] = useState(300);
   //initialTime is running off array converison: 500 => [5, 0, 0] (5 min 0 seconds)
@@ -362,6 +368,7 @@ function Main() {
   }, [totalSeconds]);
 
   function startTimer() {
+    // released === false ? release() : request()
     //if initial time has already started
     if (timerState === TIMER_STATES["EDIT"]) {
       setTimerState(TIMER_STATES["STARTED"]);
@@ -371,7 +378,6 @@ function Main() {
       setTotalSeconds(newInputTimer);
       //set new initial time to concatenated inputs
       setInitialTime(tripleInputs);
-
       return;
     } else if (timerState === TIMER_STATES["STOPPED"]) {
       setTimerState(TIMER_STATES["STARTED"]);
@@ -827,7 +833,7 @@ function Main() {
             {(timerState === TIMER_STATES["INITIAL"] ||
               timerState === TIMER_STATES["STOPPED"] ||
               timerState === TIMER_STATES["EDIT"]) && (
-              <Start onClick={() => {startTimer(); createAudio()}} />
+              <Start onClick={() => {startTimer(); createAudio(); }} />
             )}
             {timerState === TIMER_STATES["STARTED"] && (
               <Stop onClick={stopTimer} />
