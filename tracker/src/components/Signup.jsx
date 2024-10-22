@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 // import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import config from "../config";
 
 function Signup() {
   // const navigate = useNavigate();
@@ -12,7 +13,7 @@ function Signup() {
     event.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/register",
+        `${config.baseUrl}/api/register`,
         JSON.stringify({ email, username, password }),
         {
           headers: { "Content-Type": "application/json" },
