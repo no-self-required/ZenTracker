@@ -7,7 +7,7 @@ import { UserContext } from "../App";
 
 import { v4 as uuidv4 } from "uuid";
 
-// import { useWakeLock } from 'react-screen-wake-lock';
+import { useWakeLock } from 'react-screen-wake-lock';
 
 import getDayOfYear from "date-fns/getDayOfYear";
 import getYear from "date-fns/getYear";
@@ -160,11 +160,11 @@ const TIMER_STATES = {
 };
 
 function Main() {
-  // const { isSupported, released, request, release } = useWakeLock({
-  //   onRequest: () => alert('Screen Wake Lock: requested!'),
-  //   onError: () => alert('An error happened 💥'),
-  //   onRelease: () => alert('Screen Wake Lock: released!'),
-  // });
+  const { isSupported, released, request, release } = useWakeLock({
+    // onRequest: () => alert('Screen Wake Lock: requested!'),
+    // onError: () => alert('An error happened 💥'),
+    // onRelease: () => alert('Screen Wake Lock: released!'),
+  });
 
   const [totalSeconds, setTotalSeconds] = useState(300);
   //initialTime is running off array converison: 500 => [5, 0, 0] (5 min 0 seconds)
@@ -368,7 +368,7 @@ function Main() {
   }, [totalSeconds]);
 
   function startTimer() {
-    // released === false ? release() : request()
+    released === false ? release() : request()
     //if initial time has already started
     if (timerState === TIMER_STATES["EDIT"]) {
       setTimerState(TIMER_STATES["STARTED"]);
@@ -495,6 +495,7 @@ function Main() {
   }
 
   const stopTimer = () => {
+    released === true ?  request() : release()
     setTimerState(TIMER_STATES["STOPPED"]);
     clearInterval(intervalID);
     setIntervalID(undefined);
