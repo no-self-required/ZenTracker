@@ -206,6 +206,7 @@ function InputHMS(props) {
           </button>
           <button
             className="button-up-S"
+            id="button-up-S"
             onClick={handleButtonClickUpS}
             {...longPressUpS}
           >
@@ -229,6 +230,7 @@ function InputHMS(props) {
             onInput={(e) => {
               props.setCursor({ start: props.caret, end: props.caret });
             }}
+            onFocusCapture={(e) => {props.inputCapture(e)}}
             onKeyDown={(event) => {
               props.handleInput(event);
             }}
@@ -247,6 +249,8 @@ function InputHMS(props) {
             onKeyDown={(event) => {
               props.handleInput(event);
             }}
+            onFocusCapture={(e) => {props.inputCapture(e)}}
+            // onSelect={(e) => {console.log('test')}}
             onKeyPress={numOnly}
             maxLength={3}
           ></input>
@@ -262,6 +266,7 @@ function InputHMS(props) {
             onKeyDown={(event) => {
               props.handleInput(event);
             }}
+            onFocusCapture={(e) => {props.inputCapture(e)}}
             onKeyPress={numOnly}
             maxLength={3}
             autoFocus
@@ -283,6 +288,7 @@ function InputHMS(props) {
         <div className="down" id="down-buttons">
           <button
             className="button-down-H"
+            id="button-down-H"
             onClick={handleButtonClickDownH}
             {...longPressDownH}
           >

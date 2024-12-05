@@ -160,6 +160,9 @@ const TIMER_STATES = {
 };
 
 function Main() {
+  // const activeElement = useActiveElement();
+  const [activeElement, setActiveElement] = useState(null);
+
   const { isSupported, released, request, release } = useWakeLock({
     // onRequest: () => alert('Screen Wake Lock: requested!'),
     // onError: () => alert('An error happened 💥'),
@@ -366,6 +369,35 @@ function Main() {
 
     omitZero();
   }, [totalSeconds]);
+
+  const inputCapture = (event) => {
+    if(event.target.selectionEnd === 2 && event.target.selectionStart === 0){
+      event.target.setSelectionRange(1, 1);
+    }
+
+    if(event.relatedTarget){
+      if(event.relatedTarget.id === 'button-up-M' && event.target.id === 'timerHour'){
+        event.target.setSelectionRange(1, 1);
+      }
+      if(event.relatedTarget.id === 'timerHour' && event.target.id === 'timerMinute'){
+        event.target.setSelectionRange(1, 1);
+      }
+      if(event.relatedTarget.id === 'timerMinute' && event.target.id === 'timerSecond'){
+        event.target.setSelectionRange(1, 1);
+      }
+
+      if(event.relatedTarget.id === 'button-down-H' && event.target.id === 'timerSecond'){
+        event.target.setSelectionRange(2, 2);
+      }
+      if(event.relatedTarget.id === 'timerSecond' && event.target.id === 'timerMinute'){
+        event.target.setSelectionRange(2, 2);
+      }
+      if(event.relatedTarget.id === 'timerMinute' && event.target.id === 'timerHour'){
+        event.target.setSelectionRange(2, 2);
+      }
+    }
+
+  }
 
   function startTimer() {
     released === false ? release() : request()
@@ -601,10 +633,12 @@ function Main() {
 
     setTargetInput(targetInput);
 
+    //Disable up and down arrow keys
     if (event.keyCode === 38 || event.keyCode === 40) {
       event.preventDefault();
     }
-
+  
+    //Enter or spacebar starts timer in edit state
     if (event.keyCode === 13 || event.keyCode === 32) {
       if (timerState === TIMER_STATES["EDIT"]) {
         startTimer();
@@ -699,7 +733,7 @@ function Main() {
           setValues(newArr);
         }
       }
-    }
+    } 
 
     //handle input traversal left
     if (
@@ -757,6 +791,7 @@ function Main() {
     }
   };
 
+  //Used to start and stop timer with 'space' and 'enter' keys
   useGlobalKeyListener(handleGlobalKeyDown);
 
   const [charlength, setCharlength] = useState(0);
@@ -828,6 +863,7 @@ function Main() {
                 setInputTimerMinute={setInputTimerMinute}
                 InputTimerSecond={inputTimerSecond}
                 setInputTimerSecond={setInputTimerSecond}
+                inputCapture={inputCapture}
               ></InputHMS>
             </div>
           )}
